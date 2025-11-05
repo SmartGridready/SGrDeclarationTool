@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.1.1...v0.2.0) (2025-11-05)
+
+
+### Chores
+
+* add format commands and format files (GL-2) ([b5b9d54](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b5b9d544fce90d9c9488c42458b1ca4eab9d9a89))
+* install prettier for formatting and add config (GL-2) ([023ec0c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/023ec0c72face43de8edb1f9032776f3c2eee340))
+
+
+### Continuous Integration
+
+* add gitlab-pages deployment (GL-3) ([54b7a29](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/54b7a2931e7eb336e0c35affc7d3cb9905c321f6))
+* format and lint check in lint stage (GL-3) ([f4e8b4b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f4e8b4ba6fe298b705af9121189709a0a994ed05))
+
 ### 0.1.1 (2025-11-05)
 
 

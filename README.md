@@ -103,3 +103,10 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
 ### Deployment
 
 The GitLab CI/CD pipeline automatically deploys to GitLab Pages when a tag is pushed. The deployment is triggered by the tag push from the release process.
+
+## Pipeline Stages and Steps
+
+The GitLab CI/CD pipeline consists of two stages:
+
+1. **Lint**: Runs `format-check` and `lint` jobs on the `main` branch
+2. **Build and Deploy**: Builds and deploys to GitLab Pages when a tag is pushed

@@ -1,0 +1,22 @@
+stages:
+  - lint
+
+format-check:
+  stage: lint
+  image: node:20
+  before_script:
+    - npm ci
+  script:
+    - npm run format:check
+  only:
+    - main
+
+lint:
+  stage: lint
+  image: node:20
+  before_script:
+    - npm ci
+  script:
+    - npm run lint
+  only:
+    - main

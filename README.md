@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SmartGridready Declaration Tool
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   ```bash
+   git clone https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool.git
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm i
+   ```
+
+3. **Run the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+
+   Navigate to [http://localhost:3000](http://localhost:3000).
+
+## Commit Rules
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.
+
+### Commit Message Format
+
+Each commit message should follow this format:
+
+```
+<type>(<scope>): <subject> (GL-<Issue Number>)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Type** (required): The type of change being made
+- **Scope** (optional): The area of the codebase affected
+- **Subject** (required): A short, imperative description of the change
+- **Issue Number** (required): The linked Issue from GitLab
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Example:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git commit -m "feat(api): change device endpoint structure (GL-99)"
+```
 
-## Learn More
+## Releasing
 
-To learn more about Next.js, take a look at the following resources:
+Releases are performed **manually** using semantic versioning (patch, minor, major).
+The project uses [standard-version](https://github.com/conventional-changelog/standard-version).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Release Process
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Choose the release type**
 
-## Deploy on Vercel
+   - **Patch** (`0.2.0` → `0.2.1`): Bug fixes, patches
+   - **Minor** (`0.2.0` → `0.3.0`): New features, backwards compatible
+   - **Major** (`0.2.0` → `1.0.0`): Breaking changes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Run the release command**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   For a **patch** release:
+
+   ```bash
+   npm run release:patch
+   ```
+
+   For a **minor** release:
+
+   ```bash
+   npm run release:minor
+   ```
+
+   For a **major** release:
+
+   ```bash
+   npm run release:major
+   ```
+
+   This will:
+
+   - Bump the version in `package.json`
+   - Generate/update `CHANGELOG.md` based on commit history
+   - Create a git tag with the new version
+   - Create a commit with the version bump and changelog
+
+3. **Push the release**
+
+   ```bash
+   git push --follow-tags origin main
+   ```
+
+### Deployment
+
+The GitLab CI/CD pipeline automatically deploys to GitLab Pages when a tag is pushed. The deployment is triggered by the tag push from the release process.

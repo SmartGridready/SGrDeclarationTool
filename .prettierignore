@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+build
+.next-env.d.ts
+*.min.js
+*.min.css
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.gitlab/
+CHANGELOG.md
+components/ui/
+README.md
+ 

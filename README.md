@@ -1,5 +1,7 @@
 # SmartGridready Declaration Tool
 
+---
+
 ## Getting Started
 
 1. **Clone the repository**
@@ -24,6 +26,8 @@
 
    Navigate to [http://localhost:3000](http://localhost:3000).
 
+---
+
 ## Commit Rules
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.
@@ -47,12 +51,16 @@ Each commit message should follow this format:
 git commit -m "feat(api): change device endpoint structure (GL-99)"
 ```
 
+---
+
 ## Husky Pre-commit Checks
 
 This project uses [Husky](https://typicode.github.io/husky/) to run automated checks before commits:
 
 - **Pre-commit hook**: Runs `npm run lint` and `npm run format:check`
 - **Commit-msg hook**: Validates commit messages follow the [Conventional Commits](https://www.conventionalcommits.org/) specification
+
+---
 
 ## Releasing
 
@@ -100,9 +108,7 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
    git push --follow-tags origin main
    ```
 
-### Deployment
-
-The GitLab CI/CD pipeline automatically deploys to GitLab Pages when a tag is pushed. The deployment is triggered by the tag push from the release process.
+---
 
 ## Pipeline Stages and Steps
 

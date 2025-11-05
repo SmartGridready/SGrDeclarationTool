@@ -13,6 +13,7 @@ stages:
 before_script:
   - npm ci --prefer-offline --no-audit
 
+# Checks formatting using prettier
 format-check:
   stage: lint
   image: node:20
@@ -23,6 +24,7 @@ format-check:
   only:
     - main
 
+# Checks linting using eslint
 lint:
   stage: lint
   image: node:20
@@ -33,7 +35,7 @@ lint:
   only:
     - main
 
-# Build and deploy the Next.js application to GitLab Pages
+# Builds the Next.js application and deploys it to GitLab Pages
 pages:
   stage: build-and-deploy
   image: node:20

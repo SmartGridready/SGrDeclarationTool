@@ -14,7 +14,8 @@
     "release:major": "standard-version --release-as major",
     "release:patch": "standard-version --release-as patch",
     "release:preview": "standard-version --skip.commit --skip.tag",
-    "release:push": "git push --follow-tags origin main"
+    "release:push": "git push --follow-tags origin main",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
@@ -35,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
     "prettier": "^3.6.2",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4",

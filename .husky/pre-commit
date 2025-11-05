@@ -1,0 +1,15 @@
+# Lint checks
+echo "Running lint checks..."
+npm run lint || {
+  echo "Lint check failed. Please fix the errors before committing."
+  exit 1
+}
+
+# Format checks
+echo "Running format check..."
+npm run format:check || {
+  echo "Format check failed. Please run 'npm run format' to fix formatting issues."
+  exit 1
+}
+
+echo "All checks passed!"

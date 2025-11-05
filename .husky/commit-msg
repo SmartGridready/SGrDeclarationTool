@@ -1,0 +1,33 @@
+# Read the commit message
+commit_msg=$(cat "$1")
+
+# Valid conventional commit prefixes
+valid_prefixes="feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|merge"
+
+# Check if commit message matches the required format: <type>(<scope>): <subject>
+# Or allow merge/revert commits
+if echo "$commit_msg" | grep -qE "^($valid_prefixes)(\(.+\))?: .+|^Merge|^Revert"; then
+  exit 0
+fi
+
+# If we get here, the format is invalid
+echo ""
+echo "Invalid commit message format!"
+echo ""
+echo "Commit message must start with one of the following prefixes:"
+echo "  feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+echo ""
+echo "Format: <type>(<scope>): <subject>"
+echo "  - Type (required): The type of change being made"
+echo "  - Scope (optional): The area of the codebase affected"
+echo "  - Subject (required): A short, imperative description of the change"
+echo ""
+echo "Examples:"
+echo "  feat(api): change device endpoint structure"
+echo "  fix: resolve bug in authentication"
+echo "  docs: update README with new instructions"
+echo ""
+echo "Your commit message:"
+echo "  $commit_msg"
+exit 1
+

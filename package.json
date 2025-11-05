@@ -6,7 +6,13 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "release:preview": "standard-version --skip.commit --skip.tag",
+    "release:push": "git push --follow-tags origin main"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",

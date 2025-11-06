@@ -1,6 +1,12 @@
 # SmartGridready Declaration Tool
 
----
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Commit Rules](#commit-rules)
+- [Releasing](#releasing)
+- [Pipeline and Deployment](#pipeline-and-deployment)
 
 ## Getting Started
 
@@ -26,8 +32,6 @@
 
    Navigate to [http://localhost:3000](http://localhost:3000).
 
----
-
 ## Commit Rules
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.
@@ -51,46 +55,30 @@ Each commit message should follow this format:
 git commit -m "feat(api): change device endpoint structure (GL-99)"
 ```
 
----
-
-## Husky Pre-commit Checks
+### Husky Pre-commit Checks
 
 This project uses [Husky](https://typicode.github.io/husky/) to run automated checks before commits:
 
 - **Pre-commit hook**: Runs `npm run lint` and `npm run format:check`
 - **Commit-msg hook**: Validates commit messages follow the [Conventional Commits](https://www.conventionalcommits.org/) specification
 
----
-
 ## Releasing
 
 Releases are performed **manually** using semantic versioning (patch, minor, major).
 The project uses [standard-version](https://github.com/conventional-changelog/standard-version).
 
-### Release Process
+1. **Choose the release type and run the command**
 
-1. **Choose the release type**
-
-   - **Patch** (`0.2.0` → `0.2.1`): Bug fixes, patches
-   - **Minor** (`0.2.0` → `0.3.0`): New features, backwards compatible
-   - **Major** (`0.2.0` → `1.0.0`): Breaking changes
-
-2. **Run the release command**
-
-   For a **patch** release:
-
+   **Patch** (`0.2.0` → `0.2.1`): Bug fixes, patches
    ```bash
    npm run release:patch
    ```
 
-   For a **minor** release:
-
+   **Minor** (`0.2.0` → `0.3.0`): New features, backwards compatible
    ```bash
    npm run release:minor
    ```
-
-   For a **major** release:
-
+   **Major** (`0.2.0` → `1.0.0`): Breaking changes
    ```bash
    npm run release:major
    ```
@@ -102,17 +90,15 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
    - Create a git tag with the new version
    - Create a commit with the version bump and changelog
 
-3. **Push the release**
+2. **Push the release**
 
    ```bash
    git push --follow-tags origin main
    ```
 
----
-
-## Pipeline Stages and Steps
+## Pipeline and Deployment
 
 The GitLab CI/CD pipeline consists of two stages:
 
 1. **Lint**: Runs `format-check` and `lint` jobs on the `main` branch
-2. **Build and Deploy**: Builds and deploys to GitLab Pages when a tag is pushed
+2. **Build and Deploy**: Builds and deploys to [GitLab Pages](https://sgr-declaration-tool-6bb311.pages.fhnw.ch/) when a tag is pushed

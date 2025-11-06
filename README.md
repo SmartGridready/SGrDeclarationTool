@@ -1,10 +1,10 @@
 # SmartGridready Declaration Tool
 
-
 ## Table of Contents
 
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
+- [Used Libraries](#used-libraries)
 - [Commit Rules](#commit-rules)
 - [Releasing](#releasing)
 - [Pipeline and Deployment](#pipeline-and-deployment)
@@ -49,6 +49,25 @@ src/
 └─ hooks/                   # Custom reusable React hooks (state, data fetching, etc.)
 ```
 
+## Used Libraries
+
+### Dependencies
+
+- **[Next.js](https://nextjs.org/)** - React framework for routing and optimization features
+- **[React](https://react.dev/)** - Core React library for building user interfaces
+- **[TypeScript](https://www.typescriptlang.org/)** - Typed superset of JavaScript for type safety
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework for styling
+- **[Zustand](https://zustand-demo.pmnd.rs/)** - Lightweight state management solution
+- **[xml2js](https://www.npmjs.com/package/xml2js)** - XML parser for SmartGridready declarations
+- **[Shadcn UI](https://ui.shadcn.com/)** - Reusable UI components built with Radix UI and Tailwind CSS
+
+### Dev Dependencies
+
+- **[ESLint](https://eslint.org/)** & **[Prettier](https://prettier.io/)** - Code linting and formatting
+- **[Jest](https://jestjs.io/)** & **[Testing Library](https://testing-library.com/)** - Testing framework and utilities
+- **[Husky](https://typicode.github.io/husky/)** - Git hooks for pre-commit checks
+- **[standard-version](https://github.com/conventional-changelog/standard-version)** - Automated versioning and changelog generation
+
 ## Commit Rules
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.
@@ -87,21 +106,24 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
 1. **Choose the release type and run the command**
 
    **Patch** (`0.2.0` → `0.2.1`): Bug fixes, patches
+
    ```bash
    npm run release:patch
    ```
 
    **Minor** (`0.2.0` → `0.3.0`): New features, backwards compatible
+
    ```bash
    npm run release:minor
    ```
+
    **Major** (`0.2.0` → `1.0.0`): Breaking changes
+
    ```bash
    npm run release:major
    ```
 
    This will:
-
    - Bump the version in `package.json`
    - Generate/update `CHANGELOG.md` based on commit history
    - Create a git tag with the new version

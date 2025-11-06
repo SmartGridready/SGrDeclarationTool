@@ -4,6 +4,7 @@
 ## Table of Contents
 
 - [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
 - [Commit Rules](#commit-rules)
 - [Releasing](#releasing)
 - [Pipeline and Deployment](#pipeline-and-deployment)

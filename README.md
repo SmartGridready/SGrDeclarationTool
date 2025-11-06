@@ -32,6 +32,22 @@
 
    Navigate to [http://localhost:3000](http://localhost:3000).
 
+## Project Structure
+
+```bash
+src/
+├─ app/                     # Next.js routing layer
+├─ components/              # Reusable UI components
+│   └─ ui/                  # Shadcn UI primitives and styled components
+├─ lib/                     # Core domain and shared application logic (non-UI)
+│   ├─ models/              # Domain models
+│   ├─ mappers/             # Logic for mapping XML documents into models
+│   ├─ builders/            # Logic for constructing XML documents from models
+│   └─ utils/               # Generic helpers
+├─ services/                # External service integrations (REST)
+└─ hooks/                   # Custom reusable React hooks (state, data fetching, etc.)
+```
+
 ## Commit Rules
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.

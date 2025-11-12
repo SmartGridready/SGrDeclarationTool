@@ -1,17 +1,43 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { FunctionalProfileFrame } from "@/lib/models";
+import { createEmptyFunctionalProfile } from "@/lib/utils/factory";
 import {
   createReleaseNotesSlice,
   ReleaseNotesSlice,
-} from "./functional-profile";
+} from "./slices/release-notes-slice";
 
-export type ProfileSlice = ReleaseNotesSlice;
+interface ProfileStore {
+  profile?: FunctionalProfileFrame;
+  setProfile: (profile: FunctionalProfileFrame | undefined) => void;
+  createNew: () => void;
+  clear: () => void;
+}
 
-export const useProfileStore = create<ProfileSlice>()(
+type StoreState = ProfileStore & ReleaseNotesSlice;
+
+export const useProfileStore = create<StoreState>()(
   persist(
-    immer((set, get, api) => ({
-      ...createReleaseNotesSlice(set, get, api),
+    immer((set) => ({
+      profile: undefined,
+
+      setProfile: (profile) =>
+        set((state) => {
+          state.profile = profile;
+        }),
+
+      createNew: () =>
+        set((state) => {
+          state.profile = createEmptyFunctionalProfile();
+        }),
+
+      clear: () =>
+        set((state) => {
+          state.profile = undefined;
+        }),
+
+      ...createReleaseNotesSlice(set),
     })),
     {
       name: "sgr-profile-storage",

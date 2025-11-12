@@ -5,6 +5,9 @@ import { FunctionalProfileFrame } from "@/lib/models";
  */
 export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
   return {
+    releaseNotes: {
+      state: "Draft",
+    },
     functionalProfile: {
       functionalProfileIdentification: {
         specificationOwnerIdentification: "",

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const Logo = () => {
+export function Logo() {
   return (
     <Link href="/" className="flex flex-col cursor-pointer select-none">
       <div>
@@ -15,6 +15,4 @@ const Logo = () => {
       </span>
     </Link>
   );
-};
-
-export default Logo;
+}

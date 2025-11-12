@@ -12,10 +12,6 @@ export function ReleaseNotesForm() {
     (state) => state.updateReleaseNotesState
   );
 
-  const handleChange = (value: string) => {
-    updateReleaseNotesState(value as ReleaseState);
-  };
-
   return (
     <FormSection
       title={"Release Notes"}
@@ -26,7 +22,7 @@ export function ReleaseNotesForm() {
         name={"releaseState"}
         options={RELEASE_STATE_OPTIONS}
         value={releaseState}
-        onChange={handleChange}
+        onChange={(value) => updateReleaseNotesState(value as ReleaseState)}
       />
     </FormSection>
   );

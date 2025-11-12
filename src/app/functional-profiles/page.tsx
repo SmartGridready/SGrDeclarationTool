@@ -1,3 +1,5 @@
+import FunctionalProfileEditor from "@/components/editor/functional-profile-editor";
+
 export default function FunctionalProfilesPage() {
-  return <div>functional profiles</div>;
+  return <FunctionalProfileEditor />;
 }

@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.3.0...v0.4.0) (2025-11-13)
+
+
+### Features
+
+* add devices and functional-profiles route (GL-6) ([c93735c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c93735c48d38192b90077d27a6ce5ffd3edb5847))
+* add navbar to root layout (GL-6) ([ed620ab](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ed620abf37e225c9089e4ecc3e6ea95a5864afe8))
+* add navbar with the newley created logo (GL-6) ([95e639a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/95e639a4c0db0d9ee0d8b245704799a73f518c5d))
+* add required props to form components (GL-11) ([c5e2053](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c5e2053eb10ae8962f5aede266e18e19f4ad0d96))
+* create profile store and release notes slice (GL-16) ([565af07](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/565af074ee03e7569dc60513b0a812abf19eae86))
+* implement changelog entries for release notes form (GL-13) ([3fc6106](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3fc6106562c7d734f20e211a125d3a103db808f0))
+* implement form group and array field components (GL-11) ([475d69e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/475d69ec6912a20ca11dd05f2754ea414f37fb2c))
+* implement form section component (GL-11) ([896d5d1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/896d5d13149571d1326417380d1e9f762bd66ef8))
+* implement layout for editor actions and form header (GL-14) ([0e2889c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0e2889c7ae75450bc38c6806b89544acf82002f3))
+* implement optional field form component (GL-11) ([4bf58bd](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4bf58bd3333c5ed0ec15871e8821c1a411b3d343))
+* implement release notes remarks (GL-13) ([3f944c6](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3f944c6544d5fd2b438cb7d3e67ee4dab30a7d49))
+* implement release state in release notes form (GL-13) ([99deecc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/99deecc7675b29f200431e3f6e076572005338ea))
+* implement text field form component (GL-11) ([a5b5d70](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a5b5d7004bc5d80a7f5c55c46618b2bcdf4a0b59))
+* install shadcn select and implement select-field form component (GL-11) ([6f49e68](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6f49e68a68f3743f1db90dae7a291c3caa2fc23c))
+* make changelog fields required (GL-13) ([81102ad](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/81102ad47443a78c126f87cf36e1f814b4e57864))
+
+
+### Code Refactoring
+
+* reorganize store structure and integrate release notes with profile (GL-16) ([1dc3c82](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1dc3c822c12875d2394500bed28d1d76a0eb97a4))
+* simplify change handler (GL-13) ([ecc8f27](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ecc8f2739326cd0c49939d86bb60b8d6b9b5d267))
+
+
+### Chores
+
+* add form options (GL-11) ([125104a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/125104a4fb24e71f1a985fb37456c56da6ec1746))
+* add some components from shadcn library (GL-6) ([618c6de](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/618c6de83354a63752c35bdec4ae5a4ddfef64e5))
+* declare partial fp frame containing release notes, identification, alternative names and description (GL-9) ([810ae9c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/810ae9c5bd5305004c7702069f9de4a841d9a4ae))
+* install immer for immutable state updates (GL-16) ([85118fc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/85118fc72e36b4b5dc53929f3eecb67dc3b5ccce))
+
 ## [0.3.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.2.0...v0.3.0) (2025-11-06)
 
 

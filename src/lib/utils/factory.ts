@@ -1,9 +1,9 @@
 import { FunctionalProfileFrame } from "@/lib/models";
 
 /**
- * Creates a new empty FunctionalProfileFrame with default/required values
+ * Creates a new sample FunctionalProfileFrame with example/default values
  */
-export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
+export function createSampleFunctionalProfile(): FunctionalProfileFrame {
   return {
     releaseNotes: {
       state: "Draft",
@@ -23,6 +23,27 @@ export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
         },
       ],
     },
+    functionalProfile: {
+      functionalProfileIdentification: {
+        specificationOwnerIdentification: "",
+        functionalProfileCategory: "HeatPumpControl",
+        functionalProfileType: "",
+        levelOfOperation: "m",
+        versionNumber: {
+          primaryVersionNumber: 1,
+          secondaryVersionNumber: 0,
+          subReleaseVersionNumber: 0,
+        },
+      },
+    },
+  };
+}
+
+/**
+ * Creates a new empty FunctionalProfileFrame with minimal required values
+ */
+export function createEmpty(): FunctionalProfileFrame {
+  return {
     functionalProfile: {
       functionalProfileIdentification: {
         specificationOwnerIdentification: "",

@@ -7,6 +7,7 @@ export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
   return {
     releaseNotes: {
       state: "Draft",
+      remarks: "test remarks",
     },
     functionalProfile: {
       functionalProfileIdentification: {

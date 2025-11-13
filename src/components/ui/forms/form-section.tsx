@@ -21,6 +21,7 @@ interface FormSectionProps {
   description?: string;
   children: React.ReactNode;
   className?: string;
+  required?: boolean;
 }
 
 export function FormSection({
@@ -28,6 +29,7 @@ export function FormSection({
   description,
   children,
   className,
+  required = false,
 }: FormSectionProps) {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -39,6 +41,7 @@ export function FormSection({
             <div className="flex flex-col items-start text-left">
               <CardTitle className="text-lg flex items-center gap-2">
                 {title}
+                {required && <span className="text-destructive ml-1">*</span>}
               </CardTitle>
               {description && (
                 <CardDescription className="mt-1.5">

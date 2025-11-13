@@ -21,6 +21,7 @@ interface SelectFieldProps {
   onChange?: (value: string) => void;
   className?: string;
   disabled?: boolean;
+  required?: boolean;
 }
 
 export function SelectField({
@@ -31,11 +32,15 @@ export function SelectField({
   className = "",
   value,
   onChange,
+  required = false,
   ...props
 }: SelectFieldProps) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={name}>{label}</Label>
+      <Label htmlFor={name}>
+        {label}
+        {required && <span className="text-destructive ml-1">*</span>}
+      </Label>
       <Select value={value} onValueChange={onChange} {...props}>
         <SelectTrigger id={name} className={`w-full ${className}`}>
           <SelectValue placeholder={placeholder} />

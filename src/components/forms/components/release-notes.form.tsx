@@ -74,6 +74,7 @@ export function ReleaseNotesForm() {
                 handleUpdateChangeLog(index, "version", value)
               }
               placeholder="e.g., 1.0.0"
+              required={true}
             />
             <TextField
               label="Date"
@@ -81,6 +82,7 @@ export function ReleaseNotesForm() {
               type="date"
               value={item.date}
               onChange={(value) => handleUpdateChangeLog(index, "date", value)}
+              required={true}
             />
             <TextField
               label="Author"
@@ -90,6 +92,7 @@ export function ReleaseNotesForm() {
                 handleUpdateChangeLog(index, "author", value)
               }
               placeholder="Author name"
+              required={true}
             />
             <TextField
               label="Comment"
@@ -99,6 +102,7 @@ export function ReleaseNotesForm() {
                 handleUpdateChangeLog(index, "comment", value)
               }
               placeholder="Change description"
+              required={true}
             />
           </FormGroup>
         )}

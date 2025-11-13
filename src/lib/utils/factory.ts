@@ -8,6 +8,20 @@ export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
     releaseNotes: {
       state: "Draft",
       remarks: "test remarks",
+      changeLog: [
+        {
+          version: "1.0.0",
+          date: "2024-01-15",
+          author: "System",
+          comment: "Initial release",
+        },
+        {
+          version: "0.9.0",
+          date: "2024-01-14",
+          author: "Developer",
+          comment: "Beta version",
+        },
+      ],
     },
     functionalProfile: {
       functionalProfileIdentification: {

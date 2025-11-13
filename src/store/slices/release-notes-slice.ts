@@ -7,6 +7,13 @@ export interface ReleaseNotesSlice {
   addChangeLog: (changeLog: ChangeLog) => void;
   removeChangeLog: (index: number) => void;
   updateChangeLog: (index: number, changeLog: ChangeLog) => void;
+  handleAddChangeLog: () => void;
+  handleRemoveChangeLog: (index: number) => void;
+  handleUpdateChangeLog: (
+    index: number,
+    field: keyof ChangeLog,
+    value: string
+  ) => void;
 }
 
 type StoreState = {
@@ -58,6 +65,39 @@ export const createReleaseNotesSlice = (
     set((state) => {
       if (state.profile?.releaseNotes?.changeLog?.[index]) {
         state.profile.releaseNotes.changeLog[index] = changeLog;
+      }
+    }),
+
+  handleAddChangeLog: () =>
+    set((state) => {
+      if (state.profile?.releaseNotes) {
+        if (!state.profile.releaseNotes.changeLog) {
+          state.profile.releaseNotes.changeLog = [];
+        }
+        const newChangeLog: ChangeLog = {
+          version: "",
+          date: new Date().toISOString().split("T")[0], // Default to today's date in YYYY-MM-DD format
+          author: "",
+          comment: "",
+        };
+        state.profile.releaseNotes.changeLog.push(newChangeLog);
+      }
+    }),
+
+  handleRemoveChangeLog: (index) =>
+    set((state) => {
+      if (state.profile?.releaseNotes?.changeLog) {
+        state.profile.releaseNotes.changeLog.splice(index, 1);
+      }
+    }),
+
+  handleUpdateChangeLog: (index, field, value) =>
+    set((state) => {
+      if (state.profile?.releaseNotes?.changeLog?.[index]) {
+        state.profile.releaseNotes.changeLog[index] = {
+          ...state.profile.releaseNotes.changeLog[index],
+          [field]: value,
+        };
       }
     }),
 });

@@ -10,6 +10,7 @@ interface TextFieldProps {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
+  type?: string;
 }
 
 export function TextField({
@@ -21,6 +22,7 @@ export function TextField({
   placeholder,
   disabled,
   required = false,
+  type = "text",
 }: TextFieldProps) {
   return (
     <div className="space-y-2">
@@ -31,7 +33,7 @@ export function TextField({
       <Input
         id={name}
         name={name}
-        type="text"
+        type={type}
         value={value ?? ""}
         onChange={(e) => onChange?.(e.target.value)}
         className={className}

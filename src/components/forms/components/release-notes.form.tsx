@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/react/shallow";
 import { FormSection } from "@/components/ui/forms/form-section";
 import { SelectField } from "@/components/ui/forms/select-field";
 import { TextField } from "@/components/ui/forms/text-field";
@@ -7,39 +8,60 @@ import { RELEASE_STATE_OPTIONS } from "@/lib/constants/form-options";
 import { useProfileStore } from "@/store/profile-store";
 import { ReleaseState, ChangeLog } from "@/lib/models/generic/base-types";
 
+/**
+ * Selects release notes state and actions with shallow comparison to prevent infinite loops.
+ */
+function useReleaseNotes() {
+  return useProfileStore(
+    useShallow((state) => ({
+      // State
+      releaseState: state.profile?.releaseNotes?.state,
+      remarks: state.profile?.releaseNotes?.remarks,
+      changeLogs: state.profile?.releaseNotes?.changeLog,
+      hasReleaseNotes: !!state.profile?.releaseNotes,
+      // Actions
+      updateReleaseNotesState: state.updateReleaseNotesState,
+      updateReleaseNotesRemarks: state.updateReleaseNotesRemarks,
+      addEmptyChangeLog: state.addEmptyChangeLog,
+      removeChangeLog: state.removeChangeLog,
+      updateChangeLogField: state.updateChangeLogField,
+      removeReleaseNotes: state.removeReleaseNotes,
+    }))
+  );
+}
+
 export function ReleaseNotesForm() {
-  const releaseState = useProfileStore(
-    (state) => state.profile?.releaseNotes?.state
-  );
-  const updateReleaseNotesState = useProfileStore(
-    (state) => state.updateReleaseNotesState
-  );
+  const {
+    releaseState,
+    remarks,
+    changeLogs,
+    hasReleaseNotes,
+    updateReleaseNotesState,
+    updateReleaseNotesRemarks,
+    addEmptyChangeLog,
+    removeChangeLog,
+    updateChangeLogField,
+    removeReleaseNotes,
+  } = useReleaseNotes();
 
-  const remarks = useProfileStore(
-    (state) => state.profile?.releaseNotes?.remarks
-  );
-  const updateReleaseNotesRemarks = useProfileStore(
-    (state) => state.updateReleaseNotesRemarks
-  );
+  const handleAdd = () => {
+    // Initialize release notes with default state
+    updateReleaseNotesState("Draft");
+  };
 
-  const changeLogs = useProfileStore(
-    (state) => state.profile?.releaseNotes?.changeLog
-  );
-  const handleAddChangeLog = useProfileStore(
-    (state) => state.handleAddChangeLog
-  );
-  const handleRemoveChangeLog = useProfileStore(
-    (state) => state.handleRemoveChangeLog
-  );
-  const handleUpdateChangeLog = useProfileStore(
-    (state) => state.handleUpdateChangeLog
-  );
+  const handleRemove = () => {
+    // Remove release notes from profile
+    removeReleaseNotes();
+  };
 
   return (
     <FormSection
       title={"Release Notes"}
       description={"Version and release information"}
       required={false}
+      isAdded={hasReleaseNotes}
+      onAdd={handleAdd}
+      onRemove={handleRemove}
     >
       <SelectField
         label={"Release State"}
@@ -61,8 +83,8 @@ export function ReleaseNotesForm() {
       <ArrayField<ChangeLog>
         label="Change Log"
         items={changeLogs}
-        onAdd={handleAddChangeLog}
-        onRemove={handleRemoveChangeLog}
+        onAdd={addEmptyChangeLog}
+        onRemove={removeChangeLog}
         emptyMessage="No change log entries"
         renderItem={(item, index) => (
           <FormGroup columns={2}>
@@ -71,7 +93,7 @@ export function ReleaseNotesForm() {
               name={`changeLog-${index}-version`}
               value={item.version}
               onChange={(value) =>
-                handleUpdateChangeLog(index, "version", value)
+                updateChangeLogField(index, "version", value)
               }
               placeholder="e.g., 1.0.0"
               required={true}
@@ -81,16 +103,14 @@ export function ReleaseNotesForm() {
               name={`changeLog-${index}-date`}
               type="date"
               value={item.date}
-              onChange={(value) => handleUpdateChangeLog(index, "date", value)}
+              onChange={(value) => updateChangeLogField(index, "date", value)}
               required={true}
             />
             <TextField
               label="Author"
               name={`changeLog-${index}-author`}
               value={item.author}
-              onChange={(value) =>
-                handleUpdateChangeLog(index, "author", value)
-              }
+              onChange={(value) => updateChangeLogField(index, "author", value)}
               placeholder="Author name"
               required={true}
             />
@@ -99,7 +119,7 @@ export function ReleaseNotesForm() {
               name={`changeLog-${index}-comment`}
               value={item.comment}
               onChange={(value) =>
-                handleUpdateChangeLog(index, "comment", value)
+                updateChangeLogField(index, "comment", value)
               }
               placeholder="Change description"
               required={true}

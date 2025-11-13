@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.4.0...v0.4.1) (2025-11-13)
+
+
+### Features
+
+* add createSample function and debug json button (GL-14) ([6e7316e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6e7316e86a3be7d71b6908d75fe56ae0d31da0a1))
+
+
+### Code Refactoring
+
+* support not required form section (GL-11) ([f8edc4a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f8edc4a4885e6dad4760208a70b0f774d30e531a))
+* use useShallow for state and set fields to undefined if empty (GL-16) ([1af3cde](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1af3cdec87228b31dcd907e7b215454778c381a7))
+
 ## [0.4.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.3.0...v0.4.0) (2025-11-13)
 
 

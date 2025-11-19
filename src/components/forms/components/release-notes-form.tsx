@@ -63,22 +63,24 @@ export function ReleaseNotesForm() {
       onAdd={handleAdd}
       onRemove={handleRemove}
     >
-      <SelectField
-        label={"Release State"}
-        name={"releaseState"}
-        options={RELEASE_STATE_OPTIONS}
-        required={true}
-        value={releaseState}
-        onChange={(value) => updateReleaseNotesState(value as ReleaseState)}
-      />
+      <FormGroup columns={2}>
+        <SelectField
+          label={"Release State"}
+          name={"releaseState"}
+          options={RELEASE_STATE_OPTIONS}
+          required={true}
+          value={releaseState}
+          onChange={(value) => updateReleaseNotesState(value as ReleaseState)}
+        />
 
-      <InputField
-        label={"Remarks"}
-        name={"remarks"}
-        required={false}
-        value={remarks}
-        onChange={(value) => updateReleaseNotesRemarks(value)}
-      />
+        <InputField
+          label={"Remarks"}
+          name={"remarks"}
+          required={false}
+          value={remarks}
+          onChange={(value) => updateReleaseNotesRemarks(value)}
+        />
+      </FormGroup>
 
       <ArrayField<ChangeLog>
         label="Change Log"

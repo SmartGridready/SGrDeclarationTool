@@ -53,19 +53,19 @@ export function EditorActions({
           <DropdownMenuTrigger asChild>
             <Button variant="outline" disabled={isLoading}>
               <Upload className="h-4 w-4 mr-2" />
-              Importieren
+              Import
               <ChevronDown className="h-4 w-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={onImportFromFilesystem}>
               <HardDrive className="h-4 w-4 mr-2" />
-              Dateisystem
+              Filesystem
             </DropdownMenuItem>
 
             <DropdownMenuItem onClick={onImportFromLibrary}>
               <Library className="h-4 w-4 mr-2" />
-              Bibliothek
+              Library
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -73,7 +73,7 @@ export function EditorActions({
         {onExport && (
           <Button variant="outline" onClick={onExport} disabled={isLoading}>
             <Download className="h-4 w-4 mr-2" />
-            Exportieren
+            Export
           </Button>
         )}
 

@@ -5,37 +5,21 @@ import { ReleaseNotes, ChangeLog, ReleaseState } from "@/lib/models";
  */
 export function mapReleaseNotes(releaseNotesXml: any): ReleaseNotes {
   // State is required
-  if (!releaseNotesXml.state || !Array.isArray(releaseNotesXml.state)) {
+  if (!releaseNotesXml.state?.[0]) {
     throw new Error("ReleaseNotes must have a 'state' field");
   }
 
-  const state = releaseNotesXml.state[0] as string;
-  if (!isValidReleaseState(state)) {
-    throw new Error(
-      `Invalid release state: ${state}. Must be one of: Draft, Review, Published, Revoked`
-    );
-  }
-
   const releaseNotes: ReleaseNotes = {
-    state: state as ReleaseState,
+    state: releaseNotesXml.state[0] as ReleaseState,
   };
 
   // Map optional remarks
-  if (
-    releaseNotesXml.remarks &&
-    Array.isArray(releaseNotesXml.remarks) &&
-    releaseNotesXml.remarks[0]
-  ) {
+  if (releaseNotesXml.remarks?.[0]) {
     releaseNotes.remarks = releaseNotesXml.remarks[0];
   }
 
   // Map optional changeLog
-  if (
-    releaseNotesXml.changeLog &&
-    Array.isArray(releaseNotesXml.changeLog) &&
-    releaseNotesXml.changeLog[0] &&
-    releaseNotesXml.changeLog[0].changeLogEntry
-  ) {
+  if (releaseNotesXml.changeLog?.[0]?.changeLogEntry) {
     const changeLogEntries = releaseNotesXml.changeLog[0].changeLogEntry;
     releaseNotes.changeLog = changeLogEntries.map((entry: any) =>
       mapChangeLogEntry(entry)
@@ -56,36 +40,25 @@ function mapChangeLogEntry(entryXml: any): ChangeLog {
     comment: "",
   };
 
-  if (entryXml.version && Array.isArray(entryXml.version)) {
-    entry.version = entryXml.version[0];
-  } else {
+  if (!entryXml.version?.[0]) {
     throw new Error("ChangeLogEntry must have a 'version' field");
   }
+  entry.version = entryXml.version[0];
 
-  if (entryXml.date && Array.isArray(entryXml.date)) {
-    entry.date = entryXml.date[0];
-  } else {
+  if (!entryXml.date?.[0]) {
     throw new Error("ChangeLogEntry must have a 'date' field");
   }
+  entry.date = entryXml.date[0];
 
-  if (entryXml.author && Array.isArray(entryXml.author)) {
-    entry.author = entryXml.author[0];
-  } else {
+  if (!entryXml.author?.[0]) {
     throw new Error("ChangeLogEntry must have an 'author' field");
   }
+  entry.author = entryXml.author[0];
 
-  if (entryXml.comment && Array.isArray(entryXml.comment)) {
-    entry.comment = entryXml.comment[0];
-  } else {
+  if (!entryXml.comment?.[0]) {
     throw new Error("ChangeLogEntry must have a 'comment' field");
   }
+  entry.comment = entryXml.comment[0];
 
   return entry;
-}
-
-/**
- * Validates if a string is a valid ReleaseState
- */
-function isValidReleaseState(state: string): state is ReleaseState {
-  return ["Draft", "Review", "Published", "Revoked"].includes(state);
 }

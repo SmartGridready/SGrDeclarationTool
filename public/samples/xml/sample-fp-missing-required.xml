@@ -13,5 +13,18 @@
       </changeLogEntry>
     </changeLog>
   </releaseNotes>
+  <functionalProfile>
+    <functionalProfileIdentification>
+      <specificationOwnerIdentification>SGR-Example-2024</specificationOwnerIdentification>
+      <functionalProfileCategory>Battery</functionalProfileCategory>
+      <!-- Missing required functionalProfileType -->
+      <levelOfOperation>1</levelOfOperation>
+      <versionNumber>
+        <primaryVersionNumber>1</primaryVersionNumber>
+        <secondaryVersionNumber>0</secondaryVersionNumber>
+        <subReleaseVersionNumber>0</subReleaseVersionNumber>
+      </versionNumber>
+    </functionalProfileIdentification>
+  </functionalProfile>
 </FunctionalProfileFrame>
 

@@ -1,6 +1,7 @@
 import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/lib/models";
 import { mapReleaseNotes } from "./functional-profile/release-notes-mapper";
+import { mapProfileIdentification } from "./functional-profile/profile-identification-mapper";
 
 /**
  * Parses XML string and maps it to FunctionalProfileFrame model
@@ -50,12 +51,37 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   }
 
   const frameData = parsed.FunctionalProfileFrame;
-  const frame: FunctionalProfileFrame = {};
+  const frame: FunctionalProfileFrame = {
+    functionalProfile: {
+      functionalProfileIdentification: {
+        specificationOwnerIdentification: "",
+        functionalProfileCategory: "Battery",
+        functionalProfileType: "",
+        levelOfOperation: "1",
+        versionNumber: {
+          primaryVersionNumber: 0,
+          secondaryVersionNumber: 0,
+          subReleaseVersionNumber: 0,
+        },
+      },
+    },
+  };
 
   // Map releaseNotes if present
   if (frameData.releaseNotes) {
     frame.releaseNotes = mapReleaseNotes(frameData.releaseNotes[0]);
   }
+
+  // Map functionalProfileIdentification (required)
+  if (!frameData.functionalProfile?.[0]?.functionalProfileIdentification?.[0]) {
+    throw new Error(
+      "Invalid XML: 'functionalProfile.functionalProfileIdentification' is required"
+    );
+  }
+  frame.functionalProfile.functionalProfileIdentification =
+    mapProfileIdentification(
+      frameData.functionalProfile[0].functionalProfileIdentification[0]
+    );
 
   return frame;
 }

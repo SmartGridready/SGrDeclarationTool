@@ -1,7 +1,7 @@
 "use client";
 
 import { useProfileStore } from "@/store/profile-store";
-import { ReleaseNotesForm } from "./components/release-notes.form";
+import { ReleaseNotesForm } from "./components/release-notes-form";
 
 export function FunctionalProfileForm() {
   const { profile } = useProfileStore();

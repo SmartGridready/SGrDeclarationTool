@@ -23,6 +23,19 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
         },
       ],
     },
+    functionalProfile: {
+      functionalProfileIdentification: {
+        specificationOwnerIdentification: "Test",
+        functionalProfileCategory: "Battery",
+        functionalProfileType: "",
+        levelOfOperation: "1",
+        versionNumber: {
+          primaryVersionNumber: 0,
+          secondaryVersionNumber: 0,
+          subReleaseVersionNumber: 0,
+        },
+      },
+    },
   };
 }
 
@@ -30,5 +43,19 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
  * Creates a new empty FunctionalProfileFrame with minimal required values
  */
 export function createEmpty(): FunctionalProfileFrame {
-  return {};
+  return {
+    functionalProfile: {
+      functionalProfileIdentification: {
+        specificationOwnerIdentification: "Test",
+        functionalProfileCategory: "Battery",
+        functionalProfileType: "",
+        levelOfOperation: "1",
+        versionNumber: {
+          primaryVersionNumber: 0,
+          secondaryVersionNumber: 0,
+          subReleaseVersionNumber: 0,
+        },
+      },
+    },
+  };
 }

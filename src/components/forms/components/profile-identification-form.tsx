@@ -6,8 +6,28 @@ import {
   LEVEL_OF_OPERATION,
 } from "@/lib/constants/form-options";
 import { InputField } from "@/components/ui/forms/input-field";
+import { useProfileStore } from "@/store/profile-store";
+import { useShallow } from "zustand/shallow";
+
+function useProfileIdentification() {
+  return useProfileStore(
+    useShallow((state) => ({
+      // State
+      specificationOwnerIdentification:
+        state.profile?.functionalProfile.functionalProfileIdentification
+          .specificationOwnerIdentification,
+      // Actions
+      updateSpecificationOwnerIdentification:
+        state.updateSpecificationOwnerIdentification,
+    }))
+  );
+}
 
 export function ProfileIdentificationForm() {
+  const {
+    specificationOwnerIdentification,
+    updateSpecificationOwnerIdentification,
+  } = useProfileIdentification();
   return (
     <FormSection
       title={"Functional Profile Identification"}
@@ -20,6 +40,8 @@ export function ProfileIdentificationForm() {
           name={"specificationOwnerIdentification"}
           required={true}
           type="text"
+          value={specificationOwnerIdentification}
+          onChange={(value) => updateSpecificationOwnerIdentification(value)}
         />
         <SelectField
           label={"Functional Profile Category"}

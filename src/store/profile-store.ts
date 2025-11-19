@@ -10,6 +10,10 @@ import {
   createReleaseNotesSlice,
   ReleaseNotesSlice,
 } from "./slices/release-notes-slice";
+import {
+  createFunctionalProfileIdentificationSlice,
+  FunctionalProfileIdentificationSlice,
+} from "./slices/profile-identification-slice";
 
 interface ProfileStore {
   profile?: FunctionalProfileFrame;
@@ -19,7 +23,9 @@ interface ProfileStore {
   clear: () => void;
 }
 
-type StoreState = ProfileStore & ReleaseNotesSlice;
+type StoreState = ProfileStore &
+  ReleaseNotesSlice &
+  FunctionalProfileIdentificationSlice;
 
 export const useProfileStore = create<StoreState>()(
   persist(
@@ -47,6 +53,7 @@ export const useProfileStore = create<StoreState>()(
         }),
 
       ...createReleaseNotesSlice(set),
+      ...createFunctionalProfileIdentificationSlice(set),
     })),
     {
       name: "sgr-profile-storage",

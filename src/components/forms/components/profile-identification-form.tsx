@@ -121,7 +121,7 @@ export function ProfileIdentificationForm() {
           required={true}
           value={primaryVersionNumber?.toString()}
           onChange={(value) =>
-            updatePrimaryVersionNumber(value ? parseInt(value, 10) : undefined)
+            updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
         />
         <InputField
@@ -131,9 +131,7 @@ export function ProfileIdentificationForm() {
           required={true}
           value={secondaryVersionNumber?.toString()}
           onChange={(value) =>
-            updateSecondaryVersionNumber(
-              value ? parseInt(value, 10) : undefined
-            )
+            updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
         />
         <InputField
@@ -143,9 +141,7 @@ export function ProfileIdentificationForm() {
           required={true}
           value={subReleaseVersionNumber?.toString()}
           onChange={(value) =>
-            updateSubReleaseVersionNumber(
-              value ? parseInt(value, 10) : undefined
-            )
+            updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)
           }
         />
       </FormGroup>

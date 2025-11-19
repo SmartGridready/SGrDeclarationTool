@@ -6,7 +6,7 @@ export interface ReleaseNotesSlice {
   removeReleaseNotes: () => void;
 
   // Field-specific updates
-  updateReleaseState: (state: ReleaseState | undefined) => void;
+  updateReleaseState: (state: ReleaseState) => void;
   updateRemarks: (remarks: string | undefined) => void;
 
   // ChangeLog operations

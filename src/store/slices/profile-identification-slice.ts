@@ -8,28 +8,16 @@ import {
 export interface FunctionalProfileIdentificationSlice {
   // Field-specific updates
   updateSpecificationOwnerIdentification: (
-    specificationOwnerIdentification:
-      | SpecificationOwnerIdentification
-      | undefined
+    specificationOwnerIdentification: SpecificationOwnerIdentification
   ) => void;
   updateFunctionalProfileCategory: (
-    functionalProfileCategory: FunctionalProfileCategory | undefined
+    functionalProfileCategory: FunctionalProfileCategory
   ) => void;
-  updateFunctionalProfileType: (
-    functionalProfileType: string | undefined
-  ) => void;
-  updateLevelOfOperation: (
-    levelOfOperation: LevelOfOperation | undefined
-  ) => void;
-  updatePrimaryVersionNumber: (
-    primaryVersionNumber: number | undefined
-  ) => void;
-  updateSecondaryVersionNumber: (
-    secondaryVersionNumber: number | undefined
-  ) => void;
-  updateSubReleaseVersionNumber: (
-    subReleaseVersionNumber: number | undefined
-  ) => void;
+  updateFunctionalProfileType: (functionalProfileType: string) => void;
+  updateLevelOfOperation: (levelOfOperation: LevelOfOperation) => void;
+  updatePrimaryVersionNumber: (primaryVersionNumber: number) => void;
+  updateSecondaryVersionNumber: (secondaryVersionNumber: number) => void;
+  updateSubReleaseVersionNumber: (subReleaseVersionNumber: number) => void;
 }
 
 type StoreState = {

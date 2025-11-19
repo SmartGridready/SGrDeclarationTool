@@ -20,11 +20,12 @@ function useReleaseNotes() {
       changeLogs: state.profile?.releaseNotes?.changeLog,
       hasReleaseNotes: !!state.profile?.releaseNotes,
       // Actions
-      updateReleaseNotesState: state.updateReleaseNotesState,
-      updateReleaseNotesRemarks: state.updateReleaseNotesRemarks,
+      updateReleaseState: state.updateReleaseState,
+      updateRemarks: state.updateRemarks,
       addEmptyChangeLog: state.addEmptyChangeLog,
       removeChangeLog: state.removeChangeLog,
       updateChangeLogField: state.updateChangeLogField,
+      addReleaseNotes: state.addReleaseNotes,
       removeReleaseNotes: state.removeReleaseNotes,
     }))
   );
@@ -36,17 +37,18 @@ export function ReleaseNotesForm() {
     remarks,
     changeLogs,
     hasReleaseNotes,
-    updateReleaseNotesState,
-    updateReleaseNotesRemarks,
+    updateReleaseState,
+    updateRemarks,
     addEmptyChangeLog,
     removeChangeLog,
     updateChangeLogField,
+    addReleaseNotes,
     removeReleaseNotes,
   } = useReleaseNotes();
 
   const handleAdd = () => {
     // Initialize release notes with default state
-    updateReleaseNotesState("Draft");
+    addReleaseNotes();
   };
 
   const handleRemove = () => {
@@ -70,7 +72,7 @@ export function ReleaseNotesForm() {
           options={RELEASE_STATE_OPTIONS}
           required={true}
           value={releaseState}
-          onChange={(value) => updateReleaseNotesState(value as ReleaseState)}
+          onChange={(value) => updateReleaseState(value as ReleaseState)}
         />
 
         <InputField
@@ -78,7 +80,7 @@ export function ReleaseNotesForm() {
           name={"remarks"}
           required={false}
           value={remarks}
-          onChange={(value) => updateReleaseNotesRemarks(value)}
+          onChange={(value) => updateRemarks(value as string | undefined)}
         />
       </FormGroup>
 
@@ -103,7 +105,7 @@ export function ReleaseNotesForm() {
             <InputField
               label="Date"
               name={`changeLog-${index}-date`}
-              type="text"
+              type="date"
               value={item.date}
               onChange={(value) => updateChangeLogField(index, "date", value)}
               required={true}

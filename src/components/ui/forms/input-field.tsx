@@ -10,7 +10,7 @@ interface InputFieldProps {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
-  type?: "text" | "number";
+  type?: "text" | "number" | "date";
 }
 
 export function InputField({

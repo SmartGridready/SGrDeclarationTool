@@ -1,6 +1,7 @@
 import { Builder } from "xml2js";
 import { FunctionalProfileFrame } from "@/lib/models";
 import { buildReleaseNotes } from "./functional-profile/release-notes-builder";
+import { buildProfileIdentification } from "./functional-profile/profile-identification-builder";
 
 /**
  * Converts FunctionalProfileFrame model to XML string
@@ -57,6 +58,23 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
     xmlObject.FunctionalProfileFrame.releaseNotes = [
       buildReleaseNotes(frame.releaseNotes),
     ];
+  }
+
+  // Build functionalProfile with functionalProfileIdentification (required)
+  if (frame.functionalProfile?.functionalProfileIdentification) {
+    xmlObject.FunctionalProfileFrame.functionalProfile = [
+      {
+        functionalProfileIdentification: [
+          buildProfileIdentification(
+            frame.functionalProfile.functionalProfileIdentification
+          ),
+        ],
+      },
+    ];
+  } else {
+    throw new Error(
+      "FunctionalProfileFrame must have 'functionalProfile.functionalProfileIdentification'"
+    );
   }
 
   return xmlObject;

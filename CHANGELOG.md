@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.4.1...v0.5.0) (2025-11-19)
+
+
+### Features
+
+* add dropdown-menu-trigger from shadcn library (GL-14) ([4c3b835](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4c3b8352a9d5a9ffadb201d1efa3f8f9d2c878f9))
+* add form options for profile identification (GL-13) ([cdbc70f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/cdbc70fc04af48d2740babdb99bdacf812489f75))
+* add header for form group and required for the versions (GL-13) ([e0e6cd2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e0e6cd24847a2560534c1b78b51b7aecc2d27e4c))
+* add import button in functional-profile editor (GL-14) ([55a61a2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/55a61a27e82554c29a93b5a5797fd18a5d11635c))
+* add import choices for import button (GL-14) ([59b0c60](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/59b0c60eab86100b6383535774fb86f8464c02b0))
+* add optional header and description to form group (GL-11) ([aa274f7](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/aa274f7adf1d82b4634d37314e0bde0cc4562825))
+* add profileidentificationform-component to to functional profil form (GL-13) ([4a1a1e0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4a1a1e0816eef139dc044465389bc6b60a5cfa20))
+* implement builder for profile identification (GL-8) ([64c5de1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/64c5de1e3d5d9cbe81cdc3226522974e5bd7c8c3))
+* implement file upload hook and enhance error flow (GL-14) ([badff20](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/badff209ecb39895f722d332d9bae4805d61b367))
+* implement functional profile builder for release notes and rename upload to import (GL-8) ([a804392](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a8043925f9afa613ed57d62f4cb54f42c065a458))
+* implement functional profile release notes mapper and add sample xml's (GL-7) ([c845278](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c8452784df78ff1199d2947320174cbcb178f62e))
+* implement mapper for profile identification and include it in sample xml files (GL-7) ([b5e17b4](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b5e17b4a52e64fedfefcb4394cb541e6d2df4abf))
+* implement state for profile identification form (GL-13) ([d418673](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d418673ce6616c27d84b4f746bf30639cefd08b0))
+* make text-field to input field to also support numbers (GL-11) ([d08febe](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d08febef69ce5f4b1b7edfff64e2b13848bd7306))
+* setup store for specification owner identification (GL-13) ([378b551](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/378b551835c9ed050bc844ede5e5e745b65fa358))
+* update factory with profile identification ([786f531](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/786f53166046b92d3b4431dbb21ac1f76b92fbe7))
+
+
+### Bug Fixes
+
+* component file name (GL-13) ([1bc2a0a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1bc2a0ae278b704ca39b3cabadab778a26ba805e))
+* position of import button and change library import (GL-14) ([085a0c0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/085a0c05a839833155470d1a01c58cbfe4111ac0))
+* remove loading spinner for exporting (GL-14) ([dffe1e3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/dffe1e316b506d3506820568910002e31cc9a7e3))
+
+
+### Chores
+
+* temporarly remove not implemented model parts (GL-9) ([0c44d0f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0c44d0ffc36d34e6573b6f1272de9ac7a4e1d6df))
+* update formatting (GL-13) ([f87cdf2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f87cdf2680e06830aa2cb0aa5933935cafdd7042))
+* update packages with vulnerabilities with audit fix ([a9eb8dd](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a9eb8dda036d5760447c58a8ccd2c673f365e1ba))
+
 ### [0.4.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.4.0...v0.4.1) (2025-11-13)
 
 

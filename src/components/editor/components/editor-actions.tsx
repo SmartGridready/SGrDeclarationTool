@@ -1,9 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Upload, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { Upload, ChevronDown, HardDrive, Library } from "lucide-react";
 
 interface EditorActionsProps {
   title: string;
   onNew: () => void;
+  onImportFromFilesystem?: () => void;
+  onImportFromLibrary?: () => void;
   onEmpty?: () => void;
   onClear: () => void;
   newButtonLabel?: string;
@@ -14,6 +22,8 @@ interface EditorActionsProps {
 export function EditorActions({
   title,
   onNew,
+  onImportFromFilesystem,
+  onImportFromLibrary,
   onEmpty,
   onClear,
   newButtonLabel = "New",
@@ -30,11 +40,27 @@ export function EditorActions({
             {emptyButtonLabel}
           </Button>
         )}
-        <Button variant="outline" size="sm" disabled={isLoading}>
-          <Upload className="h-4 w-4 mr-2" />
-          Importieren
-          <ChevronDown className="h-4 w-4 ml-2" />
-        </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" disabled={isLoading}>
+              <Upload className="h-4 w-4 mr-2" />
+              Importieren
+              <ChevronDown className="h-4 w-4 ml-2" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={onImportFromFilesystem}>
+              <HardDrive className="h-4 w-4 mr-2" />
+              Dateisystem
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={onImportFromLibrary}>
+              <Library className="h-4 w-4 mr-2" />
+              Bibliothek
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Button variant="outline" onClick={onClear}>
           Clear

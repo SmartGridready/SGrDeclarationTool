@@ -30,8 +30,6 @@ export function useFileExport<T>({
       return;
     }
 
-    const loadingToast = toast.loading("Exporting to XML...");
-
     try {
       const xmlString = await builder(data);
 
@@ -45,11 +43,7 @@ export function useFileExport<T>({
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-
-      toast.dismiss(loadingToast);
     } catch (error) {
-      toast.dismiss(loadingToast);
-
       const errorMessage =
         error instanceof Error
           ? error.message

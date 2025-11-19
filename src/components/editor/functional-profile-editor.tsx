@@ -4,9 +4,18 @@ import { EditorActions } from "@/components/editor/components/editor-actions";
 import { useProfileStore } from "@/store/profile-store";
 import { FunctionalProfileForm } from "../forms/functional-profile-form";
 import { Button } from "@/components/ui/button";
+import { useFileUpload } from "@/hooks/use-file-upload";
+import { parseFunctionalProfile } from "@/lib/mapper/functional-profile-mapper";
 
 export default function FunctionalProfileEditor() {
-  const { profile, createNew, createEmpty, clear } = useProfileStore();
+  const { profile, createNew, createEmpty, clear, setProfile } =
+    useProfileStore();
+
+  const { uploadFile, inputRef, handleFileChange, accept } = useFileUpload({
+    parser: parseFunctionalProfile,
+    onSuccess: setProfile,
+    accept: ".xml",
+  });
 
   const handleDebugPrint = () => {
     if (profile) {
@@ -20,11 +29,20 @@ export default function FunctionalProfileEditor() {
 
   return (
     <div className="space-y-6">
+      <input
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        onChange={handleFileChange}
+        className="hidden"
+        aria-label="Upload XML file"
+      />
       <EditorActions
         title="Functional Profile Editor"
         onNew={createNew}
         onEmpty={createEmpty}
         onClear={clear}
+        onImportFromFilesystem={uploadFile}
         newButtonLabel="Load Sample Profile"
         emptyButtonLabel="Load Empty Profile"
       />

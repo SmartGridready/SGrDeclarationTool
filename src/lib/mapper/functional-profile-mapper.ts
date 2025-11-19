@@ -11,34 +11,32 @@ import { mapReleaseNotes } from "./functional-profile/release-notes-mapper";
 export async function parseFunctionalProfile(
   xmlString: string
 ): Promise<FunctionalProfileFrame> {
-  return new Promise((resolve, reject) => {
-    parseString(
-      xmlString,
-      {
-        explicitArray: true,
-        mergeAttrs: false,
-        explicitRoot: true,
-        trim: true,
-      },
-      (err, result) => {
-        if (err) {
-          reject(new Error(`Failed to parse XML: ${err.message}`));
-          return;
+  let parsed: any;
+  try {
+    parsed = await new Promise<any>((resolve, reject) => {
+      parseString(
+        xmlString,
+        {
+          explicitArray: true,
+          mergeAttrs: false,
+          explicitRoot: true,
+          trim: true,
+        },
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
         }
+      );
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to parse XML: ${message}`);
+  }
 
-        try {
-          const frame = mapFunctionalProfile(result);
-          resolve(frame);
-        } catch (error) {
-          reject(
-            error instanceof Error
-              ? error
-              : new Error(`Failed to map XML to model: ${String(error)}`)
-          );
-        }
-      }
-    );
-  });
+  return mapFunctionalProfile(parsed);
 }
 
 /**

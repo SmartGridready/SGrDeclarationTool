@@ -3,12 +3,7 @@
  * Äquivalent to FunctionalProfileFrame.xsd
  */
 
-import {
-  ReleaseNotes,
-  FunctionalProfileIdentification,
-  AlternativeNames,
-  LegibleDescription,
-} from "../generic";
+import { ReleaseNotes } from "../generic";
 
 export interface FunctionalProfileFrame {
   releaseNotes?: ReleaseNotes;

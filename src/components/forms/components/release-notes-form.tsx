@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { FormSection } from "@/components/ui/forms/form-section";
 import { SelectField } from "@/components/ui/forms/select-field";
-import { TextField } from "@/components/ui/forms/text-field";
+import { InputField } from "@/components/ui/forms/input-field";
 import { ArrayField } from "@/components/ui/forms/array-field";
 import { FormGroup } from "@/components/ui/forms/form-group";
 import { RELEASE_STATE_OPTIONS } from "@/lib/constants/form-options";
@@ -72,7 +72,7 @@ export function ReleaseNotesForm() {
         onChange={(value) => updateReleaseNotesState(value as ReleaseState)}
       />
 
-      <TextField
+      <InputField
         label={"Remarks"}
         name={"remarks"}
         required={false}
@@ -88,7 +88,7 @@ export function ReleaseNotesForm() {
         emptyMessage="No change log entries"
         renderItem={(item, index) => (
           <FormGroup columns={2}>
-            <TextField
+            <InputField
               label="Version"
               name={`changeLog-${index}-version`}
               value={item.version}
@@ -98,15 +98,15 @@ export function ReleaseNotesForm() {
               placeholder="e.g., 1.0.0"
               required={true}
             />
-            <TextField
+            <InputField
               label="Date"
               name={`changeLog-${index}-date`}
-              type="date"
+              type="text"
               value={item.date}
               onChange={(value) => updateChangeLogField(index, "date", value)}
               required={true}
             />
-            <TextField
+            <InputField
               label="Author"
               name={`changeLog-${index}-author`}
               value={item.author}
@@ -114,7 +114,7 @@ export function ReleaseNotesForm() {
               placeholder="Author name"
               required={true}
             />
-            <TextField
+            <InputField
               label="Comment"
               name={`changeLog-${index}-comment`}
               value={item.comment}

@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-interface TextFieldProps {
+interface InputFieldProps {
   label: string;
   name: string;
   value?: string;
@@ -10,10 +10,10 @@ interface TextFieldProps {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
-  type?: string;
+  type?: "text" | "number";
 }
 
-export function TextField({
+export function InputField({
   label,
   name,
   value,
@@ -23,7 +23,7 @@ export function TextField({
   disabled,
   required = false,
   type = "text",
-}: TextFieldProps) {
+}: InputFieldProps) {
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>

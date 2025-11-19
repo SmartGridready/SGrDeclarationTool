@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Upload, ChevronDown } from "lucide-react";
 
 interface EditorActionsProps {
   title: string;
@@ -7,6 +8,7 @@ interface EditorActionsProps {
   onClear: () => void;
   newButtonLabel?: string;
   emptyButtonLabel?: string;
+  isLoading?: boolean;
 }
 
 export function EditorActions({
@@ -16,6 +18,7 @@ export function EditorActions({
   onClear,
   newButtonLabel = "New",
   emptyButtonLabel = "Empty",
+  isLoading = false,
 }: EditorActionsProps) {
   return (
     <div className="flex justify-between items-center">
@@ -27,6 +30,12 @@ export function EditorActions({
             {emptyButtonLabel}
           </Button>
         )}
+        <Button variant="outline" size="sm" disabled={isLoading}>
+          <Upload className="h-4 w-4 mr-2" />
+          Importieren
+          <ChevronDown className="h-4 w-4 ml-2" />
+        </Button>
+
         <Button variant="outline" onClick={onClear}>
           Clear
         </Button>

@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Upload, ChevronDown, HardDrive, Library } from "lucide-react";
 
 interface EditorActionsProps {
@@ -33,7 +33,7 @@ export function EditorActions({
   return (
     <div className="flex justify-between items-center">
       <h1 className="text-2xl font-bold">{title}</h1>
-      <div className="space-x-2">
+      <div className="flex items-center space-x-2">
         <Button onClick={onNew}>{newButtonLabel}</Button>
         {onEmpty && (
           <Button variant="outline" onClick={onEmpty}>
@@ -43,7 +43,7 @@ export function EditorActions({
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" disabled={isLoading}>
+            <Button variant="outline" disabled={isLoading}>
               <Upload className="h-4 w-4 mr-2" />
               Importieren
               <ChevronDown className="h-4 w-4 ml-2" />

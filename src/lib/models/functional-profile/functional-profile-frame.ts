@@ -12,11 +12,11 @@ import {
 
 export interface FunctionalProfileFrame {
   releaseNotes?: ReleaseNotes;
-  functionalProfile: {
-    functionalProfileIdentification: FunctionalProfileIdentification;
-    alternativeNames?: AlternativeNames;
-    legibleDescription?: LegibleDescription[]; // maxOccurs="4"
-  };
+  // functionalProfile: {
+  // functionalProfileIdentification: FunctionalProfileIdentification;
+  // alternativeNames?: AlternativeNames;
+  // legibleDescription?: LegibleDescription[]; // maxOccurs="4"
+  // };
   // genericAttributeList?: GenericAttributeListFunctionalProfile;
   // dataPointList?: FunctionalProfileDataPointList;
 }

@@ -23,19 +23,6 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
         },
       ],
     },
-    functionalProfile: {
-      functionalProfileIdentification: {
-        specificationOwnerIdentification: "",
-        functionalProfileCategory: "HeatPumpControl",
-        functionalProfileType: "",
-        levelOfOperation: "m",
-        versionNumber: {
-          primaryVersionNumber: 1,
-          secondaryVersionNumber: 0,
-          subReleaseVersionNumber: 0,
-        },
-      },
-    },
   };
 }
 
@@ -43,19 +30,5 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
  * Creates a new empty FunctionalProfileFrame with minimal required values
  */
 export function createEmpty(): FunctionalProfileFrame {
-  return {
-    functionalProfile: {
-      functionalProfileIdentification: {
-        specificationOwnerIdentification: "",
-        functionalProfileCategory: "HeatPumpControl",
-        functionalProfileType: "",
-        levelOfOperation: "m",
-        versionNumber: {
-          primaryVersionNumber: 1,
-          secondaryVersionNumber: 0,
-          subReleaseVersionNumber: 0,
-        },
-      },
-    },
-  };
+  return {};
 }

@@ -44,21 +44,24 @@ export function ProfileIdentificationForm() {
         />
       </FormGroup>
 
-      <FormGroup columns={3}>
+      <FormGroup columns={3} header="Version Number">
         <InputField
           label={"Primary Version Number"}
           name={"primaryVersionNumber"}
           type="number"
+          required={true}
         />
         <InputField
           label={"Secondary Version Number"}
           name={"secondaryVersionNumber"}
           type="number"
+          required={true}
         />
         <InputField
           label={"Sub Release Version Number"}
           name={"subReleaseVersionNumber"}
           type="number"
+          required={true}
         />
       </FormGroup>
     </FormSection>

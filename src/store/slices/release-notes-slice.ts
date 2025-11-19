@@ -1,13 +1,13 @@
-import { ReleaseNotes, ChangeLog, FunctionalProfileFrame } from "@/lib/models";
+import { ChangeLog, FunctionalProfileFrame, ReleaseState } from "@/lib/models";
 
 export interface ReleaseNotesSlice {
-  // Main update function
-  setReleaseNotes: (releaseNotes: ReleaseNotes) => void;
+  // Main operations
+  addReleaseNotes: () => void;
   removeReleaseNotes: () => void;
 
   // Field-specific updates
-  updateReleaseNotesState: (state: ReleaseNotes["state"]) => void;
-  updateReleaseNotesRemarks: (remarks: string | undefined) => void;
+  updateReleaseState: (state: ReleaseState | undefined) => void;
+  updateRemarks: (remarks: string | undefined) => void;
 
   // ChangeLog operations
   addChangeLog: (changeLog: ChangeLog) => void;
@@ -34,17 +34,17 @@ type SetState = (fn: (state: StoreState) => void) => void;
 function createEmptyChangeLog(): ChangeLog {
   return {
     version: "",
-    date: "",
+    date: new Date().toISOString().split("T")[0], // Format: YYYY-MM-DD
     author: "",
     comment: "",
   };
 }
 
 export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
-  setReleaseNotes: (releaseNotes) =>
+  addReleaseNotes: () =>
     set((state) => {
       if (state.profile) {
-        state.profile.releaseNotes = releaseNotes;
+        state.profile.releaseNotes = { state: "Draft" };
       }
     }),
 
@@ -55,23 +55,16 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
       }
     }),
 
-  updateReleaseNotesState: (releaseState) =>
+  updateReleaseState: (releaseState) =>
     set((state) => {
-      if (state.profile) {
-        if (!state.profile.releaseNotes) {
-          state.profile.releaseNotes = { state: releaseState };
-        } else {
-          state.profile.releaseNotes.state = releaseState;
-        }
+      if (state.profile?.releaseNotes && releaseState !== undefined) {
+        state.profile.releaseNotes.state = releaseState;
       }
     }),
 
-  updateReleaseNotesRemarks: (remarks) =>
+  updateRemarks: (remarks) =>
     set((state) => {
-      if (state.profile) {
-        if (!state.profile.releaseNotes) {
-          state.profile.releaseNotes = { state: "Draft" };
-        }
+      if (state.profile?.releaseNotes) {
         // Set to undefined if empty string, otherwise set the value
         state.profile.releaseNotes.remarks =
           !remarks || remarks.trim() === "" ? undefined : remarks;
@@ -80,10 +73,7 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
 
   addChangeLog: (changeLog) =>
     set((state) => {
-      if (state.profile) {
-        if (!state.profile.releaseNotes) {
-          state.profile.releaseNotes = { state: "Draft" };
-        }
+      if (state.profile?.releaseNotes) {
         if (!state.profile.releaseNotes.changeLog) {
           state.profile.releaseNotes.changeLog = [];
         }
@@ -97,8 +87,8 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
       if (changeLogArray && index >= 0 && index < changeLogArray.length) {
         changeLogArray.splice(index, 1);
         // Set to undefined if array becomes empty
-        if (changeLogArray.length === 0) {
-          state.profile!.releaseNotes!.changeLog = undefined;
+        if (changeLogArray.length === 0 && state.profile?.releaseNotes) {
+          state.profile.releaseNotes.changeLog = undefined;
         }
       }
     }),
@@ -116,10 +106,7 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
 
   addEmptyChangeLog: () =>
     set((state) => {
-      if (state.profile) {
-        if (!state.profile.releaseNotes) {
-          state.profile.releaseNotes = { state: "Draft" };
-        }
+      if (state.profile?.releaseNotes) {
         if (!state.profile.releaseNotes.changeLog) {
           state.profile.releaseNotes.changeLog = [];
         }

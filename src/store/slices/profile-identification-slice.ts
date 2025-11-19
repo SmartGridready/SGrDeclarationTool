@@ -1,16 +1,16 @@
 import {
   FunctionalProfileFrame,
-  FunctionalProfileIdentification,
   FunctionalProfileCategory,
   LevelOfOperation,
+  SpecificationOwnerIdentification,
 } from "@/lib/models";
 
 export interface FunctionalProfileIdentificationSlice {
-  setFunctionalProfileIdentification: (
-    functionalProfileIdentification: FunctionalProfileIdentification
-  ) => void;
+  // Field-specific updates
   updateSpecificationOwnerIdentification: (
-    specificationOwnerIdentification: string | undefined
+    specificationOwnerIdentification:
+      | SpecificationOwnerIdentification
+      | undefined
   ) => void;
   updateFunctionalProfileCategory: (
     functionalProfileCategory: FunctionalProfileCategory | undefined
@@ -41,74 +41,59 @@ type SetState = (fn: (state: StoreState) => void) => void;
 export const createFunctionalProfileIdentificationSlice = (
   set: SetState
 ): FunctionalProfileIdentificationSlice => ({
-  setFunctionalProfileIdentification: (functionalProfileIdentification) => {
-    set((state) => {
-      if (state.profile?.functionalProfile) {
-        state.profile.functionalProfile.functionalProfileIdentification =
-          functionalProfileIdentification;
-      }
-    });
-  },
-
   updateSpecificationOwnerIdentification: (specificationOwnerIdentification) =>
     set((state) => {
-      if (state.profile?.functionalProfile?.functionalProfileIdentification) {
+      if (state.profile && specificationOwnerIdentification !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.specificationOwnerIdentification =
-          specificationOwnerIdentification as string;
+          specificationOwnerIdentification;
       }
     }),
 
   updateFunctionalProfileCategory: (functionalProfileCategory) =>
     set((state) => {
-      if (state.profile?.functionalProfile?.functionalProfileIdentification) {
+      if (state.profile && functionalProfileCategory !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.functionalProfileCategory =
-          functionalProfileCategory as FunctionalProfileCategory;
+          functionalProfileCategory;
       }
     }),
 
   updateFunctionalProfileType: (functionalProfileType) =>
     set((state) => {
-      if (state.profile?.functionalProfile?.functionalProfileIdentification) {
+      if (state.profile && functionalProfileType !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.functionalProfileType =
-          functionalProfileType as string;
+          functionalProfileType;
       }
     }),
 
   updateLevelOfOperation: (levelOfOperation) =>
     set((state) => {
-      if (state.profile?.functionalProfile?.functionalProfileIdentification) {
+      if (state.profile && levelOfOperation !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.levelOfOperation =
-          levelOfOperation as LevelOfOperation;
+          levelOfOperation;
       }
     }),
 
   updatePrimaryVersionNumber: (primaryVersionNumber) =>
     set((state) => {
-      const identification =
-        state.profile?.functionalProfile?.functionalProfileIdentification;
-      if (identification) {
-        identification.versionNumber.primaryVersionNumber =
-          primaryVersionNumber as number;
+      if (state.profile && primaryVersionNumber !== undefined) {
+        state.profile.functionalProfile.functionalProfileIdentification.versionNumber.primaryVersionNumber =
+          primaryVersionNumber;
       }
     }),
 
   updateSecondaryVersionNumber: (secondaryVersionNumber) =>
     set((state) => {
-      const identification =
-        state.profile?.functionalProfile?.functionalProfileIdentification;
-      if (identification) {
-        identification.versionNumber.secondaryVersionNumber =
-          secondaryVersionNumber as number;
+      if (state.profile && secondaryVersionNumber !== undefined) {
+        state.profile.functionalProfile.functionalProfileIdentification.versionNumber.secondaryVersionNumber =
+          secondaryVersionNumber;
       }
     }),
 
   updateSubReleaseVersionNumber: (subReleaseVersionNumber) =>
     set((state) => {
-      const identification =
-        state.profile?.functionalProfile?.functionalProfileIdentification;
-      if (identification) {
-        identification.versionNumber.subReleaseVersionNumber =
-          subReleaseVersionNumber as number;
+      if (state.profile && subReleaseVersionNumber !== undefined) {
+        state.profile.functionalProfile.functionalProfileIdentification.versionNumber.subReleaseVersionNumber =
+          subReleaseVersionNumber;
       }
     }),
 });

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xsl/SGr.xsl"?>
+<FunctionalProfileFrame xmlns="http://www.smartgridready.com/ns/V0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/SGrIncluder.xsd">
+  <releaseNotes>
+    <state>Draft</state>
+    <remarks>This is a sample functional profile with correct structure and release notes.</remarks>
+    <changeLog>
+      <changeLogEntry>
+        <version>1.0.0</version>
+        <date>2024-01-15</date>
+        <author>System</author>
+        <comment>Initial release</comment>
+      </changeLogEntry>
+      <changeLogEntry>
+        <version>0.9.0</version>
+        <date>2024-01-14</date>
+        <author>Developer</author>
+        <comment>Beta version</comment>
+      </changeLogEntry>
+    </changeLog>
+  </releaseNotes>
+</FunctionalProfileFrame>
+

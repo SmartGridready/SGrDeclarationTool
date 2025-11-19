@@ -5,7 +5,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Upload, ChevronDown, HardDrive, Library } from "lucide-react";
+import {
+  Upload,
+  ChevronDown,
+  HardDrive,
+  Library,
+  Download,
+} from "lucide-react";
 
 interface EditorActionsProps {
   title: string;
@@ -14,6 +20,7 @@ interface EditorActionsProps {
   onImportFromLibrary?: () => void;
   onEmpty?: () => void;
   onClear: () => void;
+  onExport?: () => void;
   newButtonLabel?: string;
   emptyButtonLabel?: string;
   isLoading?: boolean;
@@ -26,6 +33,7 @@ export function EditorActions({
   onImportFromLibrary,
   onEmpty,
   onClear,
+  onExport,
   newButtonLabel = "New",
   emptyButtonLabel = "Empty",
   isLoading = false,
@@ -61,6 +69,13 @@ export function EditorActions({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {onExport && (
+          <Button variant="outline" onClick={onExport} disabled={isLoading}>
+            <Download className="h-4 w-4 mr-2" />
+            Exportieren
+          </Button>
+        )}
 
         <Button variant="outline" onClick={onClear}>
           Clear

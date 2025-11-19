@@ -2,15 +2,15 @@ import { useCallback, useRef } from "react";
 import { toast } from "sonner";
 
 /**
- * Generic file upload hook for XML files
+ * Generic file import hook for XML files
  * @template T - The type of the parsed result (e.g., FunctionalProfileFrame)
  * @param options - Configuration options
  * @param options.parser - Function to parse the XML string into type T
  * @param options.onSuccess - Callback when file is successfully parsed
  * @param options.accept - File input accept attribute (default: ".xml")
- * @returns Object with uploadFile function and input ref
+ * @returns Object with importFile function and input ref
  */
-export function useFileUpload<T>({
+export function useFileImport<T>({
   parser,
   onSuccess,
   accept = ".xml",
@@ -21,7 +21,7 @@ export function useFileUpload<T>({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const uploadFile = useCallback(() => {
+  const importFile = useCallback(() => {
     inputRef.current?.click();
   }, []);
 
@@ -39,7 +39,7 @@ export function useFileUpload<T>({
       }
 
       // Show loading toast
-      const loadingToast = toast.loading("Uploading file...", {
+      const loadingToast = toast.loading("Importing file...", {
         description: `Processing ${file.name}`,
       });
 
@@ -50,7 +50,7 @@ export function useFileUpload<T>({
         onSuccess(parsedData); // Update store
 
         toast.dismiss(loadingToast);
-        toast.success("File uploaded successfully", {
+        toast.success("File imported successfully", {
           description: `${file.name} has been loaded.`,
         });
       } catch (error) {
@@ -61,7 +61,7 @@ export function useFileUpload<T>({
             ? error.message
             : "An unknown error occurred while processing the file.";
 
-        toast.error("Failed to upload file", {
+        toast.error("Failed to import file", {
           description: errorMessage,
           duration: 5000, // Show error duration in milliseconds
         });
@@ -71,7 +71,7 @@ export function useFileUpload<T>({
   );
 
   return {
-    uploadFile,
+    importFile,
     inputRef,
     handleFileChange,
     accept,

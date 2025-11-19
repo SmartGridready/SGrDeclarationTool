@@ -4,17 +4,26 @@ import { EditorActions } from "@/components/editor/components/editor-actions";
 import { useProfileStore } from "@/store/profile-store";
 import { FunctionalProfileForm } from "../forms/functional-profile-form";
 import { Button } from "@/components/ui/button";
-import { useFileUpload } from "@/hooks/use-file-upload";
+import { useFileImport } from "@/hooks/use-file-import";
+import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/lib/mapper/functional-profile-mapper";
+import { buildFunctionalProfileToXml } from "@/lib/builder/functional-profile-builder";
 
 export default function FunctionalProfileEditor() {
   const { profile, createNew, createEmpty, clear, setProfile } =
     useProfileStore();
 
-  const { uploadFile, inputRef, handleFileChange, accept } = useFileUpload({
+  const { importFile, inputRef, handleFileChange, accept } = useFileImport({
     parser: parseFunctionalProfile,
     onSuccess: setProfile,
     accept: ".xml",
+  });
+
+  const { exportFile } = useFileExport({
+    builder: buildFunctionalProfileToXml,
+    data: profile,
+    filename: "functional-profile.xml",
+    errorMessage: "Please load or create a profile first.",
   });
 
   const handleDebugPrint = () => {
@@ -35,14 +44,15 @@ export default function FunctionalProfileEditor() {
         accept={accept}
         onChange={handleFileChange}
         className="hidden"
-        aria-label="Upload XML file"
+        aria-label="Import XML file"
       />
       <EditorActions
         title="Functional Profile Editor"
         onNew={createNew}
         onEmpty={createEmpty}
         onClear={clear}
-        onImportFromFilesystem={uploadFile}
+        onImportFromFilesystem={importFile}
+        onExport={exportFile}
         newButtonLabel="Load Sample Profile"
         emptyButtonLabel="Load Empty Profile"
       />

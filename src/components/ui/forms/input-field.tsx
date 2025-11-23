@@ -11,6 +11,7 @@ interface InputFieldProps {
   disabled?: boolean;
   required?: boolean;
   type?: "text" | "number" | "date";
+  error?: string;
 }
 
 export function InputField({
@@ -23,7 +24,13 @@ export function InputField({
   disabled,
   required = false,
   type = "text",
+  error,
 }: InputFieldProps) {
+  const hasError = !!error;
+  const inputClassName = hasError
+    ? `${className} border-destructive focus-visible:ring-destructive`
+    : className;
+
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>
@@ -36,11 +43,22 @@ export function InputField({
         type={type}
         value={value ?? ""}
         onChange={(e) => onChange?.(e.target.value)}
-        className={className}
+        className={inputClassName}
         placeholder={placeholder}
         disabled={disabled}
         required={required}
+        aria-invalid={hasError}
+        aria-describedby={hasError ? `${name}-error` : undefined}
       />
+      {error && (
+        <p
+          id={`${name}-error`}
+          className="text-sm text-destructive"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 }

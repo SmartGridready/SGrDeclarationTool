@@ -7,6 +7,7 @@ import { FormGroup } from "@/components/ui/forms/form-group";
 import { RELEASE_STATE_OPTIONS } from "@/lib/constants/form-options";
 import { useProfileStore } from "@/store/profile-store";
 import { ReleaseState, ChangeLog } from "@/lib/models/generic/base-types";
+import { useProfileValidation } from "@/hooks/use-profile-validation";
 
 /**
  * Selects release notes state and actions with shallow comparison to prevent infinite loops.
@@ -46,6 +47,8 @@ export function ReleaseNotesForm() {
     removeReleaseNotes,
   } = useReleaseNotes();
 
+  const { getError } = useProfileValidation();
+
   const handleAdd = () => {
     // Initialize release notes with default state
     addReleaseNotes();
@@ -73,6 +76,7 @@ export function ReleaseNotesForm() {
           required={true}
           value={releaseState}
           onChange={(value) => updateReleaseState(value as ReleaseState)}
+          error={getError("releaseNotes.state")}
         />
 
         <InputField
@@ -101,6 +105,7 @@ export function ReleaseNotesForm() {
               }
               placeholder="e.g., 1.0.0"
               required={true}
+              error={getError(`releaseNotes.changeLog.${index}.version`)}
             />
             <InputField
               label="Date"
@@ -109,6 +114,7 @@ export function ReleaseNotesForm() {
               value={item.date}
               onChange={(value) => updateChangeLogField(index, "date", value)}
               required={true}
+              error={getError(`releaseNotes.changeLog.${index}.date`)}
             />
             <InputField
               label="Author"
@@ -117,6 +123,7 @@ export function ReleaseNotesForm() {
               onChange={(value) => updateChangeLogField(index, "author", value)}
               placeholder="Author name"
               required={true}
+              error={getError(`releaseNotes.changeLog.${index}.author`)}
             />
             <InputField
               label="Comment"
@@ -127,6 +134,7 @@ export function ReleaseNotesForm() {
               }
               placeholder="Change description"
               required={true}
+              error={getError(`releaseNotes.changeLog.${index}.comment`)}
             />
           </FormGroup>
         )}

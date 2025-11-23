@@ -9,6 +9,7 @@ import { InputField } from "@/components/ui/forms/input-field";
 import { useProfileStore } from "@/store/profile-store";
 import { useShallow } from "zustand/shallow";
 import { FunctionalProfileCategory, LevelOfOperation } from "@/lib/models";
+import { useProfileValidation } from "@/hooks/use-profile-validation";
 
 function useProfileIdentification() {
   return useProfileStore(
@@ -65,6 +66,9 @@ export function ProfileIdentificationForm() {
     updateSecondaryVersionNumber,
     updateSubReleaseVersionNumber,
   } = useProfileIdentification();
+
+  const { getError } = useProfileValidation();
+
   return (
     <FormSection
       title={"Functional Profile Identification"}
@@ -79,6 +83,9 @@ export function ProfileIdentificationForm() {
           type="text"
           value={specificationOwnerIdentification}
           onChange={(value) => updateSpecificationOwnerIdentification(value)}
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.specificationOwnerIdentification"
+          )}
         />
         <SelectField
           label={"Functional Profile Category"}
@@ -89,6 +96,9 @@ export function ProfileIdentificationForm() {
           onChange={(value) =>
             updateFunctionalProfileCategory(value as FunctionalProfileCategory)
           }
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.functionalProfileCategory"
+          )}
         />
       </FormGroup>
 
@@ -100,6 +110,9 @@ export function ProfileIdentificationForm() {
           type="text"
           value={functionalProfileType}
           onChange={(value) => updateFunctionalProfileType(value)}
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.functionalProfileType"
+          )}
         />
         <SelectField
           label={"Level of Operation"}
@@ -110,6 +123,9 @@ export function ProfileIdentificationForm() {
           onChange={(value) =>
             updateLevelOfOperation(value as LevelOfOperation)
           }
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.levelOfOperation"
+          )}
         />
       </FormGroup>
 
@@ -123,6 +139,9 @@ export function ProfileIdentificationForm() {
           onChange={(value) =>
             updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.versionNumber.primaryVersionNumber"
+          )}
         />
         <InputField
           label={"Secondary Version Number"}
@@ -133,6 +152,9 @@ export function ProfileIdentificationForm() {
           onChange={(value) =>
             updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.versionNumber.secondaryVersionNumber"
+          )}
         />
         <InputField
           label={"Sub Release Version Number"}
@@ -143,6 +165,9 @@ export function ProfileIdentificationForm() {
           onChange={(value) =>
             updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)
           }
+          error={getError(
+            "functionalProfile.functionalProfileIdentification.versionNumber.subReleaseVersionNumber"
+          )}
         />
       </FormGroup>
     </FormSection>

@@ -1,14 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { EditorActions } from "@/components/editor/components/editor-actions";
 import { useProfileStore } from "@/store/profile-store";
+import { useValidationStore } from "@/store/validation-store";
 import { FunctionalProfileForm } from "../forms/functional-profile-form";
 import { Button } from "@/components/ui/button";
 import { useFileImport } from "@/hooks/use-file-import";
 import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/lib/mapper/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/lib/builder/functional-profile-builder";
-import { DEBUG } from "@/lib/constants/debug-config";
+import { DEBUG } from "../../../debug-config";
 import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
 import { INFO_MESSAGES } from "@/lib/constants/info-messages";
 import { toast } from "sonner";
@@ -16,6 +18,12 @@ import { toast } from "sonner";
 export default function FunctionalProfileEditor() {
   const { profile, createNew, createEmpty, clear, setProfile } =
     useProfileStore();
+  const resetValidation = useValidationStore((state) => state.resetValidation);
+
+  // Reset validation when profile changes
+  useEffect(() => {
+    resetValidation();
+  }, [profile, resetValidation]);
 
   const { importFile, inputRef, handleFileChange, accept } = useFileImport({
     parser: parseFunctionalProfile,

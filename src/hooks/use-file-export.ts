@@ -32,13 +32,12 @@ export function useFileExport<T>({
       return;
     }
 
-    const loadingToast = toast.loading("Exporting file...", {
+    const loadingToastId = toast.loading("Exporting file...", {
       description: `Generating ${filename}`,
     });
 
     try {
       const xmlString = await builder(data);
-      toast.dismiss(loadingToast);
 
       // Create a blob and download it
       const blob = new Blob([xmlString], { type: "application/xml" });
@@ -51,18 +50,21 @@ export function useFileExport<T>({
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
+      // Update the loading toast to success (this replaces it automatically)
       toast.success(SUCCESS_MESSAGES.FILE_EXPORT.BUILD_SUCCESS, {
+        id: loadingToastId,
         description: SUCCESS_MESSAGES.FILE_EXPORT.DOWNLOAD_READY(filename),
       });
     } catch (error) {
-      toast.dismiss(loadingToast);
-      const errorMessage =
+      const errorMessageText =
         error instanceof Error
           ? error.message
           : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
 
+      // Update the loading toast to error (this replaces it automatically)
       toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
-        description: errorMessage,
+        id: loadingToastId,
+        description: errorMessageText,
         duration: 5000,
       });
     }

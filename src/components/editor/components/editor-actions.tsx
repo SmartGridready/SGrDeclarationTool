@@ -1,3 +1,6 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -34,25 +37,45 @@ export function EditorActions({
   emptyButtonLabel = "Empty",
   isLoading = false,
 }: EditorActionsProps) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [dropdownWidth, setDropdownWidth] = useState<number | undefined>(
+    undefined
+  );
+
+  const updateWidth = () => {
+    if (triggerRef.current) {
+      setDropdownWidth(triggerRef.current.offsetWidth);
+    }
+  };
+
+  useEffect(() => {
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
       <h1 className="text-2xl font-bold">{title}</h1>
-      <div className="flex items-center space-x-2">
+      <div className="flex flex-col md:flex-row md:items-center gap-2">
         {onEmpty && (
           <Button variant="outline" onClick={onEmpty}>
             {emptyButtonLabel}
           </Button>
         )}
 
-        <DropdownMenu>
+        <DropdownMenu onOpenChange={(open) => open && updateWidth()}>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" disabled={isLoading}>
+            <Button ref={triggerRef} variant="outline" disabled={isLoading}>
               <Upload className="h-4 w-4 mr-2" />
               Import
               <ChevronDown className="h-4 w-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            style={{ width: dropdownWidth ? `${dropdownWidth}px` : undefined }}
+          >
             <DropdownMenuItem onClick={onImportFromFilesystem}>
               <HardDrive className="h-4 w-4 mr-2" />
               Filesystem

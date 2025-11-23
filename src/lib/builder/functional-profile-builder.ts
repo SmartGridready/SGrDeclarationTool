@@ -61,20 +61,16 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
     ];
   }
 
-  // Build functionalProfile with functionalProfileIdentification (required)
-  if (frame.functionalProfile?.functionalProfileIdentification) {
-    xmlObject.FunctionalProfileFrame.functionalProfile = [
-      {
-        functionalProfileIdentification: [
-          buildProfileIdentification(
-            frame.functionalProfile.functionalProfileIdentification
-          ),
-        ],
-      },
-    ];
-  } else {
-    throw new Error(ERROR_MESSAGES.XML_BUILD.MISSING_IDENTIFICATION);
-  }
+  // Build functionalProfile with functionalProfileIdentification
+  xmlObject.FunctionalProfileFrame.functionalProfile = [
+    {
+      functionalProfileIdentification: [
+        buildProfileIdentification(
+          frame.functionalProfile.functionalProfileIdentification
+        ),
+      ],
+    },
+  ];
 
   return xmlObject;
 }

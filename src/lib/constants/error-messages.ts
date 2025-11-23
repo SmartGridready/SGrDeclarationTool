@@ -19,14 +19,10 @@ export const ERROR_MESSAGES = {
   XML_PARSE: {
     FAILED: (message: string) => `Failed to parse XML: ${message}`,
     INVALID_ROOT: "Invalid XML: Root element must be 'FunctionalProfileFrame'",
-    MISSING_IDENTIFICATION:
-      "Invalid XML: 'functionalProfile.functionalProfileIdentification' is required",
   },
   XML_BUILD: {
     FAILED: (message: string) => `Failed to build XML: ${message}`,
     FRAME_REQUIRED: "FunctionalProfileFrame is required",
-    MISSING_IDENTIFICATION:
-      "FunctionalProfileFrame must have 'functionalProfile.functionalProfileIdentification'",
   },
   RELEASE_NOTES: {
     MISSING_STATE: "ReleaseNotes must have a 'state' field",

@@ -33,22 +33,6 @@
 
    Navigate to [http://localhost:3000](http://localhost:3000).
 
-## Project Structure
-
-```bash
-src/
-├─ app/                     # Next.js routing layer
-├─ components/              # Reusable UI components
-│   └─ ui/                  # Shadcn UI primitives and styled components
-├─ lib/                     # Core domain and shared application logic (non-UI)
-│   ├─ models/              # Domain models
-│   ├─ mappers/             # Logic for mapping XML documents into models
-│   ├─ builders/            # Logic for constructing XML documents from models
-│   └─ utils/               # Generic helpers
-├─ services/                # External service integrations (REST)
-└─ hooks/                   # Custom reusable React hooks (state, data fetching, etc.)
-```
-
 ## Used Libraries
 
 ### Dependencies
@@ -60,6 +44,8 @@ src/
 - **[Zustand](https://zustand-demo.pmnd.rs/)** - Lightweight state management solution
 - **[xml2js](https://www.npmjs.com/package/xml2js)** - XML parser for SmartGridready declarations
 - **[Shadcn UI](https://ui.shadcn.com/)** - Reusable UI components built with Radix UI and Tailwind CSS
+- **[Zod](https://zod.dev/)** - TypeScript-first schema validation library
+- **[Sonner](https://sonner.emilkowal.ski/)** - Toast notification library for React
 
 ### Dev Dependencies
 

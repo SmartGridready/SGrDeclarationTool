@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.6.0...v0.6.1) (2025-11-23)
+
+
+### Bug Fixes
+
+* correct changelog XML structure in release notes (GL-7) ([1657998](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1657998b3e3d9ff938d1ec134ffb3f05747c21b8))
+
 ## [0.6.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.5.0...v0.6.0) (2025-11-23)
 
 

@@ -56,7 +56,7 @@ export function EditorActions({
 
   return (
     <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="text-xl font-bold">{title}</h1>
       <div className="flex flex-col md:flex-row md:items-center gap-2">
         {onEmpty && (
           <Button variant="outline" onClick={onEmpty}>

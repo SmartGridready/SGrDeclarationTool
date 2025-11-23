@@ -2,6 +2,7 @@ import { useShallow } from "zustand/react/shallow";
 import { FormSection } from "@/components/ui/forms/form-section";
 import { SelectField } from "@/components/ui/forms/select-field";
 import { InputField } from "@/components/ui/forms/input-field";
+import { DateField } from "@/components/ui/forms/date-field";
 import { ArrayField } from "@/components/ui/forms/array-field";
 import { FormGroup } from "@/components/ui/forms/form-group";
 import { RELEASE_STATE_OPTIONS } from "@/lib/constants/form-options";
@@ -107,10 +108,9 @@ export function ReleaseNotesForm() {
               required={true}
               error={getError(`releaseNotes.changeLog.${index}.version`)}
             />
-            <InputField
+            <DateField
               label="Date"
               name={`changeLog-${index}-date`}
-              type="date"
               value={item.date}
               onChange={(value) => updateChangeLogField(index, "date", value)}
               required={true}

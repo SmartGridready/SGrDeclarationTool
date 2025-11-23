@@ -6,18 +6,16 @@
     <state>Draft</state>
     <remarks>This is a sample functional profile with correct structure and release notes.</remarks>
     <changeLog>
-      <changeLogEntry>
         <version>1.0.0</version>
         <date>2024-01-15</date>
         <author>System</author>
         <comment>Initial release</comment>
-      </changeLogEntry>
-      <changeLogEntry>
+    </changeLog>
+    <changeLog>
         <version>0.9.0</version>
         <date>2024-01-14</date>
         <author>Developer</author>
         <comment>Beta version</comment>
-      </changeLogEntry>
     </changeLog>
   </releaseNotes>
   <functionalProfile>

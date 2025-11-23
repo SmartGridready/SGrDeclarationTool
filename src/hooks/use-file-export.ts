@@ -1,5 +1,7 @@
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
+import { SUCCESS_MESSAGES } from "@/lib/constants/success-messages";
 
 /**
  * Generic file export hook for XML files
@@ -15,7 +17,7 @@ export function useFileExport<T>({
   builder,
   data,
   filename = "export.xml",
-  errorMessage = "No data to export",
+  errorMessage = ERROR_MESSAGES.FILE_EXPORT.NO_DATA,
 }: {
   builder: (data: T) => Promise<string>;
   data: T | null | undefined;
@@ -24,7 +26,7 @@ export function useFileExport<T>({
 }) {
   const exportFile = useCallback(async () => {
     if (!data) {
-      toast.error("Export failed", {
+      toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
         description: errorMessage,
       });
       return;
@@ -49,17 +51,17 @@ export function useFileExport<T>({
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      toast.success("Building file successful", {
-        description: `${filename} can be downloaded now.`,
+      toast.success(SUCCESS_MESSAGES.FILE_EXPORT.BUILD_SUCCESS, {
+        description: SUCCESS_MESSAGES.FILE_EXPORT.DOWNLOAD_READY(filename),
       });
     } catch (error) {
       toast.dismiss(loadingToast);
       const errorMessage =
         error instanceof Error
           ? error.message
-          : "An unknown error occurred while exporting.";
+          : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
 
-      toast.error("Export failed", {
+      toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
         description: errorMessage,
         duration: 5000,
       });

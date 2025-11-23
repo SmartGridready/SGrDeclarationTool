@@ -1,5 +1,7 @@
 import { useCallback, useRef } from "react";
 import { toast } from "sonner";
+import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
+import { SUCCESS_MESSAGES } from "@/lib/constants/success-messages";
 
 /**
  * Generic file import hook for XML files
@@ -50,8 +52,8 @@ export function useFileImport<T>({
         onSuccess(parsedData); // Update store
 
         toast.dismiss(loadingToast);
-        toast.success("File imported successfully", {
-          description: `${file.name} has been loaded.`,
+        toast.success(SUCCESS_MESSAGES.FILE_IMPORT.SUCCESS, {
+          description: SUCCESS_MESSAGES.FILE_IMPORT.LOADED(file.name),
         });
       } catch (error) {
         toast.dismiss(loadingToast);
@@ -59,9 +61,9 @@ export function useFileImport<T>({
         const errorMessage =
           error instanceof Error
             ? error.message
-            : "An unknown error occurred while processing the file.";
+            : ERROR_MESSAGES.FILE_IMPORT.UNKNOWN_ERROR;
 
-        toast.error("Failed to import file", {
+        toast.error(ERROR_MESSAGES.FILE_IMPORT.FAILED, {
           description: errorMessage,
           duration: 5000, // Show error duration in milliseconds
         });
@@ -90,12 +92,12 @@ function readFileAsText(file: File): Promise<string> {
       if (typeof result === "string") {
         resolve(result);
       } else {
-        reject(new Error("Failed to read file as text"));
+        reject(new Error(ERROR_MESSAGES.FILE_IMPORT.READ_FAILED));
       }
     };
 
     reader.onerror = () => {
-      reject(new Error(`Error reading file: ${file.name}`));
+      reject(new Error(ERROR_MESSAGES.FILE_IMPORT.READ_ERROR(file.name)));
     };
 
     reader.readAsText(file);

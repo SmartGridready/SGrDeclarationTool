@@ -2,6 +2,7 @@ import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/lib/models";
 import { mapReleaseNotes } from "./functional-profile/release-notes-mapper";
 import { mapProfileIdentification } from "./functional-profile/profile-identification-mapper";
+import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
 
 /**
  * Parses XML string and maps it to FunctionalProfileFrame model
@@ -34,7 +35,7 @@ export async function parseFunctionalProfile(
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`Failed to parse XML: ${message}`);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.FAILED(message));
   }
 
   return mapFunctionalProfile(parsed);
@@ -45,9 +46,7 @@ export async function parseFunctionalProfile(
  */
 function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   if (!parsed.FunctionalProfileFrame) {
-    throw new Error(
-      "Invalid XML: Root element must be 'FunctionalProfileFrame'"
-    );
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
   }
 
   const frameData = parsed.FunctionalProfileFrame;
@@ -72,16 +71,13 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
     frame.releaseNotes = mapReleaseNotes(frameData.releaseNotes[0]);
   }
 
-  // Map functionalProfileIdentification (required)
-  if (!frameData.functionalProfile?.[0]?.functionalProfileIdentification?.[0]) {
-    throw new Error(
-      "Invalid XML: 'functionalProfile.functionalProfileIdentification' is required"
-    );
+  // Map functionalProfileIdentification
+  if (frameData.functionalProfile?.[0]?.functionalProfileIdentification?.[0]) {
+    frame.functionalProfile.functionalProfileIdentification =
+      mapProfileIdentification(
+        frameData.functionalProfile[0].functionalProfileIdentification[0]
+      );
   }
-  frame.functionalProfile.functionalProfileIdentification =
-    mapProfileIdentification(
-      frameData.functionalProfile[0].functionalProfileIdentification[0]
-    );
 
   return frame;
 }

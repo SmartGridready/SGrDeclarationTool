@@ -9,6 +9,9 @@ import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/lib/mapper/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/lib/builder/functional-profile-builder";
 import { DEBUG } from "@/lib/constants/debug-config";
+import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
+import { INFO_MESSAGES } from "@/lib/constants/info-messages";
+import { toast } from "sonner";
 
 export default function FunctionalProfileEditor() {
   const { profile, createNew, createEmpty, clear, setProfile } =
@@ -24,8 +27,13 @@ export default function FunctionalProfileEditor() {
     builder: buildFunctionalProfileToXml,
     data: profile,
     filename: "functional-profile.xml",
-    errorMessage: "Please load or create a profile first.",
+    errorMessage: ERROR_MESSAGES.FILE_EXPORT.PROFILE_REQUIRED,
   });
+
+  const handleEmptyProfile = () => {
+    createEmpty();
+    toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
+  };
 
   const handleDebugPrint = () => {
     if (profile) {
@@ -49,7 +57,7 @@ export default function FunctionalProfileEditor() {
       />
       <EditorActions
         title="Functional Profile Editor"
-        onEmpty={createEmpty}
+        onEmpty={handleEmptyProfile}
         onClear={clear}
         onImportFromFilesystem={importFile}
         onExport={exportFile}

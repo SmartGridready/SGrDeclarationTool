@@ -23,51 +23,36 @@ export function mapProfileIdentification(
     },
   };
 
-  // Map specificationOwnerIdentification (required)
-  if (!identificationXml.specificationOwnerIdentification?.[0]) {
-    throw new Error(
-      "FunctionalProfileIdentification must have a 'specificationOwnerIdentification' field"
-    );
+  // Map specificationOwnerIdentification
+  if (identificationXml.specificationOwnerIdentification?.[0]) {
+    identification.specificationOwnerIdentification =
+      identificationXml.specificationOwnerIdentification[0];
   }
-  identification.specificationOwnerIdentification =
-    identificationXml.specificationOwnerIdentification[0];
 
-  // Map functionalProfileCategory (required)
-  if (!identificationXml.functionalProfileCategory?.[0]) {
-    throw new Error(
-      "FunctionalProfileIdentification must have a 'functionalProfileCategory' field"
-    );
+  // Map functionalProfileCategory
+  if (identificationXml.functionalProfileCategory?.[0]) {
+    identification.functionalProfileCategory = identificationXml
+      .functionalProfileCategory[0] as FunctionalProfileCategory;
   }
-  identification.functionalProfileCategory = identificationXml
-    .functionalProfileCategory[0] as FunctionalProfileCategory;
 
-  // Map functionalProfileType (required)
-  if (!identificationXml.functionalProfileType?.[0]) {
-    throw new Error(
-      "FunctionalProfileIdentification must have a 'functionalProfileType' field"
-    );
+  // Map functionalProfileType
+  if (identificationXml.functionalProfileType?.[0]) {
+    identification.functionalProfileType =
+      identificationXml.functionalProfileType[0];
   }
-  identification.functionalProfileType =
-    identificationXml.functionalProfileType[0];
 
-  // Map levelOfOperation (required)
-  if (!identificationXml.levelOfOperation?.[0]) {
-    throw new Error(
-      "FunctionalProfileIdentification must have a 'levelOfOperation' field"
-    );
+  // Map levelOfOperation
+  if (identificationXml.levelOfOperation?.[0]) {
+    identification.levelOfOperation = identificationXml
+      .levelOfOperation[0] as LevelOfOperation;
   }
-  identification.levelOfOperation = identificationXml
-    .levelOfOperation[0] as LevelOfOperation;
 
-  // Map versionNumber (required)
-  if (!identificationXml.versionNumber?.[0]) {
-    throw new Error(
-      "FunctionalProfileIdentification must have a 'versionNumber' field"
+  // Map versionNumber
+  if (identificationXml.versionNumber?.[0]) {
+    identification.versionNumber = mapVersionNumber(
+      identificationXml.versionNumber[0]
     );
   }
-  identification.versionNumber = mapVersionNumber(
-    identificationXml.versionNumber[0]
-  );
 
   return identification;
 }
@@ -82,31 +67,26 @@ function mapVersionNumber(versionNumberXml: any): VersionNumber {
     subReleaseVersionNumber: 0,
   };
 
-  if (!versionNumberXml.primaryVersionNumber?.[0]) {
-    throw new Error("VersionNumber must have a 'primaryVersionNumber' field");
-  }
-  versionNumber.primaryVersionNumber = parseInt(
-    versionNumberXml.primaryVersionNumber[0],
-    10
-  );
-
-  if (!versionNumberXml.secondaryVersionNumber?.[0]) {
-    throw new Error("VersionNumber must have a 'secondaryVersionNumber' field");
-  }
-  versionNumber.secondaryVersionNumber = parseInt(
-    versionNumberXml.secondaryVersionNumber[0],
-    10
-  );
-
-  if (!versionNumberXml.subReleaseVersionNumber?.[0]) {
-    throw new Error(
-      "VersionNumber must have a 'subReleaseVersionNumber' field"
+  if (versionNumberXml.primaryVersionNumber?.[0]) {
+    versionNumber.primaryVersionNumber = parseInt(
+      versionNumberXml.primaryVersionNumber[0],
+      10
     );
   }
-  versionNumber.subReleaseVersionNumber = parseInt(
-    versionNumberXml.subReleaseVersionNumber[0],
-    10
-  );
+
+  if (versionNumberXml.secondaryVersionNumber?.[0]) {
+    versionNumber.secondaryVersionNumber = parseInt(
+      versionNumberXml.secondaryVersionNumber[0],
+      10
+    );
+  }
+
+  if (versionNumberXml.subReleaseVersionNumber?.[0]) {
+    versionNumber.subReleaseVersionNumber = parseInt(
+      versionNumberXml.subReleaseVersionNumber[0],
+      10
+    );
+  }
 
   return versionNumber;
 }

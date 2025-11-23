@@ -2,6 +2,7 @@ import { Builder } from "xml2js";
 import { FunctionalProfileFrame } from "@/lib/models";
 import { buildReleaseNotes } from "./functional-profile/release-notes-builder";
 import { buildProfileIdentification } from "./functional-profile/profile-identification-builder";
+import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
 
 /**
  * Converts FunctionalProfileFrame model to XML string
@@ -13,7 +14,7 @@ export async function buildFunctionalProfileToXml(
   frame: FunctionalProfileFrame
 ): Promise<string> {
   if (!frame) {
-    throw new Error("FunctionalProfileFrame is required");
+    throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED);
   }
 
   const xmlObject = buildFunctionalProfile(frame);
@@ -34,7 +35,7 @@ export async function buildFunctionalProfileToXml(
     return xmlWithStylesheet;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`Failed to build XML: ${message}`);
+    throw new Error(ERROR_MESSAGES.XML_BUILD.FAILED(message));
   }
 }
 
@@ -72,9 +73,7 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
       },
     ];
   } else {
-    throw new Error(
-      "FunctionalProfileFrame must have 'functionalProfile.functionalProfileIdentification'"
-    );
+    throw new Error(ERROR_MESSAGES.XML_BUILD.MISSING_IDENTIFICATION);
   }
 
   return xmlObject;

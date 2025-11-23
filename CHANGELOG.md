@@ -2,6 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.5.0...v0.6.0) (2025-11-23)
+
+
+### Features
+
+* add date input field for changelogs (GL-13) ([8bf363b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8bf363bd28ece1c457d322bb039540fa330e65df))
+* add validation store and helper functions (GL-18) ([dd1eba5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/dd1eba51ed52b605791f1485b48bb9adf20747fb))
+* define validation rules of identification and release notes (GL-18) ([c106f0a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c106f0aa7d86d0cfc632c404c3d87e03b182293b))
+* implement validators for release notes and identification (GL-18) ([ac71083](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ac710834bf8481237230fe8e3d545790e0ce4c04))
+* integrate zod validation handling in form components (GL-18) ([58635c9](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/58635c9ef4318e503a39543244f4374d0649c38c))
+* use zod validation before building (GL-18) ([84db7be](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/84db7be9b3692b1ddc436a210822287284c2ac93))
+* wrap state and remarks in group to display as row (GL-13) ([384a34b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/384a34bd327334ec04af7ffd1cd5b58b6821103f))
+
+
+### Bug Fixes
+
+* change button texts to english (GL-14) ([2d4b3a0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2d4b3a073aff0ad367ba07729cd1573823d6be17))
+* loading spinner to remove when done (GL-14) ([50bbafb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/50bbafb3293e881c985f60ddf5f472e7ab00248c))
+
+
+### Code Refactoring
+
+* add debug flag for debug action buttons and include export loading spinner (GL-14) ([c48cc81](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c48cc818a37419d718944db710c52068dd46de98))
+* enforce each field of version number (GL-16) ([f8f995c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f8f995c046c82ac4006264e5c9d08460ce9a724e))
+* extract all kinds of messages to constants files and move required checks from mapper to builder (GL-17) ([ee3abb5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ee3abb564fceae7afb5ad1b47f1caf068c6bc3d4))
+* make cleaner function names and rework undefined checks (GL-16) ([a793a40](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a793a40d6bd392585d0ae1027984b2b5d75c1fc4))
+* make editor actions responsive (GL-14) ([80c6aac](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/80c6aac7cc5800d957313089ed36ef730d300395))
+* remove unnecessary identification check and error message (GL-17) ([40c2959](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/40c295968f01fe2d0b674794269620e48ff40240))
+
+
+### Tests
+
+* add test to compare input and output functional profile xml files (GL-5) ([f45fad3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f45fad3b5755b1517fcb360e2ff0a968ddd7b4bd))
+
+
+### Continuous Integration
+
+* add test stage that runs all tests (GL-3) ([5d57cac](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5d57cac53709acdb10110508a3f99586677661a6))
+
+
+### Chores
+
+* install zod for form-validation (GL-18) ([2a47212](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2a47212a8df8e3b2139109cc8a15cbbbbd96a6eb))
+* move debug config to root (GL-14) ([4b6dc11](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4b6dc1159882c33c05933771efc5d4be16d9f605))
+
+
+### Documentation
+
+* update dependencies in readme (GL-18) ([3a2b713](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3a2b713be4ede154d3e7e1e821a7807f9382d91a))
+
 ## [0.5.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.4.1...v0.5.0) (2025-11-19)
 
 

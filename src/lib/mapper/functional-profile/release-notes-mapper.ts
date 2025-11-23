@@ -14,9 +14,8 @@ export function mapReleaseNotes(releaseNotesXml: any): ReleaseNotes {
   }
 
   // Map optional changeLog
-  if (releaseNotesXml.changeLog?.[0]?.changeLogEntry) {
-    const changeLogEntries = releaseNotesXml.changeLog[0].changeLogEntry;
-    releaseNotes.changeLog = changeLogEntries.map((entry: any) =>
+  if (releaseNotesXml.changeLog && Array.isArray(releaseNotesXml.changeLog)) {
+    releaseNotes.changeLog = releaseNotesXml.changeLog.map((entry: any) =>
       mapChangeLogEntry(entry)
     );
   }
@@ -25,7 +24,7 @@ export function mapReleaseNotes(releaseNotesXml: any): ReleaseNotes {
 }
 
 /**
- * Maps XML changeLogEntry to ChangeLog model
+ * Maps XML changeLog to ChangeLog model
  */
 function mapChangeLogEntry(entryXml: any): ChangeLog {
   const entry: ChangeLog = {

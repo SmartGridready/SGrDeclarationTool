@@ -28,20 +28,16 @@ export function buildReleaseNotes(releaseNotes: ReleaseNotes): any {
   }
 
   if (releaseNotes.changeLog && releaseNotes.changeLog.length > 0) {
-    releaseNotesXml.changeLog = [
-      {
-        changeLogEntry: releaseNotes.changeLog.map((entry) =>
-          buildChangeLogEntry(entry)
-        ),
-      },
-    ];
+    releaseNotesXml.changeLog = releaseNotes.changeLog.map((entry) =>
+      buildChangeLogEntry(entry)
+    );
   }
 
   return releaseNotesXml;
 }
 
 /**
- * Builds XML object for changeLogEntry from ChangeLog model
+ * Builds XML object for changeLog from ChangeLog model
  * @throws Error if required fields are missing
  */
 function buildChangeLogEntry(entry: ChangeLog): any {

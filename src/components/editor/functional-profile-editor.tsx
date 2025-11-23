@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { EditorActions } from "@/components/editor/components/editor-actions";
 import { useProfileStore } from "@/store/profile-store";
 import { useValidationStore } from "@/store/validation-store";
 import { FunctionalProfileForm } from "../forms/functional-profile-form";
 import { Button } from "@/components/ui/button";
+import { ConfirmationDialog } from "@/components/editor/components/confirmation-dialog";
 import { useFileImport } from "@/hooks/use-file-import";
 import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/lib/mapper/functional-profile-mapper";
@@ -19,6 +20,9 @@ export default function FunctionalProfileEditor() {
   const { profile, createNew, createEmpty, clear, setProfile } =
     useProfileStore();
   const resetValidation = useValidationStore((state) => state.resetValidation);
+  const [showClearDialog, setShowClearDialog] = useState(false);
+  const [showLoadEmptyDialog, setShowLoadEmptyDialog] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
 
   // Reset validation when profile changes
   useEffect(() => {
@@ -31,6 +35,19 @@ export default function FunctionalProfileEditor() {
     accept: ".xml",
   });
 
+  const handleImport = () => {
+    if (profile) {
+      setShowImportDialog(true);
+    } else {
+      importFile();
+    }
+  };
+
+  const confirmImport = () => {
+    setShowImportDialog(false);
+    importFile();
+  };
+
   const { exportFile } = useFileExport({
     builder: buildFunctionalProfileToXml,
     data: profile,
@@ -39,8 +56,31 @@ export default function FunctionalProfileEditor() {
   });
 
   const handleEmptyProfile = () => {
+    if (profile) {
+      setShowLoadEmptyDialog(true);
+    } else {
+      createEmpty();
+      toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
+    }
+  };
+
+  const confirmLoadEmpty = () => {
     createEmpty();
     toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
+    setShowLoadEmptyDialog(false);
+  };
+
+  const handleClear = () => {
+    if (profile) {
+      setShowClearDialog(true);
+    } else {
+      clear();
+    }
+  };
+
+  const confirmClear = () => {
+    clear();
+    setShowClearDialog(false);
   };
 
   const handleDebugPrint = () => {
@@ -66,10 +106,37 @@ export default function FunctionalProfileEditor() {
       <EditorActions
         title="Functional Profile Editor"
         onEmpty={handleEmptyProfile}
-        onClear={clear}
-        onImportFromFilesystem={importFile}
+        onClear={handleClear}
+        onImportFromFilesystem={handleImport}
         onExport={exportFile}
         emptyButtonLabel="Load Empty Profile"
+      />
+
+      <ConfirmationDialog
+        open={showClearDialog}
+        onOpenChange={setShowClearDialog}
+        title="Clear Profile"
+        description="Current profile will not be saved. Are you sure you want to clear the current profile?"
+        confirmLabel="Clear"
+        onConfirm={confirmClear}
+      />
+
+      <ConfirmationDialog
+        open={showLoadEmptyDialog}
+        onOpenChange={setShowLoadEmptyDialog}
+        title="Load Empty Profile"
+        description="Current profile will not be saved. Are you sure you want to load an empty profile?"
+        confirmLabel="Load Empty"
+        onConfirm={confirmLoadEmpty}
+      />
+
+      <ConfirmationDialog
+        open={showImportDialog}
+        onOpenChange={setShowImportDialog}
+        title="Import Profile"
+        description="Current profile will not be saved. Are you sure you want to import a new profile?"
+        confirmLabel="Import"
+        onConfirm={confirmImport}
       />
 
       {profile ? (

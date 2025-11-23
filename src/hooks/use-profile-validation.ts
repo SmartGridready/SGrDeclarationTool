@@ -1,11 +1,8 @@
 import { useMemo } from "react";
 import { useProfileStore } from "@/store/profile-store";
 import { useValidationStore } from "@/store/validation-store";
-import {
-  validateFunctionalProfileFrame,
-  getFieldError,
-  hasFieldError,
-} from "@/lib/validation";
+import { validateFunctionalProfileFrame } from "@/lib/validation/validators/functional-profile-frame-validator";
+import { getFieldError, hasFieldError } from "@/lib/utils/validation-utils";
 
 /**
  * Hook to get validation errors for the current profile

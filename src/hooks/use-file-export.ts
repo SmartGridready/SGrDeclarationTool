@@ -2,6 +2,9 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/lib/constants/success-messages";
+import { useValidationStore } from "@/store/validation-store";
+import { FunctionalProfileFrame } from "@/lib/models";
+import { validateFunctionalProfileFrame } from "@/lib/validation/validators/functional-profile-frame-validator";
 
 /**
  * Generic file export hook for XML files
@@ -24,12 +27,42 @@ export function useFileExport<T>({
   filename?: string;
   errorMessage?: string;
 }) {
+  const setValidationAttempted = useValidationStore(
+    (state) => state.setValidationAttempted
+  );
+
   const exportFile = useCallback(async () => {
     if (!data) {
       toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
         description: errorMessage,
       });
       return;
+    }
+
+    // Validate before exporting - this triggers validation error display
+    // Check if data is a FunctionalProfileFrame (for validation)
+    if (data && typeof data === "object" && "functionalProfile" in data) {
+      const validation = validateFunctionalProfileFrame(
+        data as FunctionalProfileFrame
+      );
+
+      // Mark validation as attempted so errors will be displayed
+      setValidationAttempted(true);
+
+      if (!validation.success) {
+        // Count validation errors
+        const errorCount = Object.keys(validation.fieldErrors || {}).length;
+        const errorMessageText =
+          errorCount > 0
+            ? `Please fix ${errorCount} validation error${errorCount > 1 ? "s" : ""} before exporting.`
+            : ERROR_MESSAGES.FILE_EXPORT.FAILED;
+
+        toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
+          description: errorMessageText,
+          duration: 5000,
+        });
+        return;
+      }
     }
 
     const loadingToastId = toast.loading("Exporting file...", {
@@ -68,7 +101,7 @@ export function useFileExport<T>({
         duration: 5000,
       });
     }
-  }, [builder, data, filename, errorMessage]);
+  }, [builder, data, filename, errorMessage, setValidationAttempted]);
 
   return {
     exportFile,

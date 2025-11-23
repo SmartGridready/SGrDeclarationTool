@@ -3,6 +3,7 @@ import { FunctionalProfileFrame } from "@/lib/models";
 import { buildReleaseNotes } from "./functional-profile/release-notes-builder";
 import { buildProfileIdentification } from "./functional-profile/profile-identification-builder";
 import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
+import { validateFunctionalProfileFrame } from "../validation/validators/functional-profile-frame-validator";
 
 /**
  * Converts FunctionalProfileFrame model to XML string
@@ -15,6 +16,15 @@ export async function buildFunctionalProfileToXml(
 ): Promise<string> {
   if (!frame) {
     throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED);
+  }
+
+  // Validate the frame before building
+  const validation = validateFunctionalProfileFrame(frame);
+  if (!validation.success) {
+    const firstError = validation.errors?.issues[0];
+    const errorMessage =
+      firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED;
+    throw new Error(ERROR_MESSAGES.XML_BUILD.FAILED(errorMessage));
   }
 
   const xmlObject = buildFunctionalProfile(frame);

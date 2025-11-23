@@ -1,5 +1,9 @@
 import { FunctionalProfileIdentification, VersionNumber } from "@/lib/models";
 import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
+import {
+  validateFunctionalProfileIdentification,
+  validateVersionNumber,
+} from "@/lib/validation/validators/profile-identification-validator";
 
 /**
  * Builds XML object for functionalProfileIdentification from FunctionalProfileIdentification model
@@ -8,27 +12,14 @@ import { ERROR_MESSAGES } from "@/lib/constants/error-messages";
 export function buildProfileIdentification(
   identification: FunctionalProfileIdentification
 ): any {
-  // Validate required fields
-  if (!identification.specificationOwnerIdentification) {
-    throw new Error(
-      ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_SPECIFICATION_OWNER
-    );
-  }
-  if (!identification.functionalProfileCategory) {
-    throw new Error(ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_CATEGORY);
-  }
-  if (!identification.functionalProfileType) {
-    throw new Error(ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_TYPE);
-  }
-  if (!identification.levelOfOperation) {
-    throw new Error(
-      ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_LEVEL_OF_OPERATION
-    );
-  }
-  if (!identification.versionNumber) {
-    throw new Error(
-      ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_VERSION_NUMBER
-    );
+  // Validate using validation layer
+  const validation = validateFunctionalProfileIdentification(identification);
+  if (!validation.success) {
+    const firstError = validation.errors?.issues[0];
+    const errorMessage =
+      firstError?.message ||
+      ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_SPECIFICATION_OWNER;
+    throw new Error(errorMessage);
   }
 
   const identificationXml: any = {
@@ -49,24 +40,13 @@ export function buildProfileIdentification(
  * @throws Error if required fields are missing
  */
 function buildVersionNumber(versionNumber: VersionNumber): any {
-  // Validate required fields
-  if (
-    versionNumber.primaryVersionNumber === undefined ||
-    versionNumber.primaryVersionNumber === null
-  ) {
-    throw new Error(ERROR_MESSAGES.VERSION_NUMBER.MISSING_PRIMARY);
-  }
-  if (
-    versionNumber.secondaryVersionNumber === undefined ||
-    versionNumber.secondaryVersionNumber === null
-  ) {
-    throw new Error(ERROR_MESSAGES.VERSION_NUMBER.MISSING_SECONDARY);
-  }
-  if (
-    versionNumber.subReleaseVersionNumber === undefined ||
-    versionNumber.subReleaseVersionNumber === null
-  ) {
-    throw new Error(ERROR_MESSAGES.VERSION_NUMBER.MISSING_SUB_RELEASE);
+  // Validate using validation layer
+  const validation = validateVersionNumber(versionNumber);
+  if (!validation.success) {
+    const firstError = validation.errors?.issues[0];
+    const errorMessage =
+      firstError?.message || ERROR_MESSAGES.VERSION_NUMBER.MISSING_PRIMARY;
+    throw new Error(errorMessage);
   }
 
   return {

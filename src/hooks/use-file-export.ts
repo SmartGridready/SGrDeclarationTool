@@ -30,8 +30,13 @@ export function useFileExport<T>({
       return;
     }
 
+    const loadingToast = toast.loading("Exporting file...", {
+      description: `Generating ${filename}`,
+    });
+
     try {
       const xmlString = await builder(data);
+      toast.dismiss(loadingToast);
 
       // Create a blob and download it
       const blob = new Blob([xmlString], { type: "application/xml" });
@@ -43,7 +48,12 @@ export function useFileExport<T>({
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+
+      toast.success("Building file successful", {
+        description: `${filename} can be downloaded now.`,
+      });
     } catch (error) {
+      toast.dismiss(loadingToast);
       const errorMessage =
         error instanceof Error
           ? error.message

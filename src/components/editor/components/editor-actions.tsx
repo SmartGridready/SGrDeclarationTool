@@ -15,26 +15,22 @@ import {
 
 interface EditorActionsProps {
   title: string;
-  onNew: () => void;
   onImportFromFilesystem?: () => void;
   onImportFromLibrary?: () => void;
   onEmpty?: () => void;
   onClear: () => void;
   onExport?: () => void;
-  newButtonLabel?: string;
   emptyButtonLabel?: string;
   isLoading?: boolean;
 }
 
 export function EditorActions({
   title,
-  onNew,
   onImportFromFilesystem,
   onImportFromLibrary,
   onEmpty,
   onClear,
   onExport,
-  newButtonLabel = "New",
   emptyButtonLabel = "Empty",
   isLoading = false,
 }: EditorActionsProps) {
@@ -42,7 +38,6 @@ export function EditorActions({
     <div className="flex justify-between items-center">
       <h1 className="text-2xl font-bold">{title}</h1>
       <div className="flex items-center space-x-2">
-        <Button onClick={onNew}>{newButtonLabel}</Button>
         {onEmpty && (
           <Button variant="outline" onClick={onEmpty}>
             {emptyButtonLabel}

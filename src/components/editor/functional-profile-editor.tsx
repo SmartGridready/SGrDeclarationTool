@@ -8,6 +8,7 @@ import { useFileImport } from "@/hooks/use-file-import";
 import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/lib/mapper/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/lib/builder/functional-profile-builder";
+import { DEBUG } from "@/lib/constants/debug-config";
 
 export default function FunctionalProfileEditor() {
   const { profile, createNew, createEmpty, clear, setProfile } =
@@ -48,12 +49,10 @@ export default function FunctionalProfileEditor() {
       />
       <EditorActions
         title="Functional Profile Editor"
-        onNew={createNew}
         onEmpty={createEmpty}
         onClear={clear}
         onImportFromFilesystem={importFile}
         onExport={exportFile}
-        newButtonLabel="Load Sample Profile"
         emptyButtonLabel="Load Empty Profile"
       />
 
@@ -65,14 +64,16 @@ export default function FunctionalProfileEditor() {
         </div>
       )}
 
-      <Button
-        onClick={handleDebugPrint}
-        variant="outline"
-        size="sm"
-        className="fixed bottom-4 right-4 z-50 shadow-lg"
-      >
-        Debug JSON
-      </Button>
+      {DEBUG && (
+        <div className="fixed bottom-4 right-4 z-50 shadow-lg">
+          <Button onClick={createNew} size="sm">
+            Load Sample Profile
+          </Button>
+          <Button onClick={handleDebugPrint} size="sm" className="ml-2">
+            Debug JSON
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

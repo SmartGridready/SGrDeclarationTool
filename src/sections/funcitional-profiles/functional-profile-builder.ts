@@ -2,6 +2,7 @@ import { Builder } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
 import { buildReleaseNotes } from "@/sections/funcitional-profiles/release-notes/release-notes-builder";
 import { buildProfileIdentification } from "@/sections/funcitional-profiles/profile-identification/profile-identification-builder";
+import { buildAlternativeNames } from "@/sections/funcitional-profiles/alternative-names/alternative-names-builder";
 import { ERROR_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/funcitional-profiles/functional-profile-frame-validator";
 
@@ -72,15 +73,22 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
   }
 
   // Build functionalProfile with functionalProfileIdentification
-  xmlObject.FunctionalProfileFrame.functionalProfile = [
-    {
-      functionalProfileIdentification: [
-        buildProfileIdentification(
-          frame.functionalProfile.functionalProfileIdentification
-        ),
-      ],
-    },
-  ];
+  const functionalProfileXml: any = {
+    functionalProfileIdentification: [
+      buildProfileIdentification(
+        frame.functionalProfile.functionalProfileIdentification
+      ),
+    ],
+  };
+
+  // Build alternativeNames if present
+  if (frame.functionalProfile.alternativeNames) {
+    functionalProfileXml.alternativeNames = [
+      buildAlternativeNames(frame.functionalProfile.alternativeNames),
+    ];
+  }
+
+  xmlObject.FunctionalProfileFrame.functionalProfile = [functionalProfileXml];
 
   return xmlObject;
 }

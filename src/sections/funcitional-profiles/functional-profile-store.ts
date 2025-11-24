@@ -14,6 +14,10 @@ import {
   createFunctionalProfileIdentificationSlice,
   FunctionalProfileIdentificationSlice,
 } from "@/sections/funcitional-profiles/profile-identification/profile-identification-slice";
+import {
+  createAlternativeNamesSlice,
+  AlternativeNamesSlice,
+} from "@/sections/funcitional-profiles/alternative-names/alternative-names-slice";
 
 interface ProfileStore {
   profile?: FunctionalProfileFrame;
@@ -25,7 +29,8 @@ interface ProfileStore {
 
 type StoreState = ProfileStore &
   ReleaseNotesSlice &
-  FunctionalProfileIdentificationSlice;
+  FunctionalProfileIdentificationSlice &
+  AlternativeNamesSlice;
 
 export const useProfileStore = create<StoreState>()(
   persist(
@@ -54,6 +59,7 @@ export const useProfileStore = create<StoreState>()(
 
       ...createReleaseNotesSlice(set),
       ...createFunctionalProfileIdentificationSlice(set),
+      ...createAlternativeNamesSlice(set),
     })),
     {
       name: "sgr-profile-storage",

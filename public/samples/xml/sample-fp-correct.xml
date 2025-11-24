@@ -30,6 +30,17 @@
         <subReleaseVersionNumber>0</subReleaseVersionNumber>
       </versionNumber>
     </functionalProfileIdentification>
+    <alternativeNames>
+      <sLV1Name>example</sLV1Name>
+      <workName>example</workName>
+      <manufName>example</manufName>
+      <iec61850Name>example</iec61850Name>
+      <sarefName>example</sarefName>
+      <eebusName>example</eebusName>
+      <sunSpecName>example</sunSpecName>
+      <hpBwpName>example</hpBwpName>
+      <en17609Name>example</en17609Name>
+    </alternativeNames>
   </functionalProfile>
 </FunctionalProfileFrame>
 

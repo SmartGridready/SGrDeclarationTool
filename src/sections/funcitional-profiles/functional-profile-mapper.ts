@@ -2,6 +2,7 @@ import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
 import { mapReleaseNotes } from "@/sections/funcitional-profiles/release-notes/release-notes-mapper";
 import { mapProfileIdentification } from "@/sections/funcitional-profiles/profile-identification/profile-identification-mapper";
+import { mapAlternativeNames } from "@/sections/funcitional-profiles/alternative-names/alternative-names-mapper";
 import { ERROR_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-error-messages";
 
 /**
@@ -77,6 +78,13 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
       mapProfileIdentification(
         frameData.functionalProfile[0].functionalProfileIdentification[0]
       );
+  }
+
+  // Map alternativeNames if present
+  if (frameData.functionalProfile?.[0]?.alternativeNames?.[0]) {
+    frame.functionalProfile.alternativeNames = mapAlternativeNames(
+      frameData.functionalProfile[0].alternativeNames[0]
+    );
   }
 
   return frame;

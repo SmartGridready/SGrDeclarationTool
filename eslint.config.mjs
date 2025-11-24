@@ -21,13 +21,13 @@ const eslintConfig = [
     ],
   },
   {
-    files: ["src/lib/mapper/**/*.ts"],
+    files: ["src/sections/funcitional-profiles/**/*mapper*.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
     },
   },
   {
-    files: ["src/lib/builder/**/*.ts"],
+    files: ["src/sections/funcitional-profiles/**/*builder*.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
     },

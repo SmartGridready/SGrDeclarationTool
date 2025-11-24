@@ -77,7 +77,6 @@ export function createEmpty(): FunctionalProfileFrame {
           subReleaseVersionNumber: 0,
         },
       },
-      alternativeNames: {},
     },
   };
 }

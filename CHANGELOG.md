@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.6.2...v0.7.0) (2025-11-24)
+
+
+### Features
+
+* implement confirmation dialogs (GL-14) ([b4c3a49](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b4c3a49e88aa5cde65177fdd0f0f0dde696cbd1d))
+* use shadcn date picker approach (GL-11) ([53166a8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/53166a8f512f575cd23ad984ba542ff6963545bf))
+
+
+### Chores
+
+* import sample xml files ([3f89c7c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3f89c7c32eee90a709695f0f63afa79c20bf6aa2))
+* install shadcn calendar and popover (GL-11) ([914d9aa](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/914d9aae8132e47d01dd15677ff77188a7767f50))
+
+
+### Code Refactoring
+
+* change entire folder structure, group all files by sections ([25acedb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/25acedbb49a04c2a1a20a567d0bb120af678ac8e))
+
 ### [0.6.2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.6.1...v0.6.2) (2025-11-23)
 
 

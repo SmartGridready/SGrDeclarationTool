@@ -8,41 +8,53 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
     releaseNotes: {
       state: "Draft",
       remarks:
-        "This is a sample functional profile demonstrating the Smart Grid Ready declaration structure. It includes comprehensive identification data and release notes for testing and development purposes.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
       changeLog: [
         {
           version: "1.0.0",
           date: "2024-01-15",
-          author: "Development Team",
+          author: "example",
           comment:
-            "Initial release - Sample functional profile created for testing",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         },
         {
           version: "0.9.0",
           date: "2024-01-14",
-          author: "QA Team",
-          comment: "Beta version - Pre-release testing and validation",
+          author: "example",
+          comment:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         },
         {
           version: "0.8.0",
           date: "2024-01-08",
-          author: "Development Team",
+          author: "example",
           comment:
-            "Alpha version - Initial implementation and structure definition",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         },
       ],
     },
     functionalProfile: {
       functionalProfileIdentification: {
-        specificationOwnerIdentification: "SGR-Example-2024",
+        specificationOwnerIdentification: "example",
         functionalProfileCategory: "Battery",
-        functionalProfileType: "Lithium-Ion Battery System",
+        functionalProfileType: "example",
         levelOfOperation: "1",
         versionNumber: {
           primaryVersionNumber: 1,
           secondaryVersionNumber: 0,
           subReleaseVersionNumber: 0,
         },
+      },
+      alternativeNames: {
+        sLV1Name: "example",
+        workName: "example",
+        manufName: "example",
+        iec61850Name: "example",
+        sarefName: "example",
+        eebusName: "example",
+        sunSpecName: "example",
+        hpBwpName: "example",
+        en17609Name: "example",
       },
     },
   };
@@ -65,6 +77,7 @@ export function createEmpty(): FunctionalProfileFrame {
           subReleaseVersionNumber: 0,
         },
       },
+      alternativeNames: {},
     },
   };
 }

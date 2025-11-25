@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EditorActions } from "@/sections/shared/components/editor/editor-actions";
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
@@ -14,6 +14,7 @@ import { buildFunctionalProfileToXml } from "@/sections/functional-profile/funct
 import { DEBUG } from "@/debug-config";
 import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
 import { INFO_MESSAGES } from "@/sections/functional-profile/functional-profile-info-messages";
+import { FunctionalProfileFrame } from "@/models";
 import { toast } from "sonner";
 
 export default function FunctionalProfileEditor() {
@@ -24,14 +25,14 @@ export default function FunctionalProfileEditor() {
   const [showLoadEmptyDialog, setShowLoadEmptyDialog] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
 
-  // Reset validation when profile changes
-  useEffect(() => {
+  const handleSetProfile = (newProfile: FunctionalProfileFrame) => {
+    setProfile(newProfile);
     resetValidation();
-  }, [profile, resetValidation]);
+  };
 
   const { importFile, inputRef, handleFileChange, accept } = useFileImport({
     parser: parseFunctionalProfile,
-    onSuccess: setProfile,
+    onSuccess: handleSetProfile,
     accept: ".xml",
   });
 
@@ -60,12 +61,14 @@ export default function FunctionalProfileEditor() {
       setShowLoadEmptyDialog(true);
     } else {
       createEmpty();
+      resetValidation();
       toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
     }
   };
 
   const confirmLoadEmpty = () => {
     createEmpty();
+    resetValidation();
     toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
     setShowLoadEmptyDialog(false);
   };
@@ -75,11 +78,13 @@ export default function FunctionalProfileEditor() {
       setShowClearDialog(true);
     } else {
       clear();
+      resetValidation();
     }
   };
 
   const confirmClear = () => {
     clear();
+    resetValidation();
     setShowClearDialog(false);
   };
 
@@ -149,7 +154,13 @@ export default function FunctionalProfileEditor() {
 
       {DEBUG && (
         <div className="fixed bottom-4 right-4 z-50 shadow-lg">
-          <Button onClick={createNew} size="sm">
+          <Button
+            onClick={() => {
+              createNew();
+              resetValidation();
+            }}
+            size="sm"
+          >
             Load Sample Profile
           </Button>
           <Button onClick={handleDebugPrint} size="sm" className="ml-2">

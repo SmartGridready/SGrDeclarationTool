@@ -23,13 +23,13 @@ export const legibleDescriptionSchema = z.object({
   uri: z.string().optional(),
 });
 
-// Array of Legible Descriptions Schema (maxOccurs="4")
-export const legibleDescriptionArraySchema = z
+// Legible Descriptions Schema (array, maxOccurs="4")
+export const legibleDescriptionsSchema = z
   .array(legibleDescriptionSchema)
   .max(4, "Cannot have more than 4 legible descriptions");
 
 // Type exports for TypeScript inference
 export type LegibleDescriptionInput = z.input<typeof legibleDescriptionSchema>;
-export type LegibleDescriptionArrayInput = z.input<
-  typeof legibleDescriptionArraySchema
+export type LegibleDescriptionsInput = z.input<
+  typeof legibleDescriptionsSchema
 >;

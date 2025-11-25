@@ -5,7 +5,7 @@ import {
 } from "@/sections/shared/validation-utils";
 import {
   legibleDescriptionSchema,
-  legibleDescriptionArraySchema,
+  legibleDescriptionsSchema,
 } from "@/sections/functional-profile/legible-description/legible-description-schema";
 
 /**
@@ -34,7 +34,7 @@ export function validateLegibleDescriptionArray(
   legibleDescriptions: LegibleDescription[]
 ): ValidationResult<LegibleDescription[]> {
   const result = validateWithSchema(
-    legibleDescriptionArraySchema,
+    legibleDescriptionsSchema,
     legibleDescriptions
   );
   if (result.success && result.data) {

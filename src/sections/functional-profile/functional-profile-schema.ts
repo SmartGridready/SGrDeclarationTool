@@ -8,6 +8,7 @@ import {
   versionNumberSchema,
 } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
 import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
+import { legibleDescriptionsSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 
 /**
  * Main validation schemas for Functional Profile models
@@ -21,6 +22,7 @@ export const functionalProfileFrameSchema = z.object({
   functionalProfile: z.object({
     functionalProfileIdentification: functionalProfileIdentificationSchema,
     alternativeNames: alternativeNamesSchema.optional(),
+    legibleDescription: legibleDescriptionsSchema.optional(),
   }),
 });
 
@@ -31,6 +33,7 @@ export {
   releaseNotesSchema,
   functionalProfileIdentificationSchema,
   alternativeNamesSchema,
+  legibleDescriptionsSchema,
 };
 
 // Re-export types for TypeScript inference
@@ -41,6 +44,7 @@ export type {
 } from "@/sections/functional-profile/release-notes/release-notes-schema";
 export type { FunctionalProfileIdentificationInput } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
 export type { AlternativeNamesInput } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
+export type { LegibleDescriptionsInput } from "@/sections/functional-profile/legible-description/legible-description-schema";
 export type FunctionalProfileFrameInput = z.input<
   typeof functionalProfileFrameSchema
 >;

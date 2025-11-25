@@ -4,6 +4,7 @@ export interface LegibleDescriptionSlice {
   // Main operations
   addLegibleDescription: (legibleDescription: LegibleDescription) => void;
   removeLegibleDescription: (index: number) => void;
+  removeAllLegibleDescriptions: () => void;
 
   // Field-specific updates
   updateTextElement: (index: number, textElement: string) => void;
@@ -65,6 +66,13 @@ export const createLegibleDescriptionSlice = (
         ) {
           state.profile.functionalProfile.legibleDescription = undefined;
         }
+      }
+    }),
+
+  removeAllLegibleDescriptions: () =>
+    set((state) => {
+      if (state.profile?.functionalProfile) {
+        state.profile.functionalProfile.legibleDescription = undefined;
       }
     }),
 

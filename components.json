@@ -14,7 +14,7 @@
   "aliases": {
     "components": "@/sections/shared/components",
     "utils": "@/sections/shared",
-    "ui": "@/sections/shared/shadcn/components",
+    "ui": "@/sections/shared/components/shadcn",
     "hooks": "@/sections/shared/hooks"
   },
   "registries": {}

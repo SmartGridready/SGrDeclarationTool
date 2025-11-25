@@ -1,5 +1,4 @@
 import { FunctionalProfileIdentification, VersionNumber } from "@/models";
-import { ERROR_MESSAGES } from "./profile-identification-error-messages";
 import {
   validateFunctionalProfileIdentification,
   validateVersionNumber,
@@ -16,9 +15,9 @@ export function buildProfileIdentification(
   const validation = validateFunctionalProfileIdentification(identification);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
+    // Zod always provides error messages, so this should always be defined
     const errorMessage =
-      firstError?.message ||
-      ERROR_MESSAGES.PROFILE_IDENTIFICATION.MISSING_SPECIFICATION_OWNER;
+      firstError?.message || "Validation failed for profile identification";
     throw new Error(errorMessage);
   }
 
@@ -44,8 +43,9 @@ function buildVersionNumber(versionNumber: VersionNumber): any {
   const validation = validateVersionNumber(versionNumber);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
+    // Zod always provides error messages, so this should always be defined
     const errorMessage =
-      firstError?.message || ERROR_MESSAGES.VERSION_NUMBER.MISSING_PRIMARY;
+      firstError?.message || "Validation failed for version number";
     throw new Error(errorMessage);
   }
 

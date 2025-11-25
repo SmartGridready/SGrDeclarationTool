@@ -1,5 +1,4 @@
 import { LegibleDescription } from "@/models";
-import { ERROR_MESSAGES } from "./legible-description-error-messages";
 import {
   validateLegibleDescription,
   validateLegibleDescriptionArray,
@@ -16,9 +15,9 @@ export function buildLegibleDescription(
   const validation = validateLegibleDescriptionArray(legibleDescriptions);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
+    // Zod always provides error messages, so this should always be defined
     const errorMessage =
-      firstError?.message ||
-      ERROR_MESSAGES.LEGIBLE_DESCRIPTION.MAX_DESCRIPTIONS_EXCEEDED;
+      firstError?.message || "Validation failed for legible descriptions";
     throw new Error(errorMessage);
   }
 
@@ -36,9 +35,9 @@ function buildLegibleDescriptionItem(description: LegibleDescription): any {
   const validation = validateLegibleDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
+    // Zod always provides error messages, so this should always be defined
     const errorMessage =
-      firstError?.message ||
-      ERROR_MESSAGES.LEGIBLE_DESCRIPTION.MISSING_TEXT_ELEMENT;
+      firstError?.message || "Validation failed for legible description";
     throw new Error(errorMessage);
   }
 

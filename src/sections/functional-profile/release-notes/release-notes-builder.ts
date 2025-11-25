@@ -1,5 +1,4 @@
 import { ReleaseNotes, ChangeLog } from "@/models";
-import { ERROR_MESSAGES } from "./release-notes-error-messages";
 import {
   validateChangeLog,
   validateReleaseNotes,
@@ -14,8 +13,9 @@ export function buildReleaseNotes(releaseNotes: ReleaseNotes): any {
   const validation = validateReleaseNotes(releaseNotes);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
+    // Zod always provides error messages, so this should always be defined
     const errorMessage =
-      firstError?.message || ERROR_MESSAGES.RELEASE_NOTES.MISSING_STATE;
+      firstError?.message || "Validation failed for release notes";
     throw new Error(errorMessage);
   }
 
@@ -45,8 +45,9 @@ function buildChangeLogEntry(entry: ChangeLog): any {
   const validation = validateChangeLog(entry);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
+    // Zod always provides error messages, so this should always be defined
     const errorMessage =
-      firstError?.message || ERROR_MESSAGES.CHANGE_LOG.MISSING_VERSION;
+      firstError?.message || "Validation failed for change log entry";
     throw new Error(errorMessage);
   }
 

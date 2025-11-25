@@ -43,13 +43,9 @@ function buildLegibleDescriptionItem(description: LegibleDescription): any {
   }
 
   const itemXml: any = {
-    // Use CDATA format for textElement to preserve HTML and special characters
-    // xml2js Builder will wrap this in CDATA when cdata option is enabled
-    textElement: [
-      {
-        _cdata: description.textElement,
-      },
-    ],
+    // Pass text directly - xml2js Builder with cdata: true will automatically
+    // wrap in CDATA when it detects HTML or special characters
+    textElement: [description.textElement],
     language: [description.language],
   };
 

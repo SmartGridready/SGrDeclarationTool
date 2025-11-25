@@ -3,6 +3,7 @@ import { FunctionalProfileFrame } from "@/models";
 import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-mapper";
 import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
+import { mapLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-mapper";
 import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
 
 /**
@@ -84,6 +85,16 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   if (frameData.functionalProfile?.[0]?.alternativeNames?.[0]) {
     frame.functionalProfile.alternativeNames = mapAlternativeNames(
       frameData.functionalProfile[0].alternativeNames[0]
+    );
+  }
+
+  // Map legibleDescription if present
+  if (
+    frameData.functionalProfile?.[0]?.legibleDescription &&
+    Array.isArray(frameData.functionalProfile[0].legibleDescription)
+  ) {
+    frame.functionalProfile.legibleDescription = mapLegibleDescription(
+      frameData.functionalProfile[0].legibleDescription
     );
   }
 

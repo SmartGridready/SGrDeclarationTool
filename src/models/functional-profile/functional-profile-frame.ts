@@ -7,6 +7,7 @@ import {
   ReleaseNotes,
   FunctionalProfileIdentification,
   AlternativeNames,
+  LegibleDescription,
 } from "@/models/generic";
 
 export interface FunctionalProfileFrame {
@@ -14,7 +15,7 @@ export interface FunctionalProfileFrame {
   functionalProfile: {
     functionalProfileIdentification: FunctionalProfileIdentification;
     alternativeNames?: AlternativeNames;
-    // legibleDescription?: LegibleDescription[]; // maxOccurs="4"
+    legibleDescription?: LegibleDescription[]; // maxOccurs="4"
   };
   // genericAttributeList?: GenericAttributeListFunctionalProfile;
   // dataPointList?: FunctionalProfileDataPointList;

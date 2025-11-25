@@ -56,6 +56,18 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
         hpBwpName: "example",
         en17609Name: "example",
       },
+      legibleDescription: [
+        {
+          textElement:
+            "This is an example functional profile description in English. It provides a human-readable description of the functional profile's purpose and capabilities.",
+          language: "en",
+        },
+        {
+          textElement:
+            "Dies ist eine Beispielbeschreibung des Funktionsprofils auf Deutsch. Es bietet eine menschenlesbare Beschreibung des Zwecks und der Fähigkeiten des Funktionsprofils.",
+          language: "de",
+        },
+      ],
     },
   };
 }

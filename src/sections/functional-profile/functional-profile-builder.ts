@@ -3,6 +3,7 @@ import { FunctionalProfileFrame } from "@/models";
 import { buildReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-builder";
 import { buildProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-builder";
 import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
+import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
 import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
 
@@ -34,6 +35,7 @@ export async function buildFunctionalProfileToXml(
     xmldec: { version: "1.0", encoding: "UTF-8" },
     renderOpts: { pretty: true, indent: "  " },
     headless: false,
+    cdata: true, // Enable CDATA support for preserving HTML and special characters
   });
 
   try {
@@ -86,6 +88,16 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
     functionalProfileXml.alternativeNames = [
       buildAlternativeNames(frame.functionalProfile.alternativeNames),
     ];
+  }
+
+  // Build legibleDescription if present
+  if (
+    frame.functionalProfile.legibleDescription &&
+    frame.functionalProfile.legibleDescription.length > 0
+  ) {
+    functionalProfileXml.legibleDescription = buildLegibleDescription(
+      frame.functionalProfile.legibleDescription
+    );
   }
 
   xmlObject.FunctionalProfileFrame.functionalProfile = [functionalProfileXml];

@@ -9,6 +9,7 @@ interface ArrayFieldProps<T> {
   renderItem: (item: T, index: number) => React.ReactNode;
   emptyMessage?: string;
   className?: string;
+  maxItems?: number;
 }
 
 export function ArrayField<T>({
@@ -19,7 +20,11 @@ export function ArrayField<T>({
   renderItem,
   emptyMessage = "No items",
   className = "",
+  maxItems,
 }: ArrayFieldProps<T>) {
+  const currentCount = items?.length || 0;
+  const isMaxReached = maxItems !== undefined && currentCount >= maxItems;
+
   return (
     <div className={`space-y-4 ${className}`}>
       <div className="flex items-center justify-between">
@@ -29,7 +34,11 @@ export function ArrayField<T>({
           variant="outline"
           size="sm"
           onClick={onAdd}
+          disabled={isMaxReached}
           className="flex items-center gap-1"
+          title={
+            isMaxReached ? `Maximum of ${maxItems} items allowed` : undefined
+          }
         >
           <Plus className="h-4 w-4" />
           Add {label}

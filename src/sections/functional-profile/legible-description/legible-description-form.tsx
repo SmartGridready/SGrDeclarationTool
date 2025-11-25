@@ -73,6 +73,7 @@ export function LegibleDescriptionForm() {
         onAdd={addEmptyLegibleDescription}
         onRemove={removeLegibleDescription}
         emptyMessage="No descriptions added"
+        maxItems={4}
         renderItem={(item, index) => (
           <div className="space-y-4">
             <TextareaField

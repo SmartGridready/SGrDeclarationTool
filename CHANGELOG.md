@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.7.0...v0.8.0) (2025-11-25)
+
+
+### Features
+
+* add alternative names to the model (GL-9) ([f93a66d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f93a66d89d38201cfc82a2b5c4b8c55dbfb9f44c))
+* extend factory methods with alternative names (GL-14) ([21c8774](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/21c8774b94d01646829d895196b5174ef06c7f91))
+* implement alternative names buider (GL-8) ([a5cd3f6](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a5cd3f6faf15f2159eb108f162a32f517314c7de))
+* implement alternative names form (GL-13) ([90e6e2f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/90e6e2f7ba513f5ec0683b37ab6cf393432eace9))
+* implement alternative names mapper and add alternative names section to sample xml (GL-7) ([1105e68](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1105e68198c007ed581b24b44a38e3186bd03450))
+* implement alternative names validator (GL-18) ([98ca9e8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/98ca9e80953bd63e6ee32a632f4d4ec806cb75d9))
+* implement schema for alternative names (GL-18) ([9b43d47](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9b43d474f878f0e07069f386693ec8369bf6ca2f))
+* implement store slice for alternative names (GL-16) ([2b57274](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2b57274a8210364dd75d9edaa9a4c981e1bc43fb))
+
 ## [0.7.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.6.2...v0.7.0) (2025-11-24)
 
 

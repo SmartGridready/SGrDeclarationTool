@@ -1,8 +1,8 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
-import { buildFunctionalProfileToXml } from "@/sections/funcitional-profiles/functional-profile-builder";
-import { parseFunctionalProfile } from "@/sections/funcitional-profiles/functional-profile-mapper";
+import { buildFunctionalProfileToXml } from "@/sections/functional-profile/functional-profile-builder";
+import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
 
 /**
  * Normalizes XML string by removing indentation and normalizing newlines

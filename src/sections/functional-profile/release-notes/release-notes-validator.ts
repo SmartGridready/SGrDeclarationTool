@@ -2,7 +2,7 @@ import { ReleaseNotes, ChangeLog } from "@/models";
 import {
   releaseNotesSchema,
   changeLogSchema,
-} from "@/sections/funcitional-profiles/functional-profile-schema";
+} from "@/sections/functional-profile/functional-profile-schema";
 import {
   ValidationResult,
   validateWithSchema,

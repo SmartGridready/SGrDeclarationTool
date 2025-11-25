@@ -1,5 +1,5 @@
 import { AlternativeNames } from "@/models";
-import { alternativeNamesSchema } from "@/sections/funcitional-profiles/functional-profile-schema";
+import { alternativeNamesSchema } from "@/sections/functional-profile/functional-profile-schema";
 import {
   ValidationResult,
   validateWithSchema,

@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 import { toast } from "sonner";
-import { ERROR_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-error-messages";
-import { SUCCESS_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-success-messages";
+import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
+import { SUCCESS_MESSAGES } from "@/sections/functional-profile/functional-profile-success-messages";
 
 /**
  * Generic file import hook for XML files

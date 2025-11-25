@@ -6,7 +6,7 @@ import { DateField } from "@/sections/shared/components/forms/date-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { RELEASE_STATE_OPTIONS } from "./release-notes-form-options";
-import { useProfileStore } from "@/sections/funcitional-profiles/functional-profile-store";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { ReleaseState, ChangeLog } from "@/models/generic/base-types";
 import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 

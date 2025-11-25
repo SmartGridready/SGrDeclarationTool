@@ -1,10 +1,10 @@
 import { Builder } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
-import { buildReleaseNotes } from "@/sections/funcitional-profiles/release-notes/release-notes-builder";
-import { buildProfileIdentification } from "@/sections/funcitional-profiles/profile-identification/profile-identification-builder";
-import { buildAlternativeNames } from "@/sections/funcitional-profiles/alternative-names/alternative-names-builder";
-import { ERROR_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-error-messages";
-import { validateFunctionalProfileFrame } from "@/sections/funcitional-profiles/functional-profile-frame-validator";
+import { buildReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-builder";
+import { buildProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-builder";
+import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
+import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
+import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
 
 /**
  * Converts FunctionalProfileFrame model to XML string

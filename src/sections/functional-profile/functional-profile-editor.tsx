@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { EditorActions } from "@/sections/shared/components/editor/editor-actions";
-import { useProfileStore } from "@/sections/funcitional-profiles/functional-profile-store";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
-import { FunctionalProfileForm } from "@/sections/funcitional-profiles/functional-profile-form";
+import { FunctionalProfileForm } from "@/sections/functional-profile/functional-profile-form";
 import { Button } from "@/sections/shared/components/shadcn/button";
 import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
 import { useFileImport } from "@/sections/shared/hooks/use-file-import";
 import { useFileExport } from "@/sections/shared/hooks/use-file-export";
-import { parseFunctionalProfile } from "@/sections/funcitional-profiles/functional-profile-mapper";
-import { buildFunctionalProfileToXml } from "@/sections/funcitional-profiles/functional-profile-builder";
+import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
+import { buildFunctionalProfileToXml } from "@/sections/functional-profile/functional-profile-builder";
 import { DEBUG } from "@/debug-config";
-import { ERROR_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-error-messages";
-import { INFO_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-info-messages";
+import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
+import { INFO_MESSAGES } from "@/sections/functional-profile/functional-profile-info-messages";
 import { toast } from "sonner";
 
 export default function FunctionalProfileEditor() {

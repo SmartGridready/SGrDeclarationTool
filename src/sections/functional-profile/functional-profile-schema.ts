@@ -2,12 +2,12 @@ import { z } from "zod";
 import {
   releaseNotesSchema,
   changeLogSchema,
-} from "@/sections/funcitional-profiles/release-notes/release-notes-schema";
+} from "@/sections/functional-profile/release-notes/release-notes-schema";
 import {
   functionalProfileIdentificationSchema,
   versionNumberSchema,
-} from "@/sections/funcitional-profiles/profile-identification/profile-identification-schema";
-import { alternativeNamesSchema } from "@/sections/funcitional-profiles/alternative-names/alternative-names-schema";
+} from "@/sections/functional-profile/profile-identification/profile-identification-schema";
+import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
 
 /**
  * Main validation schemas for Functional Profile models
@@ -34,13 +34,13 @@ export {
 };
 
 // Re-export types for TypeScript inference
-export type { VersionNumberInput } from "@/sections/funcitional-profiles/profile-identification/profile-identification-schema";
+export type { VersionNumberInput } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
 export type {
   ChangeLogInput,
   ReleaseNotesInput,
-} from "@/sections/funcitional-profiles/release-notes/release-notes-schema";
-export type { FunctionalProfileIdentificationInput } from "@/sections/funcitional-profiles/profile-identification/profile-identification-schema";
-export type { AlternativeNamesInput } from "@/sections/funcitional-profiles/alternative-names/alternative-names-schema";
+} from "@/sections/functional-profile/release-notes/release-notes-schema";
+export type { FunctionalProfileIdentificationInput } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
+export type { AlternativeNamesInput } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
 export type FunctionalProfileFrameInput = z.input<
   typeof functionalProfileFrameSchema
 >;

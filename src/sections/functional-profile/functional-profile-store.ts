@@ -9,15 +9,15 @@ import {
 import {
   createReleaseNotesSlice,
   ReleaseNotesSlice,
-} from "@/sections/funcitional-profiles/release-notes/release-notes-slice";
+} from "@/sections/functional-profile/release-notes/release-notes-slice";
 import {
   createFunctionalProfileIdentificationSlice,
   FunctionalProfileIdentificationSlice,
-} from "@/sections/funcitional-profiles/profile-identification/profile-identification-slice";
+} from "@/sections/functional-profile/profile-identification/profile-identification-slice";
 import {
   createAlternativeNamesSlice,
   AlternativeNamesSlice,
-} from "@/sections/funcitional-profiles/alternative-names/alternative-names-slice";
+} from "@/sections/functional-profile/alternative-names/alternative-names-slice";
 
 interface ProfileStore {
   profile?: FunctionalProfileFrame;

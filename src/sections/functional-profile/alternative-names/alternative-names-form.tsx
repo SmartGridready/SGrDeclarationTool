@@ -2,7 +2,7 @@ import { useShallow } from "zustand/react/shallow";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
-import { useProfileStore } from "@/sections/funcitional-profiles/functional-profile-store";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 /**

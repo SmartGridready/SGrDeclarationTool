@@ -1,9 +1,9 @@
 import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
-import { mapReleaseNotes } from "@/sections/funcitional-profiles/release-notes/release-notes-mapper";
-import { mapProfileIdentification } from "@/sections/funcitional-profiles/profile-identification/profile-identification-mapper";
-import { mapAlternativeNames } from "@/sections/funcitional-profiles/alternative-names/alternative-names-mapper";
-import { ERROR_MESSAGES } from "@/sections/funcitional-profiles/functional-profile-error-messages";
+import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-mapper";
+import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
+import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
+import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
 
 /**
  * Parses XML string and maps it to FunctionalProfileFrame model

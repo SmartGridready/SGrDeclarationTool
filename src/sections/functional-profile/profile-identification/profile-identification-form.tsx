@@ -6,7 +6,7 @@ import {
   LEVEL_OF_OPERATION,
 } from "./profile-identification-form-options";
 import { InputField } from "@/sections/shared/components/forms/input-field";
-import { useProfileStore } from "@/sections/funcitional-profiles/functional-profile-store";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useShallow } from "zustand/shallow";
 import { FunctionalProfileCategory, LevelOfOperation } from "@/models";
 import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";

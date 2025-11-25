@@ -1,5 +1,5 @@
 import { FunctionalProfileFrame } from "@/models";
-import { functionalProfileFrameSchema } from "@/sections/funcitional-profiles/functional-profile-schema";
+import { functionalProfileFrameSchema } from "@/sections/functional-profile/functional-profile-schema";
 import {
   ValidationResult,
   validateWithSchema,

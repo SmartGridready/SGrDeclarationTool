@@ -75,6 +75,25 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
         { name: "exampleAttribute2" },
       ],
     },
+    dataPointList: {
+      dataPointListElement: [
+        {
+          dataPoint: {
+            dataPointName: "ExampleDataPoint",
+            dataDirection: "R",
+            presenceLevel: "M",
+            dataType: "float64",
+            unit: "KILOWATTS",
+            legibleDescription: [
+              {
+                textElement: "Example data point description",
+                language: "en",
+              },
+            ],
+          },
+        },
+      ],
+    },
   };
 }
 

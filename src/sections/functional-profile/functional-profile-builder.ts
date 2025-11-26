@@ -5,6 +5,7 @@ import { buildProfileIdentification } from "@/sections/functional-profile/profil
 import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
 import { buildGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-builder";
+import { buildDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-builder";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
 
@@ -110,6 +111,16 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
   ) {
     xmlObject.FunctionalProfileFrame.genericAttributeList = [
       buildGenericAttributeList(frame.genericAttributeList),
+    ];
+  }
+
+  // Build dataPointList if present
+  if (
+    frame.dataPointList &&
+    frame.dataPointList.dataPointListElement.length > 0
+  ) {
+    xmlObject.FunctionalProfileFrame.dataPointList = [
+      buildDataPointList(frame.dataPointList),
     ];
   }
 

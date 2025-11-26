@@ -22,6 +22,10 @@ import {
   createLegibleDescriptionSlice,
   LegibleDescriptionSlice,
 } from "@/sections/functional-profile/legible-description/legible-description-slice";
+import {
+  createGenericAttributeListSlice,
+  GenericAttributeListSlice,
+} from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-slice";
 
 interface ProfileStore {
   profile?: FunctionalProfileFrame;
@@ -35,7 +39,8 @@ type StoreState = ProfileStore &
   ReleaseNotesSlice &
   FunctionalProfileIdentificationSlice &
   AlternativeNamesSlice &
-  LegibleDescriptionSlice;
+  LegibleDescriptionSlice &
+  GenericAttributeListSlice;
 
 export const useProfileStore = create<StoreState>()(
   persist(
@@ -66,6 +71,7 @@ export const useProfileStore = create<StoreState>()(
       ...createFunctionalProfileIdentificationSlice(set),
       ...createAlternativeNamesSlice(set),
       ...createLegibleDescriptionSlice(set),
+      ...createGenericAttributeListSlice(set),
     })),
     {
       name: "sgr-profile-storage",

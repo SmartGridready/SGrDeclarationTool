@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.9.0...v0.10.0) (2025-11-26)
+
+
+### Features
+
+* add a builder for generic attribute list (GL-8) ([0ba82ed](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0ba82ed357fa409a4c9f95a2d3f929e7dbf95031))
+* add genericAtrributeList to FunctionalProfileFrame (GL-9) ([63d8135](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/63d8135fc9c4dadf6e922e34cb4f5439b9c5c526))
+* create slice of generic attribute list and update store (GL-16) ([9ef259b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9ef259b0b054063921c9a4b3adcf6f7fadcaf2ad))
+* implement generic attribut list schema and validator ([8f7a133](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8f7a1333baff8b66f7182f27bae1d3e19cf1f5c9))
+* implement mapper for generic attribute list (GL-7) ([639a6c3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/639a6c3ea762e15714c4f0e85c3f77d1ba621f4a))
+* implement ui-form for genericAttributeList (GL-13) ([942bde2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/942bde28d5a37f58054b86838d10d38548f8cbc6))
+* update basetype and upgrade factory with sample generic AttributeList (GL-9) ([5463cc1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5463cc105ecc3a9bce7324f6d519e939af8f34a1))
+
+
+### Chores
+
+* add local file to gitignore ([2249fde](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2249fde687c27cb9d646f14029a8408dc2424033))
+
 ## [0.9.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.8.0...v0.9.0) (2025-11-26)
 
 

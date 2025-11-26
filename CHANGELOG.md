@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.10.0...v0.11.0) (2025-11-26)
+
+
+### Features
+
+* add base types for data point list (GL-9) ([493d0ed](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/493d0edef96d8f2ff4d74adef2a176a2bace5760))
+* create frontend-form for data point list and integrate into main-form of functional profiles (GL-13) ([405cc6e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/405cc6eae8927de67caaef5de46bd1b29f4c876c))
+* implement builder for data point list and integrate into main main-builder of functional profile (GL-8) ([24df273](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/24df273b3e69c1bddf2e57ec2895a5406bd14e56))
+* implement mapper for data point list and integrate into main-mapper of functional profile (GL-7) ([7a61a02](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7a61a02c7cc57e3ba6c10eda13917618f4dfaf6e))
+* implement model and factory for data point list (GL-9) ([60eeb3a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/60eeb3ac1ea32ccb03a09ca0297d9f6fbef89e1a))
+* implement schema for data point list and integrate into main schema for functional profile (GL-18) ([377bf57](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/377bf57c0a1ff4698f9916083d346bcde23405db))
+* implement schema into validator for data point list (GL-18) ([1437a2c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1437a2c757a1fe42452e315e6971c6a5f39ff454))
+* implement select options for data point list (GL-18) ([29dc11b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/29dc11b3d436d6ddb0dbbf1d432bd7fa5dd288b5))
+* implement slice for data point list und update Store (GL-16) ([be34a74](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/be34a74d4ab7757f08ae08dcb14f37130ef3e7c6))
+
+
+### Chores
+
+* deactivate debug ([52e5d91](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/52e5d91dd496a8c473efb21667bf9a326d78316d))
+
 ## [0.10.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.9.0...v0.10.0) (2025-11-26)
 
 

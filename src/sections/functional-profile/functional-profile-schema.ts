@@ -10,6 +10,7 @@ import {
 import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
 import { legibleDescriptionsSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 import { genericAttributeListFunctionalProfileSchema } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
+import { dataPointListSchema } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
 
 /**
  * Main validation schemas for Functional Profile models
@@ -26,6 +27,7 @@ export const functionalProfileFrameSchema = z.object({
     legibleDescription: legibleDescriptionsSchema.optional(),
   }),
   genericAttributeList: genericAttributeListFunctionalProfileSchema.optional(),
+  dataPointList: dataPointListSchema.optional(),
 });
 
 // Re-export schemas for convenience
@@ -37,6 +39,7 @@ export {
   alternativeNamesSchema,
   legibleDescriptionsSchema,
   genericAttributeListFunctionalProfileSchema,
+  dataPointListSchema,
 };
 
 // Re-export types for TypeScript inference
@@ -49,6 +52,7 @@ export type { FunctionalProfileIdentificationInput } from "@/sections/functional
 export type { AlternativeNamesInput } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
 export type { LegibleDescriptionsInput } from "@/sections/functional-profile/legible-description/legible-description-schema";
 export type { GenericAttributeListFunctionalProfileInput } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
+export type { DataPointListInput } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
 export type FunctionalProfileFrameInput = z.input<
   typeof functionalProfileFrameSchema
 >;

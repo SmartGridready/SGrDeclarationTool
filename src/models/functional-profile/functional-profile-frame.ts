@@ -8,6 +8,7 @@ import {
   FunctionalProfileIdentification,
   AlternativeNames,
   LegibleDescription,
+  GenericAttributeListFunctionalProfile,
 } from "@/models/generic";
 
 export interface FunctionalProfileFrame {
@@ -17,6 +18,6 @@ export interface FunctionalProfileFrame {
     alternativeNames?: AlternativeNames;
     legibleDescription?: LegibleDescription[]; // maxOccurs="4"
   };
-  // genericAttributeList?: GenericAttributeListFunctionalProfile;
+  genericAttributeList?: GenericAttributeListFunctionalProfile;
   // dataPointList?: FunctionalProfileDataPointList;
 }

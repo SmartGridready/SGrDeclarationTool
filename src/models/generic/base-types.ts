@@ -57,10 +57,73 @@ export interface AlternativeNames {
   en17609Name?: string;
 }
 
+export interface GenericAttributeFunctionalProfile {
+  name: string;
+}
+
 export interface GenericAttributeListFunctionalProfile {
   genericAttributeListElement: GenericAttributeFunctionalProfile[];
 }
 
-export interface GenericAttributeFunctionalProfile {
-  name: string;
-}
+// Data Point types for Functional Profile
+export type DataDirectionFunctionalProfile = "R" | "W" | "RW";
+export type PresenceLevel = "M" | "R" | "O";
+
+export type DataTypeFunctionalProfile =
+  | "boolean"
+  | "int8"
+  | "int16"
+  | "int32"
+  | "int64"
+  | "int8U"
+  | "int16U"
+  | "int32U"
+  | "int64U"
+  | "float32"
+  | "float64"
+  | "dateTime"
+  | "string";
+
+export type Units =
+  | "AMPERES"
+  | "BARS"
+  | "CUBIC_METERS"
+  | "CUBIC_METERS_PER_SECOND"
+  | "DEGREES_CELSIUS"
+  | "DEGREES_KELVIN"
+  | "DEGREES_PHASE"
+  | "HERTZ"
+  | "HOURS"
+  | "JOULES"
+  | "KILOGRAMS"
+  | "KILOVOLT_AMPERES"
+  | "KILOVOLT_AMPERE_HOURS"
+  | "KILOVOLT_AMPERES_REACTIVE"
+  | "KILOVOLT_AMPERES_REACTIVE_HOURS"
+  | "KILOWATT_HOURS"
+  | "KILOWATTS"
+  | "METERS"
+  | "METERS_PER_SECOND"
+  | "METERS_PER_SECOND_PER_SECOND"
+  | "MINUTES"
+  | "NO_UNITS"
+  | "OHMS"
+  | "PARTS_PER_MILLION"
+  | "PASCALS"
+  | "PER_HOUR"
+  | "PERCENT"
+  | "PERCENT_RELATIVE_HUMIDITY"
+  | "POWER_FACTOR"
+  | "RADIANS"
+  | "RADIANS_PER_SECOND"
+  | "REVOLUTIONS_PER_MINUTE"
+  | "SECONDS"
+  | "SQUARE_METERS"
+  | "VOLT_AMPERES"
+  | "VOLT_AMPERES_REACTIVE"
+  | "VOLTS"
+  | "WATT_HOURS"
+  | "WATTS"
+  | "WATTS_PER_SQUARE_METER"
+  | "MEGAWATT_HOURS"
+  | "NONE";

@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.8.0...v0.9.0) (2025-11-26)
+
+
+### Features
+
+* create slice for legible description and integrate into main store (GL-16) ([d4bc695](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d4bc69523f1465574b30fc713f9cbbbe74c78e74))
+* implement legible description builder and enable cdata (GL-8) ([a23e258](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a23e258a5b3ae836b7f2125656f84c56d637d634))
+* implement legible description form (GL-13) ([653f379](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/653f379333ceb271e145240a3847926b87b4fb87))
+* implement legible description validation layer including messages and form options (GL-18) ([965de1c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/965de1cd5b51d04fdefdcbbf8e130c6408231683))
+* implement release notes mapper (GL7) ([acdb542](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/acdb5426463e2e6080d57ce251a680ea0f150ef7))
+* install textarea and implement text area field component (GL-11) ([677aa66](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/677aa66f0b1302d5f3431006b5261598d4b2d1aa))
+* uncomment legible description and add it to sample in factory (GL-9) ([3ef078d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3ef078d817d68af5db0f2056965ee8cad66cc9e1))
+
+
+### Bug Fixes
+
+* cdata handling to passing directly to xml2js (GL-8) ([efadbeb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/efadbebf25de3078c24d80932b7977f3a6938b50))
+* include legible description schema in functional profile schema (GL-18) ([edd384c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/edd384c02fe09718b0682d7144dcc96da6e8d30e))
+* typo in functional-profile folder name ([5b201ab](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5b201ab36cc38517a4e749b8b91c504a7ca6db9e))
+
+
+### Tests
+
+* add test page for functional profiles to verify the diff (GL-5) ([b785a4b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b785a4b958e6c3acb3b525b75855a6d874852690))
+
+
+### Code Refactoring
+
+* add max items prop to array field (GL-11) ([7aa1b66](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7aa1b66083e86ed741f4463afcc9ed3c51c0c7ae))
+* delete unused error messages, they are provided by zod (GL-18) ([c6f1670](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c6f16702a9bdebf065d32c7750d511e42ea6dfb5))
+* move messages to shared folder (GL-17) ([77f2f45](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/77f2f458b42251ab736a27f84490af100648c074))
+
 ## [0.8.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.7.0...v0.8.0) (2025-11-25)
 
 

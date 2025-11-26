@@ -4,6 +4,7 @@ import { buildReleaseNotes } from "@/sections/functional-profile/release-notes/r
 import { buildProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-builder";
 import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
+import { buildGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-builder";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
 
@@ -101,6 +102,16 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
   }
 
   xmlObject.FunctionalProfileFrame.functionalProfile = [functionalProfileXml];
+
+  // Build genericAttributeList if present
+  if (
+    frame.genericAttributeList &&
+    frame.genericAttributeList.genericAttributeListElement.length > 0
+  ) {
+    xmlObject.FunctionalProfileFrame.genericAttributeList = [
+      buildGenericAttributeList(frame.genericAttributeList),
+    ];
+  }
 
   return xmlObject;
 }

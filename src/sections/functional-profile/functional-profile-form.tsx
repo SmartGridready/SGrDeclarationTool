@@ -6,6 +6,7 @@ import { ProfileIdentificationForm } from "@/sections/functional-profile/profile
 import { AlternativeNamesForm } from "@/sections/functional-profile/alternative-names/alternative-names-form";
 import { LegibleDescriptionForm } from "@/sections/functional-profile/legible-description/legible-description-form";
 import { GenericAttributeListForm } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-form";
+import { DataPointListForm } from "@/sections/functional-profile/data-point-list/data-point-list-form";
 
 export function FunctionalProfileForm() {
   const { profile } = useProfileStore();
@@ -21,6 +22,7 @@ export function FunctionalProfileForm() {
       <AlternativeNamesForm />
       <LegibleDescriptionForm />
       <GenericAttributeListForm />
+      <DataPointListForm />
     </div>
   );
 }

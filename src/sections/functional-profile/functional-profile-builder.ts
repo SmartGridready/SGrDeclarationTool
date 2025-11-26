@@ -4,7 +4,7 @@ import { buildReleaseNotes } from "@/sections/functional-profile/release-notes/r
 import { buildProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-builder";
 import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
-import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
+import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
 
 /**

@@ -12,8 +12,8 @@ import { useFileExport } from "@/sections/shared/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/sections/functional-profile/functional-profile-builder";
 import { DEBUG } from "@/debug-config";
-import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
-import { INFO_MESSAGES } from "@/sections/functional-profile/functional-profile-info-messages";
+import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
+import { INFO_MESSAGES } from "@/sections/shared/constants/info-messages";
 import { FunctionalProfileFrame } from "@/models";
 import { toast } from "sonner";
 

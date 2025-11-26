@@ -4,7 +4,7 @@ import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/rel
 import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
 import { mapLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-mapper";
-import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
+import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 
 /**
  * Parses XML string and maps it to FunctionalProfileFrame model

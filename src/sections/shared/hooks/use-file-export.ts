@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { toast } from "sonner";
-import { ERROR_MESSAGES } from "@/sections/functional-profile/functional-profile-error-messages";
-import { SUCCESS_MESSAGES } from "@/sections/functional-profile/functional-profile-success-messages";
+import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
+import { SUCCESS_MESSAGES } from "@/sections/shared/constants/success-messages";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { FunctionalProfileFrame } from "@/models";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";

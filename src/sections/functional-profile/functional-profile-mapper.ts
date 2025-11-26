@@ -4,6 +4,7 @@ import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/rel
 import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
 import { mapLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-mapper";
+import { mapGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-mapper";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 
 /**
@@ -95,6 +96,13 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   ) {
     frame.functionalProfile.legibleDescription = mapLegibleDescription(
       frameData.functionalProfile[0].legibleDescription
+    );
+  }
+
+  // Map genericAttributeList if present
+  if (frameData.genericAttributeList?.[0]) {
+    frame.genericAttributeList = mapGenericAttributeList(
+      frameData.genericAttributeList[0]
     );
   }
 

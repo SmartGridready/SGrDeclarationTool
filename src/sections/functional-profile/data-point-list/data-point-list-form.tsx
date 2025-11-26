@@ -23,6 +23,18 @@ import {
   UNIT_OPTIONS,
 } from "./data-point-list-form-options";
 import { LANGUAGE_OPTIONS } from "@/sections/functional-profile/legible-description/legible-description-form-options";
+import {
+  isEnumDataType,
+  isBitmapDataType,
+  isJsonDataType,
+  getDataTypeStringValue,
+  createDataTypeFromString,
+} from "./data-type-utils";
+import { EnumForm } from "./enum/enum-form";
+import { BitmapForm } from "./bitmap/bitmap-form";
+import { JsonForm } from "./json/json-form";
+import { JsonSlice } from "./json/json-slice";
+import { FormSubSection } from "@/sections/shared/components/forms/form-subsection";
 
 function useDataPointList() {
   return useProfileStore(
@@ -37,6 +49,7 @@ function useDataPointList() {
       updatePresenceLevel: state.updatePresenceLevel,
       updateDataType: state.updateDataType,
       updateUnit: state.updateUnit,
+      updateArrayLength: state.updateArrayLength,
       addEmptyDataPointLegibleDescription:
         state.addEmptyDataPointLegibleDescription,
       removeDataPointLegibleDescription:
@@ -45,6 +58,35 @@ function useDataPointList() {
         state.updateDataPointLegibleDescriptionText,
       updateDataPointLegibleDescriptionLanguage:
         state.updateDataPointLegibleDescriptionLanguage,
+      // Enum methods
+      setEnumDataType: state.setEnumDataType,
+      addEnumEntry: state.addEnumEntry,
+      removeEnumEntry: state.removeEnumEntry,
+      updateEnumEntryLiteral: state.updateEnumEntryLiteral,
+      updateEnumEntryDescription: state.updateEnumEntryDescription,
+      updateEnumHexMask: state.updateEnumHexMask,
+      addEmptyEnumEntry: state.addEmptyEnumEntry,
+      // Bitmap methods
+      setBitmapDataType: state.setBitmapDataType,
+      addBitmapEntry: state.addBitmapEntry,
+      removeBitmapEntry: state.removeBitmapEntry,
+      updateBitmapEntryLiteral: state.updateBitmapEntryLiteral,
+      updateBitmapEntryDescription: state.updateBitmapEntryDescription,
+      addEmptyBitmapEntry: state.addEmptyBitmapEntry,
+      // JSON methods
+      setJsonDataType: state.setJsonDataType,
+      addJsonItem: state.addJsonItem,
+      removeJsonItem: state.removeJsonItem,
+      updateJsonArrayItem: state.updateJsonArrayItem,
+      updateJsonElemItem: state.updateJsonElemItem,
+      addJsonItemAtPath: state.addJsonItemAtPath,
+      removeJsonItemAtPath: state.removeJsonItemAtPath,
+      updateJsonArrayItemAtPath: state.updateJsonArrayItemAtPath,
+      updateJsonElemItemAtPath: state.updateJsonElemItemAtPath,
+      addJsonNestedItem: state.addJsonNestedItem,
+      removeJsonNestedItem: state.removeJsonNestedItem,
+      updateJsonNestedArrayItem: state.updateJsonNestedArrayItem,
+      updateJsonNestedElemItem: state.updateJsonNestedElemItem,
     }))
   );
 }
@@ -61,10 +103,37 @@ export function DataPointListForm() {
     updatePresenceLevel,
     updateDataType,
     updateUnit,
+    updateArrayLength,
     addEmptyDataPointLegibleDescription,
     removeDataPointLegibleDescription,
     updateDataPointLegibleDescriptionText,
     updateDataPointLegibleDescriptionLanguage,
+    setEnumDataType,
+    addEnumEntry,
+    removeEnumEntry,
+    updateEnumEntryLiteral,
+    updateEnumEntryDescription,
+    updateEnumHexMask,
+    addEmptyEnumEntry,
+    setBitmapDataType,
+    addBitmapEntry,
+    removeBitmapEntry,
+    updateBitmapEntryLiteral,
+    updateBitmapEntryDescription,
+    addEmptyBitmapEntry,
+    setJsonDataType,
+    addJsonItem,
+    removeJsonItem,
+    updateJsonArrayItem,
+    updateJsonElemItem,
+    addJsonItemAtPath,
+    removeJsonItemAtPath,
+    updateJsonArrayItemAtPath,
+    updateJsonElemItemAtPath,
+    addJsonNestedItem,
+    removeJsonNestedItem,
+    updateJsonNestedArrayItem,
+    updateJsonNestedElemItem,
   } = useDataPointList();
 
   const { getError } = useProfileValidation();
@@ -85,7 +154,7 @@ export function DataPointListForm() {
         onRemove={removeDataPoint}
         emptyMessage="No data points added"
         renderItem={(item, index) => (
-          <div className="space-y-4">
+          <>
             <InputField
               label="Data Point Name"
               name={`dataPoint-${index}-name`}
@@ -140,7 +209,7 @@ export function DataPointListForm() {
               />
             </FormGroup>
 
-            <FormGroup columns={2}>
+            <FormGroup columns={3}>
               <SelectField
                 label="Data Type"
                 name={`dataPoint-${index}-dataType`}
@@ -150,10 +219,23 @@ export function DataPointListForm() {
                     label: string;
                   }[]
                 }
-                value={item.dataPoint.dataType}
-                onChange={(value) =>
-                  updateDataType(index, value as DataTypeFunctionalProfile)
-                }
+                value={getDataTypeStringValue(item.dataPoint.dataType)}
+                onChange={(value) => {
+                  const newDataType = createDataTypeFromString(value);
+                  // If switching to enum/bitmap/json, initialize empty structure
+                  if (value === "enum" && !isEnumDataType(newDataType)) {
+                    setEnumDataType(index, {});
+                  } else if (
+                    value === "bitmap" &&
+                    !isBitmapDataType(newDataType)
+                  ) {
+                    setBitmapDataType(index, {});
+                  } else if (value === "json" && !isJsonDataType(newDataType)) {
+                    setJsonDataType(index, {});
+                  } else {
+                    updateDataType(index, newDataType);
+                  }
+                }}
                 required={true}
                 error={getError(
                   `dataPointList.dataPointListElement.${index}.dataPoint.dataType`
@@ -172,10 +254,84 @@ export function DataPointListForm() {
                   `dataPointList.dataPointListElement.${index}.dataPoint.unit`
                 )}
               />
+              <InputField
+                label="Array Length"
+                name={`dataPoint-${index}-arrayLength`}
+                type="number"
+                value={item.dataPoint.arrayLength?.toString() || ""}
+                onChange={(value) =>
+                  updateArrayLength(
+                    index,
+                    value ? parseInt(value, 10) : undefined
+                  )
+                }
+                placeholder="Enter array length"
+                error={getError(
+                  `dataPointList.dataPointListElement.${index}.dataPoint.arrayLength`
+                )}
+              />
             </FormGroup>
 
+            {/* Enum Data Type Configuration */}
+            {isEnumDataType(item.dataPoint.dataType) && (
+              <EnumForm
+                dataPointIndex={index}
+                enumMap={item.dataPoint.dataType.enum}
+                enumSlice={{
+                  setEnumDataType,
+                  addEnumEntry,
+                  removeEnumEntry,
+                  updateEnumEntryLiteral,
+                  updateEnumEntryDescription,
+                  updateEnumHexMask,
+                  addEmptyEnumEntry,
+                }}
+              />
+            )}
+
+            {/* Bitmap Data Type Configuration */}
+            {isBitmapDataType(item.dataPoint.dataType) && (
+              <BitmapForm
+                dataPointIndex={index}
+                bitmap={item.dataPoint.dataType.bitmap}
+                bitmapSlice={{
+                  setBitmapDataType,
+                  addBitmapEntry,
+                  removeBitmapEntry,
+                  updateBitmapEntryLiteral,
+                  updateBitmapEntryDescription,
+                  addEmptyBitmapEntry,
+                }}
+              />
+            )}
+
+            {/* JSON Data Type Configuration */}
+            {isJsonDataType(item.dataPoint.dataType) && (
+              <JsonForm
+                dataPointIndex={index}
+                items={item.dataPoint.dataType.json.items}
+                jsonSlice={
+                  {
+                    setJsonDataType,
+                    addJsonItem,
+                    removeJsonItem,
+                    updateJsonArrayItem,
+                    updateJsonElemItem,
+                    addJsonItemAtPath,
+                    removeJsonItemAtPath,
+                    updateJsonArrayItemAtPath,
+                    updateJsonElemItemAtPath,
+                    addJsonNestedItem,
+                    removeJsonNestedItem,
+                    updateJsonNestedArrayItem,
+                    updateJsonNestedElemItem,
+                  } as JsonSlice
+                }
+              />
+            )}
+
             {/* Nested Legible Descriptions */}
-            <div className="border-t pt-4 mt-4">
+            <FormSubSection title="Descriptions">
               <ArrayField<LegibleDescription>
                 label="Descriptions"
                 items={item.dataPoint.legibleDescription}
@@ -186,7 +342,7 @@ export function DataPointListForm() {
                 emptyMessage="No descriptions added"
                 maxItems={4}
                 renderItem={(desc, descIndex) => (
-                  <div className="space-y-3">
+                  <>
                     <TextareaField
                       label="Text"
                       name={`dataPoint-${index}-desc-${descIndex}-text`}
@@ -222,11 +378,11 @@ export function DataPointListForm() {
                         `dataPointList.dataPointListElement.${index}.dataPoint.legibleDescription.${descIndex}.language`
                       )}
                     />
-                  </div>
+                  </>
                 )}
               />
-            </div>
-          </div>
+            </FormSubSection>
+          </>
         )}
       />
     </FormSection>

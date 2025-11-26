@@ -28,6 +28,9 @@ export const DATA_TYPE_OPTIONS = [
   { value: "float64", label: "Float64" },
   { value: "dateTime", label: "DateTime" },
   { value: "string", label: "String" },
+  { value: "enum", label: "Enum" },
+  { value: "bitmap", label: "Bitmap" },
+  { value: "json", label: "JSON" },
 ] as const;
 
 export const UNIT_OPTIONS = [

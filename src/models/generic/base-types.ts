@@ -56,3 +56,11 @@ export interface AlternativeNames {
   hpBwpName?: string;
   en17609Name?: string;
 }
+
+export interface GenericAttributeListFunctionalProfile {
+  genericAttributeListElement: GenericAttributeFunctionalProfile[];
+}
+
+export interface GenericAttributeFunctionalProfile {
+  name: string;
+}

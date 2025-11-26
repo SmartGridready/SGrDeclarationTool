@@ -69,6 +69,12 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
         },
       ],
     },
+    genericAttributeList: {
+      genericAttributeListElement: [
+        { name: "exampleAttribute1" },
+        { name: "exampleAttribute2" },
+      ],
+    },
   };
 }
 

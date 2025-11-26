@@ -6,6 +6,10 @@
 import { LevelOfOperation } from "@/models/generic/base-type-level-of-operation-type";
 import { FunctionalProfileCategory } from "@/models/generic/base-type-functional-profile-category";
 
+// ============================================================================
+// Release Management
+// ============================================================================
+
 export interface ReleaseNotes {
   state: ReleaseState;
   remarks?: string;
@@ -20,6 +24,10 @@ export interface ChangeLog {
   author: string;
   comment: string;
 }
+
+// ============================================================================
+// Functional Profile Identification
+// ============================================================================
 
 export interface FunctionalProfileIdentification {
   specificationOwnerIdentification: SpecificationOwnerIdentification;
@@ -36,6 +44,10 @@ export interface VersionNumber {
   secondaryVersionNumber: number;
   subReleaseVersionNumber: number;
 }
+
+// ============================================================================
+// Descriptions and Names
+// ============================================================================
 
 export interface LegibleDescription {
   textElement: string; // max 4000 characters
@@ -57,6 +69,10 @@ export interface AlternativeNames {
   en17609Name?: string;
 }
 
+// ============================================================================
+// Generic Attributes
+// ============================================================================
+
 export interface GenericAttributeFunctionalProfile {
   name: string;
 }
@@ -65,24 +81,137 @@ export interface GenericAttributeListFunctionalProfile {
   genericAttributeListElement: GenericAttributeFunctionalProfile[];
 }
 
-// Data Point types for Functional Profile
+// ============================================================================
+// Data Types - Common
+// ============================================================================
+
+export type EmptyValue = "";
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface EmptyType {}
+
+export type DataTypeChoice =
+  | { boolean: EmptyType }
+  | { int8: EmptyType }
+  | { int16: EmptyType }
+  | { int32: EmptyType }
+  | { int64: EmptyType }
+  | { int8U: EmptyType }
+  | { int16U: EmptyType }
+  | { int32U: EmptyType }
+  | { int64U: EmptyType }
+  | { float32: EmptyType }
+  | { float64: EmptyType }
+  | { dateTime: EmptyType }
+  | { string: EmptyType };
+
+// ============================================================================
+// Data Types - Functional Profile
+// ============================================================================
+
 export type DataDirectionFunctionalProfile = "R" | "W" | "RW";
 export type PresenceLevel = "M" | "R" | "O";
 
 export type DataTypeFunctionalProfile =
-  | "boolean"
-  | "int8"
-  | "int16"
-  | "int32"
-  | "int64"
-  | "int8U"
-  | "int16U"
-  | "int32U"
-  | "int64U"
-  | "float32"
-  | "float64"
-  | "dateTime"
-  | "string";
+  | { enum: EnumMapFunctionalProfile }
+  | { bitmap: BitmapFunctionalProfile }
+  | { json: JSonOutputFunctionalProfile }
+  | DataTypeChoice;
+
+// Enum for Functional Profile
+export interface EnumMapFunctionalProfile {
+  enumEntry?: EnumEntryRecordFunctionalProfile[];
+  hexMask?: string; // hexBinary
+}
+
+export interface EnumEntryRecordFunctionalProfile {
+  literal: string;
+  description?: string;
+}
+
+// Bitmap for Functional Profile
+export interface BitmapFunctionalProfile {
+  bitmapEntry?: BitmapEntryFunctionalProfile[];
+}
+
+export interface BitmapEntryFunctionalProfile {
+  literal: string;
+  description?: string;
+}
+
+// JSON for Functional Profile
+export interface JSonOutputFunctionalProfile {
+  items?: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[];
+}
+
+export interface JSonArrayOutputFunctionalProfile {
+  name?: string;
+  items?: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[];
+}
+
+export type JSonElemFunctionalProfile =
+  | (JSonElemFunctionalProfileBase & { date: EmptyValue })
+  | (JSonElemFunctionalProfileBase & { string: EmptyValue })
+  | (JSonElemFunctionalProfileBase & { number: EmptyValue });
+
+interface JSonElemFunctionalProfileBase {
+  key: string;
+}
+
+// ============================================================================
+// Data Types - Product
+// ============================================================================
+
+export type DataTypeProduct =
+  | { enum: EnumMapProduct }
+  | { bitmap: BitmapProduct }
+  | { json: EmptyValue }
+  | DataTypeChoice;
+
+// Enum for Product
+export interface EnumMapProduct {
+  enumEntry: EnumEntryProductRecord[];
+  hexMask?: string; // hexBinary
+}
+
+export interface EnumEntryProductRecord {
+  literal: string;
+  ordinal?: number;
+  description?: string;
+}
+
+// Bitmap for Product
+export interface BitmapProduct {
+  bitmapEntry: BitmapEntryProduct[];
+}
+
+export interface BitmapEntryProduct {
+  literal: string;
+  hexMask: string; // hexBinary
+  description?: string;
+}
+
+// ============================================================================
+// Dynamic Parameters
+// ============================================================================
+
+export interface DynamicParameterDescriptionList {
+  parameterListElement?: DynamicParameterDescriptionListElement[];
+}
+
+export interface DynamicParameterDescriptionListElement {
+  name: string;
+  dataType: DataTypeProduct;
+  defaultValue?: string;
+  parameterDescription?: DynamicParameterDescription[];
+}
+
+export interface DynamicParameterDescription extends LegibleDescription {
+  label?: string;
+}
+
+// ============================================================================
+// Units
+// ============================================================================
 
 export type Units =
   | "AMPERES"

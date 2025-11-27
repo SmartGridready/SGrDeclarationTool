@@ -144,9 +144,13 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
     return { bitmap: mapBitmapDataType(bitmapXml) };
   }
 
-  const jsonXml = getFirstElement(dataTypeXml, "json");
-  if (jsonXml) {
-    return { json: mapJsonDataType(jsonXml) };
+  // Check for json - it can be an empty element <json />
+  // Empty elements are represented as arrays by xml2js (explicitArray: true)
+  // getFirstElement returns undefined for empty arrays, so we check if the field exists
+  if (dataTypeXml.json !== undefined) {
+    const jsonXml = getFirstElement(dataTypeXml, "json");
+    // For empty <json />, jsonXml will be undefined, but we still want to map it
+    return { json: jsonXml ? mapJsonDataType(jsonXml) : {} };
   }
 
   // Map simple data types
@@ -259,7 +263,11 @@ function mapDataTypeProduct(dataTypeXml: any): DataTypeProduct {
     return { bitmap: mapBitmapProductDataType(bitmapXml) };
   }
 
+  // Check for json - it can be an empty element <json />
+  // Empty elements are represented as arrays by xml2js (explicitArray: true)
+  // So we check if the field exists (even if it's an empty array)
   if (dataTypeXml.json !== undefined) {
+    // For DataTypeProduct, json is just an empty string
     return { json: "" };
   }
 

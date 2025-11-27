@@ -1,6 +1,6 @@
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
-import { FormSubSection } from "@/sections/shared/components/forms/form-subsection";
+import { FormSection } from "@/sections/shared/components/forms/form-section";
 import {
   BitmapFunctionalProfile,
   BitmapEntryFunctionalProfile,
@@ -19,7 +19,7 @@ export function BitmapForm({
   bitmapSlice,
 }: BitmapFormProps) {
   return (
-    <FormSubSection title="Bitmap Configuration">
+    <FormSection title="Bitmap Configuration" nested>
       <ArrayField<BitmapEntryFunctionalProfile>
         label="Bitmap Entries"
         items={bitmap.bitmapEntry}
@@ -60,6 +60,6 @@ export function BitmapForm({
           </>
         )}
       />
-    </FormSubSection>
+    </FormSection>
   );
 }

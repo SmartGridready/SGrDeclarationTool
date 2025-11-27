@@ -1,7 +1,7 @@
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { SelectField } from "@/sections/shared/components/forms/select-field";
 import { JsonArrayField } from "@/sections/shared/components/forms/json-array-field";
-import { FormSubSection } from "@/sections/shared/components/forms/form-subsection";
+import { FormSection } from "@/sections/shared/components/forms/form-section";
 import {
   JSonArrayOutputFunctionalProfile,
   JSonElemFunctionalProfile,
@@ -168,7 +168,7 @@ function JsonItemsEditor({
 
 export function JsonForm({ dataPointIndex, items, jsonSlice }: JsonFormProps) {
   return (
-    <FormSubSection title="JSON Configuration">
+    <FormSection title="JSON Configuration" nested>
       <JsonItemsEditor
         dataPointIndex={dataPointIndex}
         items={items}
@@ -176,6 +176,6 @@ export function JsonForm({ dataPointIndex, items, jsonSlice }: JsonFormProps) {
         pathPrefix={`dataPoint-${dataPointIndex}`}
         currentPath={[]}
       />
-    </FormSubSection>
+    </FormSection>
   );
 }

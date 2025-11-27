@@ -1,4 +1,3 @@
-import { useShallow } from "zustand/react/shallow";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { TextareaField } from "@/sections/shared/components/forms/textarea-field";
 import { SelectField } from "@/sections/shared/components/forms/select-field";
@@ -6,55 +5,29 @@ import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { LANGUAGE_OPTIONS } from "./legible-description-form-options";
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { LegibleDescription, Language } from "@/models";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
-
-/**
- * Selects legible description state and actions with shallow comparison to prevent infinite loops.
- * (Prevents unnecessary re-renders)
- */
-function useLegibleDescription() {
-  return useProfileStore(
-    useShallow((state) => ({
-      // State
-      legibleDescriptions: state.profile?.functionalProfile?.legibleDescription,
-      hasLegibleDescription:
-        !!state.profile?.functionalProfile?.legibleDescription,
-      // Actions
-      addEmptyLegibleDescription: state.addEmptyLegibleDescription,
-      removeLegibleDescription: state.removeLegibleDescription,
-      removeAllLegibleDescriptions: state.removeAllLegibleDescriptions,
-      updateTextElement: state.updateTextElement,
-      updateLanguage: state.updateLanguage,
-      updateUri: state.updateUri,
-    }))
-  );
-}
 
 export function LegibleDescriptionForm() {
-  const {
-    legibleDescriptions,
-    hasLegibleDescription,
-    addEmptyLegibleDescription,
-    removeLegibleDescription,
-    removeAllLegibleDescriptions,
-    updateTextElement,
-    updateLanguage,
-    updateUri,
-  } = useLegibleDescription();
-
-  const { getError } = useProfileValidation();
-
-  const handleAdd = () => {
-    // Initialize legible description with one empty entry
-    addEmptyLegibleDescription();
-  };
-
-  const handleRemove = () => {
-    // Remove all legible descriptions from profile
-    removeAllLegibleDescriptions();
-  };
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
+    useFormSection({
+      stateSelector: (store) => ({
+        legibleDescriptions:
+          store.profile?.functionalProfile?.legibleDescription,
+      }),
+      actionsSelector: (store) => ({
+        addEmptyLegibleDescription: store.addEmptyLegibleDescription,
+        removeLegibleDescription: store.removeLegibleDescription,
+        removeAllLegibleDescriptions: store.removeAllLegibleDescriptions,
+        updateTextElement: store.updateTextElement,
+        updateLanguage: store.updateLanguage,
+        updateUri: store.updateUri,
+      }),
+      isAddedSelector: (store) =>
+        !!store.profile?.functionalProfile?.legibleDescription,
+      onAdd: (actions) => actions.addEmptyLegibleDescription(),
+      onRemove: (actions) => actions.removeAllLegibleDescriptions(),
+    });
 
   return (
     <FormSection
@@ -63,15 +36,15 @@ export function LegibleDescriptionForm() {
         "Human-readable descriptions of the functional profile (max 4)"
       }
       required={false}
-      isAdded={hasLegibleDescription}
+      isAdded={isAdded}
       onAdd={handleAdd}
       onRemove={handleRemove}
     >
       <ArrayField<LegibleDescription>
         label="Descriptions"
-        items={legibleDescriptions}
-        onAdd={addEmptyLegibleDescription}
-        onRemove={removeLegibleDescription}
+        items={state.legibleDescriptions}
+        onAdd={actions.addEmptyLegibleDescription}
+        onRemove={actions.removeLegibleDescription}
         emptyMessage="No descriptions added"
         maxItems={4}
         renderItem={(item, index) => (
@@ -80,7 +53,7 @@ export function LegibleDescriptionForm() {
               label="Text Element"
               name={`legibleDescription-${index}-textElement`}
               value={item.textElement}
-              onChange={(value) => updateTextElement(index, value)}
+              onChange={(value) => actions.updateTextElement(index, value)}
               placeholder="Enter description text (max 4000 characters)"
               required={true}
               rows={6}
@@ -95,7 +68,9 @@ export function LegibleDescriptionForm() {
                 options={LANGUAGE_OPTIONS}
                 required={true}
                 value={item.language}
-                onChange={(value) => updateLanguage(index, value as Language)}
+                onChange={(value) =>
+                  actions.updateLanguage(index, value as Language)
+                }
                 error={getError(
                   `functionalProfile.legibleDescription.${index}.language`
                 )}
@@ -106,7 +81,9 @@ export function LegibleDescriptionForm() {
                 required={false}
                 type="text"
                 value={item.uri}
-                onChange={(value) => updateUri(index, value || undefined)}
+                onChange={(value) =>
+                  actions.updateUri(index, value || undefined)
+                }
                 placeholder="Optional URI reference"
                 error={getError(
                   `functionalProfile.legibleDescription.${index}.uri`

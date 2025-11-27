@@ -6,68 +6,45 @@ import {
   LEVEL_OF_OPERATION,
 } from "./profile-identification-form-options";
 import { InputField } from "@/sections/shared/components/forms/input-field";
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { useShallow } from "zustand/shallow";
+import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { FunctionalProfileCategory, LevelOfOperation } from "@/models";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
-
-function useProfileIdentification() {
-  return useProfileStore(
-    useShallow((state) => ({
-      // State
-      specificationOwnerIdentification:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.specificationOwnerIdentification,
-      functionalProfileCategory:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.functionalProfileCategory,
-      functionalProfileType:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.functionalProfileType,
-      levelOfOperation:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.levelOfOperation,
-      primaryVersionNumber:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.versionNumber?.primaryVersionNumber,
-      secondaryVersionNumber:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.versionNumber?.secondaryVersionNumber,
-      subReleaseVersionNumber:
-        state.profile?.functionalProfile?.functionalProfileIdentification
-          ?.versionNumber?.subReleaseVersionNumber,
-      // Actions
-      updateSpecificationOwnerIdentification:
-        state.updateSpecificationOwnerIdentification,
-      updateFunctionalProfileCategory: state.updateFunctionalProfileCategory,
-      updateFunctionalProfileType: state.updateFunctionalProfileType,
-      updateLevelOfOperation: state.updateLevelOfOperation,
-      updatePrimaryVersionNumber: state.updatePrimaryVersionNumber,
-      updateSecondaryVersionNumber: state.updateSecondaryVersionNumber,
-      updateSubReleaseVersionNumber: state.updateSubReleaseVersionNumber,
-    }))
-  );
-}
 
 export function ProfileIdentificationForm() {
-  const {
-    specificationOwnerIdentification,
-    functionalProfileCategory,
-    functionalProfileType,
-    levelOfOperation,
-    primaryVersionNumber,
-    secondaryVersionNumber,
-    subReleaseVersionNumber,
-    updateSpecificationOwnerIdentification,
-    updateFunctionalProfileCategory,
-    updateFunctionalProfileType,
-    updateLevelOfOperation,
-    updatePrimaryVersionNumber,
-    updateSecondaryVersionNumber,
-    updateSubReleaseVersionNumber,
-  } = useProfileIdentification();
-
-  const { getError } = useProfileValidation();
+  const { state, actions, getError } = useFormSection({
+    stateSelector: (store) => ({
+      specificationOwnerIdentification:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.specificationOwnerIdentification,
+      functionalProfileCategory:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.functionalProfileCategory,
+      functionalProfileType:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.functionalProfileType,
+      levelOfOperation:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.levelOfOperation,
+      primaryVersionNumber:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.versionNumber?.primaryVersionNumber,
+      secondaryVersionNumber:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.versionNumber?.secondaryVersionNumber,
+      subReleaseVersionNumber:
+        store.profile?.functionalProfile?.functionalProfileIdentification
+          ?.versionNumber?.subReleaseVersionNumber,
+    }),
+    actionsSelector: (store) => ({
+      updateSpecificationOwnerIdentification:
+        store.updateSpecificationOwnerIdentification,
+      updateFunctionalProfileCategory: store.updateFunctionalProfileCategory,
+      updateFunctionalProfileType: store.updateFunctionalProfileType,
+      updateLevelOfOperation: store.updateLevelOfOperation,
+      updatePrimaryVersionNumber: store.updatePrimaryVersionNumber,
+      updateSecondaryVersionNumber: store.updateSecondaryVersionNumber,
+      updateSubReleaseVersionNumber: store.updateSubReleaseVersionNumber,
+    }),
+  });
 
   return (
     <FormSection
@@ -81,8 +58,10 @@ export function ProfileIdentificationForm() {
           name={"specificationOwnerIdentification"}
           required={true}
           type="text"
-          value={specificationOwnerIdentification}
-          onChange={(value) => updateSpecificationOwnerIdentification(value)}
+          value={state.specificationOwnerIdentification}
+          onChange={(value) =>
+            actions.updateSpecificationOwnerIdentification(value)
+          }
           error={getError(
             "functionalProfile.functionalProfileIdentification.specificationOwnerIdentification"
           )}
@@ -92,9 +71,11 @@ export function ProfileIdentificationForm() {
           name={"functionalProfileCategory"}
           options={PROFILE_IDENTIFICATION_CATEGORY}
           required={true}
-          value={functionalProfileCategory}
+          value={state.functionalProfileCategory}
           onChange={(value) =>
-            updateFunctionalProfileCategory(value as FunctionalProfileCategory)
+            actions.updateFunctionalProfileCategory(
+              value as FunctionalProfileCategory
+            )
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.functionalProfileCategory"
@@ -108,8 +89,8 @@ export function ProfileIdentificationForm() {
           name={"functionalProfileType"}
           required={true}
           type="text"
-          value={functionalProfileType}
-          onChange={(value) => updateFunctionalProfileType(value)}
+          value={state.functionalProfileType}
+          onChange={(value) => actions.updateFunctionalProfileType(value)}
           error={getError(
             "functionalProfile.functionalProfileIdentification.functionalProfileType"
           )}
@@ -119,9 +100,9 @@ export function ProfileIdentificationForm() {
           name={"levelOfOperation"}
           options={LEVEL_OF_OPERATION}
           required={true}
-          value={levelOfOperation}
+          value={state.levelOfOperation}
           onChange={(value) =>
-            updateLevelOfOperation(value as LevelOfOperation)
+            actions.updateLevelOfOperation(value as LevelOfOperation)
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.levelOfOperation"
@@ -135,9 +116,9 @@ export function ProfileIdentificationForm() {
           name={"primaryVersionNumber"}
           type="number"
           required={true}
-          value={primaryVersionNumber?.toString()}
+          value={state.primaryVersionNumber?.toString()}
           onChange={(value) =>
-            updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)
+            actions.updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.versionNumber.primaryVersionNumber"
@@ -148,9 +129,11 @@ export function ProfileIdentificationForm() {
           name={"secondaryVersionNumber"}
           type="number"
           required={true}
-          value={secondaryVersionNumber?.toString()}
+          value={state.secondaryVersionNumber?.toString()}
           onChange={(value) =>
-            updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)
+            actions.updateSecondaryVersionNumber(
+              value ? parseInt(value, 10) : 0
+            )
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.versionNumber.secondaryVersionNumber"
@@ -161,9 +144,11 @@ export function ProfileIdentificationForm() {
           name={"subReleaseVersionNumber"}
           type="number"
           required={true}
-          value={subReleaseVersionNumber?.toString()}
+          value={state.subReleaseVersionNumber?.toString()}
           onChange={(value) =>
-            updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)
+            actions.updateSubReleaseVersionNumber(
+              value ? parseInt(value, 10) : 0
+            )
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.versionNumber.subReleaseVersionNumber"

@@ -1,90 +1,41 @@
-import { useShallow } from "zustand/react/shallow";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
-
-/**
- * Selects alternative names state and actions with shallow comparison to prevent infinite loops.
- * (Prevents unnecessary re-renders)
- */
-function useAlternativeNames() {
-  return useProfileStore(
-    useShallow((state) => ({
-      // State
-      sLV1Name: state.profile?.functionalProfile?.alternativeNames?.sLV1Name,
-      workName: state.profile?.functionalProfile?.alternativeNames?.workName,
-      manufName: state.profile?.functionalProfile?.alternativeNames?.manufName,
-      iec61850Name:
-        state.profile?.functionalProfile?.alternativeNames?.iec61850Name,
-      sarefName: state.profile?.functionalProfile?.alternativeNames?.sarefName,
-      eebusName: state.profile?.functionalProfile?.alternativeNames?.eebusName,
-      sunSpecName:
-        state.profile?.functionalProfile?.alternativeNames?.sunSpecName,
-      hpBwpName: state.profile?.functionalProfile?.alternativeNames?.hpBwpName,
-      en17609Name:
-        state.profile?.functionalProfile?.alternativeNames?.en17609Name,
-      hasAlternativeNames: !!state.profile?.functionalProfile?.alternativeNames,
-      // Actions
-      updateSLV1Name: state.updateSLV1Name,
-      updateWorkName: state.updateWorkName,
-      updateManufName: state.updateManufName,
-      updateIec61850Name: state.updateIec61850Name,
-      updateSarefName: state.updateSarefName,
-      updateEebusName: state.updateEebusName,
-      updateSunSpecName: state.updateSunSpecName,
-      updateHpBwpName: state.updateHpBwpName,
-      updateEn17609Name: state.updateEn17609Name,
-      addAlternativeNames: state.addAlternativeNames,
-      removeAlternativeNames: state.removeAlternativeNames,
-    }))
-  );
-}
+import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 
 export function AlternativeNamesForm() {
-  const {
-    sLV1Name,
-    workName,
-    manufName,
-    iec61850Name,
-    sarefName,
-    eebusName,
-    sunSpecName,
-    hpBwpName,
-    en17609Name,
-    hasAlternativeNames,
-    updateSLV1Name,
-    updateWorkName,
-    updateManufName,
-    updateIec61850Name,
-    updateSarefName,
-    updateEebusName,
-    updateSunSpecName,
-    updateHpBwpName,
-    updateEn17609Name,
-    addAlternativeNames,
-    removeAlternativeNames,
-  } = useAlternativeNames();
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
+    useFormSection({
+      stateSelector: (store) => ({
+        alternativeNames: store.profile?.functionalProfile?.alternativeNames,
+      }),
+      actionsSelector: (store) => ({
+        updateSLV1Name: store.updateSLV1Name,
+        updateWorkName: store.updateWorkName,
+        updateManufName: store.updateManufName,
+        updateIec61850Name: store.updateIec61850Name,
+        updateSarefName: store.updateSarefName,
+        updateEebusName: store.updateEebusName,
+        updateSunSpecName: store.updateSunSpecName,
+        updateHpBwpName: store.updateHpBwpName,
+        updateEn17609Name: store.updateEn17609Name,
+        addAlternativeNames: store.addAlternativeNames,
+        removeAlternativeNames: store.removeAlternativeNames,
+      }),
+      isAddedSelector: (store) =>
+        !!store.profile?.functionalProfile?.alternativeNames,
+      onAdd: (actions) => actions.addAlternativeNames(),
+      onRemove: (actions) => actions.removeAlternativeNames(),
+    });
 
-  const { getError } = useProfileValidation();
-
-  const handleAdd = () => {
-    // Initialize alternative names with empty object
-    addAlternativeNames();
-  };
-
-  const handleRemove = () => {
-    // Remove alternative names from profile
-    removeAlternativeNames();
-  };
+  const altNames = state.alternativeNames;
 
   return (
     <FormSection
       title={"Alternative Names"}
       description={"Alternative naming conventions for the functional profile"}
       required={false}
-      isAdded={hasAlternativeNames}
+      isAdded={isAdded}
       onAdd={handleAdd}
       onRemove={handleRemove}
     >
@@ -94,8 +45,8 @@ export function AlternativeNamesForm() {
           name={"sLV1Name"}
           required={false}
           type="text"
-          value={sLV1Name}
-          onChange={(value) => updateSLV1Name(value || undefined)}
+          value={altNames?.sLV1Name}
+          onChange={(value) => actions.updateSLV1Name(value || undefined)}
           error={getError("functionalProfile.alternativeNames.sLV1Name")}
         />
         <InputField
@@ -103,8 +54,8 @@ export function AlternativeNamesForm() {
           name={"workName"}
           required={false}
           type="text"
-          value={workName}
-          onChange={(value) => updateWorkName(value || undefined)}
+          value={altNames?.workName}
+          onChange={(value) => actions.updateWorkName(value || undefined)}
           error={getError("functionalProfile.alternativeNames.workName")}
         />
       </FormGroup>
@@ -115,8 +66,8 @@ export function AlternativeNamesForm() {
           name={"manufName"}
           required={false}
           type="text"
-          value={manufName}
-          onChange={(value) => updateManufName(value || undefined)}
+          value={altNames?.manufName}
+          onChange={(value) => actions.updateManufName(value || undefined)}
           error={getError("functionalProfile.alternativeNames.manufName")}
         />
         <InputField
@@ -124,8 +75,8 @@ export function AlternativeNamesForm() {
           name={"iec61850Name"}
           required={false}
           type="text"
-          value={iec61850Name}
-          onChange={(value) => updateIec61850Name(value || undefined)}
+          value={altNames?.iec61850Name}
+          onChange={(value) => actions.updateIec61850Name(value || undefined)}
           error={getError("functionalProfile.alternativeNames.iec61850Name")}
         />
       </FormGroup>
@@ -136,8 +87,8 @@ export function AlternativeNamesForm() {
           name={"sarefName"}
           required={false}
           type="text"
-          value={sarefName}
-          onChange={(value) => updateSarefName(value || undefined)}
+          value={altNames?.sarefName}
+          onChange={(value) => actions.updateSarefName(value || undefined)}
           error={getError("functionalProfile.alternativeNames.sarefName")}
         />
         <InputField
@@ -145,8 +96,8 @@ export function AlternativeNamesForm() {
           name={"eebusName"}
           required={false}
           type="text"
-          value={eebusName}
-          onChange={(value) => updateEebusName(value || undefined)}
+          value={altNames?.eebusName}
+          onChange={(value) => actions.updateEebusName(value || undefined)}
           error={getError("functionalProfile.alternativeNames.eebusName")}
         />
       </FormGroup>
@@ -157,8 +108,8 @@ export function AlternativeNamesForm() {
           name={"sunSpecName"}
           required={false}
           type="text"
-          value={sunSpecName}
-          onChange={(value) => updateSunSpecName(value || undefined)}
+          value={altNames?.sunSpecName}
+          onChange={(value) => actions.updateSunSpecName(value || undefined)}
           error={getError("functionalProfile.alternativeNames.sunSpecName")}
         />
         <InputField
@@ -166,8 +117,8 @@ export function AlternativeNamesForm() {
           name={"hpBwpName"}
           required={false}
           type="text"
-          value={hpBwpName}
-          onChange={(value) => updateHpBwpName(value || undefined)}
+          value={altNames?.hpBwpName}
+          onChange={(value) => actions.updateHpBwpName(value || undefined)}
           error={getError("functionalProfile.alternativeNames.hpBwpName")}
         />
       </FormGroup>
@@ -178,8 +129,8 @@ export function AlternativeNamesForm() {
           name={"en17609Name"}
           required={false}
           type="text"
-          value={en17609Name}
-          onChange={(value) => updateEn17609Name(value || undefined)}
+          value={altNames?.en17609Name}
+          onChange={(value) => actions.updateEn17609Name(value || undefined)}
           error={getError("functionalProfile.alternativeNames.en17609Name")}
         />
       </FormGroup>

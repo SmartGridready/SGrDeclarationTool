@@ -1,6 +1,6 @@
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
-import { FormSubSection } from "@/sections/shared/components/forms/form-subsection";
+import { FormSection } from "@/sections/shared/components/forms/form-section";
 import {
   EnumMapFunctionalProfile,
   EnumEntryRecordFunctionalProfile,
@@ -19,7 +19,7 @@ export function EnumForm({
   enumSlice,
 }: EnumFormProps) {
   return (
-    <FormSubSection title="Enum Configuration">
+    <FormSection title="Enum Configuration" nested>
       <InputField
         label="Hex Mask"
         name={`dataPoint-${dataPointIndex}-enum-hexMask`}
@@ -69,6 +69,6 @@ export function EnumForm({
           </>
         )}
       />
-    </FormSubSection>
+    </FormSection>
   );
 }

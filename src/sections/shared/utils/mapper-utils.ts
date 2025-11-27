@@ -207,7 +207,7 @@ export function hasValue(
  * @param field - The field name
  * @param value - The value to set (if defined)
  */
-export function setOptionalField<T extends Record<string, unknown>>(
+export function setOptionalField<T extends object>(
   obj: T,
   field: keyof T,
   value: unknown

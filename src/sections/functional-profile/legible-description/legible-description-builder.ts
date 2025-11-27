@@ -2,7 +2,7 @@ import { LegibleDescription } from "@/models";
 import {
   validateLegibleDescription,
   validateLegibleDescriptionArray,
-} from "@/sections/functional-profile/legible-description/legible-description-validator";
+} from "@/sections/functional-profile/legible-description/legible-description-schema";
 import {
   wrapInArray,
   setOptionalXmlField,

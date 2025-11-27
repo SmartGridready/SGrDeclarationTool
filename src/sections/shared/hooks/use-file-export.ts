@@ -4,7 +4,7 @@ import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/sections/shared/constants/success-messages";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { FunctionalProfileFrame } from "@/models";
-import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
+import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
 
 /**
  * Generic file export hook for XML files

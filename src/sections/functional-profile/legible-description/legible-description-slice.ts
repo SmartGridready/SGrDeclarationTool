@@ -76,7 +76,7 @@ export const createLegibleDescriptionSlice = (
   updateLanguage: (index, language) =>
     set((state) => {
       const array = state.profile?.functionalProfile?.legibleDescription;
-      if (array?.[index] && language !== undefined) {
+      if (array?.[index]) {
         array[index] = { ...array[index], language };
       }
     }),

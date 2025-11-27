@@ -52,7 +52,7 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
 
   updateReleaseState: (releaseState) =>
     set((state) => {
-      if (state.profile?.releaseNotes && releaseState !== undefined) {
+      if (state.profile?.releaseNotes) {
         state.profile.releaseNotes.state = releaseState;
       }
     }),

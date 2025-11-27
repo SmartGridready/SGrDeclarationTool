@@ -6,7 +6,7 @@ import {
   getFieldError,
   hasFieldError,
 } from "@/sections/shared/utils/validation-utils";
-import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
+import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
 
 /**
  * Hook to get validation errors for the current profile

@@ -39,9 +39,12 @@ export interface FunctionalProfileDataPoint {
     unit: Units;
     arrayLength?: number;
 
+    // TODO: Partially implemented - mapper and builder exist, but form UI is not yet implemented
     parameterList?: DynamicParameterDescriptionList;
+    // TODO: Partially implemented - mapper and builder exist, but form UI is not yet implemented
     alternativeNames?: AlternativeNames;
     legibleDescription?: LegibleDescription[]; // maxOccurs="4"
   };
+  // TODO: Partially implemented - mapper and builder exist, but form UI is not yet implemented
   genericAttributeList?: GenericAttributeListFunctionalProfile;
 }

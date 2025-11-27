@@ -8,8 +8,8 @@ import {
   DynamicParameterDescription,
   DataTypeProduct,
 } from "@/models";
-import { validateDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-validator";
-import { validateGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-validator";
+import { validateDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
+import { validateGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
 import { parameterListSchema } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
 import { validateWithSchema } from "@/sections/shared/utils/validation-utils";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
@@ -70,11 +70,7 @@ function buildDataPointElement(
   };
 
   // Add optional arrayLength
-  setOptionalXmlField(
-    dataPointXml,
-    "arrayLength",
-    dp.arrayLength !== undefined ? dp.arrayLength.toString() : undefined
-  );
+  setOptionalXmlField(dataPointXml, "arrayLength", dp.arrayLength);
 
   // Add optional parameterList (must come before legibleDescription)
   if (dp.parameterList) {

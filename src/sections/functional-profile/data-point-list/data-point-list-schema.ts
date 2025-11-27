@@ -1,5 +1,9 @@
 import { z } from "zod";
 import {
+  FunctionalProfileDataPoint,
+  FunctionalProfileDataPointList,
+} from "@/models";
+import {
   DATA_DIRECTION_OPTIONS,
   PRESENCE_LEVEL_OPTIONS,
   DATA_TYPE_OPTIONS,
@@ -7,6 +11,10 @@ import {
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { legibleDescriptionSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
+import {
+  ValidationResult,
+  validateWithSchema,
+} from "@/sections/shared/utils/validation-utils";
 
 /**
  * Generic Attribute List validation schemas (for data points)
@@ -179,3 +187,21 @@ export type FunctionalProfileDataPointInput = z.input<
   typeof functionalProfileDataPointSchema
 >;
 export type DataPointListInput = z.input<typeof dataPointListSchema>;
+
+// Validators
+export function validateDataPoint(
+  dataPoint: FunctionalProfileDataPoint
+): ValidationResult<FunctionalProfileDataPoint> {
+  const result = validateWithSchema(
+    functionalProfileDataPointSchema,
+    dataPoint
+  );
+  return result as ValidationResult<FunctionalProfileDataPoint>;
+}
+
+export function validateDataPointList(
+  dataPointList: FunctionalProfileDataPointList
+): ValidationResult<FunctionalProfileDataPointList> {
+  const result = validateWithSchema(dataPointListSchema, dataPointList);
+  return result as ValidationResult<FunctionalProfileDataPointList>;
+}

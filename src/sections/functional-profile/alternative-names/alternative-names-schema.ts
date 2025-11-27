@@ -1,7 +1,12 @@
 import { z } from "zod";
+import { AlternativeNames } from "@/models";
+import {
+  ValidationResult,
+  validateWithSchema,
+} from "@/sections/shared/utils/validation-utils";
 
 /**
- * Alternative Names validation schemas
+ * Alternative Names validation schemas and validators
  * All fields are optional strings
  */
 
@@ -20,3 +25,11 @@ export const alternativeNamesSchema = z.object({
 
 // Type exports for TypeScript inference
 export type AlternativeNamesInput = z.input<typeof alternativeNamesSchema>;
+
+// Validators
+export function validateAlternativeNames(
+  alternativeNames: AlternativeNames
+): ValidationResult<AlternativeNames> {
+  const result = validateWithSchema(alternativeNamesSchema, alternativeNames);
+  return result as ValidationResult<AlternativeNames>;
+}

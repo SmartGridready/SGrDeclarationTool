@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FunctionalProfileFrame } from "@/models";
 import {
   releaseNotesSchema,
   changeLogSchema,
@@ -11,9 +12,13 @@ import { alternativeNamesSchema } from "@/sections/functional-profile/alternativ
 import { legibleDescriptionsSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 import { genericAttributeListFunctionalProfileSchema } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
 import { dataPointListSchema } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
+import {
+  ValidationResult,
+  validateWithSchema,
+} from "@/sections/shared/utils/validation-utils";
 
 /**
- * Main validation schemas for Functional Profile models
+ * Main validation schemas and validators for Functional Profile models
  * These schemas are used to validate data before export and provide
  * field-level error messages for form validation.
  */
@@ -56,3 +61,11 @@ export type { DataPointListInput } from "@/sections/functional-profile/data-poin
 export type FunctionalProfileFrameInput = z.input<
   typeof functionalProfileFrameSchema
 >;
+
+// Validators
+export function validateFunctionalProfileFrame(
+  frame: FunctionalProfileFrame
+): ValidationResult<FunctionalProfileFrame> {
+  const result = validateWithSchema(functionalProfileFrameSchema, frame);
+  return result as ValidationResult<FunctionalProfileFrame>;
+}

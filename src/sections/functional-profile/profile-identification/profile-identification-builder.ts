@@ -2,7 +2,7 @@ import { FunctionalProfileIdentification, VersionNumber } from "@/models";
 import {
   validateFunctionalProfileIdentification,
   validateVersionNumber,
-} from "@/sections/functional-profile/profile-identification/profile-identification-validator";
+} from "@/sections/functional-profile/profile-identification/profile-identification-schema";
 import { wrapInArray } from "@/sections/shared/utils/builder-utils";
 
 /**

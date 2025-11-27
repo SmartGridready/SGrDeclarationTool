@@ -1,11 +1,16 @@
 import { z } from "zod";
+import { FunctionalProfileIdentification, VersionNumber } from "@/models";
 import {
   PROFILE_IDENTIFICATION_CATEGORY,
   LEVEL_OF_OPERATION,
 } from "@/sections/functional-profile/profile-identification/profile-identification-form-options";
+import {
+  ValidationResult,
+  validateWithSchema,
+} from "@/sections/shared/utils/validation-utils";
 
 /**
- * Profile Identification validation schemas
+ * Profile Identification validation schemas and validators
  */
 
 // Extract category values from constants
@@ -53,3 +58,21 @@ export type VersionNumberInput = z.input<typeof versionNumberSchema>;
 export type FunctionalProfileIdentificationInput = z.input<
   typeof functionalProfileIdentificationSchema
 >;
+
+// Validators
+export function validateFunctionalProfileIdentification(
+  identification: FunctionalProfileIdentification
+): ValidationResult<FunctionalProfileIdentification> {
+  const result = validateWithSchema(
+    functionalProfileIdentificationSchema,
+    identification
+  );
+  return result as ValidationResult<FunctionalProfileIdentification>;
+}
+
+export function validateVersionNumber(
+  versionNumber: VersionNumber
+): ValidationResult<VersionNumber> {
+  const result = validateWithSchema(versionNumberSchema, versionNumber);
+  return result as ValidationResult<VersionNumber>;
+}

@@ -1,7 +1,15 @@
 import { z } from "zod";
+import {
+  GenericAttributeFunctionalProfile,
+  GenericAttributeListFunctionalProfile,
+} from "@/models";
+import {
+  ValidationResult,
+  validateWithSchema,
+} from "@/sections/shared/utils/validation-utils";
 
 /**
- * Generic Attribute List validation schemas
+ * Generic Attribute List validation schemas and validators
  */
 
 // Generic Attribute Schema (single attribute)
@@ -23,3 +31,24 @@ export type GenericAttributeFunctionalProfileInput = z.input<
 export type GenericAttributeListFunctionalProfileInput = z.input<
   typeof genericAttributeListFunctionalProfileSchema
 >;
+
+// Validators
+export function validateGenericAttribute(
+  attribute: GenericAttributeFunctionalProfile
+): ValidationResult<GenericAttributeFunctionalProfile> {
+  const result = validateWithSchema(
+    genericAttributeFunctionalProfileSchema,
+    attribute
+  );
+  return result as ValidationResult<GenericAttributeFunctionalProfile>;
+}
+
+export function validateGenericAttributeList(
+  attributeList: GenericAttributeListFunctionalProfile
+): ValidationResult<GenericAttributeListFunctionalProfile> {
+  const result = validateWithSchema(
+    genericAttributeListFunctionalProfileSchema,
+    attributeList
+  );
+  return result as ValidationResult<GenericAttributeListFunctionalProfile>;
+}

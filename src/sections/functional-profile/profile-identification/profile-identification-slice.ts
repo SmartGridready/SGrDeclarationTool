@@ -25,7 +25,7 @@ export const createFunctionalProfileIdentificationSlice = (
 ): FunctionalProfileIdentificationSlice => ({
   updateSpecificationOwnerIdentification: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.specificationOwnerIdentification =
           value;
       }
@@ -33,7 +33,7 @@ export const createFunctionalProfileIdentificationSlice = (
 
   updateFunctionalProfileCategory: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.functionalProfileCategory =
           value;
       }
@@ -41,7 +41,7 @@ export const createFunctionalProfileIdentificationSlice = (
 
   updateFunctionalProfileType: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.functionalProfileType =
           value;
       }
@@ -49,7 +49,7 @@ export const createFunctionalProfileIdentificationSlice = (
 
   updateLevelOfOperation: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.levelOfOperation =
           value;
       }
@@ -57,7 +57,7 @@ export const createFunctionalProfileIdentificationSlice = (
 
   updatePrimaryVersionNumber: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.versionNumber.primaryVersionNumber =
           value;
       }
@@ -65,7 +65,7 @@ export const createFunctionalProfileIdentificationSlice = (
 
   updateSecondaryVersionNumber: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.versionNumber.secondaryVersionNumber =
           value;
       }
@@ -73,7 +73,7 @@ export const createFunctionalProfileIdentificationSlice = (
 
   updateSubReleaseVersionNumber: (value) =>
     set((state) => {
-      if (state.profile?.functionalProfile && value !== undefined) {
+      if (state.profile?.functionalProfile) {
         state.profile.functionalProfile.functionalProfileIdentification.versionNumber.subReleaseVersionNumber =
           value;
       }

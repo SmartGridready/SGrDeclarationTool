@@ -1,5 +1,8 @@
 import { AlternativeNames } from "@/models";
-import { getOptionalStringValue } from "@/sections/shared/utils/mapper-utils";
+import {
+  getOptionalStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML alternativeNames to AlternativeNames model
@@ -7,44 +10,54 @@ import { getOptionalStringValue } from "@/sections/shared/utils/mapper-utils";
 export function mapAlternativeNames(
   alternativeNamesXml: any
 ): AlternativeNames {
-  const alternativeNames: Partial<AlternativeNames> = {};
+  const alternativeNames: AlternativeNames = {};
 
-  // Map all optional fields
-  const sLV1Name = getOptionalStringValue(alternativeNamesXml, "sLV1Name");
-  if (sLV1Name) alternativeNames.sLV1Name = sLV1Name;
-
-  const workName = getOptionalStringValue(alternativeNamesXml, "workName");
-  if (workName) alternativeNames.workName = workName;
-
-  const manufName = getOptionalStringValue(alternativeNamesXml, "manufName");
-  if (manufName) alternativeNames.manufName = manufName;
-
-  const iec61850Name = getOptionalStringValue(
-    alternativeNamesXml,
-    "iec61850Name"
+  // Map all optional fields using utility function
+  setOptionalField(
+    alternativeNames,
+    "sLV1Name",
+    getOptionalStringValue(alternativeNamesXml, "sLV1Name")
   );
-  if (iec61850Name) alternativeNames.iec61850Name = iec61850Name;
-
-  const sarefName = getOptionalStringValue(alternativeNamesXml, "sarefName");
-  if (sarefName) alternativeNames.sarefName = sarefName;
-
-  const eebusName = getOptionalStringValue(alternativeNamesXml, "eebusName");
-  if (eebusName) alternativeNames.eebusName = eebusName;
-
-  const sunSpecName = getOptionalStringValue(
-    alternativeNamesXml,
-    "sunSpecName"
+  setOptionalField(
+    alternativeNames,
+    "workName",
+    getOptionalStringValue(alternativeNamesXml, "workName")
   );
-  if (sunSpecName) alternativeNames.sunSpecName = sunSpecName;
-
-  const hpBwpName = getOptionalStringValue(alternativeNamesXml, "hpBwpName");
-  if (hpBwpName) alternativeNames.hpBwpName = hpBwpName;
-
-  const en17609Name = getOptionalStringValue(
-    alternativeNamesXml,
-    "en17609Name"
+  setOptionalField(
+    alternativeNames,
+    "manufName",
+    getOptionalStringValue(alternativeNamesXml, "manufName")
   );
-  if (en17609Name) alternativeNames.en17609Name = en17609Name;
+  setOptionalField(
+    alternativeNames,
+    "iec61850Name",
+    getOptionalStringValue(alternativeNamesXml, "iec61850Name")
+  );
+  setOptionalField(
+    alternativeNames,
+    "sarefName",
+    getOptionalStringValue(alternativeNamesXml, "sarefName")
+  );
+  setOptionalField(
+    alternativeNames,
+    "eebusName",
+    getOptionalStringValue(alternativeNamesXml, "eebusName")
+  );
+  setOptionalField(
+    alternativeNames,
+    "sunSpecName",
+    getOptionalStringValue(alternativeNamesXml, "sunSpecName")
+  );
+  setOptionalField(
+    alternativeNames,
+    "hpBwpName",
+    getOptionalStringValue(alternativeNamesXml, "hpBwpName")
+  );
+  setOptionalField(
+    alternativeNames,
+    "en17609Name",
+    getOptionalStringValue(alternativeNamesXml, "en17609Name")
+  );
 
-  return alternativeNames as AlternativeNames;
+  return alternativeNames;
 }

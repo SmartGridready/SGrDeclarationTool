@@ -7,7 +7,7 @@ import { buildLegibleDescription } from "@/sections/functional-profile/legible-d
 import { buildGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-builder";
 import { buildDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-builder";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
-import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
+import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
 import {
   wrapInArray,
   setOptionalXmlArray,

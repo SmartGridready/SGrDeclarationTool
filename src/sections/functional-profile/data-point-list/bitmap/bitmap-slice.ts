@@ -1,8 +1,13 @@
 import {
-  FunctionalProfileFrame,
   BitmapFunctionalProfile,
   BitmapEntryFunctionalProfile,
 } from "@/models";
+import {
+  SetState,
+  getDataPoint,
+  ensureArray,
+  removeArrayItem,
+} from "@/sections/shared/slice-utils";
 
 export interface BitmapSlice {
   setBitmapDataType: (index: number, bitmap: BitmapFunctionalProfile) => void;
@@ -24,16 +29,10 @@ export interface BitmapSlice {
   addEmptyBitmapEntry: (dataPointIndex: number) => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
-
 export const createBitmapSlice = (set: SetState): BitmapSlice => ({
   setBitmapDataType: (index, bitmap) =>
     set((state) => {
-      const dp = state.profile?.dataPointList?.dataPointListElement?.[index];
+      const dp = getDataPoint(state, index);
       if (dp) {
         dp.dataPoint.dataType = { bitmap: bitmap };
       }
@@ -41,39 +40,29 @@ export const createBitmapSlice = (set: SetState): BitmapSlice => ({
 
   addBitmapEntry: (dataPointIndex, entry) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       if (dp && "bitmap" in dp.dataPoint.dataType) {
-        if (!dp.dataPoint.dataType.bitmap.bitmapEntry) {
-          dp.dataPoint.dataType.bitmap.bitmapEntry = [];
-        }
-        dp.dataPoint.dataType.bitmap.bitmapEntry.push(entry);
+        const bitmapType = dp.dataPoint.dataType.bitmap;
+        const entries = ensureArray(bitmapType.bitmapEntry, () => []);
+        entries.push(entry);
+        bitmapType.bitmapEntry = entries;
       }
     }),
 
   removeBitmapEntry: (dataPointIndex, entryIndex) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
-      const entries = dp?.dataPoint.dataType;
-      if (
-        entries &&
-        "bitmap" in entries &&
-        entries.bitmap.bitmapEntry &&
-        entryIndex >= 0 &&
-        entryIndex < entries.bitmap.bitmapEntry.length
-      ) {
-        entries.bitmap.bitmapEntry.splice(entryIndex, 1);
-        if (entries.bitmap.bitmapEntry.length === 0) {
-          entries.bitmap.bitmapEntry = undefined;
-        }
+      const dp = getDataPoint(state, dataPointIndex);
+      if (dp && "bitmap" in dp.dataPoint.dataType) {
+        const bitmapType = dp.dataPoint.dataType.bitmap;
+        removeArrayItem(bitmapType.bitmapEntry, entryIndex, () => {
+          bitmapType.bitmapEntry = undefined;
+        });
       }
     }),
 
   updateBitmapEntryLiteral: (dataPointIndex, entryIndex, literal) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       const entry =
         dp?.dataPoint.dataType &&
         "bitmap" in dp.dataPoint.dataType &&
@@ -85,8 +74,7 @@ export const createBitmapSlice = (set: SetState): BitmapSlice => ({
 
   updateBitmapEntryDescription: (dataPointIndex, entryIndex, description) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       const entry =
         dp?.dataPoint.dataType &&
         "bitmap" in dp.dataPoint.dataType &&
@@ -98,15 +86,12 @@ export const createBitmapSlice = (set: SetState): BitmapSlice => ({
 
   addEmptyBitmapEntry: (dataPointIndex) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       if (dp && "bitmap" in dp.dataPoint.dataType) {
-        if (!dp.dataPoint.dataType.bitmap.bitmapEntry) {
-          dp.dataPoint.dataType.bitmap.bitmapEntry = [];
-        }
-        dp.dataPoint.dataType.bitmap.bitmapEntry.push({
-          literal: "",
-        });
+        const bitmapType = dp.dataPoint.dataType.bitmap;
+        const entries = ensureArray(bitmapType.bitmapEntry, () => []);
+        entries.push({ literal: "" });
+        bitmapType.bitmapEntry = entries;
       }
     }),
 });

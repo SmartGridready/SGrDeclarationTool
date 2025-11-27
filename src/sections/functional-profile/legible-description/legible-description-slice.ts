@@ -1,4 +1,10 @@
-import { FunctionalProfileFrame, LegibleDescription, Language } from "@/models";
+import { LegibleDescription, Language } from "@/models";
+import {
+  SetState,
+  ensureArray,
+  removeArrayItem,
+  normalizeString,
+} from "@/sections/shared/slice-utils";
 
 export interface LegibleDescriptionSlice {
   // Main operations
@@ -15,21 +21,10 @@ export interface LegibleDescriptionSlice {
   addEmptyLegibleDescription: () => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
-
-/**
- * Creates a new empty LegibleDescription entry with default values
- */
-function createEmptyLegibleDescription(): LegibleDescription {
-  return {
-    textElement: "",
-    language: "en",
-  };
-}
+const createEmptyLegibleDescription = (): LegibleDescription => ({
+  textElement: "",
+  language: "en",
+});
 
 export const createLegibleDescriptionSlice = (
   set: SetState
@@ -37,35 +32,29 @@ export const createLegibleDescriptionSlice = (
   addLegibleDescription: (legibleDescription) =>
     set((state) => {
       if (state.profile?.functionalProfile) {
-        if (!state.profile.functionalProfile.legibleDescription) {
-          state.profile.functionalProfile.legibleDescription = [];
-        }
-        // Check maxOccurs="4" constraint
-        if (state.profile.functionalProfile.legibleDescription.length < 4) {
-          state.profile.functionalProfile.legibleDescription.push(
-            legibleDescription
-          );
+        const list = ensureArray(
+          state.profile.functionalProfile.legibleDescription,
+          () => []
+        );
+        if (list.length < 4) {
+          list.push(legibleDescription);
+          state.profile.functionalProfile.legibleDescription = list;
         }
       }
     }),
 
   removeLegibleDescription: (index) =>
     set((state) => {
-      const legibleDescriptionArray =
-        state.profile?.functionalProfile?.legibleDescription;
-      if (
-        legibleDescriptionArray &&
-        index >= 0 &&
-        index < legibleDescriptionArray.length
-      ) {
-        legibleDescriptionArray.splice(index, 1);
-        // Set to undefined if array becomes empty
-        if (
-          legibleDescriptionArray.length === 0 &&
-          state.profile?.functionalProfile
-        ) {
-          state.profile.functionalProfile.legibleDescription = undefined;
-        }
+      if (state.profile?.functionalProfile?.legibleDescription) {
+        removeArrayItem(
+          state.profile.functionalProfile.legibleDescription,
+          index,
+          () => {
+            if (state.profile?.functionalProfile) {
+              state.profile.functionalProfile.legibleDescription = undefined;
+            }
+          }
+        );
       }
     }),
 
@@ -78,51 +67,38 @@ export const createLegibleDescriptionSlice = (
 
   updateTextElement: (index, textElement) =>
     set((state) => {
-      const legibleDescriptionArray =
-        state.profile?.functionalProfile?.legibleDescription;
-      if (legibleDescriptionArray?.[index]) {
-        legibleDescriptionArray[index] = {
-          ...legibleDescriptionArray[index],
-          textElement: textElement,
-        };
+      const array = state.profile?.functionalProfile?.legibleDescription;
+      if (array?.[index]) {
+        array[index] = { ...array[index], textElement };
       }
     }),
 
   updateLanguage: (index, language) =>
     set((state) => {
-      const legibleDescriptionArray =
-        state.profile?.functionalProfile?.legibleDescription;
-      if (legibleDescriptionArray?.[index] && language !== undefined) {
-        legibleDescriptionArray[index] = {
-          ...legibleDescriptionArray[index],
-          language: language,
-        };
+      const array = state.profile?.functionalProfile?.legibleDescription;
+      if (array?.[index] && language !== undefined) {
+        array[index] = { ...array[index], language };
       }
     }),
 
   updateUri: (index, uri) =>
     set((state) => {
-      const legibleDescriptionArray =
-        state.profile?.functionalProfile?.legibleDescription;
-      if (legibleDescriptionArray?.[index]) {
-        legibleDescriptionArray[index] = {
-          ...legibleDescriptionArray[index],
-          uri: !uri || uri.trim() === "" ? undefined : uri,
-        };
+      const array = state.profile?.functionalProfile?.legibleDescription;
+      if (array?.[index]) {
+        array[index] = { ...array[index], uri: normalizeString(uri) };
       }
     }),
 
   addEmptyLegibleDescription: () =>
     set((state) => {
       if (state.profile?.functionalProfile) {
-        if (!state.profile.functionalProfile.legibleDescription) {
-          state.profile.functionalProfile.legibleDescription = [];
-        }
-        // Check maxOccurs="4" constraint
-        if (state.profile.functionalProfile.legibleDescription.length < 4) {
-          state.profile.functionalProfile.legibleDescription.push(
-            createEmptyLegibleDescription()
-          );
+        const list = ensureArray(
+          state.profile.functionalProfile.legibleDescription,
+          () => []
+        );
+        if (list.length < 4) {
+          list.push(createEmptyLegibleDescription());
+          state.profile.functionalProfile.legibleDescription = list;
         }
       }
     }),

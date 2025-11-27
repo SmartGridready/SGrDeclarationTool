@@ -39,7 +39,7 @@ interface ProfileStore {
   clear: () => void;
 }
 
-type StoreState = ProfileStore &
+export type StoreState = ProfileStore &
   ReleaseNotesSlice &
   FunctionalProfileIdentificationSlice &
   AlternativeNamesSlice &

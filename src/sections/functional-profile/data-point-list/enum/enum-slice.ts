@@ -1,8 +1,13 @@
 import {
-  FunctionalProfileFrame,
   EnumMapFunctionalProfile,
   EnumEntryRecordFunctionalProfile,
 } from "@/models";
+import {
+  SetState,
+  getDataPoint,
+  ensureArray,
+  removeArrayItem,
+} from "@/sections/shared/slice-utils";
 
 export interface EnumSlice {
   setEnumDataType: (index: number, enumMap: EnumMapFunctionalProfile) => void;
@@ -28,16 +33,10 @@ export interface EnumSlice {
   addEmptyEnumEntry: (dataPointIndex: number) => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
-
 export const createEnumSlice = (set: SetState): EnumSlice => ({
   setEnumDataType: (index, enumMap) =>
     set((state) => {
-      const dp = state.profile?.dataPointList?.dataPointListElement?.[index];
+      const dp = getDataPoint(state, index);
       if (dp) {
         dp.dataPoint.dataType = { enum: enumMap };
       }
@@ -45,39 +44,29 @@ export const createEnumSlice = (set: SetState): EnumSlice => ({
 
   addEnumEntry: (dataPointIndex, entry) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       if (dp && "enum" in dp.dataPoint.dataType) {
-        if (!dp.dataPoint.dataType.enum.enumEntry) {
-          dp.dataPoint.dataType.enum.enumEntry = [];
-        }
-        dp.dataPoint.dataType.enum.enumEntry.push(entry);
+        const enumType = dp.dataPoint.dataType.enum;
+        const entries = ensureArray(enumType.enumEntry, () => []);
+        entries.push(entry);
+        enumType.enumEntry = entries;
       }
     }),
 
   removeEnumEntry: (dataPointIndex, entryIndex) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
-      const entries = dp?.dataPoint.dataType;
-      if (
-        entries &&
-        "enum" in entries &&
-        entries.enum.enumEntry &&
-        entryIndex >= 0 &&
-        entryIndex < entries.enum.enumEntry.length
-      ) {
-        entries.enum.enumEntry.splice(entryIndex, 1);
-        if (entries.enum.enumEntry.length === 0) {
-          entries.enum.enumEntry = undefined;
-        }
+      const dp = getDataPoint(state, dataPointIndex);
+      if (dp && "enum" in dp.dataPoint.dataType) {
+        const enumType = dp.dataPoint.dataType.enum;
+        removeArrayItem(enumType.enumEntry, entryIndex, () => {
+          enumType.enumEntry = undefined;
+        });
       }
     }),
 
   updateEnumEntryLiteral: (dataPointIndex, entryIndex, literal) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       const entry =
         dp?.dataPoint.dataType &&
         "enum" in dp.dataPoint.dataType &&
@@ -89,8 +78,7 @@ export const createEnumSlice = (set: SetState): EnumSlice => ({
 
   updateEnumEntryDescription: (dataPointIndex, entryIndex, description) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       const entry =
         dp?.dataPoint.dataType &&
         "enum" in dp.dataPoint.dataType &&
@@ -102,24 +90,21 @@ export const createEnumSlice = (set: SetState): EnumSlice => ({
 
   updateEnumHexMask: (dataPointIndex, hexMask) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       if (dp && "enum" in dp.dataPoint.dataType) {
-        dp.dataPoint.dataType.enum.hexMask = hexMask;
+        const enumType = dp.dataPoint.dataType.enum;
+        enumType.hexMask = hexMask;
       }
     }),
 
   addEmptyEnumEntry: (dataPointIndex) =>
     set((state) => {
-      const dp =
-        state.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
+      const dp = getDataPoint(state, dataPointIndex);
       if (dp && "enum" in dp.dataPoint.dataType) {
-        if (!dp.dataPoint.dataType.enum.enumEntry) {
-          dp.dataPoint.dataType.enum.enumEntry = [];
-        }
-        dp.dataPoint.dataType.enum.enumEntry.push({
-          literal: "",
-        });
+        const enumType = dp.dataPoint.dataType.enum;
+        const entries = ensureArray(enumType.enumEntry, () => []);
+        entries.push({ literal: "" });
+        enumType.enumEntry = entries;
       }
     }),
 });

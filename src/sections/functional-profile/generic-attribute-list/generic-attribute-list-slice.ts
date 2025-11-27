@@ -1,7 +1,9 @@
+import { GenericAttributeFunctionalProfile } from "@/models";
 import {
-  FunctionalProfileFrame,
-  GenericAttributeFunctionalProfile,
-} from "@/models";
+  SetState,
+  ensureArray,
+  removeArrayItem,
+} from "@/sections/shared/slice-utils";
 
 export interface GenericAttributeListSlice {
   // Main operations
@@ -16,20 +18,9 @@ export interface GenericAttributeListSlice {
   addEmptyGenericAttribute: () => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
-
-/**
- * Creates a new empty GenericAttributeFunctionalProfile entry with default values
- */
-function createEmptyGenericAttribute(): GenericAttributeFunctionalProfile {
-  return {
-    name: "",
-  };
-}
+const createEmptyGenericAttribute = (): GenericAttributeFunctionalProfile => ({
+  name: "",
+});
 
 export const createGenericAttributeListSlice = (
   set: SetState
@@ -37,27 +28,33 @@ export const createGenericAttributeListSlice = (
   addGenericAttribute: (attribute) =>
     set((state) => {
       if (state.profile) {
+        const list = ensureArray(
+          state.profile.genericAttributeList?.genericAttributeListElement,
+          () => []
+        );
+        list.push(attribute);
         if (!state.profile.genericAttributeList) {
           state.profile.genericAttributeList = {
-            genericAttributeListElement: [],
+            genericAttributeListElement: list,
           };
+        } else {
+          state.profile.genericAttributeList.genericAttributeListElement = list;
         }
-        state.profile.genericAttributeList.genericAttributeListElement.push(
-          attribute
-        );
       }
     }),
 
   removeGenericAttribute: (index) =>
     set((state) => {
-      const attributeArray =
-        state.profile?.genericAttributeList?.genericAttributeListElement;
-      if (attributeArray && index >= 0 && index < attributeArray.length) {
-        attributeArray.splice(index, 1);
-        // Set to undefined if array becomes empty
-        if (attributeArray.length === 0 && state.profile) {
-          state.profile.genericAttributeList = undefined;
-        }
+      if (state.profile?.genericAttributeList?.genericAttributeListElement) {
+        removeArrayItem(
+          state.profile.genericAttributeList.genericAttributeListElement,
+          index,
+          () => {
+            if (state.profile) {
+              state.profile.genericAttributeList = undefined;
+            }
+          }
+        );
       }
     }),
 
@@ -73,24 +70,25 @@ export const createGenericAttributeListSlice = (
       const attributeArray =
         state.profile?.genericAttributeList?.genericAttributeListElement;
       if (attributeArray?.[index]) {
-        attributeArray[index] = {
-          ...attributeArray[index],
-          name: name,
-        };
+        attributeArray[index] = { ...attributeArray[index], name };
       }
     }),
 
   addEmptyGenericAttribute: () =>
     set((state) => {
       if (state.profile) {
+        const list = ensureArray(
+          state.profile.genericAttributeList?.genericAttributeListElement,
+          () => []
+        );
+        list.push(createEmptyGenericAttribute());
         if (!state.profile.genericAttributeList) {
           state.profile.genericAttributeList = {
-            genericAttributeListElement: [],
+            genericAttributeListElement: list,
           };
+        } else {
+          state.profile.genericAttributeList.genericAttributeListElement = list;
         }
-        state.profile.genericAttributeList.genericAttributeListElement.push(
-          createEmptyGenericAttribute()
-        );
       }
     }),
 });

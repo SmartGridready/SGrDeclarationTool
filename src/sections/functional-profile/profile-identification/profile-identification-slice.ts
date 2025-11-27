@@ -1,9 +1,9 @@
 import {
-  FunctionalProfileFrame,
   FunctionalProfileCategory,
   LevelOfOperation,
   SpecificationOwnerIdentification,
 } from "@/models";
+import { SetState } from "@/sections/shared/slice-utils";
 
 export interface FunctionalProfileIdentificationSlice {
   // Field-specific updates
@@ -20,68 +20,62 @@ export interface FunctionalProfileIdentificationSlice {
   updateSubReleaseVersionNumber: (subReleaseVersionNumber: number) => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
-
 export const createFunctionalProfileIdentificationSlice = (
   set: SetState
 ): FunctionalProfileIdentificationSlice => ({
-  updateSpecificationOwnerIdentification: (specificationOwnerIdentification) =>
+  updateSpecificationOwnerIdentification: (value) =>
     set((state) => {
-      if (state.profile && specificationOwnerIdentification !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.specificationOwnerIdentification =
-          specificationOwnerIdentification;
+          value;
       }
     }),
 
-  updateFunctionalProfileCategory: (functionalProfileCategory) =>
+  updateFunctionalProfileCategory: (value) =>
     set((state) => {
-      if (state.profile && functionalProfileCategory !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.functionalProfileCategory =
-          functionalProfileCategory;
+          value;
       }
     }),
 
-  updateFunctionalProfileType: (functionalProfileType) =>
+  updateFunctionalProfileType: (value) =>
     set((state) => {
-      if (state.profile && functionalProfileType !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.functionalProfileType =
-          functionalProfileType;
+          value;
       }
     }),
 
-  updateLevelOfOperation: (levelOfOperation) =>
+  updateLevelOfOperation: (value) =>
     set((state) => {
-      if (state.profile && levelOfOperation !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.levelOfOperation =
-          levelOfOperation;
+          value;
       }
     }),
 
-  updatePrimaryVersionNumber: (primaryVersionNumber) =>
+  updatePrimaryVersionNumber: (value) =>
     set((state) => {
-      if (state.profile && primaryVersionNumber !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.versionNumber.primaryVersionNumber =
-          primaryVersionNumber;
+          value;
       }
     }),
 
-  updateSecondaryVersionNumber: (secondaryVersionNumber) =>
+  updateSecondaryVersionNumber: (value) =>
     set((state) => {
-      if (state.profile && secondaryVersionNumber !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.versionNumber.secondaryVersionNumber =
-          secondaryVersionNumber;
+          value;
       }
     }),
 
-  updateSubReleaseVersionNumber: (subReleaseVersionNumber) =>
+  updateSubReleaseVersionNumber: (value) =>
     set((state) => {
-      if (state.profile && subReleaseVersionNumber !== undefined) {
+      if (state.profile?.functionalProfile && value !== undefined) {
         state.profile.functionalProfile.functionalProfileIdentification.versionNumber.subReleaseVersionNumber =
-          subReleaseVersionNumber;
+          value;
       }
     }),
 });

@@ -1,4 +1,10 @@
-import { ChangeLog, FunctionalProfileFrame, ReleaseState } from "@/models";
+import { ChangeLog, ReleaseState } from "@/models";
+import {
+  SetState,
+  ensureArray,
+  removeArrayItem,
+  normalizeString,
+} from "@/sections/shared/slice-utils";
 
 export interface ReleaseNotesSlice {
   // Main operations
@@ -22,23 +28,12 @@ export interface ReleaseNotesSlice {
   addEmptyChangeLog: () => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
-
-/**
- * Creates a new empty ChangeLog entry with default values
- */
-function createEmptyChangeLog(): ChangeLog {
-  return {
-    version: "",
-    date: new Date().toISOString().split("T")[0], // Format: YYYY-MM-DD
-    author: "",
-    comment: "",
-  };
-}
+const createEmptyChangeLog = (): ChangeLog => ({
+  version: "",
+  date: new Date().toISOString().split("T")[0],
+  author: "",
+  comment: "",
+});
 
 export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
   addReleaseNotes: () =>
@@ -65,52 +60,50 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
   updateRemarks: (remarks) =>
     set((state) => {
       if (state.profile?.releaseNotes) {
-        // Set to undefined if empty string, otherwise set the value
-        state.profile.releaseNotes.remarks =
-          !remarks || remarks.trim() === "" ? undefined : remarks;
+        state.profile.releaseNotes.remarks = normalizeString(remarks);
       }
     }),
 
   addChangeLog: (changeLog) =>
     set((state) => {
       if (state.profile?.releaseNotes) {
-        if (!state.profile.releaseNotes.changeLog) {
-          state.profile.releaseNotes.changeLog = [];
-        }
-        state.profile.releaseNotes.changeLog.push(changeLog);
+        const list = ensureArray(
+          state.profile.releaseNotes.changeLog,
+          () => []
+        );
+        list.push(changeLog);
+        state.profile.releaseNotes.changeLog = list;
       }
     }),
 
   removeChangeLog: (index) =>
     set((state) => {
-      const changeLogArray = state.profile?.releaseNotes?.changeLog;
-      if (changeLogArray && index >= 0 && index < changeLogArray.length) {
-        changeLogArray.splice(index, 1);
-        // Set to undefined if array becomes empty
-        if (changeLogArray.length === 0 && state.profile?.releaseNotes) {
-          state.profile.releaseNotes.changeLog = undefined;
-        }
+      if (state.profile?.releaseNotes?.changeLog) {
+        removeArrayItem(state.profile.releaseNotes.changeLog, index, () => {
+          if (state.profile?.releaseNotes) {
+            state.profile.releaseNotes.changeLog = undefined;
+          }
+        });
       }
     }),
 
   updateChangeLogField: (index, field, value) =>
     set((state) => {
-      const changeLogArray = state.profile?.releaseNotes?.changeLog;
-      if (changeLogArray?.[index]) {
-        changeLogArray[index] = {
-          ...changeLogArray[index],
-          [field]: value,
-        };
+      const array = state.profile?.releaseNotes?.changeLog;
+      if (array?.[index]) {
+        array[index] = { ...array[index], [field]: value };
       }
     }),
 
   addEmptyChangeLog: () =>
     set((state) => {
       if (state.profile?.releaseNotes) {
-        if (!state.profile.releaseNotes.changeLog) {
-          state.profile.releaseNotes.changeLog = [];
-        }
-        state.profile.releaseNotes.changeLog.push(createEmptyChangeLog());
+        const list = ensureArray(
+          state.profile.releaseNotes.changeLog,
+          () => []
+        );
+        list.push(createEmptyChangeLog());
+        state.profile.releaseNotes.changeLog = list;
       }
     }),
 });

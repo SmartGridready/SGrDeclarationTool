@@ -1,4 +1,5 @@
-import { FunctionalProfileFrame } from "@/models";
+import { AlternativeNames } from "@/models";
+import { SetState, normalizeString } from "@/sections/shared/slice-utils";
 
 export interface AlternativeNamesSlice {
   // Main operations
@@ -17,11 +18,17 @@ export interface AlternativeNamesSlice {
   updateEn17609Name: (en17609Name: string | undefined) => void;
 }
 
-type StoreState = {
-  profile?: FunctionalProfileFrame;
-};
-
-type SetState = (fn: (state: StoreState) => void) => void;
+const updateField =
+  (field: keyof AlternativeNames) =>
+  (value: string | undefined) =>
+  (state: {
+    profile?: { functionalProfile: { alternativeNames?: AlternativeNames } };
+  }) => {
+    if (state.profile?.functionalProfile.alternativeNames) {
+      state.profile.functionalProfile.alternativeNames[field] =
+        normalizeString(value);
+    }
+  };
 
 export const createAlternativeNamesSlice = (
   set: SetState
@@ -40,77 +47,13 @@ export const createAlternativeNamesSlice = (
       }
     }),
 
-  updateSLV1Name: (sLV1Name) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.sLV1Name =
-          !sLV1Name || sLV1Name.trim() === "" ? undefined : sLV1Name;
-      }
-    }),
-
-  updateWorkName: (workName) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.workName =
-          !workName || workName.trim() === "" ? undefined : workName;
-      }
-    }),
-
-  updateManufName: (manufName) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.manufName =
-          !manufName || manufName.trim() === "" ? undefined : manufName;
-      }
-    }),
-
-  updateIec61850Name: (iec61850Name) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.iec61850Name =
-          !iec61850Name || iec61850Name.trim() === ""
-            ? undefined
-            : iec61850Name;
-      }
-    }),
-
-  updateSarefName: (sarefName) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.sarefName =
-          !sarefName || sarefName.trim() === "" ? undefined : sarefName;
-      }
-    }),
-
-  updateEebusName: (eebusName) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.eebusName =
-          !eebusName || eebusName.trim() === "" ? undefined : eebusName;
-      }
-    }),
-
-  updateSunSpecName: (sunSpecName) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.sunSpecName =
-          !sunSpecName || sunSpecName.trim() === "" ? undefined : sunSpecName;
-      }
-    }),
-
-  updateHpBwpName: (hpBwpName) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.hpBwpName =
-          !hpBwpName || hpBwpName.trim() === "" ? undefined : hpBwpName;
-      }
-    }),
-
-  updateEn17609Name: (en17609Name) =>
-    set((state) => {
-      if (state.profile?.functionalProfile.alternativeNames) {
-        state.profile.functionalProfile.alternativeNames.en17609Name =
-          !en17609Name || en17609Name.trim() === "" ? undefined : en17609Name;
-      }
-    }),
+  updateSLV1Name: (value) => set(updateField("sLV1Name")(value)),
+  updateWorkName: (value) => set(updateField("workName")(value)),
+  updateManufName: (value) => set(updateField("manufName")(value)),
+  updateIec61850Name: (value) => set(updateField("iec61850Name")(value)),
+  updateSarefName: (value) => set(updateField("sarefName")(value)),
+  updateEebusName: (value) => set(updateField("eebusName")(value)),
+  updateSunSpecName: (value) => set(updateField("sunSpecName")(value)),
+  updateHpBwpName: (value) => set(updateField("hpBwpName")(value)),
+  updateEn17609Name: (value) => set(updateField("en17609Name")(value)),
 });

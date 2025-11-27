@@ -24,10 +24,10 @@ export function validateDataPoint(
   if (result.success && result.data) {
     return {
       ...result,
-      data: result.data as FunctionalProfileDataPoint,
+      data: result.data as unknown as FunctionalProfileDataPoint,
     } as ValidationResult<FunctionalProfileDataPoint>;
   }
-  return result as ValidationResult<FunctionalProfileDataPoint>;
+  return result as unknown as ValidationResult<FunctionalProfileDataPoint>;
 }
 
 /**
@@ -40,8 +40,8 @@ export function validateDataPointList(
   if (result.success && result.data) {
     return {
       ...result,
-      data: result.data as FunctionalProfileDataPointList,
+      data: result.data as unknown as FunctionalProfileDataPointList,
     } as ValidationResult<FunctionalProfileDataPointList>;
   }
-  return result as ValidationResult<FunctionalProfileDataPointList>;
+  return result as unknown as ValidationResult<FunctionalProfileDataPointList>;
 }

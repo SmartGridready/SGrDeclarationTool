@@ -3,6 +3,7 @@ import {
   validateFunctionalProfileIdentification,
   validateVersionNumber,
 } from "@/sections/functional-profile/profile-identification/profile-identification-validator";
+import { wrapInArray } from "@/sections/shared/utils/builder-utils";
 
 /**
  * Builds XML object for functionalProfileIdentification from FunctionalProfileIdentification model
@@ -10,7 +11,7 @@ import {
  */
 export function buildProfileIdentification(
   identification: FunctionalProfileIdentification
-): any {
+): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateFunctionalProfileIdentification(identification);
   if (!validation.success) {
@@ -21,14 +22,18 @@ export function buildProfileIdentification(
     throw new Error(errorMessage);
   }
 
-  const identificationXml: any = {
-    specificationOwnerIdentification: [
-      identification.specificationOwnerIdentification,
-    ],
-    functionalProfileCategory: [identification.functionalProfileCategory],
-    functionalProfileType: [identification.functionalProfileType],
-    levelOfOperation: [identification.levelOfOperation],
-    versionNumber: [buildVersionNumber(identification.versionNumber)],
+  const identificationXml: Record<string, unknown> = {
+    specificationOwnerIdentification: wrapInArray(
+      identification.specificationOwnerIdentification
+    ),
+    functionalProfileCategory: wrapInArray(
+      identification.functionalProfileCategory
+    ),
+    functionalProfileType: wrapInArray(identification.functionalProfileType),
+    levelOfOperation: wrapInArray(identification.levelOfOperation),
+    versionNumber: wrapInArray(
+      buildVersionNumber(identification.versionNumber)
+    ),
   };
 
   return identificationXml;
@@ -38,7 +43,9 @@ export function buildProfileIdentification(
  * Builds XML object for versionNumber from VersionNumber model
  * @throws Error if required fields are missing
  */
-function buildVersionNumber(versionNumber: VersionNumber): any {
+function buildVersionNumber(
+  versionNumber: VersionNumber
+): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateVersionNumber(versionNumber);
   if (!validation.success) {
@@ -50,8 +57,8 @@ function buildVersionNumber(versionNumber: VersionNumber): any {
   }
 
   return {
-    primaryVersionNumber: [versionNumber.primaryVersionNumber],
-    secondaryVersionNumber: [versionNumber.secondaryVersionNumber],
-    subReleaseVersionNumber: [versionNumber.subReleaseVersionNumber],
+    primaryVersionNumber: wrapInArray(versionNumber.primaryVersionNumber),
+    secondaryVersionNumber: wrapInArray(versionNumber.secondaryVersionNumber),
+    subReleaseVersionNumber: wrapInArray(versionNumber.subReleaseVersionNumber),
   };
 }

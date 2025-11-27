@@ -1,12 +1,13 @@
 import { GenericAttributeListFunctionalProfile } from "@/models";
 import { validateGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-validator";
+import { wrapInArray } from "@/sections/shared/utils/builder-utils";
 
 /**
  * Builds XML object for genericAttributeList from GenericAttributeListFunctionalProfile model
  */
 export function buildGenericAttributeList(
   attributeList: GenericAttributeListFunctionalProfile
-): any {
+): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateGenericAttributeList(attributeList);
   if (!validation.success) {
@@ -19,7 +20,7 @@ export function buildGenericAttributeList(
   return {
     genericAttributeListElement: attributeList.genericAttributeListElement.map(
       (attr) => ({
-        name: [attr.name],
+        name: wrapInArray(attr.name),
       })
     ),
   };

@@ -3,6 +3,10 @@ import {
   validateLegibleDescription,
   validateLegibleDescriptionArray,
 } from "@/sections/functional-profile/legible-description/legible-description-validator";
+import {
+  wrapInArray,
+  setOptionalXmlField,
+} from "@/sections/shared/utils/builder-utils";
 
 /**
  * Builds XML object for legibleDescription array from LegibleDescription[] model
@@ -10,7 +14,7 @@ import {
  */
 export function buildLegibleDescription(
   legibleDescriptions: LegibleDescription[]
-): any[] {
+): Record<string, unknown>[] {
   // Validate using validation layer
   const validation = validateLegibleDescriptionArray(legibleDescriptions);
   if (!validation.success) {
@@ -30,7 +34,9 @@ export function buildLegibleDescription(
  * Builds XML object for a single legibleDescription item
  * Uses CDATA for textElement to preserve HTML content and special characters
  */
-function buildLegibleDescriptionItem(description: LegibleDescription): any {
+function buildLegibleDescriptionItem(
+  description: LegibleDescription
+): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateLegibleDescription(description);
   if (!validation.success) {
@@ -41,17 +47,15 @@ function buildLegibleDescriptionItem(description: LegibleDescription): any {
     throw new Error(errorMessage);
   }
 
-  const itemXml: any = {
+  const itemXml: Record<string, unknown> = {
     // Pass text directly - xml2js Builder with cdata: true will automatically
     // wrap in CDATA when it detects HTML or special characters
-    textElement: [description.textElement],
-    language: [description.language],
+    textElement: wrapInArray(description.textElement),
+    language: wrapInArray(description.language),
   };
 
   // Include optional URI if present
-  if (description.uri) {
-    itemXml.uri = [description.uri];
-  }
+  setOptionalXmlField(itemXml, "uri", description.uri);
 
   return itemXml;
 }

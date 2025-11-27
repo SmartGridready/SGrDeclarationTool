@@ -8,6 +8,10 @@ import { buildGenericAttributeList } from "@/sections/functional-profile/generic
 import { buildDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-builder";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
+import {
+  wrapInArray,
+  setOptionalXmlArray,
+} from "@/sections/shared/utils/builder-utils";
 
 /**
  * Converts FunctionalProfileFrame model to XML string
@@ -57,61 +61,61 @@ export async function buildFunctionalProfileToXml(
 /**
  * Builds the XML object structure from FunctionalProfileFrame model
  */
-function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
-  const xmlObject: any = {
-    FunctionalProfileFrame: {
-      $: {
-        xmlns: "http://www.smartgridready.com/ns/V0/",
-        "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-        "xsi:schemaLocation":
-          "http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/SGrIncluder.xsd",
-      },
+function buildFunctionalProfile(
+  frame: FunctionalProfileFrame
+): Record<string, unknown> {
+  const functionalProfileFrame: Record<string, unknown> = {
+    $: {
+      xmlns: "http://www.smartgridready.com/ns/V0/",
+      "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+      "xsi:schemaLocation":
+        "http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/SGrIncluder.xsd",
     },
   };
 
   // Build releaseNotes if present
   if (frame.releaseNotes) {
-    xmlObject.FunctionalProfileFrame.releaseNotes = [
-      buildReleaseNotes(frame.releaseNotes),
-    ];
+    functionalProfileFrame.releaseNotes = wrapInArray(
+      buildReleaseNotes(frame.releaseNotes)
+    );
   }
 
   // Build functionalProfile with functionalProfileIdentification
-  const functionalProfileXml: any = {
-    functionalProfileIdentification: [
+  const functionalProfileXml: Record<string, unknown> = {
+    functionalProfileIdentification: wrapInArray(
       buildProfileIdentification(
         frame.functionalProfile.functionalProfileIdentification
-      ),
-    ],
+      )
+    ),
   };
 
   // Build alternativeNames if present
   if (frame.functionalProfile.alternativeNames) {
-    functionalProfileXml.alternativeNames = [
-      buildAlternativeNames(frame.functionalProfile.alternativeNames),
-    ];
-  }
-
-  // Build legibleDescription if present
-  if (
-    frame.functionalProfile.legibleDescription &&
-    frame.functionalProfile.legibleDescription.length > 0
-  ) {
-    functionalProfileXml.legibleDescription = buildLegibleDescription(
-      frame.functionalProfile.legibleDescription
+    functionalProfileXml.alternativeNames = wrapInArray(
+      buildAlternativeNames(frame.functionalProfile.alternativeNames)
     );
   }
 
-  xmlObject.FunctionalProfileFrame.functionalProfile = [functionalProfileXml];
+  // Build legibleDescription if present
+  setOptionalXmlArray(
+    functionalProfileXml,
+    "legibleDescription",
+    frame.functionalProfile.legibleDescription &&
+      frame.functionalProfile.legibleDescription.length > 0
+      ? buildLegibleDescription(frame.functionalProfile.legibleDescription)
+      : undefined
+  );
+
+  functionalProfileFrame.functionalProfile = wrapInArray(functionalProfileXml);
 
   // Build genericAttributeList if present
   if (
     frame.genericAttributeList &&
     frame.genericAttributeList.genericAttributeListElement.length > 0
   ) {
-    xmlObject.FunctionalProfileFrame.genericAttributeList = [
-      buildGenericAttributeList(frame.genericAttributeList),
-    ];
+    functionalProfileFrame.genericAttributeList = wrapInArray(
+      buildGenericAttributeList(frame.genericAttributeList)
+    );
   }
 
   // Build dataPointList if present
@@ -119,10 +123,12 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): any {
     frame.dataPointList &&
     frame.dataPointList.dataPointListElement.length > 0
   ) {
-    xmlObject.FunctionalProfileFrame.dataPointList = [
-      buildDataPointList(frame.dataPointList),
-    ];
+    functionalProfileFrame.dataPointList = wrapInArray(
+      buildDataPointList(frame.dataPointList)
+    );
   }
 
-  return xmlObject;
+  return {
+    FunctionalProfileFrame: functionalProfileFrame,
+  };
 }

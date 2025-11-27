@@ -3,12 +3,19 @@ import {
   validateChangeLog,
   validateReleaseNotes,
 } from "@/sections/functional-profile/release-notes/release-notes-validator";
+import {
+  wrapInArray,
+  setOptionalXmlField,
+  setOptionalXmlArray,
+} from "@/sections/shared/utils/builder-utils";
 
 /**
  * Builds XML object for releaseNotes from ReleaseNotes model
  * @throws Error if required fields are missing
  */
-export function buildReleaseNotes(releaseNotes: ReleaseNotes): any {
+export function buildReleaseNotes(
+  releaseNotes: ReleaseNotes
+): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateReleaseNotes(releaseNotes);
   if (!validation.success) {
@@ -19,19 +26,19 @@ export function buildReleaseNotes(releaseNotes: ReleaseNotes): any {
     throw new Error(errorMessage);
   }
 
-  const releaseNotesXml: any = {
-    state: [releaseNotes.state],
+  const releaseNotesXml: Record<string, unknown> = {
+    state: wrapInArray(releaseNotes.state),
   };
 
-  if (releaseNotes.remarks) {
-    releaseNotesXml.remarks = [releaseNotes.remarks];
-  }
+  // Add optional remarks
+  setOptionalXmlField(releaseNotesXml, "remarks", releaseNotes.remarks);
 
-  if (releaseNotes.changeLog && releaseNotes.changeLog.length > 0) {
-    releaseNotesXml.changeLog = releaseNotes.changeLog.map((entry) =>
-      buildChangeLogEntry(entry)
-    );
-  }
+  // Add optional changeLog array
+  setOptionalXmlArray(
+    releaseNotesXml,
+    "changeLog",
+    releaseNotes.changeLog?.map((entry) => buildChangeLogEntry(entry))
+  );
 
   return releaseNotesXml;
 }
@@ -40,7 +47,7 @@ export function buildReleaseNotes(releaseNotes: ReleaseNotes): any {
  * Builds XML object for changeLog from ChangeLog model
  * @throws Error if required fields are missing
  */
-function buildChangeLogEntry(entry: ChangeLog): any {
+function buildChangeLogEntry(entry: ChangeLog): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateChangeLog(entry);
   if (!validation.success) {
@@ -52,9 +59,9 @@ function buildChangeLogEntry(entry: ChangeLog): any {
   }
 
   return {
-    version: [entry.version],
-    date: [entry.date],
-    author: [entry.author],
-    comment: [entry.comment],
+    version: wrapInArray(entry.version),
+    date: wrapInArray(entry.date),
+    author: wrapInArray(entry.author),
+    comment: wrapInArray(entry.comment),
   };
 }

@@ -18,7 +18,7 @@ export function mapLegibleDescription(
 /**
  * Maps a single XML legibleDescription item to LegibleDescription model
  */
-function mapLegibleDescriptionItem(itemXml: any): LegibleDescription {
+export function mapLegibleDescriptionItem(itemXml: any): LegibleDescription {
   const legibleDescription: LegibleDescription = {
     textElement: itemXml.textElement?.[0] || "",
     language: (itemXml.language?.[0] as Language) || "en",

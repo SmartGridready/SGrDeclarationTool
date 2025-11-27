@@ -11,6 +11,17 @@ import {
   DynamicParameterDescription,
 } from "@/models";
 import {
+  mapArray,
+  mapOptionalArray,
+  getStringValue,
+  getTypedValue,
+  getOptionalNumberValue,
+  getFirstElement,
+  getOptionalStringValue,
+  mapSimpleDataType,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
+import {
   mapLegibleDescription,
   mapLegibleDescriptionItem,
 } from "@/sections/functional-profile/legible-description/legible-description-mapper";
@@ -28,15 +39,11 @@ import { mapBitmapProductDataType } from "@/sections/functional-profile/data-poi
 export function mapDataPointList(
   dataPointListXml: any
 ): FunctionalProfileDataPointList {
-  const elements = dataPointListXml.dataPointListElement;
-
-  if (!Array.isArray(elements)) {
-    return { dataPointListElement: [] };
-  }
-
   return {
-    dataPointListElement: elements.map((element: any) =>
-      mapDataPointElement(element)
+    dataPointListElement: mapArray(
+      dataPointListXml,
+      "dataPointListElement",
+      mapDataPointElement
     ),
   };
 }
@@ -45,7 +52,7 @@ export function mapDataPointList(
  * Maps a single XML dataPointListElement to FunctionalProfileDataPoint model
  */
 function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
-  const dpXml = elementXml.dataPoint?.[0];
+  const dpXml = getFirstElement(elementXml, "dataPoint");
 
   if (!dpXml) {
     return {
@@ -61,47 +68,58 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
 
   const dataPoint: FunctionalProfileDataPoint = {
     dataPoint: {
-      dataPointName: dpXml.dataPointName?.[0] || "",
-      dataDirection:
-        (dpXml.dataDirection?.[0] as DataDirectionFunctionalProfile) || "R",
-      presenceLevel: (dpXml.presenceLevel?.[0] as PresenceLevel) || "M",
-      dataType: mapDataType(dpXml.dataType?.[0]),
-      unit: (dpXml.unit?.[0] as Units) || "NO_UNITS",
+      dataPointName: getStringValue(dpXml, "dataPointName"),
+      dataDirection: getTypedValue<DataDirectionFunctionalProfile>(
+        dpXml,
+        "dataDirection",
+        "R"
+      ),
+      presenceLevel: getTypedValue<PresenceLevel>(dpXml, "presenceLevel", "M"),
+      dataType: mapDataType(getFirstElement(dpXml, "dataType")),
+      unit: getTypedValue<Units>(dpXml, "unit", "NO_UNITS"),
     },
   };
 
   // Map optional arrayLength
-  if (dpXml.arrayLength?.[0]) {
-    dataPoint.dataPoint.arrayLength = parseInt(dpXml.arrayLength[0], 10);
-  }
+  setOptionalField(
+    dataPoint.dataPoint,
+    "arrayLength",
+    getOptionalNumberValue(dpXml, "arrayLength")
+  );
 
-  // Map legibleDescription if present
+  // Map optional legibleDescription
   if (dpXml.legibleDescription && Array.isArray(dpXml.legibleDescription)) {
     dataPoint.dataPoint.legibleDescription = mapLegibleDescription(
       dpXml.legibleDescription
     );
   }
 
-  // Map alternativeNames if present
-  if (dpXml.alternativeNames?.[0]) {
-    dataPoint.dataPoint.alternativeNames = mapAlternativeNames(
-      dpXml.alternativeNames[0]
-    );
-  }
+  // Map optional alternativeNames
+  const alternativeNamesXml = getFirstElement(dpXml, "alternativeNames");
+  setOptionalField(
+    dataPoint.dataPoint,
+    "alternativeNames",
+    alternativeNamesXml && mapAlternativeNames(alternativeNamesXml)
+  );
 
-  // Map parameterList if present
-  if (dpXml.parameterList?.[0]) {
-    dataPoint.dataPoint.parameterList = mapParameterList(
-      dpXml.parameterList[0]
-    );
-  }
+  // Map optional parameterList
+  const parameterListXml = getFirstElement(dpXml, "parameterList");
+  setOptionalField(
+    dataPoint.dataPoint,
+    "parameterList",
+    parameterListXml && mapParameterList(parameterListXml)
+  );
 
-  // Map genericAttributeList at element level if present
-  if (elementXml.genericAttributeList?.[0]) {
-    dataPoint.genericAttributeList = mapGenericAttributeList(
-      elementXml.genericAttributeList[0]
-    );
-  }
+  // Map optional genericAttributeList at element level
+  const genericAttributeListXml = getFirstElement(
+    elementXml,
+    "genericAttributeList"
+  );
+  setOptionalField(
+    dataPoint,
+    "genericAttributeList",
+    genericAttributeListXml && mapGenericAttributeList(genericAttributeListXml)
+  );
 
   return dataPoint;
 }
@@ -116,17 +134,22 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
   }
 
   // Check for enum, bitmap, or json first
-  if (dataTypeXml.enum) {
-    return { enum: mapEnumDataType(dataTypeXml.enum[0]) };
-  }
-  if (dataTypeXml.bitmap) {
-    return { bitmap: mapBitmapDataType(dataTypeXml.bitmap[0]) };
-  }
-  if (dataTypeXml.json) {
-    return { json: mapJsonDataType(dataTypeXml.json[0]) };
+  const enumXml = getFirstElement(dataTypeXml, "enum");
+  if (enumXml) {
+    return { enum: mapEnumDataType(enumXml) };
   }
 
-  // Check for each possible simple data type element
+  const bitmapXml = getFirstElement(dataTypeXml, "bitmap");
+  if (bitmapXml) {
+    return { bitmap: mapBitmapDataType(bitmapXml) };
+  }
+
+  const jsonXml = getFirstElement(dataTypeXml, "json");
+  if (jsonXml) {
+    return { json: mapJsonDataType(jsonXml) };
+  }
+
+  // Map simple data types
   const typeMap: Record<string, DataTypeFunctionalProfile> = {
     boolean: { boolean: {} },
     int8: { int8: {} },
@@ -143,13 +166,7 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
     string: { string: {} },
   };
 
-  for (const [key, value] of Object.entries(typeMap)) {
-    if (dataTypeXml[key] !== undefined) {
-      return value;
-    }
-  }
-
-  return { float64: {} };
+  return mapSimpleDataType(dataTypeXml, typeMap, { float64: {} });
 }
 
 /**
@@ -158,17 +175,19 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
 function mapParameterList(
   parameterListXml: any
 ): DynamicParameterDescriptionList {
-  const elements = parameterListXml.parameterListElement;
+  const parameterList: DynamicParameterDescriptionList = {};
 
-  if (!Array.isArray(elements)) {
-    return { parameterListElement: [] };
+  // Map optional parameterListElement
+  const parameterListElement = mapOptionalArray(
+    parameterListXml,
+    "parameterListElement",
+    mapParameterListElement
+  );
+  if (parameterListElement) {
+    parameterList.parameterListElement = parameterListElement;
   }
 
-  return {
-    parameterListElement: elements.map((element: any) =>
-      mapParameterListElement(element)
-    ),
-  };
+  return parameterList;
 }
 
 /**
@@ -178,14 +197,16 @@ function mapParameterListElement(
   elementXml: any
 ): DynamicParameterDescriptionListElement {
   const element: DynamicParameterDescriptionListElement = {
-    name: elementXml.name?.[0] || "",
-    dataType: mapDataTypeProduct(elementXml.dataType?.[0]),
+    name: getStringValue(elementXml, "name"),
+    dataType: mapDataTypeProduct(getFirstElement(elementXml, "dataType")),
   };
 
   // Map optional defaultValue
-  if (elementXml.defaultValue?.[0]) {
-    element.defaultValue = elementXml.defaultValue[0];
-  }
+  setOptionalField(
+    element,
+    "defaultValue",
+    getOptionalStringValue(elementXml, "defaultValue")
+  );
 
   // Map optional parameterDescription
   if (
@@ -209,9 +230,11 @@ function mapParameterDescription(descXml: any): DynamicParameterDescription {
   };
 
   // Map optional label
-  if (descXml.label?.[0]) {
-    description.label = descXml.label[0];
-  }
+  setOptionalField(
+    description,
+    "label",
+    getOptionalStringValue(descXml, "label")
+  );
 
   return description;
 }
@@ -226,17 +249,21 @@ function mapDataTypeProduct(dataTypeXml: any): DataTypeProduct {
   }
 
   // Check for enum, bitmap, or json first
-  if (dataTypeXml.enum) {
-    return { enum: mapEnumProductDataType(dataTypeXml.enum[0]) };
+  const enumXml = getFirstElement(dataTypeXml, "enum");
+  if (enumXml) {
+    return { enum: mapEnumProductDataType(enumXml) };
   }
-  if (dataTypeXml.bitmap) {
-    return { bitmap: mapBitmapProductDataType(dataTypeXml.bitmap[0]) };
+
+  const bitmapXml = getFirstElement(dataTypeXml, "bitmap");
+  if (bitmapXml) {
+    return { bitmap: mapBitmapProductDataType(bitmapXml) };
   }
-  if (dataTypeXml.json) {
+
+  if (dataTypeXml.json !== undefined) {
     return { json: "" };
   }
 
-  // Check for each possible simple data type element
+  // Map simple data types
   const typeMap: Record<string, DataTypeProduct> = {
     boolean: { boolean: {} },
     int8: { int8: {} },
@@ -253,11 +280,5 @@ function mapDataTypeProduct(dataTypeXml: any): DataTypeProduct {
     string: { string: {} },
   };
 
-  for (const [key, value] of Object.entries(typeMap)) {
-    if (dataTypeXml[key] !== undefined) {
-      return value;
-    }
-  }
-
-  return { float64: {} };
+  return mapSimpleDataType(dataTypeXml, typeMap, { float64: {} });
 }

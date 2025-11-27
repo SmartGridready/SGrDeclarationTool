@@ -1,4 +1,10 @@
 import { LegibleDescription, Language } from "@/models";
+import {
+  getStringValue,
+  getTypedValue,
+  getOptionalStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML legibleDescription array to LegibleDescription[] model
@@ -9,10 +15,7 @@ export function mapLegibleDescription(
   if (!Array.isArray(legibleDescriptionXml)) {
     return [];
   }
-
-  return legibleDescriptionXml.map((item: any) =>
-    mapLegibleDescriptionItem(item)
-  );
+  return legibleDescriptionXml.map(mapLegibleDescriptionItem);
 }
 
 /**
@@ -20,14 +23,16 @@ export function mapLegibleDescription(
  */
 export function mapLegibleDescriptionItem(itemXml: any): LegibleDescription {
   const legibleDescription: LegibleDescription = {
-    textElement: itemXml.textElement?.[0] || "",
-    language: (itemXml.language?.[0] as Language) || "en",
+    textElement: getStringValue(itemXml, "textElement"),
+    language: getTypedValue<Language>(itemXml, "language", "en"),
   };
 
   // Map optional URI
-  if (itemXml.uri?.[0]) {
-    legibleDescription.uri = itemXml.uri[0];
-  }
+  setOptionalField(
+    legibleDescription,
+    "uri",
+    getOptionalStringValue(itemXml, "uri")
+  );
 
   return legibleDescription;
 }

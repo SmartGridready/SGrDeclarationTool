@@ -1,24 +1,26 @@
 import { EnumMapProduct, EnumEntryProductRecord } from "@/models";
+import {
+  getOptionalStringValue,
+  mapArray,
+  getStringValue,
+  getOptionalNumberValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML enum dataType to EnumMapProduct model (for parameterList)
  */
 export function mapEnumProductDataType(enumXml: any): EnumMapProduct {
   const enumMap: EnumMapProduct = {
-    enumEntry: [],
+    enumEntry: mapArray(enumXml, "enumEntry", mapEnumProductEntry),
   };
 
   // Map optional hexMask
-  if (enumXml.hexMask?.[0]) {
-    enumMap.hexMask = enumXml.hexMask[0];
-  }
-
-  // Map enumEntry array (required for Product)
-  if (enumXml.enumEntry && Array.isArray(enumXml.enumEntry)) {
-    enumMap.enumEntry = enumXml.enumEntry.map((entry: any) =>
-      mapEnumProductEntry(entry)
-    );
-  }
+  setOptionalField(
+    enumMap,
+    "hexMask",
+    getOptionalStringValue(enumXml, "hexMask")
+  );
 
   return enumMap;
 }
@@ -28,18 +30,20 @@ export function mapEnumProductDataType(enumXml: any): EnumMapProduct {
  */
 function mapEnumProductEntry(entryXml: any): EnumEntryProductRecord {
   const entry: EnumEntryProductRecord = {
-    literal: entryXml.literal?.[0] || "",
+    literal: getStringValue(entryXml, "literal"),
   };
 
-  // Map optional ordinal
-  if (entryXml.ordinal?.[0]) {
-    entry.ordinal = parseInt(entryXml.ordinal[0], 10);
-  }
-
-  // Map optional description
-  if (entryXml.description?.[0]) {
-    entry.description = entryXml.description[0];
-  }
+  // Map optional fields
+  setOptionalField(
+    entry,
+    "ordinal",
+    getOptionalNumberValue(entryXml, "ordinal")
+  );
+  setOptionalField(
+    entry,
+    "description",
+    getOptionalStringValue(entryXml, "description")
+  );
 
   return entry;
 }

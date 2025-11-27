@@ -2,6 +2,12 @@ import {
   EnumMapFunctionalProfile,
   EnumEntryRecordFunctionalProfile,
 } from "@/models";
+import {
+  getOptionalStringValue,
+  mapOptionalArray,
+  getStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML enum dataType to EnumMapFunctionalProfile model
@@ -9,17 +15,17 @@ import {
 export function mapEnumDataType(enumXml: any): EnumMapFunctionalProfile {
   const enumMap: EnumMapFunctionalProfile = {};
 
-  // Map optional hexMask
-  if (enumXml.hexMask?.[0]) {
-    enumMap.hexMask = enumXml.hexMask[0];
-  }
-
-  // Map optional enumEntry array
-  if (enumXml.enumEntry && Array.isArray(enumXml.enumEntry)) {
-    enumMap.enumEntry = enumXml.enumEntry.map((entry: any) =>
-      mapEnumEntry(entry)
-    );
-  }
+  // Map optional fields
+  setOptionalField(
+    enumMap,
+    "hexMask",
+    getOptionalStringValue(enumXml, "hexMask")
+  );
+  setOptionalField(
+    enumMap,
+    "enumEntry",
+    mapOptionalArray(enumXml, "enumEntry", mapEnumEntry)
+  );
 
   return enumMap;
 }
@@ -29,13 +35,15 @@ export function mapEnumDataType(enumXml: any): EnumMapFunctionalProfile {
  */
 function mapEnumEntry(entryXml: any): EnumEntryRecordFunctionalProfile {
   const entry: EnumEntryRecordFunctionalProfile = {
-    literal: entryXml.literal?.[0] || "",
+    literal: getStringValue(entryXml, "literal"),
   };
 
   // Map optional description
-  if (entryXml.description?.[0]) {
-    entry.description = entryXml.description[0];
-  }
+  setOptionalField(
+    entry,
+    "description",
+    getOptionalStringValue(entryXml, "description")
+  );
 
   return entry;
 }

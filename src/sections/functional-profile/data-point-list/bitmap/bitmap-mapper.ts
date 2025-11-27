@@ -2,6 +2,12 @@ import {
   BitmapFunctionalProfile,
   BitmapEntryFunctionalProfile,
 } from "@/models";
+import {
+  mapOptionalArray,
+  getStringValue,
+  getOptionalStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML bitmap dataType to BitmapFunctionalProfile model
@@ -10,11 +16,11 @@ export function mapBitmapDataType(bitmapXml: any): BitmapFunctionalProfile {
   const bitmap: BitmapFunctionalProfile = {};
 
   // Map optional bitmapEntry array
-  if (bitmapXml.bitmapEntry && Array.isArray(bitmapXml.bitmapEntry)) {
-    bitmap.bitmapEntry = bitmapXml.bitmapEntry.map((entry: any) =>
-      mapBitmapEntry(entry)
-    );
-  }
+  setOptionalField(
+    bitmap,
+    "bitmapEntry",
+    mapOptionalArray(bitmapXml, "bitmapEntry", mapBitmapEntry)
+  );
 
   return bitmap;
 }
@@ -24,13 +30,15 @@ export function mapBitmapDataType(bitmapXml: any): BitmapFunctionalProfile {
  */
 function mapBitmapEntry(entryXml: any): BitmapEntryFunctionalProfile {
   const entry: BitmapEntryFunctionalProfile = {
-    literal: entryXml.literal?.[0] || "",
+    literal: getStringValue(entryXml, "literal"),
   };
 
   // Map optional description
-  if (entryXml.description?.[0]) {
-    entry.description = entryXml.description[0];
-  }
+  setOptionalField(
+    entry,
+    "description",
+    getOptionalStringValue(entryXml, "description")
+  );
 
   return entry;
 }

@@ -1,21 +1,18 @@
 import { BitmapProduct, BitmapEntryProduct } from "@/models";
+import {
+  mapArray,
+  getStringValue,
+  getOptionalStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML bitmap dataType to BitmapProduct model (for parameterList)
  */
 export function mapBitmapProductDataType(bitmapXml: any): BitmapProduct {
-  const bitmap: BitmapProduct = {
-    bitmapEntry: [],
+  return {
+    bitmapEntry: mapArray(bitmapXml, "bitmapEntry", mapBitmapProductEntry),
   };
-
-  // Map bitmapEntry array (required for Product)
-  if (bitmapXml.bitmapEntry && Array.isArray(bitmapXml.bitmapEntry)) {
-    bitmap.bitmapEntry = bitmapXml.bitmapEntry.map((entry: any) =>
-      mapBitmapProductEntry(entry)
-    );
-  }
-
-  return bitmap;
 }
 
 /**
@@ -23,14 +20,16 @@ export function mapBitmapProductDataType(bitmapXml: any): BitmapProduct {
  */
 function mapBitmapProductEntry(entryXml: any): BitmapEntryProduct {
   const entry: BitmapEntryProduct = {
-    literal: entryXml.literal?.[0] || "",
-    hexMask: entryXml.hexMask?.[0] || "", // Required for Product
+    literal: getStringValue(entryXml, "literal"),
+    hexMask: getStringValue(entryXml, "hexMask"), // Required for Product
   };
 
   // Map optional description
-  if (entryXml.description?.[0]) {
-    entry.description = entryXml.description[0];
-  }
+  setOptionalField(
+    entry,
+    "description",
+    getOptionalStringValue(entryXml, "description")
+  );
 
   return entry;
 }

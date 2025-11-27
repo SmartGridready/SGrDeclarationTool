@@ -1,24 +1,31 @@
 import { ReleaseNotes, ChangeLog, ReleaseState } from "@/models";
+import {
+  getTypedValue,
+  getOptionalStringValue,
+  mapOptionalArray,
+  getStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML releaseNotes to ReleaseNotes model
  */
 export function mapReleaseNotes(releaseNotesXml: any): ReleaseNotes {
   const releaseNotes: ReleaseNotes = {
-    state: (releaseNotesXml.state?.[0] as ReleaseState) || "Draft",
+    state: getTypedValue<ReleaseState>(releaseNotesXml, "state", "Draft"),
   };
 
-  // Map optional remarks
-  if (releaseNotesXml.remarks?.[0]) {
-    releaseNotes.remarks = releaseNotesXml.remarks[0];
-  }
-
-  // Map optional changeLog
-  if (releaseNotesXml.changeLog && Array.isArray(releaseNotesXml.changeLog)) {
-    releaseNotes.changeLog = releaseNotesXml.changeLog.map((entry: any) =>
-      mapChangeLogEntry(entry)
-    );
-  }
+  // Map optional fields
+  setOptionalField(
+    releaseNotes,
+    "remarks",
+    getOptionalStringValue(releaseNotesXml, "remarks")
+  );
+  setOptionalField(
+    releaseNotes,
+    "changeLog",
+    mapOptionalArray(releaseNotesXml, "changeLog", mapChangeLogEntry)
+  );
 
   return releaseNotes;
 }
@@ -27,12 +34,10 @@ export function mapReleaseNotes(releaseNotesXml: any): ReleaseNotes {
  * Maps XML changeLog to ChangeLog model
  */
 function mapChangeLogEntry(entryXml: any): ChangeLog {
-  const entry: ChangeLog = {
-    version: entryXml.version?.[0] || "",
-    date: entryXml.date?.[0] || "",
-    author: entryXml.author?.[0] || "",
-    comment: entryXml.comment?.[0] || "",
+  return {
+    version: getStringValue(entryXml, "version"),
+    date: getStringValue(entryXml, "date"),
+    author: getStringValue(entryXml, "author"),
+    comment: getStringValue(entryXml, "comment"),
   };
-
-  return entry;
 }

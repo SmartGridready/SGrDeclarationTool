@@ -1,4 +1,5 @@
 import { GenericAttributeListFunctionalProfile } from "@/models";
+import { mapArray, getStringValue } from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML genericAttributeList to GenericAttributeListFunctionalProfile model
@@ -6,17 +7,12 @@ import { GenericAttributeListFunctionalProfile } from "@/models";
 export function mapGenericAttributeList(
   genericAttributeListXml: any
 ): GenericAttributeListFunctionalProfile {
-  const genericAttributeListElement =
-    genericAttributeListXml.genericAttributeListElement;
-
-  if (!Array.isArray(genericAttributeListElement)) {
-    return { genericAttributeListElement: [] };
-  }
-
   return {
-    genericAttributeListElement: genericAttributeListElement.map(
+    genericAttributeListElement: mapArray(
+      genericAttributeListXml,
+      "genericAttributeListElement",
       (item: any) => ({
-        name: item.name?.[0] || "",
+        name: getStringValue(item, "name"),
       })
     ),
   };

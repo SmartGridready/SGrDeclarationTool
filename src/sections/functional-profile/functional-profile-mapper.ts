@@ -1,5 +1,9 @@
 import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
+import {
+  getFirstElement,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-mapper";
 import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
@@ -54,63 +58,68 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   }
 
   const frameData = parsed.FunctionalProfileFrame;
+  const functionalProfileXml = getFirstElement(frameData, "functionalProfile");
+
+  if (!functionalProfileXml) {
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+  }
+
+  const identificationXml = getFirstElement(
+    functionalProfileXml,
+    "functionalProfileIdentification"
+  );
+
   const frame: FunctionalProfileFrame = {
     functionalProfile: {
-      functionalProfileIdentification: {
-        specificationOwnerIdentification: "",
-        functionalProfileCategory: "Battery",
-        functionalProfileType: "",
-        levelOfOperation: "1",
-        versionNumber: {
-          primaryVersionNumber: 0,
-          secondaryVersionNumber: 0,
-          subReleaseVersionNumber: 0,
-        },
-      },
+      functionalProfileIdentification: mapProfileIdentification(
+        identificationXml || {}
+      ),
     },
   };
 
-  // Map releaseNotes if present
-  if (frameData.releaseNotes) {
-    frame.releaseNotes = mapReleaseNotes(frameData.releaseNotes[0]);
-  }
+  // Map optional fields
+  const releaseNotesXml = getFirstElement(frameData, "releaseNotes");
+  setOptionalField(
+    frame,
+    "releaseNotes",
+    releaseNotesXml && mapReleaseNotes(releaseNotesXml)
+  );
 
-  // Map functionalProfileIdentification
-  if (frameData.functionalProfile?.[0]?.functionalProfileIdentification?.[0]) {
-    frame.functionalProfile.functionalProfileIdentification =
-      mapProfileIdentification(
-        frameData.functionalProfile[0].functionalProfileIdentification[0]
-      );
-  }
+  const alternativeNamesXml = getFirstElement(
+    functionalProfileXml,
+    "alternativeNames"
+  );
+  setOptionalField(
+    frame.functionalProfile,
+    "alternativeNames",
+    alternativeNamesXml && mapAlternativeNames(alternativeNamesXml)
+  );
 
-  // Map alternativeNames if present
-  if (frameData.functionalProfile?.[0]?.alternativeNames?.[0]) {
-    frame.functionalProfile.alternativeNames = mapAlternativeNames(
-      frameData.functionalProfile[0].alternativeNames[0]
-    );
-  }
-
-  // Map legibleDescription if present
   if (
-    frameData.functionalProfile?.[0]?.legibleDescription &&
-    Array.isArray(frameData.functionalProfile[0].legibleDescription)
+    functionalProfileXml.legibleDescription &&
+    Array.isArray(functionalProfileXml.legibleDescription)
   ) {
     frame.functionalProfile.legibleDescription = mapLegibleDescription(
-      frameData.functionalProfile[0].legibleDescription
+      functionalProfileXml.legibleDescription
     );
   }
 
-  // Map genericAttributeList if present
-  if (frameData.genericAttributeList?.[0]) {
-    frame.genericAttributeList = mapGenericAttributeList(
-      frameData.genericAttributeList[0]
-    );
-  }
+  const genericAttributeListXml = getFirstElement(
+    frameData,
+    "genericAttributeList"
+  );
+  setOptionalField(
+    frame,
+    "genericAttributeList",
+    genericAttributeListXml && mapGenericAttributeList(genericAttributeListXml)
+  );
 
-  // Map dataPointList if present
-  if (frameData.dataPointList?.[0]) {
-    frame.dataPointList = mapDataPointList(frameData.dataPointList[0]);
-  }
+  const dataPointListXml = getFirstElement(frameData, "dataPointList");
+  setOptionalField(
+    frame,
+    "dataPointList",
+    dataPointListXml && mapDataPointList(dataPointListXml)
+  );
 
   return frame;
 }

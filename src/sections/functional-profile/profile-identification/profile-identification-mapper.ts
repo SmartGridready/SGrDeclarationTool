@@ -4,6 +4,12 @@ import {
   LevelOfOperation,
   VersionNumber,
 } from "@/models";
+import {
+  getStringValue,
+  getTypedValue,
+  getNumberValue,
+  getFirstElement,
+} from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML functionalProfileIdentification to FunctionalProfileIdentification model
@@ -12,47 +18,28 @@ export function mapProfileIdentification(
   identificationXml: any
 ): FunctionalProfileIdentification {
   const identification: FunctionalProfileIdentification = {
-    specificationOwnerIdentification: "",
-    functionalProfileCategory: "Battery",
-    functionalProfileType: "",
-    levelOfOperation: "1",
-    versionNumber: {
-      primaryVersionNumber: 0,
-      secondaryVersionNumber: 0,
-      subReleaseVersionNumber: 0,
-    },
+    specificationOwnerIdentification: getStringValue(
+      identificationXml,
+      "specificationOwnerIdentification"
+    ),
+    functionalProfileCategory: getTypedValue<FunctionalProfileCategory>(
+      identificationXml,
+      "functionalProfileCategory",
+      "Battery"
+    ),
+    functionalProfileType: getStringValue(
+      identificationXml,
+      "functionalProfileType"
+    ),
+    levelOfOperation: getTypedValue<LevelOfOperation>(
+      identificationXml,
+      "levelOfOperation",
+      "1"
+    ),
+    versionNumber: mapVersionNumber(
+      getFirstElement(identificationXml, "versionNumber")
+    ),
   };
-
-  // Map specificationOwnerIdentification
-  if (identificationXml.specificationOwnerIdentification?.[0]) {
-    identification.specificationOwnerIdentification =
-      identificationXml.specificationOwnerIdentification[0];
-  }
-
-  // Map functionalProfileCategory
-  if (identificationXml.functionalProfileCategory?.[0]) {
-    identification.functionalProfileCategory = identificationXml
-      .functionalProfileCategory[0] as FunctionalProfileCategory;
-  }
-
-  // Map functionalProfileType
-  if (identificationXml.functionalProfileType?.[0]) {
-    identification.functionalProfileType =
-      identificationXml.functionalProfileType[0];
-  }
-
-  // Map levelOfOperation
-  if (identificationXml.levelOfOperation?.[0]) {
-    identification.levelOfOperation = identificationXml
-      .levelOfOperation[0] as LevelOfOperation;
-  }
-
-  // Map versionNumber
-  if (identificationXml.versionNumber?.[0]) {
-    identification.versionNumber = mapVersionNumber(
-      identificationXml.versionNumber[0]
-    );
-  }
 
   return identification;
 }
@@ -61,32 +48,29 @@ export function mapProfileIdentification(
  * Maps XML versionNumber to VersionNumber model
  */
 function mapVersionNumber(versionNumberXml: any): VersionNumber {
-  const versionNumber: VersionNumber = {
-    primaryVersionNumber: 0,
-    secondaryVersionNumber: 0,
-    subReleaseVersionNumber: 0,
+  if (!versionNumberXml) {
+    return {
+      primaryVersionNumber: 0,
+      secondaryVersionNumber: 0,
+      subReleaseVersionNumber: 0,
+    };
+  }
+
+  return {
+    primaryVersionNumber: getNumberValue(
+      versionNumberXml,
+      "primaryVersionNumber",
+      0
+    ),
+    secondaryVersionNumber: getNumberValue(
+      versionNumberXml,
+      "secondaryVersionNumber",
+      0
+    ),
+    subReleaseVersionNumber: getNumberValue(
+      versionNumberXml,
+      "subReleaseVersionNumber",
+      0
+    ),
   };
-
-  if (versionNumberXml.primaryVersionNumber?.[0]) {
-    versionNumber.primaryVersionNumber = parseInt(
-      versionNumberXml.primaryVersionNumber[0],
-      10
-    );
-  }
-
-  if (versionNumberXml.secondaryVersionNumber?.[0]) {
-    versionNumber.secondaryVersionNumber = parseInt(
-      versionNumberXml.secondaryVersionNumber[0],
-      10
-    );
-  }
-
-  if (versionNumberXml.subReleaseVersionNumber?.[0]) {
-    versionNumber.subReleaseVersionNumber = parseInt(
-      versionNumberXml.subReleaseVersionNumber[0],
-      10
-    );
-  }
-
-  return versionNumber;
 }

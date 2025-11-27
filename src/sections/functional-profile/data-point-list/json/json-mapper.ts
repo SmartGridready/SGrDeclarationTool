@@ -3,7 +3,12 @@ import {
   JSonArrayOutputFunctionalProfile,
   JSonElemFunctionalProfile,
 } from "@/models";
-
+import {
+  mapOptionalArray,
+  getOptionalStringValue,
+  getStringValue,
+  setOptionalField,
+} from "@/sections/shared/utils/mapper-utils";
 /**
  * Maps XML json dataType to JSonOutputFunctionalProfile model
  */
@@ -11,9 +16,11 @@ export function mapJsonDataType(jsonXml: any): JSonOutputFunctionalProfile {
   const jsonOutput: JSonOutputFunctionalProfile = {};
 
   // Map optional items array
-  if (jsonXml.items && Array.isArray(jsonXml.items)) {
-    jsonOutput.items = jsonXml.items.map((item: any) => mapJsonItem(item));
-  }
+  setOptionalField(
+    jsonOutput,
+    "items",
+    mapOptionalArray(jsonXml, "items", mapJsonItem)
+  );
 
   return jsonOutput;
 }
@@ -39,15 +46,13 @@ function mapJsonItem(
 function mapJsonArray(arrayXml: any): JSonArrayOutputFunctionalProfile {
   const array: JSonArrayOutputFunctionalProfile = {};
 
-  // Map optional name
-  if (arrayXml.name?.[0]) {
-    array.name = arrayXml.name[0];
-  }
-
-  // Map optional nested items
-  if (arrayXml.items && Array.isArray(arrayXml.items)) {
-    array.items = arrayXml.items.map((item: any) => mapJsonItem(item));
-  }
+  // Map optional fields
+  setOptionalField(array, "name", getOptionalStringValue(arrayXml, "name"));
+  setOptionalField(
+    array,
+    "items",
+    mapOptionalArray(arrayXml, "items", mapJsonItem)
+  );
 
   return array;
 }
@@ -56,7 +61,7 @@ function mapJsonArray(arrayXml: any): JSonArrayOutputFunctionalProfile {
  * Maps XML json element to JSonElemFunctionalProfile model
  */
 function mapJsonElement(elementXml: any): JSonElemFunctionalProfile {
-  const key = elementXml.key?.[0] || "";
+  const key = getStringValue(elementXml, "key");
 
   // Check which type it is (date, string, or number)
   if (elementXml.date !== undefined) {

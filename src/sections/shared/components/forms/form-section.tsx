@@ -26,6 +26,8 @@ interface FormSectionProps {
   isAdded?: boolean;
   onAdd?: () => void;
   onRemove?: () => void;
+  nested?: boolean;
+  defaultOpen?: boolean;
 }
 
 export function FormSection({
@@ -37,8 +39,47 @@ export function FormSection({
   isAdded,
   onAdd,
   onRemove,
+  nested = false,
+  defaultOpen = false,
 }: FormSectionProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  // Nested variant - simpler styling, no Card wrapper
+  if (nested) {
+    return (
+      <div className={cn("border-t pt-4 mt-4 space-y-4", className)}>
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <div className="flex items-center justify-between mb-2">
+            <CollapsibleTrigger className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+              <div className="font-semibold text-sm">{title}</div>
+              {isOpen ? (
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              ) : (
+                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              )}
+            </CollapsibleTrigger>
+            {!required && isAdded && onRemove && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={onRemove}
+                className="h-6 w-6 text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+          {description && (
+            <p className="text-xs text-muted-foreground mb-2">{description}</p>
+          )}
+          <CollapsibleContent>
+            <div className="space-y-4">{children}</div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+    );
+  }
 
   // If not required and not added, show Add button
   if (!required && !isAdded) {

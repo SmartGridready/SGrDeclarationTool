@@ -99,9 +99,10 @@ export function useFormSection<
   // Use stable selectors with the store
   const state = useProfileStore(stableStateSelector);
   const actions = useProfileStore(stableActionsSelector);
-  const isAdded = config.isAddedSelector
-    ? useProfileStore(stableIsAddedSelector)
-    : false;
+  const isAddedValue = useProfileStore(
+    config.isAddedSelector ? stableIsAddedSelector : () => false
+  );
+  const isAdded = config.isAddedSelector ? isAddedValue : false;
 
   const { getError } = useProfileValidation();
 

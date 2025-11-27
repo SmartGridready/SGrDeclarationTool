@@ -82,7 +82,7 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
             dataPointName: "ExampleDataPoint",
             dataDirection: "R",
             presenceLevel: "M",
-            dataType: "float64",
+            dataType: { float64: {} },
             unit: "KILOWATTS",
             legibleDescription: [
               {

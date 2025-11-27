@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RELEASE_STATE_OPTIONS } from "./release-notes-form-options";
+import { RELEASE_STATE_OPTIONS } from "@/sections/functional-profile/release-notes/release-notes-form-options";
 
 /**
  * Release Notes validation schemas

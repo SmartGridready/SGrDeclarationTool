@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   PROFILE_IDENTIFICATION_CATEGORY,
   LEVEL_OF_OPERATION,
-} from "./profile-identification-form-options";
+} from "@/sections/functional-profile/profile-identification/profile-identification-form-options";
 
 /**
  * Profile Identification validation schemas

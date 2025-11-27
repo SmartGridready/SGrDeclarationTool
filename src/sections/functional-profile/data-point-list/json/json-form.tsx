@@ -6,7 +6,7 @@ import {
   JSonArrayOutputFunctionalProfile,
   JSonElemFunctionalProfile,
 } from "@/models";
-import { JsonSlice } from "./json-slice";
+import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
 import {
   isJsonArray,
   isJsonElement,
@@ -15,7 +15,7 @@ import {
   createJsonArray,
   createEmptyJsonElement,
   JSON_ELEMENT_TYPE_OPTIONS,
-} from "./json-utils";
+} from "@/sections/functional-profile/data-point-list/json/json-utils";
 
 interface JsonFormProps {
   dataPointIndex: number;

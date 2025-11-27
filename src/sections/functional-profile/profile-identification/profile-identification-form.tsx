@@ -4,7 +4,7 @@ import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import {
   PROFILE_IDENTIFICATION_CATEGORY,
   LEVEL_OF_OPERATION,
-} from "./profile-identification-form-options";
+} from "@/sections/functional-profile/profile-identification/profile-identification-form-options";
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { FunctionalProfileCategory, LevelOfOperation } from "@/models";

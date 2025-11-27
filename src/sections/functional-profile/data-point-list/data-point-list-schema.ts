@@ -4,7 +4,7 @@ import {
   PRESENCE_LEVEL_OPTIONS,
   DATA_TYPE_OPTIONS,
   UNIT_OPTIONS,
-} from "./data-point-list-form-options";
+} from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { legibleDescriptionSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 
 /**

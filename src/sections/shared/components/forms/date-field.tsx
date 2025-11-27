@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/sections/shared/components/shadcn/popover";
-import { cn } from "@/sections/shared/style-utils";
+import { cn } from "@/sections/shared/utils/style-utils";
 
 interface DateFieldProps {
   label: string;

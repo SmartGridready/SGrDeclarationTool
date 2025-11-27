@@ -13,10 +13,19 @@ import {
   getDataPoint,
   ensureArray,
   removeArrayItem,
-} from "@/sections/shared/slice-utils";
-import { createEnumSlice, EnumSlice } from "./enum/enum-slice";
-import { createBitmapSlice, BitmapSlice } from "./bitmap/bitmap-slice";
-import { createJsonSlice, JsonSlice } from "./json/json-slice";
+} from "@/sections/shared/utils/slice-utils";
+import {
+  createEnumSlice,
+  EnumSlice,
+} from "@/sections/functional-profile/data-point-list/enum/enum-slice";
+import {
+  createBitmapSlice,
+  BitmapSlice,
+} from "@/sections/functional-profile/data-point-list/bitmap/bitmap-slice";
+import {
+  createJsonSlice,
+  JsonSlice,
+} from "@/sections/functional-profile/data-point-list/json/json-slice";
 
 export interface DataPointListSlice extends EnumSlice, BitmapSlice, JsonSlice {
   // Main operations

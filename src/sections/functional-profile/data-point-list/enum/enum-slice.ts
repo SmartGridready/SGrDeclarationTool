@@ -7,7 +7,7 @@ import {
   getDataPoint,
   ensureArray,
   removeArrayItem,
-} from "@/sections/shared/slice-utils";
+} from "@/sections/shared/utils/slice-utils";
 
 export interface EnumSlice {
   setEnumDataType: (index: number, enumMap: EnumMapFunctionalProfile) => void;

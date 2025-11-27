@@ -4,7 +4,7 @@ import {
   ensureArray,
   removeArrayItem,
   normalizeString,
-} from "@/sections/shared/slice-utils";
+} from "@/sections/shared/utils/slice-utils";
 
 export interface ReleaseNotesSlice {
   // Main operations

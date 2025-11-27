@@ -18,7 +18,7 @@ import {
   PRESENCE_LEVEL_OPTIONS,
   DATA_TYPE_OPTIONS,
   UNIT_OPTIONS,
-} from "./data-point-list-form-options";
+} from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { LANGUAGE_OPTIONS } from "@/sections/functional-profile/legible-description/legible-description-form-options";
 import {
   isEnumDataType,
@@ -26,11 +26,11 @@ import {
   isJsonDataType,
   getDataTypeStringValue,
   createDataTypeFromString,
-} from "./data-type-utils";
-import { EnumForm } from "./enum/enum-form";
-import { BitmapForm } from "./bitmap/bitmap-form";
-import { JsonForm } from "./json/json-form";
-import { JsonSlice } from "./json/json-slice";
+} from "@/sections/functional-profile/data-point-list/data-type-utils";
+import { EnumForm } from "@/sections/functional-profile/data-point-list/enum/enum-form";
+import { BitmapForm } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-form";
+import { JsonForm } from "@/sections/functional-profile/data-point-list/json/json-form";
+import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
 
 export function DataPointListForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } =

@@ -7,7 +7,7 @@ import {
   getDataPoint,
   ensureArray,
   removeArrayItem,
-} from "@/sections/shared/slice-utils";
+} from "@/sections/shared/utils/slice-utils";
 
 export interface BitmapSlice {
   setBitmapDataType: (index: number, bitmap: BitmapFunctionalProfile) => void;

@@ -4,7 +4,7 @@ import { SelectField } from "@/sections/shared/components/forms/select-field";
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
-import { LANGUAGE_OPTIONS } from "./legible-description-form-options";
+import { LANGUAGE_OPTIONS } from "@/sections/functional-profile/legible-description/legible-description-form-options";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { LegibleDescription, Language } from "@/models";
 

@@ -2,7 +2,7 @@ import { FunctionalProfileIdentification, VersionNumber } from "@/models";
 import {
   validateFunctionalProfileIdentification,
   validateVersionNumber,
-} from "./profile-identification-validator";
+} from "@/sections/functional-profile/profile-identification/profile-identification-validator";
 
 /**
  * Builds XML object for functionalProfileIdentification from FunctionalProfileIdentification model

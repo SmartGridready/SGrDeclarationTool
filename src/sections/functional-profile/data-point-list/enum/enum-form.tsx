@@ -5,7 +5,7 @@ import {
   EnumMapFunctionalProfile,
   EnumEntryRecordFunctionalProfile,
 } from "@/models";
-import { EnumSlice } from "./enum-slice";
+import { EnumSlice } from "@/sections/functional-profile/data-point-list/enum/enum-slice";
 
 interface EnumFormProps {
   dataPointIndex: number;

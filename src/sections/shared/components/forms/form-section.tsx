@@ -15,7 +15,7 @@ import {
   CollapsibleTrigger,
 } from "@/sections/shared/components/shadcn/collapsible";
 import { Button } from "@/sections/shared/components/shadcn/button";
-import { cn } from "@/sections/shared/style-utils";
+import { cn } from "@/sections/shared/utils/style-utils";
 
 interface FormSectionProps {
   title: string;

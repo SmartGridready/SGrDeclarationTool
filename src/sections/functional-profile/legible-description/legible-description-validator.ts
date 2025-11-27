@@ -2,7 +2,7 @@ import { LegibleDescription } from "@/models";
 import {
   ValidationResult,
   validateWithSchema,
-} from "@/sections/shared/validation-utils";
+} from "@/sections/shared/utils/validation-utils";
 import {
   legibleDescriptionSchema,
   legibleDescriptionsSchema,

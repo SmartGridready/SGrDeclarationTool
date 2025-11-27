@@ -5,11 +5,11 @@ import {
 import {
   ValidationResult,
   validateWithSchema,
-} from "@/sections/shared/validation-utils";
+} from "@/sections/shared/utils/validation-utils";
 import {
   functionalProfileDataPointSchema,
   dataPointListSchema,
-} from "./data-point-list-schema";
+} from "@/sections/functional-profile/data-point-list/data-point-list-schema";
 
 /**
  * Validates a single FunctionalProfileDataPoint

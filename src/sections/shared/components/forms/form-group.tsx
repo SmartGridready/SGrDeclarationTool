@@ -1,4 +1,4 @@
-import { cn } from "@/sections/shared/style-utils";
+import { cn } from "@/sections/shared/utils/style-utils";
 
 interface FormGroupProps {
   children: React.ReactNode;

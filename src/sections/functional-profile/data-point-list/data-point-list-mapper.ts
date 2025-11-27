@@ -7,6 +7,7 @@ import {
   Units,
 } from "@/models";
 import { mapLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-mapper";
+import { createDataTypeFromString } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
 /**
  * Maps XML dataPointList to FunctionalProfileDataPointList model

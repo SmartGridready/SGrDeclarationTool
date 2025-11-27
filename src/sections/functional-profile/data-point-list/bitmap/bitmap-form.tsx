@@ -5,7 +5,7 @@ import {
   BitmapFunctionalProfile,
   BitmapEntryFunctionalProfile,
 } from "@/models";
-import { BitmapSlice } from "./bitmap-slice";
+import { BitmapSlice } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-slice";
 
 interface BitmapFormProps {
   dataPointIndex: number;

@@ -3,7 +3,7 @@ import {
   SetState,
   ensureArray,
   removeArrayItem,
-} from "@/sections/shared/slice-utils";
+} from "@/sections/shared/utils/slice-utils";
 
 export interface GenericAttributeListSlice {
   // Main operations

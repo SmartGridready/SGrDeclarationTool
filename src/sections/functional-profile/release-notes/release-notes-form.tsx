@@ -4,7 +4,7 @@ import { InputField } from "@/sections/shared/components/forms/input-field";
 import { DateField } from "@/sections/shared/components/forms/date-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
-import { RELEASE_STATE_OPTIONS } from "./release-notes-form-options";
+import { RELEASE_STATE_OPTIONS } from "@/sections/functional-profile/release-notes/release-notes-form-options";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { ReleaseState, ChangeLog } from "@/models/generic/base-types";
 

@@ -2,7 +2,7 @@ import { ReleaseNotes, ChangeLog } from "@/models";
 import {
   validateChangeLog,
   validateReleaseNotes,
-} from "./release-notes-validator";
+} from "@/sections/functional-profile/release-notes/release-notes-validator";
 
 /**
  * Builds XML object for releaseNotes from ReleaseNotes model

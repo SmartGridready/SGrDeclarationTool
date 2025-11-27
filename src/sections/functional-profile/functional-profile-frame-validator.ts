@@ -3,7 +3,7 @@ import { functionalProfileFrameSchema } from "@/sections/functional-profile/func
 import {
   ValidationResult,
   validateWithSchema,
-} from "@/sections/shared/validation-utils";
+} from "@/sections/shared/utils/validation-utils";
 
 /**
  * Validates a FunctionalProfileFrame and returns detailed field-level errors

@@ -1,5 +1,5 @@
 import { AlternativeNames } from "@/models";
-import { SetState, normalizeString } from "@/sections/shared/slice-utils";
+import { SetState, normalizeString } from "@/sections/shared/utils/slice-utils";
 
 export interface AlternativeNamesSlice {
   // Main operations

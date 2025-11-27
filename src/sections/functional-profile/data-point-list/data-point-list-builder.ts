@@ -2,8 +2,9 @@ import {
   FunctionalProfileDataPointList,
   FunctionalProfileDataPoint,
 } from "@/models";
-import { validateDataPointList } from "./data-point-list-validator";
+import { validateDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-validator";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
+import { getDataTypeStringValue } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
 /**
  * Builds XML object for dataPointList from FunctionalProfileDataPointList model

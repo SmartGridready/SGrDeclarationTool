@@ -3,7 +3,7 @@ import {
   LevelOfOperation,
   SpecificationOwnerIdentification,
 } from "@/models";
-import { SetState } from "@/sections/shared/slice-utils";
+import { SetState } from "@/sections/shared/utils/slice-utils";
 
 export interface FunctionalProfileIdentificationSlice {
   // Field-specific updates

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LANGUAGE_OPTIONS } from "./legible-description-form-options";
+import { LANGUAGE_OPTIONS } from "@/sections/functional-profile/legible-description/legible-description-form-options";
 
 /**
  * Legible Description validation schemas

@@ -5,7 +5,7 @@ import { useValidationStore } from "@/sections/shared/validation-store";
 import {
   getFieldError,
   hasFieldError,
-} from "@/sections/shared/validation-utils";
+} from "@/sections/shared/utils/validation-utils";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-frame-validator";
 
 /**

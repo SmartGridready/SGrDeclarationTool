@@ -8,7 +8,7 @@ import {
   getDataPoint,
   ensureArray,
   removeArrayItem,
-} from "@/sections/shared/slice-utils";
+} from "@/sections/shared/utils/slice-utils";
 
 export interface JsonSlice {
   setJsonDataType: (index: number, json: JSonOutputFunctionalProfile) => void;

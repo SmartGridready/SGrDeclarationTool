@@ -1,5 +1,5 @@
 import { GenericAttributeListFunctionalProfile } from "@/models";
-import { validateGenericAttributeList } from "./generic-attribute-list-validator";
+import { validateGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-validator";
 
 /**
  * Builds XML object for genericAttributeList from GenericAttributeListFunctionalProfile model

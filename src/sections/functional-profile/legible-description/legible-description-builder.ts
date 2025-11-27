@@ -2,7 +2,7 @@ import { LegibleDescription } from "@/models";
 import {
   validateLegibleDescription,
   validateLegibleDescriptionArray,
-} from "./legible-description-validator";
+} from "@/sections/functional-profile/legible-description/legible-description-validator";
 
 /**
  * Builds XML object for legibleDescription array from LegibleDescription[] model

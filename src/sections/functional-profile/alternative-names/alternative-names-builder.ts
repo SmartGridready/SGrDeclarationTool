@@ -1,5 +1,5 @@
 import { AlternativeNames } from "@/models";
-import { validateAlternativeNames } from "./alternative-names-validator";
+import { validateAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-validator";
 
 /**
  * Builds XML object for alternativeNames from AlternativeNames model

@@ -3,7 +3,7 @@ import { alternativeNamesSchema } from "@/sections/functional-profile/functional
 import {
   ValidationResult,
   validateWithSchema,
-} from "@/sections/shared/validation-utils";
+} from "@/sections/shared/utils/validation-utils";
 
 /**
  * Validates AlternativeNames

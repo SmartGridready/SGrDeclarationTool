@@ -76,6 +76,13 @@ function buildDataPointElement(
     dp.arrayLength !== undefined ? dp.arrayLength.toString() : undefined
   );
 
+  // Add optional parameterList (must come before legibleDescription)
+  if (dp.parameterList) {
+    dataPointXml.parameterList = wrapInArray(
+      buildParameterListForDataPoint(dp.parameterList)
+    );
+  }
+
   // Add legibleDescription if present
   setOptionalXmlArray(
     dataPointXml,
@@ -89,13 +96,6 @@ function buildDataPointElement(
   if (dp.alternativeNames) {
     dataPointXml.alternativeNames = wrapInArray(
       buildAlternativeNames(dp.alternativeNames)
-    );
-  }
-
-  // Add optional parameterList
-  if (dp.parameterList) {
-    dataPointXml.parameterList = wrapInArray(
-      buildParameterListForDataPoint(dp.parameterList)
     );
   }
 
@@ -278,7 +278,13 @@ function buildDataType(
   }
 
   if (isJsonDataType(dataType)) {
-    return { json: wrapInArray(buildJsonDataType(dataType.json)) };
+    const jsonContent = buildJsonDataType(dataType.json);
+    // If json is empty (no items), serialize as empty element like <json />
+    // Similar to how simple types work: { json: [""] }
+    if (Object.keys(jsonContent).length === 0) {
+      return { json: [""] };
+    }
+    return { json: wrapInArray(jsonContent) };
   }
 
   // Build simple data types

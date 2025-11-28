@@ -59,10 +59,7 @@ export function JsonArrayField<T>({
       ) : (
         <div className="space-y-4">
           {items.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-4 p-4 border rounded-md bg-card"
-            >
+            <div key={index} className="flex items-start gap-4 p-4 border rounded-md bg-card">
               <div className="flex-1 space-y-3">{renderItem(item, index)}</div>
               <Button
                 type="button"

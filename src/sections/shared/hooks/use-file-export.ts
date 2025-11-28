@@ -27,9 +27,7 @@ export function useFileExport<T>({
   filename?: string;
   errorMessage?: string;
 }) {
-  const setValidationAttempted = useValidationStore(
-    (state) => state.setValidationAttempted
-  );
+  const setValidationAttempted = useValidationStore((state) => state.setValidationAttempted);
 
   const exportFile = useCallback(async () => {
     if (!data) {
@@ -42,9 +40,7 @@ export function useFileExport<T>({
     // Validate before exporting - this triggers validation error display
     // Check if data is a FunctionalProfileFrame (for validation)
     if (data && typeof data === "object" && "functionalProfile" in data) {
-      const validation = validateFunctionalProfileFrame(
-        data as FunctionalProfileFrame
-      );
+      const validation = validateFunctionalProfileFrame(data as FunctionalProfileFrame);
 
       // Mark validation as attempted so errors will be displayed
       setValidationAttempted(true);
@@ -90,9 +86,7 @@ export function useFileExport<T>({
       });
     } catch (error) {
       const errorMessageText =
-        error instanceof Error
-          ? error.message
-          : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
+        error instanceof Error ? error.message : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
 
       // Update the loading toast to error (this replaces it automatically)
       toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {

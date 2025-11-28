@@ -1,15 +1,10 @@
 import { AlternativeNames } from "@/models";
-import {
-  getOptionalStringValue,
-  setOptionalField,
-} from "@/sections/shared/utils/mapper-utils";
+import { getOptionalStringValue, setOptionalField } from "@/sections/shared/utils/mapper-utils";
 
 /**
  * Maps XML alternativeNames to AlternativeNames model
  */
-export function mapAlternativeNames(
-  alternativeNamesXml: any
-): AlternativeNames {
+export function mapAlternativeNames(alternativeNamesXml: any): AlternativeNames {
   const alternativeNames: AlternativeNames = {};
 
   // Map all optional fields using utility function

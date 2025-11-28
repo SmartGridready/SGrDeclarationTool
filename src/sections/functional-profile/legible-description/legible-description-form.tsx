@@ -9,32 +9,27 @@ import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { LegibleDescription, Language } from "@/models";
 
 export function LegibleDescriptionForm() {
-  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
-    useFormSection({
-      stateSelector: (store) => ({
-        legibleDescriptions:
-          store.profile?.functionalProfile?.legibleDescription,
-      }),
-      actionsSelector: (store) => ({
-        addEmptyLegibleDescription: store.addEmptyLegibleDescription,
-        removeLegibleDescription: store.removeLegibleDescription,
-        removeAllLegibleDescriptions: store.removeAllLegibleDescriptions,
-        updateTextElement: store.updateTextElement,
-        updateLanguage: store.updateLanguage,
-        updateUri: store.updateUri,
-      }),
-      isAddedSelector: (store) =>
-        !!store.profile?.functionalProfile?.legibleDescription,
-      onAdd: (actions) => actions.addEmptyLegibleDescription(),
-      onRemove: (actions) => actions.removeAllLegibleDescriptions(),
-    });
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    stateSelector: (store) => ({
+      legibleDescriptions: store.profile?.functionalProfile?.legibleDescription,
+    }),
+    actionsSelector: (store) => ({
+      addEmptyLegibleDescription: store.addEmptyLegibleDescription,
+      removeLegibleDescription: store.removeLegibleDescription,
+      removeAllLegibleDescriptions: store.removeAllLegibleDescriptions,
+      updateTextElement: store.updateTextElement,
+      updateLanguage: store.updateLanguage,
+      updateUri: store.updateUri,
+    }),
+    isAddedSelector: (store) => !!store.profile?.functionalProfile?.legibleDescription,
+    onAdd: (actions) => actions.addEmptyLegibleDescription(),
+    onRemove: (actions) => actions.removeAllLegibleDescriptions(),
+  });
 
   return (
     <FormSection
       title={"Legible Description"}
-      description={
-        "Human-readable descriptions of the functional profile (max 4)"
-      }
+      description={"Human-readable descriptions of the functional profile (max 4)"}
       required={false}
       isAdded={isAdded}
       onAdd={handleAdd}
@@ -57,9 +52,7 @@ export function LegibleDescriptionForm() {
               placeholder="Enter description text (max 4000 characters)"
               required={true}
               rows={6}
-              error={getError(
-                `functionalProfile.legibleDescription.${index}.textElement`
-              )}
+              error={getError(`functionalProfile.legibleDescription.${index}.textElement`)}
             />
             <FormGroup columns={2}>
               <SelectField
@@ -68,12 +61,8 @@ export function LegibleDescriptionForm() {
                 options={LANGUAGE_OPTIONS}
                 required={true}
                 value={item.language}
-                onChange={(value) =>
-                  actions.updateLanguage(index, value as Language)
-                }
-                error={getError(
-                  `functionalProfile.legibleDescription.${index}.language`
-                )}
+                onChange={(value) => actions.updateLanguage(index, value as Language)}
+                error={getError(`functionalProfile.legibleDescription.${index}.language`)}
               />
               <InputField
                 label="URI"
@@ -81,13 +70,9 @@ export function LegibleDescriptionForm() {
                 required={false}
                 type="text"
                 value={item.uri}
-                onChange={(value) =>
-                  actions.updateUri(index, value || undefined)
-                }
+                onChange={(value) => actions.updateUri(index, value || undefined)}
                 placeholder="Optional URI reference"
-                error={getError(
-                  `functionalProfile.legibleDescription.${index}.uri`
-                )}
+                error={getError(`functionalProfile.legibleDescription.${index}.uri`)}
               />
             </FormGroup>
           </div>

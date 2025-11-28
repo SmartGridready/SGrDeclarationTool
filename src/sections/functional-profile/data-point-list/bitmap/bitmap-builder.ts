@@ -1,7 +1,4 @@
-import {
-  BitmapFunctionalProfile,
-  BitmapEntryFunctionalProfile,
-} from "@/models";
+import { BitmapFunctionalProfile, BitmapEntryFunctionalProfile } from "@/models";
 import {
   setOptionalXmlField,
   setOptionalXmlArray,
@@ -11,9 +8,7 @@ import {
 /**
  * Builds XML object for bitmap dataType from BitmapFunctionalProfile model
  */
-export function buildBitmapDataType(
-  bitmap: BitmapFunctionalProfile
-): Record<string, unknown> {
+export function buildBitmapDataType(bitmap: BitmapFunctionalProfile): Record<string, unknown> {
   const bitmapXml: Record<string, unknown> = {};
 
   // Add optional bitmapEntry array
@@ -29,9 +24,7 @@ export function buildBitmapDataType(
 /**
  * Builds XML object for bitmapEntry from BitmapEntryFunctionalProfile model
  */
-function buildBitmapEntry(
-  entry: BitmapEntryFunctionalProfile
-): Record<string, unknown> {
+function buildBitmapEntry(entry: BitmapEntryFunctionalProfile): Record<string, unknown> {
   const entryXml: Record<string, unknown> = {
     literal: wrapInArray(entry.literal),
   };

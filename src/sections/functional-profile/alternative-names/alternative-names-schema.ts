@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { AlternativeNames } from "@/models";
-import {
-  ValidationResult,
-  validateWithSchema,
-} from "@/sections/shared/utils/validation-utils";
+import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
 
 /**
  * Alternative Names validation schemas and validators

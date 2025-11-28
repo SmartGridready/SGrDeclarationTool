@@ -9,9 +9,7 @@ import {
 /**
  * Maps XML legibleDescription array to LegibleDescription[] model
  */
-export function mapLegibleDescription(
-  legibleDescriptionXml: any
-): LegibleDescription[] {
+export function mapLegibleDescription(legibleDescriptionXml: any): LegibleDescription[] {
   if (!Array.isArray(legibleDescriptionXml)) {
     return [];
   }
@@ -28,11 +26,7 @@ export function mapLegibleDescriptionItem(itemXml: any): LegibleDescription {
   };
 
   // Map optional URI
-  setOptionalField(
-    legibleDescription,
-    "uri",
-    getOptionalStringValue(itemXml, "uri")
-  );
+  setOptionalField(legibleDescription, "uri", getOptionalStringValue(itemXml, "uri"));
 
   return legibleDescription;
 }

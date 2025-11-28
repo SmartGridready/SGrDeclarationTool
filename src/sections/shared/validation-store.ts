@@ -8,7 +8,6 @@ interface ValidationStore {
 
 export const useValidationStore = create<ValidationStore>((set) => ({
   validationAttempted: false,
-  setValidationAttempted: (attempted) =>
-    set({ validationAttempted: attempted }),
+  setValidationAttempted: (attempted) => set({ validationAttempted: attempted }),
   resetValidation: () => set({ validationAttempted: false }),
 }));

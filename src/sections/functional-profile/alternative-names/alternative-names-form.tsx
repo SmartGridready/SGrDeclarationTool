@@ -4,29 +4,27 @@ import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 
 export function AlternativeNamesForm() {
-  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
-    useFormSection({
-      stateSelector: (store) => ({
-        alternativeNames: store.profile?.functionalProfile?.alternativeNames,
-      }),
-      actionsSelector: (store) => ({
-        updateSLV1Name: store.updateSLV1Name,
-        updateWorkName: store.updateWorkName,
-        updateManufName: store.updateManufName,
-        updateIec61850Name: store.updateIec61850Name,
-        updateSarefName: store.updateSarefName,
-        updateEebusName: store.updateEebusName,
-        updateSunSpecName: store.updateSunSpecName,
-        updateHpBwpName: store.updateHpBwpName,
-        updateEn17609Name: store.updateEn17609Name,
-        addAlternativeNames: store.addAlternativeNames,
-        removeAlternativeNames: store.removeAlternativeNames,
-      }),
-      isAddedSelector: (store) =>
-        !!store.profile?.functionalProfile?.alternativeNames,
-      onAdd: (actions) => actions.addAlternativeNames(),
-      onRemove: (actions) => actions.removeAlternativeNames(),
-    });
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    stateSelector: (store) => ({
+      alternativeNames: store.profile?.functionalProfile?.alternativeNames,
+    }),
+    actionsSelector: (store) => ({
+      updateSLV1Name: store.updateSLV1Name,
+      updateWorkName: store.updateWorkName,
+      updateManufName: store.updateManufName,
+      updateIec61850Name: store.updateIec61850Name,
+      updateSarefName: store.updateSarefName,
+      updateEebusName: store.updateEebusName,
+      updateSunSpecName: store.updateSunSpecName,
+      updateHpBwpName: store.updateHpBwpName,
+      updateEn17609Name: store.updateEn17609Name,
+      addAlternativeNames: store.addAlternativeNames,
+      removeAlternativeNames: store.removeAlternativeNames,
+    }),
+    isAddedSelector: (store) => !!store.profile?.functionalProfile?.alternativeNames,
+    onAdd: (actions) => actions.addAlternativeNames(),
+    onRemove: (actions) => actions.removeAlternativeNames(),
+  });
 
   const altNames = state.alternativeNames;
 

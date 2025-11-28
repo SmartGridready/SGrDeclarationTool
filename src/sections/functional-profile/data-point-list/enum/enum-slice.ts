@@ -1,7 +1,4 @@
-import {
-  EnumMapFunctionalProfile,
-  EnumEntryRecordFunctionalProfile,
-} from "@/models";
+import { EnumMapFunctionalProfile, EnumEntryRecordFunctionalProfile } from "@/models";
 import {
   SetState,
   getDataPoint,
@@ -11,25 +8,15 @@ import {
 
 export interface EnumSlice {
   setEnumDataType: (index: number, enumMap: EnumMapFunctionalProfile) => void;
-  addEnumEntry: (
-    dataPointIndex: number,
-    entry: EnumEntryRecordFunctionalProfile
-  ) => void;
+  addEnumEntry: (dataPointIndex: number, entry: EnumEntryRecordFunctionalProfile) => void;
   removeEnumEntry: (dataPointIndex: number, entryIndex: number) => void;
-  updateEnumEntryLiteral: (
-    dataPointIndex: number,
-    entryIndex: number,
-    literal: string
-  ) => void;
+  updateEnumEntryLiteral: (dataPointIndex: number, entryIndex: number, literal: string) => void;
   updateEnumEntryDescription: (
     dataPointIndex: number,
     entryIndex: number,
     description: string | undefined
   ) => void;
-  updateEnumHexMask: (
-    dataPointIndex: number,
-    hexMask: string | undefined
-  ) => void;
+  updateEnumHexMask: (dataPointIndex: number, hexMask: string | undefined) => void;
   addEmptyEnumEntry: (dataPointIndex: number) => void;
 }
 

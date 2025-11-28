@@ -18,8 +18,7 @@ import { FunctionalProfileFrame } from "@/models";
 import { toast } from "sonner";
 
 export default function FunctionalProfileEditor() {
-  const { profile, createNew, createEmpty, clear, setProfile } =
-    useProfileStore();
+  const { profile, createNew, createEmpty, clear, setProfile } = useProfileStore();
   const resetValidation = useValidationStore((state) => state.resetValidation);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [showLoadEmptyDialog, setShowLoadEmptyDialog] = useState(false);
@@ -147,9 +146,7 @@ export default function FunctionalProfileEditor() {
       {profile ? (
         <FunctionalProfileForm />
       ) : (
-        <div className="text-center text-muted-foreground py-12">
-          No Profile loaded.
-        </div>
+        <div className="text-center text-muted-foreground py-12">No Profile loaded.</div>
       )}
 
       {DEBUG && (

@@ -33,63 +33,58 @@ import { JsonForm } from "@/sections/functional-profile/data-point-list/json/jso
 import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
 
 export function DataPointListForm() {
-  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
-    useFormSection({
-      stateSelector: (store) => ({
-        dataPoints: store.profile?.dataPointList?.dataPointListElement,
-      }),
-      actionsSelector: (store) => ({
-        addEmptyDataPoint: store.addEmptyDataPoint,
-        removeDataPoint: store.removeDataPoint,
-        removeAllDataPoints: store.removeAllDataPoints,
-        updateDataPointName: store.updateDataPointName,
-        updateDataDirection: store.updateDataDirection,
-        updatePresenceLevel: store.updatePresenceLevel,
-        updateDataType: store.updateDataType,
-        updateUnit: store.updateUnit,
-        updateArrayLength: store.updateArrayLength,
-        addEmptyDataPointLegibleDescription:
-          store.addEmptyDataPointLegibleDescription,
-        removeDataPointLegibleDescription:
-          store.removeDataPointLegibleDescription,
-        updateDataPointLegibleDescriptionText:
-          store.updateDataPointLegibleDescriptionText,
-        updateDataPointLegibleDescriptionLanguage:
-          store.updateDataPointLegibleDescriptionLanguage,
-        // Enum methods
-        setEnumDataType: store.setEnumDataType,
-        addEnumEntry: store.addEnumEntry,
-        removeEnumEntry: store.removeEnumEntry,
-        updateEnumEntryLiteral: store.updateEnumEntryLiteral,
-        updateEnumEntryDescription: store.updateEnumEntryDescription,
-        updateEnumHexMask: store.updateEnumHexMask,
-        addEmptyEnumEntry: store.addEmptyEnumEntry,
-        // Bitmap methods
-        setBitmapDataType: store.setBitmapDataType,
-        addBitmapEntry: store.addBitmapEntry,
-        removeBitmapEntry: store.removeBitmapEntry,
-        updateBitmapEntryLiteral: store.updateBitmapEntryLiteral,
-        updateBitmapEntryDescription: store.updateBitmapEntryDescription,
-        addEmptyBitmapEntry: store.addEmptyBitmapEntry,
-        // JSON methods
-        setJsonDataType: store.setJsonDataType,
-        addJsonItem: store.addJsonItem,
-        removeJsonItem: store.removeJsonItem,
-        updateJsonArrayItem: store.updateJsonArrayItem,
-        updateJsonElemItem: store.updateJsonElemItem,
-        addJsonItemAtPath: store.addJsonItemAtPath,
-        removeJsonItemAtPath: store.removeJsonItemAtPath,
-        updateJsonArrayItemAtPath: store.updateJsonArrayItemAtPath,
-        updateJsonElemItemAtPath: store.updateJsonElemItemAtPath,
-        addJsonNestedItem: store.addJsonNestedItem,
-        removeJsonNestedItem: store.removeJsonNestedItem,
-        updateJsonNestedArrayItem: store.updateJsonNestedArrayItem,
-        updateJsonNestedElemItem: store.updateJsonNestedElemItem,
-      }),
-      isAddedSelector: (store) => !!store.profile?.dataPointList,
-      onAdd: (actions) => actions.addEmptyDataPoint(),
-      onRemove: (actions) => actions.removeAllDataPoints(),
-    });
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    stateSelector: (store) => ({
+      dataPoints: store.profile?.dataPointList?.dataPointListElement,
+    }),
+    actionsSelector: (store) => ({
+      addEmptyDataPoint: store.addEmptyDataPoint,
+      removeDataPoint: store.removeDataPoint,
+      removeAllDataPoints: store.removeAllDataPoints,
+      updateDataPointName: store.updateDataPointName,
+      updateDataDirection: store.updateDataDirection,
+      updatePresenceLevel: store.updatePresenceLevel,
+      updateDataType: store.updateDataType,
+      updateUnit: store.updateUnit,
+      updateArrayLength: store.updateArrayLength,
+      addEmptyDataPointLegibleDescription: store.addEmptyDataPointLegibleDescription,
+      removeDataPointLegibleDescription: store.removeDataPointLegibleDescription,
+      updateDataPointLegibleDescriptionText: store.updateDataPointLegibleDescriptionText,
+      updateDataPointLegibleDescriptionLanguage: store.updateDataPointLegibleDescriptionLanguage,
+      // Enum methods
+      setEnumDataType: store.setEnumDataType,
+      addEnumEntry: store.addEnumEntry,
+      removeEnumEntry: store.removeEnumEntry,
+      updateEnumEntryLiteral: store.updateEnumEntryLiteral,
+      updateEnumEntryDescription: store.updateEnumEntryDescription,
+      updateEnumHexMask: store.updateEnumHexMask,
+      addEmptyEnumEntry: store.addEmptyEnumEntry,
+      // Bitmap methods
+      setBitmapDataType: store.setBitmapDataType,
+      addBitmapEntry: store.addBitmapEntry,
+      removeBitmapEntry: store.removeBitmapEntry,
+      updateBitmapEntryLiteral: store.updateBitmapEntryLiteral,
+      updateBitmapEntryDescription: store.updateBitmapEntryDescription,
+      addEmptyBitmapEntry: store.addEmptyBitmapEntry,
+      // JSON methods
+      setJsonDataType: store.setJsonDataType,
+      addJsonItem: store.addJsonItem,
+      removeJsonItem: store.removeJsonItem,
+      updateJsonArrayItem: store.updateJsonArrayItem,
+      updateJsonElemItem: store.updateJsonElemItem,
+      addJsonItemAtPath: store.addJsonItemAtPath,
+      removeJsonItemAtPath: store.removeJsonItemAtPath,
+      updateJsonArrayItemAtPath: store.updateJsonArrayItemAtPath,
+      updateJsonElemItemAtPath: store.updateJsonElemItemAtPath,
+      addJsonNestedItem: store.addJsonNestedItem,
+      removeJsonNestedItem: store.removeJsonNestedItem,
+      updateJsonNestedArrayItem: store.updateJsonNestedArrayItem,
+      updateJsonNestedElemItem: store.updateJsonNestedElemItem,
+    }),
+    isAddedSelector: (store) => !!store.profile?.dataPointList,
+    onAdd: (actions) => actions.addEmptyDataPoint(),
+    onRemove: (actions) => actions.removeAllDataPoints(),
+  });
 
   return (
     <FormSection
@@ -132,10 +127,7 @@ export function DataPointListForm() {
                 }
                 value={item.dataPoint.dataDirection}
                 onChange={(value) =>
-                  actions.updateDataDirection(
-                    index,
-                    value as DataDirectionFunctionalProfile
-                  )
+                  actions.updateDataDirection(index, value as DataDirectionFunctionalProfile)
                 }
                 required={true}
                 error={getError(
@@ -152,9 +144,7 @@ export function DataPointListForm() {
                   }[]
                 }
                 value={item.dataPoint.presenceLevel}
-                onChange={(value) =>
-                  actions.updatePresenceLevel(index, value as PresenceLevel)
-                }
+                onChange={(value) => actions.updatePresenceLevel(index, value as PresenceLevel)}
                 required={true}
                 error={getError(
                   `dataPointList.dataPointListElement.${index}.dataPoint.presenceLevel`
@@ -178,10 +168,7 @@ export function DataPointListForm() {
                   // If switching to enum/bitmap/json, initialize empty structure
                   if (value === "enum" && !isEnumDataType(newDataType)) {
                     actions.setEnumDataType(index, {});
-                  } else if (
-                    value === "bitmap" &&
-                    !isBitmapDataType(newDataType)
-                  ) {
+                  } else if (value === "bitmap" && !isBitmapDataType(newDataType)) {
                     actions.setBitmapDataType(index, {});
                   } else if (value === "json" && !isJsonDataType(newDataType)) {
                     actions.setJsonDataType(index, {});
@@ -190,22 +177,16 @@ export function DataPointListForm() {
                   }
                 }}
                 required={true}
-                error={getError(
-                  `dataPointList.dataPointListElement.${index}.dataPoint.dataType`
-                )}
+                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.dataType`)}
               />
               <SelectField
                 label="Unit"
                 name={`dataPoint-${index}-unit`}
-                options={
-                  UNIT_OPTIONS as unknown as { value: string; label: string }[]
-                }
+                options={UNIT_OPTIONS as unknown as { value: string; label: string }[]}
                 value={item.dataPoint.unit}
                 onChange={(value) => actions.updateUnit(index, value as Units)}
                 required={true}
-                error={getError(
-                  `dataPointList.dataPointListElement.${index}.dataPoint.unit`
-                )}
+                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.unit`)}
               />
               <InputField
                 label="Array Length"
@@ -213,10 +194,7 @@ export function DataPointListForm() {
                 type="number"
                 value={item.dataPoint.arrayLength?.toString() || ""}
                 onChange={(value) =>
-                  actions.updateArrayLength(
-                    index,
-                    value ? parseInt(value, 10) : undefined
-                  )
+                  actions.updateArrayLength(index, value ? parseInt(value, 10) : undefined)
                 }
                 placeholder="Enter array length"
                 error={getError(
@@ -235,8 +213,7 @@ export function DataPointListForm() {
                   addEnumEntry: actions.addEnumEntry,
                   removeEnumEntry: actions.removeEnumEntry,
                   updateEnumEntryLiteral: actions.updateEnumEntryLiteral,
-                  updateEnumEntryDescription:
-                    actions.updateEnumEntryDescription,
+                  updateEnumEntryDescription: actions.updateEnumEntryDescription,
                   updateEnumHexMask: actions.updateEnumHexMask,
                   addEmptyEnumEntry: actions.addEmptyEnumEntry,
                 }}
@@ -253,8 +230,7 @@ export function DataPointListForm() {
                   addBitmapEntry: actions.addBitmapEntry,
                   removeBitmapEntry: actions.removeBitmapEntry,
                   updateBitmapEntryLiteral: actions.updateBitmapEntryLiteral,
-                  updateBitmapEntryDescription:
-                    actions.updateBitmapEntryDescription,
+                  updateBitmapEntryDescription: actions.updateBitmapEntryDescription,
                   addEmptyBitmapEntry: actions.addEmptyBitmapEntry,
                 }}
               />
@@ -274,13 +250,11 @@ export function DataPointListForm() {
                     updateJsonElemItem: actions.updateJsonElemItem,
                     addJsonItemAtPath: actions.addJsonItemAtPath,
                     removeJsonItemAtPath: actions.removeJsonItemAtPath,
-                    updateJsonArrayItemAtPath:
-                      actions.updateJsonArrayItemAtPath,
+                    updateJsonArrayItemAtPath: actions.updateJsonArrayItemAtPath,
                     updateJsonElemItemAtPath: actions.updateJsonElemItemAtPath,
                     addJsonNestedItem: actions.addJsonNestedItem,
                     removeJsonNestedItem: actions.removeJsonNestedItem,
-                    updateJsonNestedArrayItem:
-                      actions.updateJsonNestedArrayItem,
+                    updateJsonNestedArrayItem: actions.updateJsonNestedArrayItem,
                     updateJsonNestedElemItem: actions.updateJsonNestedElemItem,
                   } as JsonSlice
                 }
@@ -305,11 +279,7 @@ export function DataPointListForm() {
                       name={`dataPoint-${index}-desc-${descIndex}-text`}
                       value={desc.textElement}
                       onChange={(value) =>
-                        actions.updateDataPointLegibleDescriptionText(
-                          index,
-                          descIndex,
-                          value
-                        )
+                        actions.updateDataPointLegibleDescriptionText(index, descIndex, value)
                       }
                       placeholder="Enter description"
                       required={true}

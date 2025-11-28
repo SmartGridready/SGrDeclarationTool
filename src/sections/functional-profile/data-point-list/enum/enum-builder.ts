@@ -1,7 +1,4 @@
-import {
-  EnumMapFunctionalProfile,
-  EnumEntryRecordFunctionalProfile,
-} from "@/models";
+import { EnumMapFunctionalProfile, EnumEntryRecordFunctionalProfile } from "@/models";
 import {
   setOptionalXmlField,
   setOptionalXmlArray,
@@ -11,9 +8,7 @@ import {
 /**
  * Builds XML object for enum dataType from EnumMapFunctionalProfile model
  */
-export function buildEnumDataType(
-  enumMap: EnumMapFunctionalProfile
-): Record<string, unknown> {
+export function buildEnumDataType(enumMap: EnumMapFunctionalProfile): Record<string, unknown> {
   const enumXml: Record<string, unknown> = {};
 
   // Add optional hexMask
@@ -32,9 +27,7 @@ export function buildEnumDataType(
 /**
  * Builds XML object for enumEntry from EnumEntryRecordFunctionalProfile model
  */
-function buildEnumEntry(
-  entry: EnumEntryRecordFunctionalProfile
-): Record<string, unknown> {
+function buildEnumEntry(entry: EnumEntryRecordFunctionalProfile): Record<string, unknown> {
   const entryXml: Record<string, unknown> = {
     literal: wrapInArray(entry.literal),
   };

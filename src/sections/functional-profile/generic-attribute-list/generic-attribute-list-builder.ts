@@ -12,16 +12,13 @@ export function buildGenericAttributeList(
   const validation = validateGenericAttributeList(attributeList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for generic attribute list";
+    const errorMessage = firstError?.message || "Validation failed for generic attribute list";
     throw new Error(errorMessage);
   }
 
   return {
-    genericAttributeListElement: attributeList.genericAttributeListElement.map(
-      (attr) => ({
-        name: wrapInArray(attr.name),
-      })
-    ),
+    genericAttributeListElement: attributeList.genericAttributeListElement.map((attr) => ({
+      name: wrapInArray(attr.name),
+    })),
   };
 }

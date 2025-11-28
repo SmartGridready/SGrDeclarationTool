@@ -4,10 +4,7 @@ import {
   PROFILE_IDENTIFICATION_CATEGORY,
   LEVEL_OF_OPERATION,
 } from "@/sections/functional-profile/profile-identification/profile-identification-form-options";
-import {
-  ValidationResult,
-  validateWithSchema,
-} from "@/sections/shared/utils/validation-utils";
+import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
 
 /**
  * Profile Identification validation schemas and validators
@@ -19,9 +16,10 @@ const FUNCTIONAL_PROFILE_CATEGORY_VALUES = PROFILE_IDENTIFICATION_CATEGORY.map(
 ) as [string, ...string[]];
 
 // Extract level of operation values from constants
-const LEVEL_OF_OPERATION_VALUES = LEVEL_OF_OPERATION.map(
-  (option) => option.value
-) as [string, ...string[]];
+const LEVEL_OF_OPERATION_VALUES = LEVEL_OF_OPERATION.map((option) => option.value) as [
+  string,
+  ...string[],
+];
 
 // Version Number Schema
 export const versionNumberSchema = z.object({
@@ -63,10 +61,7 @@ export type FunctionalProfileIdentificationInput = z.input<
 export function validateFunctionalProfileIdentification(
   identification: FunctionalProfileIdentification
 ): ValidationResult<FunctionalProfileIdentification> {
-  const result = validateWithSchema(
-    functionalProfileIdentificationSchema,
-    identification
-  );
+  const result = validateWithSchema(functionalProfileIdentificationSchema, identification);
   return result as ValidationResult<FunctionalProfileIdentification>;
 }
 

@@ -36,9 +36,7 @@ export function ArrayField<T>({
           onClick={onAdd}
           disabled={isMaxReached}
           className="flex items-center gap-1"
-          title={
-            isMaxReached ? `Maximum of ${maxItems} items allowed` : undefined
-          }
+          title={isMaxReached ? `Maximum of ${maxItems} items allowed` : undefined}
         >
           <Plus className="h-4 w-4" />
           Add {label}
@@ -50,10 +48,7 @@ export function ArrayField<T>({
       ) : (
         <div className="space-y-4">
           {items.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-4 p-4 border rounded-md bg-card"
-            >
+            <div key={index} className="flex items-start gap-4 p-4 border rounded-md bg-card">
               <div className="flex-1 space-y-3">{renderItem(item, index)}</div>
               <Button
                 type="button"

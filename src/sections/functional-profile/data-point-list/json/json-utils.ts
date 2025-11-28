@@ -2,10 +2,7 @@
  * Utilities for working with JSON data types
  */
 
-import {
-  JSonArrayOutputFunctionalProfile,
-  JSonElemFunctionalProfile,
-} from "@/models";
+import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
 
 /**
  * Type guard to check if a JSON item is an array
@@ -56,9 +53,7 @@ export function createJsonElement(
 /**
  * Creates an empty JSON array
  */
-export function createJsonArray(
-  name: string = ""
-): JSonArrayOutputFunctionalProfile {
+export function createJsonArray(name: string = ""): JSonArrayOutputFunctionalProfile {
   return { name };
 }
 

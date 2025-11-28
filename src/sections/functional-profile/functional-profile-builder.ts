@@ -8,10 +8,7 @@ import { buildGenericAttributeList } from "@/sections/functional-profile/generic
 import { buildDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-builder";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
-import {
-  wrapInArray,
-  setOptionalXmlArray,
-} from "@/sections/shared/utils/builder-utils";
+import { wrapInArray, setOptionalXmlArray } from "@/sections/shared/utils/builder-utils";
 
 /**
  * Converts FunctionalProfileFrame model to XML string
@@ -19,9 +16,7 @@ import {
  * @returns Promise resolving to XML string
  * @throws Error if frame is invalid or cannot be built
  */
-export async function buildFunctionalProfileToXml(
-  frame: FunctionalProfileFrame
-): Promise<string> {
+export async function buildFunctionalProfileToXml(frame: FunctionalProfileFrame): Promise<string> {
   if (!frame) {
     throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED);
   }
@@ -30,8 +25,7 @@ export async function buildFunctionalProfileToXml(
   const validation = validateFunctionalProfileFrame(frame);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED;
+    const errorMessage = firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED;
     throw new Error(ERROR_MESSAGES.XML_BUILD.FAILED(errorMessage));
   }
 
@@ -61,9 +55,7 @@ export async function buildFunctionalProfileToXml(
 /**
  * Builds the XML object structure from FunctionalProfileFrame model
  */
-function buildFunctionalProfile(
-  frame: FunctionalProfileFrame
-): Record<string, unknown> {
+function buildFunctionalProfile(frame: FunctionalProfileFrame): Record<string, unknown> {
   const functionalProfileFrame: Record<string, unknown> = {
     $: {
       xmlns: "http://www.smartgridready.com/ns/V0/",
@@ -75,17 +67,13 @@ function buildFunctionalProfile(
 
   // Build releaseNotes if present
   if (frame.releaseNotes) {
-    functionalProfileFrame.releaseNotes = wrapInArray(
-      buildReleaseNotes(frame.releaseNotes)
-    );
+    functionalProfileFrame.releaseNotes = wrapInArray(buildReleaseNotes(frame.releaseNotes));
   }
 
   // Build functionalProfile with functionalProfileIdentification
   const functionalProfileXml: Record<string, unknown> = {
     functionalProfileIdentification: wrapInArray(
-      buildProfileIdentification(
-        frame.functionalProfile.functionalProfileIdentification
-      )
+      buildProfileIdentification(frame.functionalProfile.functionalProfileIdentification)
     ),
   };
 
@@ -119,13 +107,8 @@ function buildFunctionalProfile(
   }
 
   // Build dataPointList if present
-  if (
-    frame.dataPointList &&
-    frame.dataPointList.dataPointListElement.length > 0
-  ) {
-    functionalProfileFrame.dataPointList = wrapInArray(
-      buildDataPointList(frame.dataPointList)
-    );
+  if (frame.dataPointList && frame.dataPointList.dataPointListElement.length > 0) {
+    functionalProfileFrame.dataPointList = wrapInArray(buildDataPointList(frame.dataPointList));
   }
 
   return {

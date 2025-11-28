@@ -9,26 +9,25 @@ import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { ReleaseState, ChangeLog } from "@/models/generic/base-types";
 
 export function ReleaseNotesForm() {
-  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
-    useFormSection({
-      stateSelector: (store) => ({
-        releaseState: store.profile?.releaseNotes?.state,
-        remarks: store.profile?.releaseNotes?.remarks,
-        changeLogs: store.profile?.releaseNotes?.changeLog,
-      }),
-      actionsSelector: (store) => ({
-        updateReleaseState: store.updateReleaseState,
-        updateRemarks: store.updateRemarks,
-        addEmptyChangeLog: store.addEmptyChangeLog,
-        removeChangeLog: store.removeChangeLog,
-        updateChangeLogField: store.updateChangeLogField,
-        addReleaseNotes: store.addReleaseNotes,
-        removeReleaseNotes: store.removeReleaseNotes,
-      }),
-      isAddedSelector: (store) => !!store.profile?.releaseNotes,
-      onAdd: (actions) => actions.addReleaseNotes(),
-      onRemove: (actions) => actions.removeReleaseNotes(),
-    });
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    stateSelector: (store) => ({
+      releaseState: store.profile?.releaseNotes?.state,
+      remarks: store.profile?.releaseNotes?.remarks,
+      changeLogs: store.profile?.releaseNotes?.changeLog,
+    }),
+    actionsSelector: (store) => ({
+      updateReleaseState: store.updateReleaseState,
+      updateRemarks: store.updateRemarks,
+      addEmptyChangeLog: store.addEmptyChangeLog,
+      removeChangeLog: store.removeChangeLog,
+      updateChangeLogField: store.updateChangeLogField,
+      addReleaseNotes: store.addReleaseNotes,
+      removeReleaseNotes: store.removeReleaseNotes,
+    }),
+    isAddedSelector: (store) => !!store.profile?.releaseNotes,
+    onAdd: (actions) => actions.addReleaseNotes(),
+    onRemove: (actions) => actions.removeReleaseNotes(),
+  });
 
   return (
     <FormSection
@@ -46,9 +45,7 @@ export function ReleaseNotesForm() {
           options={RELEASE_STATE_OPTIONS}
           required={true}
           value={state.releaseState}
-          onChange={(value) =>
-            actions.updateReleaseState(value as ReleaseState)
-          }
+          onChange={(value) => actions.updateReleaseState(value as ReleaseState)}
           error={getError("releaseNotes.state")}
         />
 
@@ -57,9 +54,7 @@ export function ReleaseNotesForm() {
           name={"remarks"}
           required={false}
           value={state.remarks}
-          onChange={(value) =>
-            actions.updateRemarks(value as string | undefined)
-          }
+          onChange={(value) => actions.updateRemarks(value as string | undefined)}
         />
       </FormGroup>
 
@@ -75,9 +70,7 @@ export function ReleaseNotesForm() {
               label="Version"
               name={`changeLog-${index}-version`}
               value={item.version}
-              onChange={(value) =>
-                actions.updateChangeLogField(index, "version", value)
-              }
+              onChange={(value) => actions.updateChangeLogField(index, "version", value)}
               placeholder="e.g., 1.0.0"
               required={true}
               error={getError(`releaseNotes.changeLog.${index}.version`)}
@@ -86,9 +79,7 @@ export function ReleaseNotesForm() {
               label="Date"
               name={`changeLog-${index}-date`}
               value={item.date}
-              onChange={(value) =>
-                actions.updateChangeLogField(index, "date", value)
-              }
+              onChange={(value) => actions.updateChangeLogField(index, "date", value)}
               required={true}
               error={getError(`releaseNotes.changeLog.${index}.date`)}
             />
@@ -96,9 +87,7 @@ export function ReleaseNotesForm() {
               label="Author"
               name={`changeLog-${index}-author`}
               value={item.author}
-              onChange={(value) =>
-                actions.updateChangeLogField(index, "author", value)
-              }
+              onChange={(value) => actions.updateChangeLogField(index, "author", value)}
               placeholder="Author name"
               required={true}
               error={getError(`releaseNotes.changeLog.${index}.author`)}
@@ -107,9 +96,7 @@ export function ReleaseNotesForm() {
               label="Comment"
               name={`changeLog-${index}-comment`}
               value={item.comment}
-              onChange={(value) =>
-                actions.updateChangeLogField(index, "comment", value)
-              }
+              onChange={(value) => actions.updateChangeLogField(index, "comment", value)}
               placeholder="Change description"
               required={true}
               error={getError(`releaseNotes.changeLog.${index}.comment`)}

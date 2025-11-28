@@ -59,9 +59,7 @@ export function useFileImport<T>({
         toast.dismiss(loadingToast);
 
         const errorMessage =
-          error instanceof Error
-            ? error.message
-            : ERROR_MESSAGES.FILE_IMPORT.UNKNOWN_ERROR;
+          error instanceof Error ? error.message : ERROR_MESSAGES.FILE_IMPORT.UNKNOWN_ERROR;
 
         toast.error(ERROR_MESSAGES.FILE_IMPORT.FAILED, {
           description: errorMessage,

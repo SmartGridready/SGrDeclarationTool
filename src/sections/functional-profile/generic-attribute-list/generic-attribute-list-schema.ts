@@ -1,12 +1,6 @@
 import { z } from "zod";
-import {
-  GenericAttributeFunctionalProfile,
-  GenericAttributeListFunctionalProfile,
-} from "@/models";
-import {
-  ValidationResult,
-  validateWithSchema,
-} from "@/sections/shared/utils/validation-utils";
+import { GenericAttributeFunctionalProfile, GenericAttributeListFunctionalProfile } from "@/models";
+import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
 
 /**
  * Generic Attribute List validation schemas and validators
@@ -14,9 +8,7 @@ import {
 
 // Generic Attribute Schema (single attribute)
 export const genericAttributeFunctionalProfileSchema = z.object({
-  name: z
-    .string({ message: "Name is required" })
-    .min(1, "Name cannot be empty"),
+  name: z.string({ message: "Name is required" }).min(1, "Name cannot be empty"),
 });
 
 // Generic Attribute List Schema
@@ -36,19 +28,13 @@ export type GenericAttributeListFunctionalProfileInput = z.input<
 export function validateGenericAttribute(
   attribute: GenericAttributeFunctionalProfile
 ): ValidationResult<GenericAttributeFunctionalProfile> {
-  const result = validateWithSchema(
-    genericAttributeFunctionalProfileSchema,
-    attribute
-  );
+  const result = validateWithSchema(genericAttributeFunctionalProfileSchema, attribute);
   return result as ValidationResult<GenericAttributeFunctionalProfile>;
 }
 
 export function validateGenericAttributeList(
   attributeList: GenericAttributeListFunctionalProfile
 ): ValidationResult<GenericAttributeListFunctionalProfile> {
-  const result = validateWithSchema(
-    genericAttributeListFunctionalProfileSchema,
-    attributeList
-  );
+  const result = validateWithSchema(genericAttributeListFunctionalProfileSchema, attributeList);
   return result as ValidationResult<GenericAttributeListFunctionalProfile>;
 }

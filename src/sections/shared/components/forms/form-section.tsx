@@ -70,9 +70,7 @@ export function FormSection({
               </Button>
             )}
           </div>
-          {description && (
-            <p className="text-xs text-muted-foreground mb-2">{description}</p>
-          )}
+          {description && <p className="text-xs text-muted-foreground mb-2">{description}</p>}
           <CollapsibleContent>
             <div className="space-y-4">{children}</div>
           </CollapsibleContent>
@@ -84,12 +82,7 @@ export function FormSection({
   // If not required and not added, show Add button
   if (!required && !isAdded) {
     return (
-      <Card
-        className={cn(
-          "w-full cursor-pointer hover:opacity-70 transition-opacity",
-          className
-        )}
-      >
+      <Card className={cn("w-full cursor-pointer hover:opacity-70 transition-opacity", className)}>
         <CardHeader className="pb-3" onClick={onAdd}>
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col items-start text-left">
@@ -97,11 +90,7 @@ export function FormSection({
                 <Plus className="h-5 w-5" />
                 {title}
               </CardTitle>
-              {description && (
-                <CardDescription className="mt-1.5">
-                  {description}
-                </CardDescription>
-              )}
+              {description && <CardDescription className="mt-1.5">{description}</CardDescription>}
             </div>
           </div>
         </CardHeader>
@@ -120,11 +109,7 @@ export function FormSection({
                   {title}
                   {required && <span className="text-destructive ml-1">*</span>}
                 </CardTitle>
-                {description && (
-                  <CardDescription className="mt-1.5">
-                    {description}
-                  </CardDescription>
-                )}
+                {description && <CardDescription className="mt-1.5">{description}</CardDescription>}
               </div>
               <div className="ml-4 shrink-0">
                 {isOpen ? (

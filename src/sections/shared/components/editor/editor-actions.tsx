@@ -8,13 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/sections/shared/components/shadcn/dropdown-menu";
-import {
-  Upload,
-  ChevronDown,
-  HardDrive,
-  Library,
-  Download,
-} from "lucide-react";
+import { Upload, ChevronDown, HardDrive, Library, Download } from "lucide-react";
 
 interface EditorActionsProps {
   title: string;
@@ -38,9 +32,7 @@ export function EditorActions({
   isLoading = false,
 }: EditorActionsProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const [dropdownWidth, setDropdownWidth] = useState<number | undefined>(
-    undefined
-  );
+  const [dropdownWidth, setDropdownWidth] = useState<number | undefined>(undefined);
 
   const updateWidth = () => {
     if (triggerRef.current) {

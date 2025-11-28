@@ -127,11 +127,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
   addJsonNestedItem: (dataPointIndex, arrayItemIndex, item) =>
     set((state) => {
       const dp = getDataPoint(state, dataPointIndex);
-      if (
-        dp &&
-        "json" in dp.dataPoint.dataType &&
-        dp.dataPoint.dataType.json.items
-      ) {
+      if (dp && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items) {
         const items = dp.dataPoint.dataType.json.items;
         const arrayItem = items[arrayItemIndex];
         if (
@@ -150,11 +146,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
   removeJsonNestedItem: (dataPointIndex, arrayItemIndex, nestedItemIndex) =>
     set((state) => {
       const dp = getDataPoint(state, dataPointIndex);
-      if (
-        dp &&
-        "json" in dp.dataPoint.dataType &&
-        dp.dataPoint.dataType.json.items
-      ) {
+      if (dp && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items) {
         const items = dp.dataPoint.dataType.json.items;
         const arrayItem = items[arrayItemIndex];
         if (
@@ -171,19 +163,10 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
       }
     }),
 
-  updateJsonNestedArrayItem: (
-    dataPointIndex,
-    arrayItemIndex,
-    nestedItemIndex,
-    item
-  ) =>
+  updateJsonNestedArrayItem: (dataPointIndex, arrayItemIndex, nestedItemIndex, item) =>
     set((state) => {
       const dp = getDataPoint(state, dataPointIndex);
-      if (
-        dp &&
-        "json" in dp.dataPoint.dataType &&
-        dp.dataPoint.dataType.json.items
-      ) {
+      if (dp && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items) {
         const items = dp.dataPoint.dataType.json.items;
         const arrayItem = items[arrayItemIndex];
         if (
@@ -198,19 +181,10 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
       }
     }),
 
-  updateJsonNestedElemItem: (
-    dataPointIndex,
-    arrayItemIndex,
-    nestedItemIndex,
-    item
-  ) =>
+  updateJsonNestedElemItem: (dataPointIndex, arrayItemIndex, nestedItemIndex, item) =>
     set((state) => {
       const dp = getDataPoint(state, dataPointIndex);
-      if (
-        dp &&
-        "json" in dp.dataPoint.dataType &&
-        dp.dataPoint.dataType.json.items
-      ) {
+      if (dp && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items) {
         const items = dp.dataPoint.dataType.json.items;
         const arrayItem = items[arrayItemIndex];
         if (
@@ -256,9 +230,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
           index < currentItems.length &&
           "name" in currentItems[index]
         ) {
-          const arrayItem = currentItems[
-            index
-          ] as JSonArrayOutputFunctionalProfile;
+          const arrayItem = currentItems[index] as JSonArrayOutputFunctionalProfile;
           if (i === path.length - 1) {
             // Last index in path - this is where we add
             const targetItems = ensureArray(arrayItem.items, () => []);
@@ -309,9 +281,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
           index < currentItems.length &&
           "name" in currentItems[index]
         ) {
-          const arrayItem = currentItems[
-            index
-          ] as JSonArrayOutputFunctionalProfile;
+          const arrayItem = currentItems[index] as JSonArrayOutputFunctionalProfile;
           currentItems = arrayItem.items;
         } else {
           return;
@@ -334,9 +304,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
                 index < grandParentItems.length &&
                 "name" in grandParentItems[index]
               ) {
-                const arrayItem = grandParentItems[
-                  index
-                ] as JSonArrayOutputFunctionalProfile;
+                const arrayItem = grandParentItems[index] as JSonArrayOutputFunctionalProfile;
                 grandParentItems = arrayItem.items;
               } else {
                 return;
@@ -349,11 +317,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
               parentIndex < grandParentItems.length &&
               "name" in grandParentItems[parentIndex]
             ) {
-              (
-                grandParentItems[
-                  parentIndex
-                ] as JSonArrayOutputFunctionalProfile
-              ).items = undefined;
+              (grandParentItems[parentIndex] as JSonArrayOutputFunctionalProfile).items = undefined;
             }
           }
         });
@@ -379,9 +343,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
           index < currentItems.length &&
           "name" in currentItems[index]
         ) {
-          const arrayItem = currentItems[
-            index
-          ] as JSonArrayOutputFunctionalProfile;
+          const arrayItem = currentItems[index] as JSonArrayOutputFunctionalProfile;
           currentItems = arrayItem.items;
         } else {
           return;
@@ -413,9 +375,7 @@ export const createJsonSlice = (set: SetState): JsonSlice => ({
           index < currentItems.length &&
           "name" in currentItems[index]
         ) {
-          const arrayItem = currentItems[
-            index
-          ] as JSonArrayOutputFunctionalProfile;
+          const arrayItem = currentItems[index] as JSonArrayOutputFunctionalProfile;
           currentItems = arrayItem.items;
         } else {
           return;

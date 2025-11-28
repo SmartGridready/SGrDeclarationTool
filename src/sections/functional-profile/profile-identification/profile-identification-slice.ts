@@ -10,9 +10,7 @@ export interface FunctionalProfileIdentificationSlice {
   updateSpecificationOwnerIdentification: (
     specificationOwnerIdentification: SpecificationOwnerIdentification
   ) => void;
-  updateFunctionalProfileCategory: (
-    functionalProfileCategory: FunctionalProfileCategory
-  ) => void;
+  updateFunctionalProfileCategory: (functionalProfileCategory: FunctionalProfileCategory) => void;
   updateFunctionalProfileType: (functionalProfileType: string) => void;
   updateLevelOfOperation: (levelOfOperation: LevelOfOperation) => void;
   updatePrimaryVersionNumber: (primaryVersionNumber: number) => void;
@@ -50,8 +48,7 @@ export const createFunctionalProfileIdentificationSlice = (
   updateLevelOfOperation: (value) =>
     set((state) => {
       if (state.profile?.functionalProfile) {
-        state.profile.functionalProfile.functionalProfileIdentification.levelOfOperation =
-          value;
+        state.profile.functionalProfile.functionalProfileIdentification.levelOfOperation = value;
       }
     }),
 

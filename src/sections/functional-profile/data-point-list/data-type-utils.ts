@@ -13,9 +13,7 @@ import {
 /**
  * Type guard to check if a DataTypeFunctionalProfile is a simple type (from DataTypeChoice)
  */
-export function isSimpleDataType(
-  dataType: DataTypeFunctionalProfile
-): dataType is DataTypeChoice {
+export function isSimpleDataType(dataType: DataTypeFunctionalProfile): dataType is DataTypeChoice {
   return (
     typeof dataType === "object" &&
     !("enum" in dataType) &&
@@ -68,9 +66,7 @@ export function isJsonDataType(
  * Gets the simple type name as a string from a DataTypeChoice
  * Returns undefined if not a simple type
  */
-export function getSimpleTypeName(
-  dataType: DataTypeFunctionalProfile
-): string | undefined {
+export function getSimpleTypeName(dataType: DataTypeFunctionalProfile): string | undefined {
   if (!isSimpleDataType(dataType)) {
     return undefined;
   }
@@ -95,9 +91,7 @@ export function getSimpleTypeName(
 /**
  * Creates a simple DataTypeFunctionalProfile from a string type name
  */
-export function createSimpleDataType(
-  typeName: string
-): DataTypeFunctionalProfile {
+export function createSimpleDataType(typeName: string): DataTypeFunctionalProfile {
   const typeMap: Record<string, DataTypeChoice> = {
     boolean: { boolean: {} },
     int8: { int8: {} },
@@ -120,9 +114,7 @@ export function createSimpleDataType(
 /**
  * Converts DataTypeFunctionalProfile to a string value for form select
  */
-export function getDataTypeStringValue(
-  dataType: DataTypeFunctionalProfile
-): string {
+export function getDataTypeStringValue(dataType: DataTypeFunctionalProfile): string {
   if (isEnumDataType(dataType)) {
     return "enum";
   }
@@ -138,9 +130,7 @@ export function getDataTypeStringValue(
 /**
  * Creates DataTypeFunctionalProfile from a string value (for form select)
  */
-export function createDataTypeFromString(
-  value: string
-): DataTypeFunctionalProfile {
+export function createDataTypeFromString(value: string): DataTypeFunctionalProfile {
   if (value === "enum") {
     return { enum: {} };
   }

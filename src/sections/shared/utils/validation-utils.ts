@@ -56,10 +56,7 @@ export function hasFieldError(
 /**
  * Generic validation function that wraps schema validation
  */
-export function validateWithSchema<T>(
-  schema: z.ZodSchema<T>,
-  data: unknown
-): ValidationResult<T> {
+export function validateWithSchema<T>(schema: z.ZodSchema<T>, data: unknown): ValidationResult<T> {
   try {
     const result = schema.safeParse(data);
 

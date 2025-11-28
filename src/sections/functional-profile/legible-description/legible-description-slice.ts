@@ -26,16 +26,11 @@ const createEmptyLegibleDescription = (): LegibleDescription => ({
   language: "en",
 });
 
-export const createLegibleDescriptionSlice = (
-  set: SetState
-): LegibleDescriptionSlice => ({
+export const createLegibleDescriptionSlice = (set: SetState): LegibleDescriptionSlice => ({
   addLegibleDescription: (legibleDescription) =>
     set((state) => {
       if (state.profile?.functionalProfile) {
-        const list = ensureArray(
-          state.profile.functionalProfile.legibleDescription,
-          () => []
-        );
+        const list = ensureArray(state.profile.functionalProfile.legibleDescription, () => []);
         if (list.length < 4) {
           list.push(legibleDescription);
           state.profile.functionalProfile.legibleDescription = list;
@@ -46,15 +41,11 @@ export const createLegibleDescriptionSlice = (
   removeLegibleDescription: (index) =>
     set((state) => {
       if (state.profile?.functionalProfile?.legibleDescription) {
-        removeArrayItem(
-          state.profile.functionalProfile.legibleDescription,
-          index,
-          () => {
-            if (state.profile?.functionalProfile) {
-              state.profile.functionalProfile.legibleDescription = undefined;
-            }
+        removeArrayItem(state.profile.functionalProfile.legibleDescription, index, () => {
+          if (state.profile?.functionalProfile) {
+            state.profile.functionalProfile.legibleDescription = undefined;
           }
-        );
+        });
       }
     }),
 
@@ -92,10 +83,7 @@ export const createLegibleDescriptionSlice = (
   addEmptyLegibleDescription: () =>
     set((state) => {
       if (state.profile?.functionalProfile) {
-        const list = ensureArray(
-          state.profile.functionalProfile.legibleDescription,
-          () => []
-        );
+        const list = ensureArray(state.profile.functionalProfile.legibleDescription, () => []);
         if (list.length < 4) {
           list.push(createEmptyLegibleDescription());
           state.profile.functionalProfile.legibleDescription = list;

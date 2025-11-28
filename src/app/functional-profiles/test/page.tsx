@@ -18,9 +18,7 @@ export default function FunctionalProfileTestPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -77,10 +75,7 @@ export default function FunctionalProfileTestPage() {
             }
             if (part.removed) {
               return (
-                <span
-                  key={index}
-                  className="bg-destructive/20 text-destructive block"
-                >
+                <span key={index} className="bg-destructive/20 text-destructive block">
                   - {part.value}
                 </span>
               );

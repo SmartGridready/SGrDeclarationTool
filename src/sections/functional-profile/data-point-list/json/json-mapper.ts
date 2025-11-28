@@ -16,11 +16,7 @@ export function mapJsonDataType(jsonXml: any): JSonOutputFunctionalProfile {
   const jsonOutput: JSonOutputFunctionalProfile = {};
 
   // Map optional items array
-  setOptionalField(
-    jsonOutput,
-    "items",
-    mapOptionalArray(jsonXml, "items", mapJsonItem)
-  );
+  setOptionalField(jsonOutput, "items", mapOptionalArray(jsonXml, "items", mapJsonItem));
 
   return jsonOutput;
 }
@@ -28,9 +24,7 @@ export function mapJsonDataType(jsonXml: any): JSonOutputFunctionalProfile {
 /**
  * Maps XML json item (array or element) to JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
  */
-function mapJsonItem(
-  itemXml: any
-): JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile {
+function mapJsonItem(itemXml: any): JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile {
   // Check if it's an array (has name property)
   if (itemXml.name !== undefined) {
     return mapJsonArray(itemXml);
@@ -48,11 +42,7 @@ function mapJsonArray(arrayXml: any): JSonArrayOutputFunctionalProfile {
 
   // Map optional fields
   setOptionalField(array, "name", getOptionalStringValue(arrayXml, "name"));
-  setOptionalField(
-    array,
-    "items",
-    mapOptionalArray(arrayXml, "items", mapJsonItem)
-  );
+  setOptionalField(array, "items", mapOptionalArray(arrayXml, "items", mapJsonItem));
 
   return array;
 }

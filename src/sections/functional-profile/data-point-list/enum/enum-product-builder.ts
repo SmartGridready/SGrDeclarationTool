@@ -1,15 +1,10 @@
 import { EnumMapProduct, EnumEntryProductRecord } from "@/models";
-import {
-  setOptionalXmlField,
-  wrapInArray,
-} from "@/sections/shared/utils/builder-utils";
+import { setOptionalXmlField, wrapInArray } from "@/sections/shared/utils/builder-utils";
 
 /**
  * Builds XML object for enum dataType from EnumMapProduct model (for parameterList)
  */
-export function buildEnumProductDataType(
-  enumMap: EnumMapProduct
-): Record<string, unknown> {
+export function buildEnumProductDataType(enumMap: EnumMapProduct): Record<string, unknown> {
   const enumXml: Record<string, unknown> = {
     enumEntry: enumMap.enumEntry.map((entry) => buildEnumProductEntry(entry)),
   };
@@ -23,9 +18,7 @@ export function buildEnumProductDataType(
 /**
  * Builds XML object for enumEntry from EnumEntryProductRecord model
  */
-function buildEnumProductEntry(
-  entry: EnumEntryProductRecord
-): Record<string, unknown> {
+function buildEnumProductEntry(entry: EnumEntryProductRecord): Record<string, unknown> {
   const entryXml: Record<string, unknown> = {
     literal: wrapInArray(entry.literal),
   };

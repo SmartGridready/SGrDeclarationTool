@@ -96,11 +96,7 @@ export function DateField({
         </PopoverContent>
       </Popover>
       {error && (
-        <p
-          id={`${name}-error`}
-          className="text-sm text-destructive"
-          role="alert"
-        >
+        <p id={`${name}-error`} className="text-sm text-destructive" role="alert">
           {error}
         </p>
       )}

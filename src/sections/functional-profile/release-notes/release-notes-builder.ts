@@ -13,16 +13,13 @@ import {
  * Builds XML object for releaseNotes from ReleaseNotes model
  * @throws Error if required fields are missing
  */
-export function buildReleaseNotes(
-  releaseNotes: ReleaseNotes
-): Record<string, unknown> {
+export function buildReleaseNotes(releaseNotes: ReleaseNotes): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateReleaseNotes(releaseNotes);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
     // Zod always provides error messages, so this should always be defined
-    const errorMessage =
-      firstError?.message || "Validation failed for release notes";
+    const errorMessage = firstError?.message || "Validation failed for release notes";
     throw new Error(errorMessage);
   }
 
@@ -53,8 +50,7 @@ function buildChangeLogEntry(entry: ChangeLog): Record<string, unknown> {
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
     // Zod always provides error messages, so this should always be defined
-    const errorMessage =
-      firstError?.message || "Validation failed for change log entry";
+    const errorMessage = firstError?.message || "Validation failed for change log entry";
     throw new Error(errorMessage);
   }
 

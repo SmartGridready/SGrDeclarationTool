@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  FunctionalProfileDataPoint,
-  FunctionalProfileDataPointList,
-} from "@/models";
+import { FunctionalProfileDataPoint, FunctionalProfileDataPointList } from "@/models";
 import {
   DATA_DIRECTION_OPTIONS,
   PRESENCE_LEVEL_OPTIONS,
@@ -11,18 +8,13 @@ import {
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { legibleDescriptionSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
-import {
-  ValidationResult,
-  validateWithSchema,
-} from "@/sections/shared/utils/validation-utils";
+import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
 
 /**
  * Generic Attribute List validation schemas (for data points)
  */
 const genericAttributeFunctionalProfileSchema = z.object({
-  name: z
-    .string({ message: "Name is required" })
-    .min(1, "Name cannot be empty"),
+  name: z.string({ message: "Name is required" }).min(1, "Name cannot be empty"),
 });
 
 const genericAttributeListFunctionalProfileSchema = z.object({
@@ -78,18 +70,9 @@ export const parameterListSchema = z.object({
  * Data Point List validation schemas
  */
 
-const DATA_DIRECTION_VALUES = DATA_DIRECTION_OPTIONS.map((o) => o.value) as [
-  string,
-  ...string[],
-];
-const PRESENCE_LEVEL_VALUES = PRESENCE_LEVEL_OPTIONS.map((o) => o.value) as [
-  string,
-  ...string[],
-];
-const DATA_TYPE_VALUES = DATA_TYPE_OPTIONS.map((o) => o.value) as [
-  string,
-  ...string[],
-];
+const DATA_DIRECTION_VALUES = DATA_DIRECTION_OPTIONS.map((o) => o.value) as [string, ...string[]];
+const PRESENCE_LEVEL_VALUES = PRESENCE_LEVEL_OPTIONS.map((o) => o.value) as [string, ...string[]];
+const DATA_TYPE_VALUES = DATA_TYPE_OPTIONS.map((o) => o.value) as [string, ...string[]];
 const UNIT_VALUES = UNIT_OPTIONS.map((o) => o.value) as [string, ...string[]];
 
 // Data Type Functional Profile Schema - accepts both string (for form) and object (for model)
@@ -180,22 +163,15 @@ export const dataPointListSchema = z.object({
 });
 
 // Type exports
-export type DataPointDescriptionInput = z.input<
-  typeof dataPointDescriptionSchema
->;
-export type FunctionalProfileDataPointInput = z.input<
-  typeof functionalProfileDataPointSchema
->;
+export type DataPointDescriptionInput = z.input<typeof dataPointDescriptionSchema>;
+export type FunctionalProfileDataPointInput = z.input<typeof functionalProfileDataPointSchema>;
 export type DataPointListInput = z.input<typeof dataPointListSchema>;
 
 // Validators
 export function validateDataPoint(
   dataPoint: FunctionalProfileDataPoint
 ): ValidationResult<FunctionalProfileDataPoint> {
-  const result = validateWithSchema(
-    functionalProfileDataPointSchema,
-    dataPoint
-  );
+  const result = validateWithSchema(functionalProfileDataPointSchema, dataPoint);
   return result as ValidationResult<FunctionalProfileDataPoint>;
 }
 

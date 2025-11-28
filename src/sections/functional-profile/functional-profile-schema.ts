@@ -12,10 +12,7 @@ import { alternativeNamesSchema } from "@/sections/functional-profile/alternativ
 import { legibleDescriptionsSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
 import { genericAttributeListFunctionalProfileSchema } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
 import { dataPointListSchema } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
-import {
-  ValidationResult,
-  validateWithSchema,
-} from "@/sections/shared/utils/validation-utils";
+import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
 
 /**
  * Main validation schemas and validators for Functional Profile models
@@ -58,9 +55,7 @@ export type { AlternativeNamesInput } from "@/sections/functional-profile/altern
 export type { LegibleDescriptionsInput } from "@/sections/functional-profile/legible-description/legible-description-schema";
 export type { GenericAttributeListFunctionalProfileInput } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
 export type { DataPointListInput } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
-export type FunctionalProfileFrameInput = z.input<
-  typeof functionalProfileFrameSchema
->;
+export type FunctionalProfileFrameInput = z.input<typeof functionalProfileFrameSchema>;
 
 // Validators
 export function validateFunctionalProfileFrame(

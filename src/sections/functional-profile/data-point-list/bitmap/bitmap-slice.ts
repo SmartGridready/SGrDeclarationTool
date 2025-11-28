@@ -1,7 +1,4 @@
-import {
-  BitmapFunctionalProfile,
-  BitmapEntryFunctionalProfile,
-} from "@/models";
+import { BitmapFunctionalProfile, BitmapEntryFunctionalProfile } from "@/models";
 import {
   SetState,
   getDataPoint,
@@ -11,16 +8,9 @@ import {
 
 export interface BitmapSlice {
   setBitmapDataType: (index: number, bitmap: BitmapFunctionalProfile) => void;
-  addBitmapEntry: (
-    dataPointIndex: number,
-    entry: BitmapEntryFunctionalProfile
-  ) => void;
+  addBitmapEntry: (dataPointIndex: number, entry: BitmapEntryFunctionalProfile) => void;
   removeBitmapEntry: (dataPointIndex: number, entryIndex: number) => void;
-  updateBitmapEntryLiteral: (
-    dataPointIndex: number,
-    entryIndex: number,
-    literal: string
-  ) => void;
+  updateBitmapEntryLiteral: (dataPointIndex: number, entryIndex: number, literal: string) => void;
   updateBitmapEntryDescription: (
     dataPointIndex: number,
     entryIndex: number,

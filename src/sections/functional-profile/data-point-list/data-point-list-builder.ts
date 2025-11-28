@@ -41,8 +41,7 @@ export function buildDataPointList(
   const validation = validateDataPointList(dataPointList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for data point list";
+    const errorMessage = firstError?.message || "Validation failed for data point list";
     throw new Error(errorMessage);
   }
 
@@ -56,9 +55,7 @@ export function buildDataPointList(
 /**
  * Builds XML object for a single dataPointListElement
  */
-function buildDataPointElement(
-  element: FunctionalProfileDataPoint
-): Record<string, unknown> {
+function buildDataPointElement(element: FunctionalProfileDataPoint): Record<string, unknown> {
   const dp = element.dataPoint;
 
   const dataPointXml: Record<string, unknown> = {
@@ -74,9 +71,7 @@ function buildDataPointElement(
 
   // Add optional parameterList (must come before legibleDescription)
   if (dp.parameterList) {
-    dataPointXml.parameterList = wrapInArray(
-      buildParameterListForDataPoint(dp.parameterList)
-    );
+    dataPointXml.parameterList = wrapInArray(buildParameterListForDataPoint(dp.parameterList));
   }
 
   // Add legibleDescription if present
@@ -90,9 +85,7 @@ function buildDataPointElement(
 
   // Add optional alternativeNames
   if (dp.alternativeNames) {
-    dataPointXml.alternativeNames = wrapInArray(
-      buildAlternativeNames(dp.alternativeNames)
-    );
+    dataPointXml.alternativeNames = wrapInArray(buildAlternativeNames(dp.alternativeNames));
   }
 
   const elementXml: Record<string, unknown> = {
@@ -120,17 +113,14 @@ function buildGenericAttributeListForDataPoint(
   const validation = validateGenericAttributeList(attributeList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for generic attribute list";
+    const errorMessage = firstError?.message || "Validation failed for generic attribute list";
     throw new Error(errorMessage);
   }
 
   return {
-    genericAttributeListElement: attributeList.genericAttributeListElement.map(
-      (attr) => ({
-        name: wrapInArray(attr.name),
-      })
-    ),
+    genericAttributeListElement: attributeList.genericAttributeListElement.map((attr) => ({
+      name: wrapInArray(attr.name),
+    })),
   };
 }
 
@@ -145,22 +135,17 @@ function buildParameterListForDataPoint(
   const validation = validateWithSchema(parameterListSchema, parameterList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for parameter list";
+    const errorMessage = firstError?.message || "Validation failed for parameter list";
     throw new Error(errorMessage);
   }
 
   const parameterListXml: Record<string, unknown> = {};
 
   // Add optional parameterListElement array
-  if (
-    parameterList.parameterListElement &&
-    parameterList.parameterListElement.length > 0
-  ) {
-    parameterListXml.parameterListElement =
-      parameterList.parameterListElement.map((element) =>
-        buildParameterListElement(element)
-      );
+  if (parameterList.parameterListElement && parameterList.parameterListElement.length > 0) {
+    parameterListXml.parameterListElement = parameterList.parameterListElement.map((element) =>
+      buildParameterListElement(element)
+    );
   }
 
   return parameterListXml;
@@ -193,9 +178,7 @@ function buildParameterListElement(
 /**
  * Builds XML object for parameterDescription from DynamicParameterDescription model
  */
-function buildParameterDescription(
-  desc: DynamicParameterDescription
-): Record<string, unknown> {
+function buildParameterDescription(desc: DynamicParameterDescription): Record<string, unknown> {
   const descXml: Record<string, unknown> = {
     textElement: wrapInArray(desc.textElement),
     language: wrapInArray(desc.language),
@@ -214,9 +197,7 @@ function buildParameterDescription(
  * Builds XML dataType element for DataTypeProduct
  * The XML structure uses nested elements like <float64 /> instead of a string value
  */
-function buildDataTypeProduct(
-  dataType: DataTypeProduct
-): Record<string, unknown> {
+function buildDataTypeProduct(dataType: DataTypeProduct): Record<string, unknown> {
   // Check for enum, bitmap, or json first
   if ("enum" in dataType) {
     return { enum: wrapInArray(buildEnumProductDataType(dataType.enum)) };
@@ -261,9 +242,7 @@ function buildDataTypeProduct(
  * Builds XML dataType element from DataTypeFunctionalProfile
  * The XML structure uses nested elements like <float64 /> instead of a string value
  */
-function buildDataType(
-  dataType: DataTypeFunctionalProfile
-): Record<string, unknown> {
+function buildDataType(dataType: DataTypeFunctionalProfile): Record<string, unknown> {
   // Check for enum, bitmap, or json first
   if (isEnumDataType(dataType)) {
     return { enum: wrapInArray(buildEnumDataType(dataType.enum)) };

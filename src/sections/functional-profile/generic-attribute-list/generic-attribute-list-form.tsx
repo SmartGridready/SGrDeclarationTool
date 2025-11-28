@@ -5,22 +5,20 @@ import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { GenericAttributeFunctionalProfile } from "@/models";
 
 export function GenericAttributeListForm() {
-  const { state, actions, isAdded, getError, handleAdd, handleRemove } =
-    useFormSection({
-      stateSelector: (store) => ({
-        genericAttributes:
-          store.profile?.genericAttributeList?.genericAttributeListElement,
-      }),
-      actionsSelector: (store) => ({
-        addEmptyGenericAttribute: store.addEmptyGenericAttribute,
-        removeGenericAttribute: store.removeGenericAttribute,
-        removeAllGenericAttributes: store.removeAllGenericAttributes,
-        updateGenericAttributeName: store.updateGenericAttributeName,
-      }),
-      isAddedSelector: (store) => !!store.profile?.genericAttributeList,
-      onAdd: (actions) => actions.addEmptyGenericAttribute(),
-      onRemove: (actions) => actions.removeAllGenericAttributes(),
-    });
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    stateSelector: (store) => ({
+      genericAttributes: store.profile?.genericAttributeList?.genericAttributeListElement,
+    }),
+    actionsSelector: (store) => ({
+      addEmptyGenericAttribute: store.addEmptyGenericAttribute,
+      removeGenericAttribute: store.removeGenericAttribute,
+      removeAllGenericAttributes: store.removeAllGenericAttributes,
+      updateGenericAttributeName: store.updateGenericAttributeName,
+    }),
+    isAddedSelector: (store) => !!store.profile?.genericAttributeList,
+    onAdd: (actions) => actions.addEmptyGenericAttribute(),
+    onRemove: (actions) => actions.removeAllGenericAttributes(),
+  });
 
   return (
     <FormSection
@@ -42,14 +40,10 @@ export function GenericAttributeListForm() {
             label="Name"
             name={`genericAttribute-${index}-name`}
             value={item.name}
-            onChange={(value) =>
-              actions.updateGenericAttributeName(index, value)
-            }
+            onChange={(value) => actions.updateGenericAttributeName(index, value)}
             placeholder="Enter attribute name"
             required={true}
-            error={getError(
-              `genericAttributeList.genericAttributeListElement.${index}.name`
-            )}
+            error={getError(`genericAttributeList.genericAttributeListElement.${index}.name`)}
           />
         )}
       />

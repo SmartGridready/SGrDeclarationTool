@@ -8,10 +8,7 @@ import { useProfileValidation } from "@/sections/shared/hooks/use-profile-valida
 /**
  * Shallow comparison for objects (one level deep)
  */
-function shallowEqual<T extends Record<string, unknown>>(
-  objA: T,
-  objB: T
-): boolean {
+function shallowEqual<T extends Record<string, unknown>>(objA: T, objB: T): boolean {
   if (objA === objB) return true;
   if (!objA || !objB) return false;
 
@@ -82,10 +79,7 @@ export function useFormSection<
 
   const stableActionsSelector = useRef((store: StoreState): TActions => {
     const newActions = actionsSelectorRef.current(store);
-    if (
-      actionsCache.current &&
-      shallowEqual(actionsCache.current, newActions)
-    ) {
+    if (actionsCache.current && shallowEqual(actionsCache.current, newActions)) {
       return actionsCache.current;
     }
     actionsCache.current = newActions;

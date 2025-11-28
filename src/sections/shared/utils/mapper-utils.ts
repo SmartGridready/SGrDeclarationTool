@@ -86,11 +86,7 @@ export function getOptionalNumberValue(
  * @param defaultValue - Default value if field is missing
  * @returns The typed value or default
  */
-export function getTypedValue<T>(
-  xml: Xml2JsObject | undefined,
-  field: string,
-  defaultValue: T
-): T {
+export function getTypedValue<T>(xml: Xml2JsObject | undefined, field: string, defaultValue: T): T {
   const value = xml?.[field]?.[0];
   return (value as T) || defaultValue;
 }
@@ -185,18 +181,10 @@ export function getFirstElement(
  * @param field - The field name to check
  * @returns True if field exists and has a value
  */
-export function hasValue(
-  xml: Xml2JsObject | undefined,
-  field: string
-): boolean {
+export function hasValue(xml: Xml2JsObject | undefined, field: string): boolean {
   const value = xml?.[field];
   if (Array.isArray(value)) {
-    return (
-      value.length > 0 &&
-      value[0] !== undefined &&
-      value[0] !== null &&
-      value[0] !== ""
-    );
+    return value.length > 0 && value[0] !== undefined && value[0] !== null && value[0] !== "";
   }
   return value !== undefined && value !== null && value !== "";
 }
@@ -207,11 +195,7 @@ export function hasValue(
  * @param field - The field name
  * @param value - The value to set (if defined)
  */
-export function setOptionalField<T extends object>(
-  obj: T,
-  field: keyof T,
-  value: unknown
-): void {
+export function setOptionalField<T extends object>(obj: T, field: keyof T, value: unknown): void {
   if (value !== undefined && value !== null) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (obj as any)[field] = value;

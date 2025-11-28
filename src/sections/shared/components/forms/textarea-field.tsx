@@ -51,11 +51,7 @@ export function TextareaField({
         aria-describedby={hasError ? `${name}-error` : undefined}
       />
       {error && (
-        <p
-          id={`${name}-error`}
-          className="text-sm text-destructive"
-          role="alert"
-        >
+        <p id={`${name}-error`} className="text-sm text-destructive" role="alert">
           {error}
         </p>
       )}

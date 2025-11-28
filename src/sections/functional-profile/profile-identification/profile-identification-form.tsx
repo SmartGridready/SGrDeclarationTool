@@ -19,24 +19,21 @@ export function ProfileIdentificationForm() {
         store.profile?.functionalProfile?.functionalProfileIdentification
           ?.functionalProfileCategory,
       functionalProfileType:
-        store.profile?.functionalProfile?.functionalProfileIdentification
-          ?.functionalProfileType,
+        store.profile?.functionalProfile?.functionalProfileIdentification?.functionalProfileType,
       levelOfOperation:
-        store.profile?.functionalProfile?.functionalProfileIdentification
-          ?.levelOfOperation,
+        store.profile?.functionalProfile?.functionalProfileIdentification?.levelOfOperation,
       primaryVersionNumber:
-        store.profile?.functionalProfile?.functionalProfileIdentification
-          ?.versionNumber?.primaryVersionNumber,
+        store.profile?.functionalProfile?.functionalProfileIdentification?.versionNumber
+          ?.primaryVersionNumber,
       secondaryVersionNumber:
-        store.profile?.functionalProfile?.functionalProfileIdentification
-          ?.versionNumber?.secondaryVersionNumber,
+        store.profile?.functionalProfile?.functionalProfileIdentification?.versionNumber
+          ?.secondaryVersionNumber,
       subReleaseVersionNumber:
-        store.profile?.functionalProfile?.functionalProfileIdentification
-          ?.versionNumber?.subReleaseVersionNumber,
+        store.profile?.functionalProfile?.functionalProfileIdentification?.versionNumber
+          ?.subReleaseVersionNumber,
     }),
     actionsSelector: (store) => ({
-      updateSpecificationOwnerIdentification:
-        store.updateSpecificationOwnerIdentification,
+      updateSpecificationOwnerIdentification: store.updateSpecificationOwnerIdentification,
       updateFunctionalProfileCategory: store.updateFunctionalProfileCategory,
       updateFunctionalProfileType: store.updateFunctionalProfileType,
       updateLevelOfOperation: store.updateLevelOfOperation,
@@ -59,9 +56,7 @@ export function ProfileIdentificationForm() {
           required={true}
           type="text"
           value={state.specificationOwnerIdentification}
-          onChange={(value) =>
-            actions.updateSpecificationOwnerIdentification(value)
-          }
+          onChange={(value) => actions.updateSpecificationOwnerIdentification(value)}
           error={getError(
             "functionalProfile.functionalProfileIdentification.specificationOwnerIdentification"
           )}
@@ -73,9 +68,7 @@ export function ProfileIdentificationForm() {
           required={true}
           value={state.functionalProfileCategory}
           onChange={(value) =>
-            actions.updateFunctionalProfileCategory(
-              value as FunctionalProfileCategory
-            )
+            actions.updateFunctionalProfileCategory(value as FunctionalProfileCategory)
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.functionalProfileCategory"
@@ -101,12 +94,8 @@ export function ProfileIdentificationForm() {
           options={LEVEL_OF_OPERATION}
           required={true}
           value={state.levelOfOperation}
-          onChange={(value) =>
-            actions.updateLevelOfOperation(value as LevelOfOperation)
-          }
-          error={getError(
-            "functionalProfile.functionalProfileIdentification.levelOfOperation"
-          )}
+          onChange={(value) => actions.updateLevelOfOperation(value as LevelOfOperation)}
+          error={getError("functionalProfile.functionalProfileIdentification.levelOfOperation")}
         />
       </FormGroup>
 
@@ -117,9 +106,7 @@ export function ProfileIdentificationForm() {
           type="number"
           required={true}
           value={state.primaryVersionNumber?.toString()}
-          onChange={(value) =>
-            actions.updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)
-          }
+          onChange={(value) => actions.updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)}
           error={getError(
             "functionalProfile.functionalProfileIdentification.versionNumber.primaryVersionNumber"
           )}
@@ -131,9 +118,7 @@ export function ProfileIdentificationForm() {
           required={true}
           value={state.secondaryVersionNumber?.toString()}
           onChange={(value) =>
-            actions.updateSecondaryVersionNumber(
-              value ? parseInt(value, 10) : 0
-            )
+            actions.updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.versionNumber.secondaryVersionNumber"
@@ -146,9 +131,7 @@ export function ProfileIdentificationForm() {
           required={true}
           value={state.subReleaseVersionNumber?.toString()}
           onChange={(value) =>
-            actions.updateSubReleaseVersionNumber(
-              value ? parseInt(value, 10) : 0
-            )
+            actions.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)
           }
           error={getError(
             "functionalProfile.functionalProfileIdentification.versionNumber.subReleaseVersionNumber"

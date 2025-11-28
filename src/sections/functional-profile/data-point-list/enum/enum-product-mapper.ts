@@ -16,11 +16,7 @@ export function mapEnumProductDataType(enumXml: any): EnumMapProduct {
   };
 
   // Map optional hexMask
-  setOptionalField(
-    enumMap,
-    "hexMask",
-    getOptionalStringValue(enumXml, "hexMask")
-  );
+  setOptionalField(enumMap, "hexMask", getOptionalStringValue(enumXml, "hexMask"));
 
   return enumMap;
 }
@@ -34,16 +30,8 @@ function mapEnumProductEntry(entryXml: any): EnumEntryProductRecord {
   };
 
   // Map optional fields
-  setOptionalField(
-    entry,
-    "ordinal",
-    getOptionalNumberValue(entryXml, "ordinal")
-  );
-  setOptionalField(
-    entry,
-    "description",
-    getOptionalStringValue(entryXml, "description")
-  );
+  setOptionalField(entry, "ordinal", getOptionalNumberValue(entryXml, "ordinal"));
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
 
   return entry;
 }

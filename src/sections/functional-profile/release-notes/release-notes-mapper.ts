@@ -16,11 +16,7 @@ export function mapReleaseNotes(releaseNotesXml: any): ReleaseNotes {
   };
 
   // Map optional fields
-  setOptionalField(
-    releaseNotes,
-    "remarks",
-    getOptionalStringValue(releaseNotesXml, "remarks")
-  );
+  setOptionalField(releaseNotes, "remarks", getOptionalStringValue(releaseNotesXml, "remarks"));
   setOptionalField(
     releaseNotes,
     "changeLog",

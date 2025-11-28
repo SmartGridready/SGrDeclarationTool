@@ -21,18 +21,13 @@ export interface AlternativeNamesSlice {
 const updateField =
   (field: keyof AlternativeNames) =>
   (value: string | undefined) =>
-  (state: {
-    profile?: { functionalProfile: { alternativeNames?: AlternativeNames } };
-  }) => {
+  (state: { profile?: { functionalProfile: { alternativeNames?: AlternativeNames } } }) => {
     if (state.profile?.functionalProfile.alternativeNames) {
-      state.profile.functionalProfile.alternativeNames[field] =
-        normalizeString(value);
+      state.profile.functionalProfile.alternativeNames[field] = normalizeString(value);
     }
   };
 
-export const createAlternativeNamesSlice = (
-  set: SetState
-): AlternativeNamesSlice => ({
+export const createAlternativeNamesSlice = (set: SetState): AlternativeNamesSlice => ({
   addAlternativeNames: () =>
     set((state) => {
       if (state.profile) {

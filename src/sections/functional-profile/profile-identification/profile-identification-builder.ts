@@ -17,23 +17,16 @@ export function buildProfileIdentification(
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
     // Zod always provides error messages, so this should always be defined
-    const errorMessage =
-      firstError?.message || "Validation failed for profile identification";
+    const errorMessage = firstError?.message || "Validation failed for profile identification";
     throw new Error(errorMessage);
   }
 
   const identificationXml: Record<string, unknown> = {
-    specificationOwnerIdentification: wrapInArray(
-      identification.specificationOwnerIdentification
-    ),
-    functionalProfileCategory: wrapInArray(
-      identification.functionalProfileCategory
-    ),
+    specificationOwnerIdentification: wrapInArray(identification.specificationOwnerIdentification),
+    functionalProfileCategory: wrapInArray(identification.functionalProfileCategory),
     functionalProfileType: wrapInArray(identification.functionalProfileType),
     levelOfOperation: wrapInArray(identification.levelOfOperation),
-    versionNumber: wrapInArray(
-      buildVersionNumber(identification.versionNumber)
-    ),
+    versionNumber: wrapInArray(buildVersionNumber(identification.versionNumber)),
   };
 
   return identificationXml;
@@ -43,16 +36,13 @@ export function buildProfileIdentification(
  * Builds XML object for versionNumber from VersionNumber model
  * @throws Error if required fields are missing
  */
-function buildVersionNumber(
-  versionNumber: VersionNumber
-): Record<string, unknown> {
+function buildVersionNumber(versionNumber: VersionNumber): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateVersionNumber(versionNumber);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
     // Zod always provides error messages, so this should always be defined
-    const errorMessage =
-      firstError?.message || "Validation failed for version number";
+    const errorMessage = firstError?.message || "Validation failed for version number";
     throw new Error(errorMessage);
   }
 

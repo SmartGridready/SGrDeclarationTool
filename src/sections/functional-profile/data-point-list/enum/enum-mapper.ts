@@ -1,7 +1,4 @@
-import {
-  EnumMapFunctionalProfile,
-  EnumEntryRecordFunctionalProfile,
-} from "@/models";
+import { EnumMapFunctionalProfile, EnumEntryRecordFunctionalProfile } from "@/models";
 import {
   getOptionalStringValue,
   mapOptionalArray,
@@ -16,16 +13,8 @@ export function mapEnumDataType(enumXml: any): EnumMapFunctionalProfile {
   const enumMap: EnumMapFunctionalProfile = {};
 
   // Map optional fields
-  setOptionalField(
-    enumMap,
-    "hexMask",
-    getOptionalStringValue(enumXml, "hexMask")
-  );
-  setOptionalField(
-    enumMap,
-    "enumEntry",
-    mapOptionalArray(enumXml, "enumEntry", mapEnumEntry)
-  );
+  setOptionalField(enumMap, "hexMask", getOptionalStringValue(enumXml, "hexMask"));
+  setOptionalField(enumMap, "enumEntry", mapOptionalArray(enumXml, "enumEntry", mapEnumEntry));
 
   return enumMap;
 }
@@ -39,11 +28,7 @@ function mapEnumEntry(entryXml: any): EnumEntryRecordFunctionalProfile {
   };
 
   // Map optional description
-  setOptionalField(
-    entry,
-    "description",
-    getOptionalStringValue(entryXml, "description")
-  );
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
 
   return entry;
 }

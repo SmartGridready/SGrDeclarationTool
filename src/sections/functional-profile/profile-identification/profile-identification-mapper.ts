@@ -14,9 +14,7 @@ import {
 /**
  * Maps XML functionalProfileIdentification to FunctionalProfileIdentification model
  */
-export function mapProfileIdentification(
-  identificationXml: any
-): FunctionalProfileIdentification {
+export function mapProfileIdentification(identificationXml: any): FunctionalProfileIdentification {
   const identification: FunctionalProfileIdentification = {
     specificationOwnerIdentification: getStringValue(
       identificationXml,
@@ -27,18 +25,9 @@ export function mapProfileIdentification(
       "functionalProfileCategory",
       "Battery"
     ),
-    functionalProfileType: getStringValue(
-      identificationXml,
-      "functionalProfileType"
-    ),
-    levelOfOperation: getTypedValue<LevelOfOperation>(
-      identificationXml,
-      "levelOfOperation",
-      "1"
-    ),
-    versionNumber: mapVersionNumber(
-      getFirstElement(identificationXml, "versionNumber")
-    ),
+    functionalProfileType: getStringValue(identificationXml, "functionalProfileType"),
+    levelOfOperation: getTypedValue<LevelOfOperation>(identificationXml, "levelOfOperation", "1"),
+    versionNumber: mapVersionNumber(getFirstElement(identificationXml, "versionNumber")),
   };
 
   return identification;
@@ -57,20 +46,8 @@ function mapVersionNumber(versionNumberXml: any): VersionNumber {
   }
 
   return {
-    primaryVersionNumber: getNumberValue(
-      versionNumberXml,
-      "primaryVersionNumber",
-      0
-    ),
-    secondaryVersionNumber: getNumberValue(
-      versionNumberXml,
-      "secondaryVersionNumber",
-      0
-    ),
-    subReleaseVersionNumber: getNumberValue(
-      versionNumberXml,
-      "subReleaseVersionNumber",
-      0
-    ),
+    primaryVersionNumber: getNumberValue(versionNumberXml, "primaryVersionNumber", 0),
+    secondaryVersionNumber: getNumberValue(versionNumberXml, "secondaryVersionNumber", 0),
+    subReleaseVersionNumber: getNumberValue(versionNumberXml, "subReleaseVersionNumber", 0),
   };
 }

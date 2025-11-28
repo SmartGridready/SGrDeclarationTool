@@ -1,9 +1,5 @@
 import { GenericAttributeFunctionalProfile } from "@/models";
-import {
-  SetState,
-  ensureArray,
-  removeArrayItem,
-} from "@/sections/shared/utils/slice-utils";
+import { SetState, ensureArray, removeArrayItem } from "@/sections/shared/utils/slice-utils";
 
 export interface GenericAttributeListSlice {
   // Main operations
@@ -22,9 +18,7 @@ const createEmptyGenericAttribute = (): GenericAttributeFunctionalProfile => ({
   name: "",
 });
 
-export const createGenericAttributeListSlice = (
-  set: SetState
-): GenericAttributeListSlice => ({
+export const createGenericAttributeListSlice = (set: SetState): GenericAttributeListSlice => ({
   addGenericAttribute: (attribute) =>
     set((state) => {
       if (state.profile) {
@@ -67,8 +61,7 @@ export const createGenericAttributeListSlice = (
 
   updateGenericAttributeName: (index, name) =>
     set((state) => {
-      const attributeArray =
-        state.profile?.genericAttributeList?.genericAttributeListElement;
+      const attributeArray = state.profile?.genericAttributeList?.genericAttributeListElement;
       if (attributeArray?.[index]) {
         attributeArray[index] = { ...attributeArray[index], name };
       }

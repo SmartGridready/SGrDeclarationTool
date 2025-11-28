@@ -1,7 +1,4 @@
-import {
-  BitmapFunctionalProfile,
-  BitmapEntryFunctionalProfile,
-} from "@/models";
+import { BitmapFunctionalProfile, BitmapEntryFunctionalProfile } from "@/models";
 import {
   mapOptionalArray,
   getStringValue,
@@ -34,11 +31,7 @@ function mapBitmapEntry(entryXml: any): BitmapEntryFunctionalProfile {
   };
 
   // Map optional description
-  setOptionalField(
-    entry,
-    "description",
-    getOptionalStringValue(entryXml, "description")
-  );
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
 
   return entry;
 }

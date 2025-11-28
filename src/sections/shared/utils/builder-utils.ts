@@ -50,9 +50,7 @@ export function setOptionalXmlArray<T>(
  * @param typeName - The type name (e.g., "float64", "string")
  * @returns XML object with the type as a key
  */
-export function buildSimpleDataType(
-  typeName: string
-): Record<string, string[]> {
+export function buildSimpleDataType(typeName: string): Record<string, string[]> {
   // Return an object with the typeName as a key with empty string value
   // xml2js will render this as a self-closing tag like <float64 />
   return { [typeName]: [""] };

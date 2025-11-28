@@ -3,10 +3,7 @@ import {
   validateLegibleDescription,
   validateLegibleDescriptionArray,
 } from "@/sections/functional-profile/legible-description/legible-description-schema";
-import {
-  wrapInArray,
-  setOptionalXmlField,
-} from "@/sections/shared/utils/builder-utils";
+import { wrapInArray, setOptionalXmlField } from "@/sections/shared/utils/builder-utils";
 
 /**
  * Builds XML object for legibleDescription array from LegibleDescription[] model
@@ -20,30 +17,24 @@ export function buildLegibleDescription(
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
     // Zod always provides error messages, so this should always be defined
-    const errorMessage =
-      firstError?.message || "Validation failed for legible descriptions";
+    const errorMessage = firstError?.message || "Validation failed for legible descriptions";
     throw new Error(errorMessage);
   }
 
-  return legibleDescriptions.map((description) =>
-    buildLegibleDescriptionItem(description)
-  );
+  return legibleDescriptions.map((description) => buildLegibleDescriptionItem(description));
 }
 
 /**
  * Builds XML object for a single legibleDescription item
  * Uses CDATA for textElement to preserve HTML content and special characters
  */
-function buildLegibleDescriptionItem(
-  description: LegibleDescription
-): Record<string, unknown> {
+function buildLegibleDescriptionItem(description: LegibleDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateLegibleDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
     // Zod always provides error messages, so this should always be defined
-    const errorMessage =
-      firstError?.message || "Validation failed for legible description";
+    const errorMessage = firstError?.message || "Validation failed for legible description";
     throw new Error(errorMessage);
   }
 

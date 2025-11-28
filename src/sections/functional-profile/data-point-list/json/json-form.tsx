@@ -2,10 +2,7 @@ import { InputField } from "@/sections/shared/components/forms/input-field";
 import { SelectField } from "@/sections/shared/components/forms/select-field";
 import { JsonArrayField } from "@/sections/shared/components/forms/json-array-field";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
-import {
-  JSonArrayOutputFunctionalProfile,
-  JSonElemFunctionalProfile,
-} from "@/models";
+import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
 import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
 import {
   isJsonArray,
@@ -46,11 +43,7 @@ function JsonItemsEditor({
   };
 
   const handleAddElement = () => {
-    jsonSlice.addJsonItemAtPath(
-      dataPointIndex,
-      currentPath,
-      createEmptyJsonElement()
-    );
+    jsonSlice.addJsonItemAtPath(dataPointIndex, currentPath, createEmptyJsonElement());
   };
 
   const handleRemoveItem = (itemIndex: number) => {
@@ -61,28 +54,15 @@ function JsonItemsEditor({
     itemIndex: number,
     updatedItem: JSonArrayOutputFunctionalProfile
   ) => {
-    jsonSlice.updateJsonArrayItemAtPath(
-      dataPointIndex,
-      [...currentPath, itemIndex],
-      updatedItem
-    );
+    jsonSlice.updateJsonArrayItemAtPath(dataPointIndex, [...currentPath, itemIndex], updatedItem);
   };
 
-  const handleUpdateElemItem = (
-    itemIndex: number,
-    updatedItem: JSonElemFunctionalProfile
-  ) => {
-    jsonSlice.updateJsonElemItemAtPath(
-      dataPointIndex,
-      [...currentPath, itemIndex],
-      updatedItem
-    );
+  const handleUpdateElemItem = (itemIndex: number, updatedItem: JSonElemFunctionalProfile) => {
+    jsonSlice.updateJsonElemItemAtPath(dataPointIndex, [...currentPath, itemIndex], updatedItem);
   };
 
   return (
-    <JsonArrayField<
-      JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
-    >
+    <JsonArrayField<JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile>
       label="JSON Items"
       items={items}
       onAddArray={handleAddArray}
@@ -94,9 +74,7 @@ function JsonItemsEditor({
         if (isJsonArray(jsonItem)) {
           return (
             <>
-              <div className="text-xs font-semibold text-muted-foreground">
-                ARRAY
-              </div>
+              <div className="text-xs font-semibold text-muted-foreground">ARRAY</div>
               <InputField
                 label="Array Name"
                 name={`${pathPrefix}-json-${itemIndex}-name`}
@@ -124,9 +102,7 @@ function JsonItemsEditor({
         if (isJsonElement(jsonItem)) {
           return (
             <>
-              <div className="text-xs font-semibold text-muted-foreground">
-                ELEMENT
-              </div>
+              <div className="text-xs font-semibold text-muted-foreground">ELEMENT</div>
               <InputField
                 label="Key"
                 name={`${pathPrefix}-json-${itemIndex}-key`}
@@ -148,10 +124,7 @@ function JsonItemsEditor({
                 onChange={(value) => {
                   handleUpdateElemItem(
                     itemIndex,
-                    createJsonElement(
-                      jsonItem.key,
-                      value as "string" | "number" | "date"
-                    )
+                    createJsonElement(jsonItem.key, value as "string" | "number" | "date")
                   );
                 }}
                 required={true}

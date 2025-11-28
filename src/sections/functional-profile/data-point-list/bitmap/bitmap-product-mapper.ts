@@ -25,11 +25,7 @@ function mapBitmapProductEntry(entryXml: any): BitmapEntryProduct {
   };
 
   // Map optional description
-  setOptionalField(
-    entry,
-    "description",
-    getOptionalStringValue(entryXml, "description")
-  );
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
 
   return entry;
 }

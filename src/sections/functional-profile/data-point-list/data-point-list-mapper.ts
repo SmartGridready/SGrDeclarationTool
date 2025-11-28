@@ -36,15 +36,9 @@ import { mapBitmapProductDataType } from "@/sections/functional-profile/data-poi
 /**
  * Maps XML dataPointList to FunctionalProfileDataPointList model
  */
-export function mapDataPointList(
-  dataPointListXml: any
-): FunctionalProfileDataPointList {
+export function mapDataPointList(dataPointListXml: any): FunctionalProfileDataPointList {
   return {
-    dataPointListElement: mapArray(
-      dataPointListXml,
-      "dataPointListElement",
-      mapDataPointElement
-    ),
+    dataPointListElement: mapArray(dataPointListXml, "dataPointListElement", mapDataPointElement),
   };
 }
 
@@ -69,11 +63,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
   const dataPoint: FunctionalProfileDataPoint = {
     dataPoint: {
       dataPointName: getStringValue(dpXml, "dataPointName"),
-      dataDirection: getTypedValue<DataDirectionFunctionalProfile>(
-        dpXml,
-        "dataDirection",
-        "R"
-      ),
+      dataDirection: getTypedValue<DataDirectionFunctionalProfile>(dpXml, "dataDirection", "R"),
       presenceLevel: getTypedValue<PresenceLevel>(dpXml, "presenceLevel", "M"),
       dataType: mapDataType(getFirstElement(dpXml, "dataType")),
       unit: getTypedValue<Units>(dpXml, "unit", "NO_UNITS"),
@@ -89,9 +79,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
 
   // Map optional legibleDescription
   if (dpXml.legibleDescription && Array.isArray(dpXml.legibleDescription)) {
-    dataPoint.dataPoint.legibleDescription = mapLegibleDescription(
-      dpXml.legibleDescription
-    );
+    dataPoint.dataPoint.legibleDescription = mapLegibleDescription(dpXml.legibleDescription);
   }
 
   // Map optional alternativeNames
@@ -111,10 +99,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
   );
 
   // Map optional genericAttributeList at element level
-  const genericAttributeListXml = getFirstElement(
-    elementXml,
-    "genericAttributeList"
-  );
+  const genericAttributeListXml = getFirstElement(elementXml, "genericAttributeList");
   setOptionalField(
     dataPoint,
     "genericAttributeList",
@@ -176,9 +161,7 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
 /**
  * Maps XML parameterList to DynamicParameterDescriptionList model
  */
-function mapParameterList(
-  parameterListXml: any
-): DynamicParameterDescriptionList {
+function mapParameterList(parameterListXml: any): DynamicParameterDescriptionList {
   const parameterList: DynamicParameterDescriptionList = {};
 
   // Map optional parameterListElement
@@ -197,28 +180,19 @@ function mapParameterList(
 /**
  * Maps a single XML parameterListElement to DynamicParameterDescriptionListElement model
  */
-function mapParameterListElement(
-  elementXml: any
-): DynamicParameterDescriptionListElement {
+function mapParameterListElement(elementXml: any): DynamicParameterDescriptionListElement {
   const element: DynamicParameterDescriptionListElement = {
     name: getStringValue(elementXml, "name"),
     dataType: mapDataTypeProduct(getFirstElement(elementXml, "dataType")),
   };
 
   // Map optional defaultValue
-  setOptionalField(
-    element,
-    "defaultValue",
-    getOptionalStringValue(elementXml, "defaultValue")
-  );
+  setOptionalField(element, "defaultValue", getOptionalStringValue(elementXml, "defaultValue"));
 
   // Map optional parameterDescription
-  if (
-    elementXml.parameterDescription &&
-    Array.isArray(elementXml.parameterDescription)
-  ) {
-    element.parameterDescription = elementXml.parameterDescription.map(
-      (desc: any) => mapParameterDescription(desc)
+  if (elementXml.parameterDescription && Array.isArray(elementXml.parameterDescription)) {
+    element.parameterDescription = elementXml.parameterDescription.map((desc: any) =>
+      mapParameterDescription(desc)
     );
   }
 
@@ -234,11 +208,7 @@ function mapParameterDescription(descXml: any): DynamicParameterDescription {
   };
 
   // Map optional label
-  setOptionalField(
-    description,
-    "label",
-    getOptionalStringValue(descXml, "label")
-  );
+  setOptionalField(description, "label", getOptionalStringValue(descXml, "label"));
 
   return description;
 }

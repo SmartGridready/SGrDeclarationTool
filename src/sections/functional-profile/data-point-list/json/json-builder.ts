@@ -45,9 +45,7 @@ function buildJsonItem(
 /**
  * Builds XML object for json array from JSonArrayOutputFunctionalProfile model
  */
-function buildJsonArray(
-  array: JSonArrayOutputFunctionalProfile
-): Record<string, unknown> {
+function buildJsonArray(array: JSonArrayOutputFunctionalProfile): Record<string, unknown> {
   const arrayXml: Record<string, unknown> = {};
 
   // Add optional name
@@ -66,9 +64,7 @@ function buildJsonArray(
 /**
  * Builds XML object for json element from JSonElemFunctionalProfile model
  */
-function buildJsonElement(
-  element: JSonElemFunctionalProfile
-): Record<string, unknown> {
+function buildJsonElement(element: JSonElemFunctionalProfile): Record<string, unknown> {
   const elementXml: Record<string, unknown> = {
     key: wrapInArray(element.key),
   };

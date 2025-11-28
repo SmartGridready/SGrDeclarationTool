@@ -29,13 +29,7 @@ function normalizeXml(xml: string): string {
 describe("Functional Profile XML", () => {
   it("should accept correct XML and match input with output after normalization", async () => {
     // Read the correct XML sample file
-    const xmlFilePath = join(
-      process.cwd(),
-      "public",
-      "samples",
-      "xml",
-      "sample-fp-correct.xml"
-    );
+    const xmlFilePath = join(process.cwd(), "public", "samples", "xml", "sample-fp-correct.xml");
     const inputXml = readFileSync(xmlFilePath, "utf-8");
 
     // Parse the XML to FunctionalProfileFrame model

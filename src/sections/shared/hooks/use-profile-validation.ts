@@ -2,10 +2,7 @@ import { useMemo } from "react";
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
 
-import {
-  getFieldError,
-  hasFieldError,
-} from "@/sections/shared/utils/validation-utils";
+import { getFieldError, hasFieldError } from "@/sections/shared/utils/validation-utils";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
 
 /**
@@ -15,9 +12,7 @@ import { validateFunctionalProfileFrame } from "@/sections/functional-profile/fu
  */
 export function useProfileValidation() {
   const profile = useProfileStore((state) => state.profile);
-  const validationAttempted = useValidationStore(
-    (state) => state.validationAttempted
-  );
+  const validationAttempted = useValidationStore((state) => state.validationAttempted);
 
   const validation = useMemo(() => {
     if (!profile) {

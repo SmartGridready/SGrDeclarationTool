@@ -18,11 +18,7 @@ export interface ReleaseNotesSlice {
   // ChangeLog operations
   addChangeLog: (changeLog: ChangeLog) => void;
   removeChangeLog: (index: number) => void;
-  updateChangeLogField: (
-    index: number,
-    field: keyof ChangeLog,
-    value: string
-  ) => void;
+  updateChangeLogField: (index: number, field: keyof ChangeLog, value: string) => void;
 
   // Convenience methods
   addEmptyChangeLog: () => void;
@@ -67,10 +63,7 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
   addChangeLog: (changeLog) =>
     set((state) => {
       if (state.profile?.releaseNotes) {
-        const list = ensureArray(
-          state.profile.releaseNotes.changeLog,
-          () => []
-        );
+        const list = ensureArray(state.profile.releaseNotes.changeLog, () => []);
         list.push(changeLog);
         state.profile.releaseNotes.changeLog = list;
       }
@@ -98,10 +91,7 @@ export const createReleaseNotesSlice = (set: SetState): ReleaseNotesSlice => ({
   addEmptyChangeLog: () =>
     set((state) => {
       if (state.profile?.releaseNotes) {
-        const list = ensureArray(
-          state.profile.releaseNotes.changeLog,
-          () => []
-        );
+        const list = ensureArray(state.profile.releaseNotes.changeLog, () => []);
         list.push(createEmptyChangeLog());
         state.profile.releaseNotes.changeLog = list;
       }

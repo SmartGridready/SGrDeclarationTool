@@ -1,9 +1,6 @@
 import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
-import {
-  getFirstElement,
-  setOptionalField,
-} from "@/sections/shared/utils/mapper-utils";
+import { getFirstElement, setOptionalField } from "@/sections/shared/utils/mapper-utils";
 import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-mapper";
 import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
@@ -18,9 +15,7 @@ import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
  * @returns Promise resolving to FunctionalProfileFrame
  * @throws Error if XML is invalid or cannot be parsed
  */
-export async function parseFunctionalProfile(
-  xmlString: string
-): Promise<FunctionalProfileFrame> {
+export async function parseFunctionalProfile(xmlString: string): Promise<FunctionalProfileFrame> {
   let parsed: any;
   try {
     parsed = await new Promise<any>((resolve, reject) => {
@@ -71,24 +66,15 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
 
   const frame: FunctionalProfileFrame = {
     functionalProfile: {
-      functionalProfileIdentification: mapProfileIdentification(
-        identificationXml || {}
-      ),
+      functionalProfileIdentification: mapProfileIdentification(identificationXml || {}),
     },
   };
 
   // Map optional fields
   const releaseNotesXml = getFirstElement(frameData, "releaseNotes");
-  setOptionalField(
-    frame,
-    "releaseNotes",
-    releaseNotesXml && mapReleaseNotes(releaseNotesXml)
-  );
+  setOptionalField(frame, "releaseNotes", releaseNotesXml && mapReleaseNotes(releaseNotesXml));
 
-  const alternativeNamesXml = getFirstElement(
-    functionalProfileXml,
-    "alternativeNames"
-  );
+  const alternativeNamesXml = getFirstElement(functionalProfileXml, "alternativeNames");
   setOptionalField(
     frame.functionalProfile,
     "alternativeNames",
@@ -104,10 +90,7 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
     );
   }
 
-  const genericAttributeListXml = getFirstElement(
-    frameData,
-    "genericAttributeList"
-  );
+  const genericAttributeListXml = getFirstElement(frameData, "genericAttributeList");
   setOptionalField(
     frame,
     "genericAttributeList",
@@ -115,11 +98,7 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   );
 
   const dataPointListXml = getFirstElement(frameData, "dataPointList");
-  setOptionalField(
-    frame,
-    "dataPointList",
-    dataPointListXml && mapDataPointList(dataPointListXml)
-  );
+  setOptionalField(frame, "dataPointList", dataPointListXml && mapDataPointList(dataPointListXml));
 
   return frame;
 }

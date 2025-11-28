@@ -70,10 +70,7 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
       ],
     },
     genericAttributeList: {
-      genericAttributeListElement: [
-        { name: "exampleAttribute1" },
-        { name: "exampleAttribute2" },
-      ],
+      genericAttributeListElement: [{ name: "exampleAttribute1" }, { name: "exampleAttribute2" }],
     },
     dataPointList: {
       dataPointListElement: [

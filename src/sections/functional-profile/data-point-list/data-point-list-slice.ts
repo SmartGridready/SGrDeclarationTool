@@ -35,24 +35,15 @@ export interface DataPointListSlice extends EnumSlice, BitmapSlice, JsonSlice {
 
   // Field-specific updates for dataPoint
   updateDataPointName: (index: number, name: string) => void;
-  updateDataDirection: (
-    index: number,
-    direction: DataDirectionFunctionalProfile
-  ) => void;
+  updateDataDirection: (index: number, direction: DataDirectionFunctionalProfile) => void;
   updatePresenceLevel: (index: number, level: PresenceLevel) => void;
   updateDataType: (index: number, dataType: DataTypeFunctionalProfile) => void;
   updateUnit: (index: number, unit: Units) => void;
   updateArrayLength: (index: number, length: number | undefined) => void;
 
   // Legible description operations for data points
-  addDataPointLegibleDescription: (
-    dataPointIndex: number,
-    description: LegibleDescription
-  ) => void;
-  removeDataPointLegibleDescription: (
-    dataPointIndex: number,
-    descIndex: number
-  ) => void;
+  addDataPointLegibleDescription: (dataPointIndex: number, description: LegibleDescription) => void;
+  removeDataPointLegibleDescription: (dataPointIndex: number, descIndex: number) => void;
   updateDataPointLegibleDescriptionText: (
     dataPointIndex: number,
     descIndex: number,
@@ -92,10 +83,7 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
     addDataPoint: (dataPoint) =>
       set((state) => {
         if (state.profile) {
-          const list = ensureArray(
-            state.profile.dataPointList?.dataPointListElement,
-            () => []
-          );
+          const list = ensureArray(state.profile.dataPointList?.dataPointListElement, () => []);
           list.push(dataPoint);
           if (!state.profile.dataPointList) {
             state.profile.dataPointList = { dataPointListElement: list };
@@ -108,15 +96,11 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
     removeDataPoint: (index) =>
       set((state) => {
         if (state.profile?.dataPointList?.dataPointListElement) {
-          removeArrayItem(
-            state.profile.dataPointList.dataPointListElement,
-            index,
-            () => {
-              if (state.profile) {
-                state.profile.dataPointList = undefined;
-              }
+          removeArrayItem(state.profile.dataPointList.dataPointListElement, index, () => {
+            if (state.profile) {
+              state.profile.dataPointList = undefined;
             }
-          );
+          });
         }
       }),
 
@@ -206,11 +190,7 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
         }
       }),
 
-    updateDataPointLegibleDescriptionLanguage: (
-      dataPointIndex,
-      descIndex,
-      language
-    ) =>
+    updateDataPointLegibleDescriptionLanguage: (dataPointIndex, descIndex, language) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const desc = dp?.dataPoint.legibleDescription?.[descIndex];
@@ -222,10 +202,7 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
     addEmptyDataPoint: () =>
       set((state) => {
         if (state.profile) {
-          const list = ensureArray(
-            state.profile.dataPointList?.dataPointListElement,
-            () => []
-          );
+          const list = ensureArray(state.profile.dataPointList?.dataPointListElement, () => []);
           list.push(createEmptyDataPoint());
           if (!state.profile.dataPointList) {
             state.profile.dataPointList = { dataPointListElement: list };

@@ -18,6 +18,20 @@ export interface AlternativeNamesSlice {
   updateEn17609Name: (en17609Name: string | undefined) => void;
 }
 
+/**
+ * Helper function to update an AlternativeNames field
+ * Can be reused for both FunctionalProfile-level and DataPoint-level
+ */
+export const updateAlternativeNamesField = <T extends { alternativeNames?: AlternativeNames }>(
+  obj: T,
+  field: keyof AlternativeNames,
+  value: string | undefined
+): void => {
+  if (obj.alternativeNames) {
+    obj.alternativeNames[field] = normalizeString(value);
+  }
+};
+
 const updateField =
   (field: keyof AlternativeNames) =>
   (value: string | undefined) =>

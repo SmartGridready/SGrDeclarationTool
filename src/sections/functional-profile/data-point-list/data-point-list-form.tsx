@@ -26,6 +26,10 @@ import {
   isJsonDataType,
   getDataTypeStringValue,
   createDataTypeFromString,
+  getDataTypeProductStringValue,
+  createDataTypeProductFromString,
+  isEnumDataTypeProduct,
+  isBitmapDataTypeProduct,
 } from "@/sections/functional-profile/data-point-list/data-type-utils";
 import { EnumForm } from "@/sections/functional-profile/data-point-list/enum/enum-form";
 import { BitmapForm } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-form";
@@ -51,6 +55,52 @@ export function DataPointListForm() {
       removeDataPointLegibleDescription: store.removeDataPointLegibleDescription,
       updateDataPointLegibleDescriptionText: store.updateDataPointLegibleDescriptionText,
       updateDataPointLegibleDescriptionLanguage: store.updateDataPointLegibleDescriptionLanguage,
+      // AlternativeNames methods
+      addDataPointAlternativeNames: store.addDataPointAlternativeNames,
+      removeDataPointAlternativeNames: store.removeDataPointAlternativeNames,
+      updateDataPointSLV1Name: store.updateDataPointSLV1Name,
+      updateDataPointWorkName: store.updateDataPointWorkName,
+      updateDataPointManufName: store.updateDataPointManufName,
+      updateDataPointIec61850Name: store.updateDataPointIec61850Name,
+      updateDataPointSarefName: store.updateDataPointSarefName,
+      updateDataPointEebusName: store.updateDataPointEebusName,
+      updateDataPointSunSpecName: store.updateDataPointSunSpecName,
+      updateDataPointHpBwpName: store.updateDataPointHpBwpName,
+      updateDataPointEn17609Name: store.updateDataPointEn17609Name,
+      // ParameterList methods
+      addDataPointParameterList: store.addDataPointParameterList,
+      removeDataPointParameterList: store.removeDataPointParameterList,
+      addDataPointParameterListElement: store.addDataPointParameterListElement,
+      removeDataPointParameterListElement: store.removeDataPointParameterListElement,
+      updateDataPointParameterListElementName: store.updateDataPointParameterListElementName,
+      updateDataPointParameterListElementDataType:
+        store.updateDataPointParameterListElementDataType,
+      updateDataPointParameterListElementDefaultValue:
+        store.updateDataPointParameterListElementDefaultValue,
+      addEmptyDataPointParameterDescription: store.addEmptyDataPointParameterDescription,
+      removeDataPointParameterDescription: store.removeDataPointParameterDescription,
+      updateDataPointParameterDescriptionText: store.updateDataPointParameterDescriptionText,
+      updateDataPointParameterDescriptionLanguage:
+        store.updateDataPointParameterDescriptionLanguage,
+      updateDataPointParameterDescriptionUri: store.updateDataPointParameterDescriptionUri,
+      updateDataPointParameterDescriptionLabel: store.updateDataPointParameterDescriptionLabel,
+      // ParameterList Enum methods
+      setParameterListEnumDataType: store.setParameterListEnumDataType,
+      addParameterListEnumEntry: store.addParameterListEnumEntry,
+      removeParameterListEnumEntry: store.removeParameterListEnumEntry,
+      updateParameterListEnumEntryLiteral: store.updateParameterListEnumEntryLiteral,
+      updateParameterListEnumEntryOrdinal: store.updateParameterListEnumEntryOrdinal,
+      updateParameterListEnumEntryDescription: store.updateParameterListEnumEntryDescription,
+      updateParameterListEnumHexMask: store.updateParameterListEnumHexMask,
+      addEmptyParameterListEnumEntry: store.addEmptyParameterListEnumEntry,
+      // ParameterList Bitmap methods
+      setParameterListBitmapDataType: store.setParameterListBitmapDataType,
+      addParameterListBitmapEntry: store.addParameterListBitmapEntry,
+      removeParameterListBitmapEntry: store.removeParameterListBitmapEntry,
+      updateParameterListBitmapEntryLiteral: store.updateParameterListBitmapEntryLiteral,
+      updateParameterListBitmapEntryHexMask: store.updateParameterListBitmapEntryHexMask,
+      updateParameterListBitmapEntryDescription: store.updateParameterListBitmapEntryDescription,
+      addEmptyParameterListBitmapEntry: store.addEmptyParameterListBitmapEntry,
       // Enum methods
       setEnumDataType: store.setEnumDataType,
       addEnumEntry: store.addEnumEntry,
@@ -305,6 +355,468 @@ export function DataPointListForm() {
                         `dataPointList.dataPointListElement.${index}.dataPoint.legibleDescription.${descIndex}.language`
                       )}
                     />
+                  </>
+                )}
+              />
+            </FormSection>
+
+            {/* Alternative Names */}
+            <FormSection
+              title="Alternative Names"
+              description="Alternative naming conventions for this data point"
+              required={false}
+              isAdded={!!item.dataPoint.alternativeNames}
+              onAdd={() => actions.addDataPointAlternativeNames(index)}
+              onRemove={() => actions.removeDataPointAlternativeNames(index)}
+              nested
+            >
+              <FormGroup columns={2}>
+                <InputField
+                  label="SLV1 Name"
+                  name={`dataPoint-${index}-sLV1Name`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.sLV1Name}
+                  onChange={(value) => actions.updateDataPointSLV1Name(index, value || undefined)}
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.sLV1Name`
+                  )}
+                />
+                <InputField
+                  label="Work Name"
+                  name={`dataPoint-${index}-workName`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.workName}
+                  onChange={(value) => actions.updateDataPointWorkName(index, value || undefined)}
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.workName`
+                  )}
+                />
+              </FormGroup>
+
+              <FormGroup columns={2}>
+                <InputField
+                  label="Manufacturer Name"
+                  name={`dataPoint-${index}-manufName`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.manufName}
+                  onChange={(value) => actions.updateDataPointManufName(index, value || undefined)}
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.manufName`
+                  )}
+                />
+                <InputField
+                  label="IEC 61850 Name"
+                  name={`dataPoint-${index}-iec61850Name`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.iec61850Name}
+                  onChange={(value) =>
+                    actions.updateDataPointIec61850Name(index, value || undefined)
+                  }
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.iec61850Name`
+                  )}
+                />
+              </FormGroup>
+
+              <FormGroup columns={2}>
+                <InputField
+                  label="SAREF Name"
+                  name={`dataPoint-${index}-sarefName`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.sarefName}
+                  onChange={(value) => actions.updateDataPointSarefName(index, value || undefined)}
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.sarefName`
+                  )}
+                />
+                <InputField
+                  label="EEBus Name"
+                  name={`dataPoint-${index}-eebusName`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.eebusName}
+                  onChange={(value) => actions.updateDataPointEebusName(index, value || undefined)}
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.eebusName`
+                  )}
+                />
+              </FormGroup>
+
+              <FormGroup columns={2}>
+                <InputField
+                  label="SunSpec Name"
+                  name={`dataPoint-${index}-sunSpecName`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.sunSpecName}
+                  onChange={(value) =>
+                    actions.updateDataPointSunSpecName(index, value || undefined)
+                  }
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.sunSpecName`
+                  )}
+                />
+                <InputField
+                  label="HP/BWP Name"
+                  name={`dataPoint-${index}-hpBwpName`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.hpBwpName}
+                  onChange={(value) => actions.updateDataPointHpBwpName(index, value || undefined)}
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.hpBwpName`
+                  )}
+                />
+              </FormGroup>
+
+              <FormGroup columns={2}>
+                <InputField
+                  label="EN 17609 Name"
+                  name={`dataPoint-${index}-en17609Name`}
+                  required={false}
+                  type="text"
+                  value={item.dataPoint.alternativeNames?.en17609Name}
+                  onChange={(value) =>
+                    actions.updateDataPointEn17609Name(index, value || undefined)
+                  }
+                  error={getError(
+                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.en17609Name`
+                  )}
+                />
+              </FormGroup>
+            </FormSection>
+
+            {/* Parameter List */}
+            <FormSection
+              title="Parameter List"
+              description="Dynamic parameters that must be provided to execute read/write operations for this data point"
+              required={false}
+              isAdded={!!item.dataPoint.parameterList}
+              onAdd={() => actions.addDataPointParameterList(index)}
+              onRemove={() => actions.removeDataPointParameterList(index)}
+              nested
+            >
+              <ArrayField
+                label="Parameters"
+                items={item.dataPoint.parameterList?.parameterListElement}
+                onAdd={() => actions.addDataPointParameterListElement(index)}
+                onRemove={(paramIndex) =>
+                  actions.removeDataPointParameterListElement(index, paramIndex)
+                }
+                emptyMessage="No parameters added"
+                renderItem={(param, paramIndex) => (
+                  <>
+                    <FormGroup columns={3}>
+                      <InputField
+                        label="Parameter Name"
+                        name={`dataPoint-${index}-param-${paramIndex}-name`}
+                        type="text"
+                        value={param.name}
+                        onChange={(value) =>
+                          actions.updateDataPointParameterListElementName(index, paramIndex, value)
+                        }
+                        placeholder="Enter parameter name"
+                        required={true}
+                        error={getError(
+                          `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.name`
+                        )}
+                      />
+                      <SelectField
+                        label="Data Type"
+                        name={`dataPoint-${index}-param-${paramIndex}-dataType`}
+                        options={
+                          DATA_TYPE_OPTIONS as unknown as {
+                            value: string;
+                            label: string;
+                          }[]
+                        }
+                        value={getDataTypeProductStringValue(param.dataType)}
+                        onChange={(value) => {
+                          const newDataType = createDataTypeProductFromString(value);
+                          // If switching to enum/bitmap, initialize empty structure
+                          if (value === "enum" && !isEnumDataTypeProduct(param.dataType)) {
+                            actions.setParameterListEnumDataType(index, paramIndex, {
+                              enumEntry: [],
+                            });
+                          } else if (
+                            value === "bitmap" &&
+                            !isBitmapDataTypeProduct(param.dataType)
+                          ) {
+                            actions.setParameterListBitmapDataType(index, paramIndex, {
+                              bitmapEntry: [],
+                            });
+                          } else {
+                            actions.updateDataPointParameterListElementDataType(
+                              index,
+                              paramIndex,
+                              newDataType
+                            );
+                          }
+                        }}
+                        required={true}
+                        error={getError(
+                          `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.dataType`
+                        )}
+                      />
+                      <InputField
+                        label="Default Value"
+                        name={`dataPoint-${index}-param-${paramIndex}-defaultValue`}
+                        type="text"
+                        value={param.defaultValue || ""}
+                        onChange={(value) =>
+                          actions.updateDataPointParameterListElementDefaultValue(
+                            index,
+                            paramIndex,
+                            value || undefined
+                          )
+                        }
+                        placeholder="Enter default value"
+                        required={false}
+                        error={getError(
+                          `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.defaultValue`
+                        )}
+                      />
+                    </FormGroup>
+
+                    {/* Enum Data Type Configuration for Parameter */}
+                    {isEnumDataTypeProduct(param.dataType) && (
+                      <FormSection title="Enum Configuration" nested>
+                        <InputField
+                          label="Hex Mask"
+                          name={`dataPoint-${index}-param-${paramIndex}-enum-hexMask`}
+                          value={param.dataType.enum.hexMask || ""}
+                          onChange={(value) =>
+                            actions.updateParameterListEnumHexMask(
+                              index,
+                              paramIndex,
+                              value || undefined
+                            )
+                          }
+                          placeholder="Enter hex mask (e.g., 0xFF)"
+                        />
+                        <ArrayField
+                          label="Enum Entries"
+                          items={param.dataType.enum.enumEntry}
+                          onAdd={() => actions.addEmptyParameterListEnumEntry(index, paramIndex)}
+                          onRemove={(entryIndex) =>
+                            actions.removeParameterListEnumEntry(index, paramIndex, entryIndex)
+                          }
+                          emptyMessage="No enum entries added"
+                          renderItem={(entry, entryIndex) => (
+                            <>
+                              <InputField
+                                label="Literal"
+                                name={`dataPoint-${index}-param-${paramIndex}-enum-${entryIndex}-literal`}
+                                value={entry.literal}
+                                onChange={(value) =>
+                                  actions.updateParameterListEnumEntryLiteral(
+                                    index,
+                                    paramIndex,
+                                    entryIndex,
+                                    value
+                                  )
+                                }
+                                placeholder="Enter enum literal"
+                                required={true}
+                              />
+                              <InputField
+                                label="Ordinal"
+                                name={`dataPoint-${index}-param-${paramIndex}-enum-${entryIndex}-ordinal`}
+                                type="number"
+                                value={entry.ordinal?.toString() || ""}
+                                onChange={(value) =>
+                                  actions.updateParameterListEnumEntryOrdinal(
+                                    index,
+                                    paramIndex,
+                                    entryIndex,
+                                    value ? parseInt(value, 10) : undefined
+                                  )
+                                }
+                                placeholder="Enter ordinal number"
+                              />
+                              <InputField
+                                label="Description"
+                                name={`dataPoint-${index}-param-${paramIndex}-enum-${entryIndex}-description`}
+                                value={entry.description || ""}
+                                onChange={(value) =>
+                                  actions.updateParameterListEnumEntryDescription(
+                                    index,
+                                    paramIndex,
+                                    entryIndex,
+                                    value || undefined
+                                  )
+                                }
+                                placeholder="Enter description"
+                              />
+                            </>
+                          )}
+                        />
+                      </FormSection>
+                    )}
+
+                    {/* Bitmap Data Type Configuration for Parameter */}
+                    {isBitmapDataTypeProduct(param.dataType) && (
+                      <FormSection title="Bitmap Configuration" nested>
+                        <ArrayField
+                          label="Bitmap Entries"
+                          items={param.dataType.bitmap.bitmapEntry}
+                          onAdd={() => actions.addEmptyParameterListBitmapEntry(index, paramIndex)}
+                          onRemove={(entryIndex) =>
+                            actions.removeParameterListBitmapEntry(index, paramIndex, entryIndex)
+                          }
+                          emptyMessage="No bitmap entries added"
+                          renderItem={(entry, entryIndex) => (
+                            <>
+                              <InputField
+                                label="Literal"
+                                name={`dataPoint-${index}-param-${paramIndex}-bitmap-${entryIndex}-literal`}
+                                value={entry.literal}
+                                onChange={(value) =>
+                                  actions.updateParameterListBitmapEntryLiteral(
+                                    index,
+                                    paramIndex,
+                                    entryIndex,
+                                    value
+                                  )
+                                }
+                                placeholder="Enter bitmap literal"
+                                required={true}
+                              />
+                              <InputField
+                                label="Hex Mask"
+                                name={`dataPoint-${index}-param-${paramIndex}-bitmap-${entryIndex}-hexMask`}
+                                value={entry.hexMask}
+                                onChange={(value) =>
+                                  actions.updateParameterListBitmapEntryHexMask(
+                                    index,
+                                    paramIndex,
+                                    entryIndex,
+                                    value
+                                  )
+                                }
+                                placeholder="Enter hex mask (e.g., 0xFF)"
+                                required={true}
+                              />
+                              <InputField
+                                label="Description"
+                                name={`dataPoint-${index}-param-${paramIndex}-bitmap-${entryIndex}-description`}
+                                value={entry.description || ""}
+                                onChange={(value) =>
+                                  actions.updateParameterListBitmapEntryDescription(
+                                    index,
+                                    paramIndex,
+                                    entryIndex,
+                                    value || undefined
+                                  )
+                                }
+                                placeholder="Enter description"
+                              />
+                            </>
+                          )}
+                        />
+                      </FormSection>
+                    )}
+
+                    {/* Parameter Descriptions */}
+                    <FormSection title="Parameter Descriptions" nested>
+                      <ArrayField
+                        label="Descriptions"
+                        items={param.parameterDescription}
+                        onAdd={() =>
+                          actions.addEmptyDataPointParameterDescription(index, paramIndex)
+                        }
+                        onRemove={(descIndex) =>
+                          actions.removeDataPointParameterDescription(index, paramIndex, descIndex)
+                        }
+                        emptyMessage="No descriptions added"
+                        renderItem={(desc, descIndex) => (
+                          <>
+                            <TextareaField
+                              label="Text"
+                              name={`dataPoint-${index}-param-${paramIndex}-desc-${descIndex}-text`}
+                              value={desc.textElement}
+                              onChange={(value) =>
+                                actions.updateDataPointParameterDescriptionText(
+                                  index,
+                                  paramIndex,
+                                  descIndex,
+                                  value
+                                )
+                              }
+                              placeholder="Enter description"
+                              required={true}
+                              rows={3}
+                              error={getError(
+                                `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.textElement`
+                              )}
+                            />
+                            <FormGroup columns={3}>
+                              <SelectField
+                                label="Language"
+                                name={`dataPoint-${index}-param-${paramIndex}-desc-${descIndex}-lang`}
+                                options={LANGUAGE_OPTIONS}
+                                value={desc.language}
+                                onChange={(value) =>
+                                  actions.updateDataPointParameterDescriptionLanguage(
+                                    index,
+                                    paramIndex,
+                                    descIndex,
+                                    value as Language
+                                  )
+                                }
+                                required={true}
+                                error={getError(
+                                  `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.language`
+                                )}
+                              />
+                              <InputField
+                                label="URI"
+                                name={`dataPoint-${index}-param-${paramIndex}-desc-${descIndex}-uri`}
+                                type="text"
+                                value={desc.uri || ""}
+                                onChange={(value) =>
+                                  actions.updateDataPointParameterDescriptionUri(
+                                    index,
+                                    paramIndex,
+                                    descIndex,
+                                    value || undefined
+                                  )
+                                }
+                                placeholder="Enter URI"
+                                required={false}
+                                error={getError(
+                                  `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.uri`
+                                )}
+                              />
+                              <InputField
+                                label="Label"
+                                name={`dataPoint-${index}-param-${paramIndex}-desc-${descIndex}-label`}
+                                type="text"
+                                value={desc.label || ""}
+                                onChange={(value) =>
+                                  actions.updateDataPointParameterDescriptionLabel(
+                                    index,
+                                    paramIndex,
+                                    descIndex,
+                                    value || undefined
+                                  )
+                                }
+                                placeholder="Enter label"
+                                required={false}
+                                error={getError(
+                                  `dataPointList.dataPointListElement.${index}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.label`
+                                )}
+                              />
+                            </FormGroup>
+                          </>
+                        )}
+                      />
+                    </FormSection>
                   </>
                 )}
               />

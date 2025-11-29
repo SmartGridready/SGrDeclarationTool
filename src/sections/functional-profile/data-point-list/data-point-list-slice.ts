@@ -6,6 +6,14 @@ import {
   Units,
   LegibleDescription,
   Language,
+  AlternativeNames,
+  DynamicParameterDescriptionList,
+  DynamicParameterDescription,
+  DataTypeProduct,
+  EnumMapProduct,
+  EnumEntryProductRecord,
+  BitmapProduct,
+  BitmapEntryProduct,
 } from "@/models";
 import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
 import {
@@ -13,7 +21,9 @@ import {
   getDataPoint,
   ensureArray,
   removeArrayItem,
+  normalizeString,
 } from "@/sections/shared/utils/slice-utils";
+import { updateAlternativeNamesField } from "@/sections/functional-profile/alternative-names/alternative-names-slice";
 import {
   createEnumSlice,
   EnumSlice,
@@ -55,9 +65,155 @@ export interface DataPointListSlice extends EnumSlice, BitmapSlice, JsonSlice {
     language: Language
   ) => void;
 
+  // AlternativeNames operations for data points
+  addDataPointAlternativeNames: (dataPointIndex: number) => void;
+  removeDataPointAlternativeNames: (dataPointIndex: number) => void;
+  updateDataPointSLV1Name: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointWorkName: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointManufName: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointIec61850Name: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointSarefName: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointEebusName: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointSunSpecName: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointHpBwpName: (dataPointIndex: number, value: string | undefined) => void;
+  updateDataPointEn17609Name: (dataPointIndex: number, value: string | undefined) => void;
+
+  // ParameterList operations for data points
+  addDataPointParameterList: (dataPointIndex: number) => void;
+  removeDataPointParameterList: (dataPointIndex: number) => void;
+  addDataPointParameterListElement: (dataPointIndex: number) => void;
+  removeDataPointParameterListElement: (dataPointIndex: number, paramIndex: number) => void;
+  updateDataPointParameterListElementName: (
+    dataPointIndex: number,
+    paramIndex: number,
+    name: string
+  ) => void;
+  updateDataPointParameterListElementDataType: (
+    dataPointIndex: number,
+    paramIndex: number,
+    dataType: DataTypeProduct
+  ) => void;
+  updateDataPointParameterListElementDefaultValue: (
+    dataPointIndex: number,
+    paramIndex: number,
+    defaultValue: string | undefined
+  ) => void;
+  addDataPointParameterDescription: (
+    dataPointIndex: number,
+    paramIndex: number,
+    description: DynamicParameterDescription
+  ) => void;
+  removeDataPointParameterDescription: (
+    dataPointIndex: number,
+    paramIndex: number,
+    descIndex: number
+  ) => void;
+  updateDataPointParameterDescriptionText: (
+    dataPointIndex: number,
+    paramIndex: number,
+    descIndex: number,
+    text: string
+  ) => void;
+  updateDataPointParameterDescriptionLanguage: (
+    dataPointIndex: number,
+    paramIndex: number,
+    descIndex: number,
+    language: Language
+  ) => void;
+  updateDataPointParameterDescriptionUri: (
+    dataPointIndex: number,
+    paramIndex: number,
+    descIndex: number,
+    uri: string | undefined
+  ) => void;
+  updateDataPointParameterDescriptionLabel: (
+    dataPointIndex: number,
+    paramIndex: number,
+    descIndex: number,
+    label: string | undefined
+  ) => void;
+
+  // ParameterList Enum operations (for DataTypeProduct)
+  setParameterListEnumDataType: (
+    dataPointIndex: number,
+    paramIndex: number,
+    enumMap: EnumMapProduct
+  ) => void;
+  addParameterListEnumEntry: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entry: EnumEntryProductRecord
+  ) => void;
+  removeParameterListEnumEntry: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number
+  ) => void;
+  updateParameterListEnumEntryLiteral: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number,
+    literal: string
+  ) => void;
+  updateParameterListEnumEntryOrdinal: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number,
+    ordinal: number | undefined
+  ) => void;
+  updateParameterListEnumEntryDescription: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number,
+    description: string | undefined
+  ) => void;
+  updateParameterListEnumHexMask: (
+    dataPointIndex: number,
+    paramIndex: number,
+    hexMask: string | undefined
+  ) => void;
+  addEmptyParameterListEnumEntry: (dataPointIndex: number, paramIndex: number) => void;
+
+  // ParameterList Bitmap operations (for DataTypeProduct)
+  setParameterListBitmapDataType: (
+    dataPointIndex: number,
+    paramIndex: number,
+    bitmap: BitmapProduct
+  ) => void;
+  addParameterListBitmapEntry: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entry: BitmapEntryProduct
+  ) => void;
+  removeParameterListBitmapEntry: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number
+  ) => void;
+  updateParameterListBitmapEntryLiteral: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number,
+    literal: string
+  ) => void;
+  updateParameterListBitmapEntryHexMask: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number,
+    hexMask: string
+  ) => void;
+  updateParameterListBitmapEntryDescription: (
+    dataPointIndex: number,
+    paramIndex: number,
+    entryIndex: number,
+    description: string | undefined
+  ) => void;
+  addEmptyParameterListBitmapEntry: (dataPointIndex: number, paramIndex: number) => void;
+
   // Convenience methods
   addEmptyDataPoint: () => void;
   addEmptyDataPointLegibleDescription: (dataPointIndex: number) => void;
+  addEmptyDataPointParameterDescription: (dataPointIndex: number, paramIndex: number) => void;
 }
 
 const createEmptyDataPoint = (): FunctionalProfileDataPoint => ({
@@ -221,6 +377,448 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
             list.push({ textElement: "", language: "en" });
             dp.dataPoint.legibleDescription = list;
           }
+        }
+      }),
+
+    // AlternativeNames operations
+    addDataPointAlternativeNames: (dataPointIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          dp.dataPoint.alternativeNames = {};
+        }
+      }),
+
+    removeDataPointAlternativeNames: (dataPointIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          dp.dataPoint.alternativeNames = undefined;
+        }
+      }),
+
+    updateDataPointSLV1Name: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "sLV1Name", value);
+        }
+      }),
+
+    updateDataPointWorkName: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "workName", value);
+        }
+      }),
+
+    updateDataPointManufName: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "manufName", value);
+        }
+      }),
+
+    updateDataPointIec61850Name: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "iec61850Name", value);
+        }
+      }),
+
+    updateDataPointSarefName: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "sarefName", value);
+        }
+      }),
+
+    updateDataPointEebusName: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "eebusName", value);
+        }
+      }),
+
+    updateDataPointSunSpecName: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "sunSpecName", value);
+        }
+      }),
+
+    updateDataPointHpBwpName: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "hpBwpName", value);
+        }
+      }),
+
+    updateDataPointEn17609Name: (dataPointIndex, value) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          updateAlternativeNamesField(dp.dataPoint, "en17609Name", value);
+        }
+      }),
+
+    // ParameterList operations
+    addDataPointParameterList: (dataPointIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          dp.dataPoint.parameterList = {};
+        }
+      }),
+
+    removeDataPointParameterList: (dataPointIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          dp.dataPoint.parameterList = undefined;
+        }
+      }),
+
+    addDataPointParameterListElement: (dataPointIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp) {
+          if (!dp.dataPoint.parameterList) {
+            dp.dataPoint.parameterList = {};
+          }
+          const list = ensureArray(dp.dataPoint.parameterList.parameterListElement, () => []);
+          list.push({
+            name: "",
+            dataType: { float64: {} },
+          });
+          dp.dataPoint.parameterList.parameterListElement = list;
+        }
+      }),
+
+    removeDataPointParameterListElement: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        if (dp?.dataPoint.parameterList?.parameterListElement) {
+          removeArrayItem(dp.dataPoint.parameterList.parameterListElement, paramIndex, () => {
+            if (dp.dataPoint.parameterList) {
+              dp.dataPoint.parameterList.parameterListElement = undefined;
+            }
+          });
+        }
+      }),
+
+    updateDataPointParameterListElementName: (dataPointIndex, paramIndex, name) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          param.name = name;
+        }
+      }),
+
+    updateDataPointParameterListElementDataType: (dataPointIndex, paramIndex, dataType) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          param.dataType = dataType;
+        }
+      }),
+
+    updateDataPointParameterListElementDefaultValue: (dataPointIndex, paramIndex, defaultValue) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          param.defaultValue = normalizeString(defaultValue);
+        }
+      }),
+
+    addDataPointParameterDescription: (dataPointIndex, paramIndex, description) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          const list = ensureArray(param.parameterDescription, () => []);
+          list.push(description);
+          param.parameterDescription = list;
+        }
+      }),
+
+    removeDataPointParameterDescription: (dataPointIndex, paramIndex, descIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param?.parameterDescription) {
+          removeArrayItem(param.parameterDescription, descIndex, () => {
+            param.parameterDescription = undefined;
+          });
+        }
+      }),
+
+    updateDataPointParameterDescriptionText: (dataPointIndex, paramIndex, descIndex, text) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) {
+          desc.textElement = text;
+        }
+      }),
+
+    updateDataPointParameterDescriptionLanguage: (
+      dataPointIndex,
+      paramIndex,
+      descIndex,
+      language
+    ) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) {
+          desc.language = language;
+        }
+      }),
+
+    updateDataPointParameterDescriptionUri: (dataPointIndex, paramIndex, descIndex, uri) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) {
+          desc.uri = normalizeString(uri);
+        }
+      }),
+
+    updateDataPointParameterDescriptionLabel: (dataPointIndex, paramIndex, descIndex, label) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) {
+          desc.label = normalizeString(label);
+        }
+      }),
+
+    addEmptyDataPointParameterDescription: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          const list = ensureArray(param.parameterDescription, () => []);
+          list.push({ textElement: "", language: "en" });
+          param.parameterDescription = list;
+        }
+      }),
+
+    // ParameterList Enum operations
+    setParameterListEnumDataType: (dataPointIndex, paramIndex, enumMap) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          param.dataType = { enum: enumMap };
+        }
+      }),
+
+    addParameterListEnumEntry: (dataPointIndex, paramIndex, entry) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "enum" in param.dataType) {
+          const enumType = param.dataType.enum;
+          const entries = ensureArray(enumType.enumEntry, () => []);
+          entries.push(entry);
+          enumType.enumEntry = entries;
+        }
+      }),
+
+    removeParameterListEnumEntry: (dataPointIndex, paramIndex, entryIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "enum" in param.dataType) {
+          const enumType = param.dataType.enum;
+          removeArrayItem(enumType.enumEntry, entryIndex, () => {
+            enumType.enumEntry = [];
+          });
+        }
+      }),
+
+    updateParameterListEnumEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const entry =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
+          "enum" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
+          dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.enum.enumEntry?.[
+            entryIndex
+          ];
+        if (entry) {
+          entry.literal = literal;
+        }
+      }),
+
+    updateParameterListEnumEntryOrdinal: (dataPointIndex, paramIndex, entryIndex, ordinal) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const entry =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
+          "enum" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
+          dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.enum.enumEntry?.[
+            entryIndex
+          ];
+        if (entry) {
+          entry.ordinal = ordinal;
+        }
+      }),
+
+    updateParameterListEnumEntryDescription: (
+      dataPointIndex,
+      paramIndex,
+      entryIndex,
+      description
+    ) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const entry =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
+          "enum" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
+          dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.enum.enumEntry?.[
+            entryIndex
+          ];
+        if (entry) {
+          entry.description = normalizeString(description);
+        }
+      }),
+
+    updateParameterListEnumHexMask: (dataPointIndex, paramIndex, hexMask) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "enum" in param.dataType) {
+          param.dataType.enum.hexMask = normalizeString(hexMask);
+        }
+      }),
+
+    addEmptyParameterListEnumEntry: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "enum" in param.dataType) {
+          const enumType = param.dataType.enum;
+          const entries = ensureArray(enumType.enumEntry, () => []);
+          entries.push({ literal: "" });
+          enumType.enumEntry = entries;
+        }
+      }),
+
+    // ParameterList Bitmap operations
+    setParameterListBitmapDataType: (dataPointIndex, paramIndex, bitmap) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          param.dataType = { bitmap: bitmap };
+        }
+      }),
+
+    addParameterListBitmapEntry: (dataPointIndex, paramIndex, entry) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "bitmap" in param.dataType) {
+          const bitmapType = param.dataType.bitmap;
+          const entries = ensureArray(bitmapType.bitmapEntry, () => []);
+          entries.push(entry);
+          bitmapType.bitmapEntry = entries;
+        }
+      }),
+
+    removeParameterListBitmapEntry: (dataPointIndex, paramIndex, entryIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "bitmap" in param.dataType) {
+          const bitmapType = param.dataType.bitmap;
+          removeArrayItem(bitmapType.bitmapEntry, entryIndex, () => {
+            bitmapType.bitmapEntry = [];
+          });
+        }
+      }),
+
+    updateParameterListBitmapEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const entry =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
+          "bitmap" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
+          dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.bitmap.bitmapEntry?.[
+            entryIndex
+          ];
+        if (entry) {
+          entry.literal = literal;
+        }
+      }),
+
+    updateParameterListBitmapEntryHexMask: (dataPointIndex, paramIndex, entryIndex, hexMask) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const entry =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
+          "bitmap" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
+          dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.bitmap.bitmapEntry?.[
+            entryIndex
+          ];
+        if (entry) {
+          entry.hexMask = hexMask;
+        }
+      }),
+
+    updateParameterListBitmapEntryDescription: (
+      dataPointIndex,
+      paramIndex,
+      entryIndex,
+      description
+    ) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const entry =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
+          "bitmap" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
+          dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.bitmap.bitmapEntry?.[
+            entryIndex
+          ];
+        if (entry) {
+          entry.description = normalizeString(description);
+        }
+      }),
+
+    addEmptyParameterListBitmapEntry: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param && "bitmap" in param.dataType) {
+          const bitmapType = param.dataType.bitmap;
+          const entries = ensureArray(bitmapType.bitmapEntry, () => []);
+          entries.push({ literal: "", hexMask: "" });
+          bitmapType.bitmapEntry = entries;
         }
       }),
   };

@@ -2,7 +2,7 @@ import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { EnumMapFunctionalProfile, EnumEntryRecordFunctionalProfile } from "@/models";
-import { EnumSlice } from "@/sections/functional-profile/data-point-list/enum/enum-slice";
+import { EnumSlice } from "@/sections/functional-profile/data-point-list/data-types/enum/enum-slice";
 
 interface EnumFormProps {
   dataPointIndex: number;

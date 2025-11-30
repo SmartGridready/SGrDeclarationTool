@@ -2,7 +2,7 @@ import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { BitmapFunctionalProfile, BitmapEntryFunctionalProfile } from "@/models";
-import { BitmapSlice } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-slice";
+import { BitmapSlice } from "@/sections/functional-profile/data-point-list/data-types/bitmap/bitmap-slice";
 
 interface BitmapFormProps {
   dataPointIndex: number;

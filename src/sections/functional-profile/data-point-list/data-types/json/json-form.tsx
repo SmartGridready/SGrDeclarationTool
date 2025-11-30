@@ -3,7 +3,7 @@ import { SelectField } from "@/sections/shared/components/forms/select-field";
 import { JsonArrayField } from "@/sections/shared/components/forms/json-array-field";
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
-import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
+import { JsonSlice } from "@/sections/functional-profile/data-point-list/data-types/json/json-slice";
 import {
   isJsonArray,
   isJsonElement,
@@ -12,7 +12,7 @@ import {
   createJsonArray,
   createEmptyJsonElement,
   JSON_ELEMENT_TYPE_OPTIONS,
-} from "@/sections/functional-profile/data-point-list/json/json-utils";
+} from "@/sections/functional-profile/data-point-list/data-types/json/json-utils";
 
 interface JsonFormProps {
   dataPointIndex: number;

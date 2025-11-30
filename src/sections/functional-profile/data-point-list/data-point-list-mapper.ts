@@ -27,11 +27,11 @@ import {
 } from "@/sections/functional-profile/legible-description/legible-description-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
 import { mapGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-mapper";
-import { mapEnumDataType } from "@/sections/functional-profile/data-point-list/enum/enum-mapper";
-import { mapBitmapDataType } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-mapper";
-import { mapJsonDataType } from "@/sections/functional-profile/data-point-list/json/json-mapper";
-import { mapEnumProductDataType } from "@/sections/functional-profile/data-point-list/enum/enum-product-mapper";
-import { mapBitmapProductDataType } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-product-mapper";
+import { mapEnumDataType } from "@/sections/functional-profile/data-point-list/data-types/enum/enum-mapper";
+import { mapBitmapDataType } from "@/sections/functional-profile/data-point-list/data-types/bitmap/bitmap-mapper";
+import { mapJsonDataType } from "@/sections/functional-profile/data-point-list/data-types/json/json-mapper";
+import { mapEnumProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-product-mapper";
+import { mapBitmapProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-product-mapper";
 
 /**
  * Maps XML dataPointList to FunctionalProfileDataPointList model

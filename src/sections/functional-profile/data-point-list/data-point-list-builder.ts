@@ -14,11 +14,11 @@ import { parameterListSchema } from "@/sections/functional-profile/data-point-li
 import { validateWithSchema } from "@/sections/shared/utils/validation-utils";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
 import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
-import { buildEnumDataType } from "@/sections/functional-profile/data-point-list/enum/enum-builder";
-import { buildBitmapDataType } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-builder";
-import { buildJsonDataType } from "@/sections/functional-profile/data-point-list/json/json-builder";
-import { buildEnumProductDataType } from "@/sections/functional-profile/data-point-list/enum/enum-product-builder";
-import { buildBitmapProductDataType } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-product-builder";
+import { buildEnumDataType } from "@/sections/functional-profile/data-point-list/data-types/enum/enum-builder";
+import { buildBitmapDataType } from "@/sections/functional-profile/data-point-list/data-types/bitmap/bitmap-builder";
+import { buildJsonDataType } from "@/sections/functional-profile/data-point-list/data-types/json/json-builder";
+import { buildEnumProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-product-builder";
+import { buildBitmapProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-product-builder";
 import {
   isEnumDataType,
   isBitmapDataType,

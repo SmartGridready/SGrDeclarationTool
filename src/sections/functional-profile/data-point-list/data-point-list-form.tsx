@@ -11,7 +11,6 @@ import {
   PresenceLevel,
   Units,
   Language,
-  LegibleDescription,
 } from "@/models";
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
@@ -21,7 +20,6 @@ import {
   DATA_TYPE_OPTIONS,
   UNIT_OPTIONS,
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
-import { LANGUAGE_OPTIONS } from "@/sections/shared/sections/legible-description/legible-description-form-options";
 import {
   isEnumDataType,
   isBitmapDataType,
@@ -38,6 +36,8 @@ import { BitmapForm } from "@/sections/functional-profile/data-point-list/bitmap
 import { JsonForm } from "@/sections/functional-profile/data-point-list/json/json-form";
 import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
 import { DataPointAlternativeNamesForm } from "@/sections/functional-profile/data-point-list/alternative-names/alternative-names-form";
+import { DataPointLegibleDescriptionForm } from "@/sections/functional-profile/data-point-list/legible-description/legible-description-form";
+import { LANGUAGE_OPTIONS } from "@/sections/shared/sections/legible-description/legible-description-form-options";
 
 export function DataPointListForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
@@ -56,10 +56,6 @@ export function DataPointListForm() {
       updateDataType: store.updateDataType,
       updateUnit: store.updateUnit,
       updateArrayLength: store.updateArrayLength,
-      addEmptyDataPointLegibleDescription: store.addEmptyDataPointLegibleDescription,
-      removeDataPointLegibleDescription: store.removeDataPointLegibleDescription,
-      updateDataPointLegibleDescriptionText: store.updateDataPointLegibleDescriptionText,
-      updateDataPointLegibleDescriptionLanguage: store.updateDataPointLegibleDescriptionLanguage,
       // AlternativeNames methods
       addDataPointAlternativeNames: store.addDataPointAlternativeNames,
       removeDataPointAlternativeNames: store.removeDataPointAlternativeNames,
@@ -316,54 +312,8 @@ export function DataPointListForm() {
               />
             )}
 
-            {/* Nested Legible Descriptions */}
-            <FormSection title="Descriptions" nested>
-              <ArrayField<LegibleDescription>
-                label="Descriptions"
-                items={item.dataPoint.legibleDescription}
-                onAdd={() => actions.addEmptyDataPointLegibleDescription(index)}
-                onRemove={(descIndex) =>
-                  actions.removeDataPointLegibleDescription(index, descIndex)
-                }
-                emptyMessage="No descriptions added"
-                maxItems={4}
-                renderItem={(desc, descIndex) => (
-                  <>
-                    <TextareaField
-                      label="Text"
-                      name={`dataPoint-${index}-desc-${descIndex}-text`}
-                      value={desc.textElement}
-                      onChange={(value) =>
-                        actions.updateDataPointLegibleDescriptionText(index, descIndex, value)
-                      }
-                      placeholder="Enter description"
-                      required={true}
-                      rows={3}
-                      error={getError(
-                        `dataPointList.dataPointListElement.${index}.dataPoint.legibleDescription.${descIndex}.textElement`
-                      )}
-                    />
-                    <SelectField
-                      label="Language"
-                      name={`dataPoint-${index}-desc-${descIndex}-lang`}
-                      options={LANGUAGE_OPTIONS}
-                      value={desc.language}
-                      onChange={(value) =>
-                        actions.updateDataPointLegibleDescriptionLanguage(
-                          index,
-                          descIndex,
-                          value as Language
-                        )
-                      }
-                      required={true}
-                      error={getError(
-                        `dataPointList.dataPointListElement.${index}.dataPoint.legibleDescription.${descIndex}.language`
-                      )}
-                    />
-                  </>
-                )}
-              />
-            </FormSection>
+            {/* Legible Description */}
+            <DataPointLegibleDescriptionForm dataPointIndex={index} />
 
             {/* Alternative Names */}
             <DataPointAlternativeNamesForm dataPointIndex={index} />

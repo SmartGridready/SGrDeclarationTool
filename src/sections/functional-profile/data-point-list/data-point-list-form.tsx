@@ -21,7 +21,7 @@ import {
   DATA_TYPE_OPTIONS,
   UNIT_OPTIONS,
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
-import { LANGUAGE_OPTIONS } from "@/sections/functional-profile/legible-description/legible-description-form-options";
+import { LANGUAGE_OPTIONS } from "@/sections/shared/sections/legible-description/legible-description-form-options";
 import {
   isEnumDataType,
   isBitmapDataType,

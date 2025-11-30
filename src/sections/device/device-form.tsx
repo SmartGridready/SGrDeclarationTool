@@ -2,6 +2,7 @@
 
 import { useDeviceStore } from "@/sections/device/device-store";
 import { DeviceIdentificationForm } from "@/sections/device/device-identification/device-identification-form";
+import { ReleaseNotesForm } from "@/sections/device/release-notes/release-notes-form";
 
 export function DeviceForm() {
   const { device } = useDeviceStore();
@@ -13,6 +14,7 @@ export function DeviceForm() {
   return (
     <div className="space-y-6">
       <DeviceIdentificationForm />
+      <ReleaseNotesForm />
     </div>
   );
 }

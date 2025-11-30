@@ -1,4 +1,21 @@
 import { FunctionalProfileFrame } from "@/models";
+import { DeviceFrame } from "@/models/product/product";
+
+/**
+ * Creates a new empty DeviceFrame with minimal required values
+ */
+export function createEmptyDevice(): DeviceFrame {
+  return {
+    deviceName: "",
+    specificationOwnerIdentification: "0",
+    releaseNotes: {
+      state: "Draft",
+    },
+    deviceInformation: {
+      isLocalControl: false,
+    },
+  };
+}
 
 /**
  * Creates a new sample FunctionalProfileFrame with example/default values

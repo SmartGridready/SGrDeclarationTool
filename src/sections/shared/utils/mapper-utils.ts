@@ -9,7 +9,7 @@
  * xml2js converts XML elements to arrays, so each field is an array
  */
 type Xml2JsValue = string | number | boolean | Xml2JsObject | Xml2JsValue[];
-type Xml2JsObject = Record<string, Xml2JsValue[]>;
+export type Xml2JsObject = Record<string, Xml2JsValue[]>;
 
 /**
  * Extracts a string value from XML array format (xml2js uses arrays)

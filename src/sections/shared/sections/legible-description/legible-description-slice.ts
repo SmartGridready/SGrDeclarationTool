@@ -1,9 +1,5 @@
 import { LegibleDescription, Language } from "@/models";
-import {
-  ensureArray,
-  removeArrayItem,
-  normalizeString,
-} from "@/sections/shared/utils/slice-utils";
+import { ensureArray, removeArrayItem, normalizeString } from "@/sections/shared/utils/slice-utils";
 
 export interface LegibleDescriptionSlice {
   // Main operations
@@ -36,7 +32,10 @@ const createEmptyLegibleDescription = (): LegibleDescription => ({
 export function createLegibleDescriptionSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getLegibleDescriptions: (state: TState) => LegibleDescription[] | undefined,
-  setLegibleDescriptions: (state: TState, legibleDescriptions: LegibleDescription[] | undefined) => void,
+  setLegibleDescriptions: (
+    state: TState,
+    legibleDescriptions: LegibleDescription[] | undefined
+  ) => void,
   maxItems: number = 4,
   isOptional: boolean = true
 ): LegibleDescriptionSlice {

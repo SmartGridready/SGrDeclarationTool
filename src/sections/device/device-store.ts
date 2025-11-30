@@ -2,17 +2,20 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { DeviceFrame } from "@/models/product/product";
-import { createSampleDevice, createEmptyDevice } from "@/sections/shared/factory";
+import { createEmptyDevice } from "@/sections/shared/factory";
+import {
+  createDeviceIdentificationSlice,
+  DeviceIdentificationSlice,
+} from "@/sections/device/device-identification/device-identification-slice";
 
 interface DeviceStore {
   device?: DeviceFrame;
   setDevice: (device: DeviceFrame | undefined) => void;
-  createNew: () => void;
   createEmpty: () => void;
   clear: () => void;
 }
 
-export type DeviceStoreState = DeviceStore;
+export type DeviceStoreState = DeviceStore & DeviceIdentificationSlice;
 
 export const useDeviceStore = create<DeviceStoreState>()(
   persist(
@@ -24,11 +27,6 @@ export const useDeviceStore = create<DeviceStoreState>()(
           state.device = device;
         }),
 
-      createNew: () =>
-        set((state) => {
-          state.device = createSampleDevice();
-        }),
-
       createEmpty: () =>
         set((state) => {
           state.device = createEmptyDevice();
@@ -38,6 +36,8 @@ export const useDeviceStore = create<DeviceStoreState>()(
         set((state) => {
           state.device = undefined;
         }),
+
+      ...createDeviceIdentificationSlice(set),
     })),
     {
       name: "sgr-device-storage",

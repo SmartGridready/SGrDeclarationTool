@@ -37,6 +37,7 @@ import { EnumForm } from "@/sections/functional-profile/data-point-list/enum/enu
 import { BitmapForm } from "@/sections/functional-profile/data-point-list/bitmap/bitmap-form";
 import { JsonForm } from "@/sections/functional-profile/data-point-list/json/json-form";
 import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/json-slice";
+import { DataPointAlternativeNamesForm } from "@/sections/functional-profile/data-point-list/alternative-names/alternative-names-form";
 
 export function DataPointListForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
@@ -365,135 +366,7 @@ export function DataPointListForm() {
             </FormSection>
 
             {/* Alternative Names */}
-            <FormSection
-              title="Alternative Names"
-              description="Alternative naming conventions for this data point"
-              required={false}
-              isAdded={!!item.dataPoint.alternativeNames}
-              onAdd={() => actions.addDataPointAlternativeNames(index)}
-              onRemove={() => actions.removeDataPointAlternativeNames(index)}
-              nested
-            >
-              <FormGroup columns={2}>
-                <InputField
-                  label="SLV1 Name"
-                  name={`dataPoint-${index}-sLV1Name`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.sLV1Name}
-                  onChange={(value) => actions.updateDataPointSLV1Name(index, value || undefined)}
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.sLV1Name`
-                  )}
-                />
-                <InputField
-                  label="Work Name"
-                  name={`dataPoint-${index}-workName`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.workName}
-                  onChange={(value) => actions.updateDataPointWorkName(index, value || undefined)}
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.workName`
-                  )}
-                />
-              </FormGroup>
-
-              <FormGroup columns={2}>
-                <InputField
-                  label="Manufacturer Name"
-                  name={`dataPoint-${index}-manufName`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.manufName}
-                  onChange={(value) => actions.updateDataPointManufName(index, value || undefined)}
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.manufName`
-                  )}
-                />
-                <InputField
-                  label="IEC 61850 Name"
-                  name={`dataPoint-${index}-iec61850Name`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.iec61850Name}
-                  onChange={(value) =>
-                    actions.updateDataPointIec61850Name(index, value || undefined)
-                  }
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.iec61850Name`
-                  )}
-                />
-              </FormGroup>
-
-              <FormGroup columns={2}>
-                <InputField
-                  label="SAREF Name"
-                  name={`dataPoint-${index}-sarefName`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.sarefName}
-                  onChange={(value) => actions.updateDataPointSarefName(index, value || undefined)}
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.sarefName`
-                  )}
-                />
-                <InputField
-                  label="EEBus Name"
-                  name={`dataPoint-${index}-eebusName`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.eebusName}
-                  onChange={(value) => actions.updateDataPointEebusName(index, value || undefined)}
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.eebusName`
-                  )}
-                />
-              </FormGroup>
-
-              <FormGroup columns={2}>
-                <InputField
-                  label="SunSpec Name"
-                  name={`dataPoint-${index}-sunSpecName`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.sunSpecName}
-                  onChange={(value) =>
-                    actions.updateDataPointSunSpecName(index, value || undefined)
-                  }
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.sunSpecName`
-                  )}
-                />
-                <InputField
-                  label="HP/BWP Name"
-                  name={`dataPoint-${index}-hpBwpName`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.hpBwpName}
-                  onChange={(value) => actions.updateDataPointHpBwpName(index, value || undefined)}
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.hpBwpName`
-                  )}
-                />
-              </FormGroup>
-
-              <FormGroup columns={2}>
-                <InputField
-                  label="EN 17609 Name"
-                  name={`dataPoint-${index}-en17609Name`}
-                  required={false}
-                  type="text"
-                  value={item.dataPoint.alternativeNames?.en17609Name}
-                  onChange={(value) =>
-                    actions.updateDataPointEn17609Name(index, value || undefined)
-                  }
-                  error={getError(
-                    `dataPointList.dataPointListElement.${index}.dataPoint.alternativeNames.en17609Name`
-                  )}
-                />
-              </FormGroup>
-            </FormSection>
+            <DataPointAlternativeNamesForm dataPointIndex={index} />
 
             {/* Parameter List */}
             <FormSection

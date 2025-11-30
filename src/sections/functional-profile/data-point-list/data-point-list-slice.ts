@@ -36,6 +36,10 @@ import {
   createDataPointLegibleDescriptionSlice,
   DataPointLegibleDescriptionSlice,
 } from "@/sections/functional-profile/data-point-list/legible-description/legible-description-slice";
+import {
+  createDataPointGenericAttributeListSlice,
+  DataPointGenericAttributeListSlice,
+} from "@/sections/functional-profile/data-point-list/generic-attribute-list/generic-attribute-list-slice";
 
 export interface DataPointListSlice
   extends EnumSlice,
@@ -43,7 +47,8 @@ export interface DataPointListSlice
     JsonSlice,
     DataPointAlternativeNamesSlice,
     DataPointLegibleDescriptionSlice,
-    ParameterListSlice {
+    ParameterListSlice,
+    DataPointGenericAttributeListSlice {
   // Main operations
   addDataPoint: (dataPoint: FunctionalProfileDataPoint) => void;
   removeDataPoint: (index: number) => void;
@@ -78,6 +83,7 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
   const alternativeNamesSlice = createDataPointAlternativeNamesSlice(set);
   const legibleDescriptionSlice = createDataPointLegibleDescriptionSlice(set);
   const parameterListSlice = createParameterListSlice(set);
+  const genericAttributeListSlice = createDataPointGenericAttributeListSlice(set);
 
   return {
     ...enumSlice,
@@ -86,6 +92,7 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
     ...alternativeNamesSlice,
     ...legibleDescriptionSlice,
     ...parameterListSlice,
+    ...genericAttributeListSlice,
 
     addDataPoint: (dataPoint) =>
       set((state) => {

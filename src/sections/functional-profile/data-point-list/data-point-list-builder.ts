@@ -14,11 +14,19 @@ import { parameterListSchema } from "@/sections/functional-profile/data-point-li
 import { validateWithSchema } from "@/sections/shared/utils/validation-utils";
 import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
 import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
-import { buildEnumDataType } from "@/sections/functional-profile/data-point-list/data-types/enum/enum-builder";
-import { buildBitmapDataType } from "@/sections/functional-profile/data-point-list/data-types/bitmap/bitmap-builder";
-import { buildJsonDataType } from "@/sections/functional-profile/data-point-list/data-types/json/json-builder";
-import { buildEnumProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-product-builder";
-import { buildBitmapProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-product-builder";
+import {
+  EnumMapFunctionalProfile,
+  EnumEntryRecordFunctionalProfile,
+  BitmapFunctionalProfile,
+  BitmapEntryFunctionalProfile,
+  JSonOutputFunctionalProfile,
+  JSonArrayOutputFunctionalProfile,
+  JSonElemFunctionalProfile,
+  EnumMapProduct,
+  EnumEntryProductRecord,
+  BitmapProduct,
+  BitmapEntryProduct,
+} from "@/models";
 import {
   isEnumDataType,
   isBitmapDataType,
@@ -74,6 +82,11 @@ function buildDataPointElement(element: FunctionalProfileDataPoint): Record<stri
     dataPointXml.parameterList = wrapInArray(buildParameterListForDataPoint(dp.parameterList));
   }
 
+  // Add optional alternativeNames
+  if (dp.alternativeNames) {
+    dataPointXml.alternativeNames = wrapInArray(buildAlternativeNames(dp.alternativeNames));
+  }
+
   // Add legibleDescription if present
   setOptionalXmlArray(
     dataPointXml,
@@ -82,11 +95,6 @@ function buildDataPointElement(element: FunctionalProfileDataPoint): Record<stri
       ? buildLegibleDescription(dp.legibleDescription)
       : undefined
   );
-
-  // Add optional alternativeNames
-  if (dp.alternativeNames) {
-    dataPointXml.alternativeNames = wrapInArray(buildAlternativeNames(dp.alternativeNames));
-  }
 
   const elementXml: Record<string, unknown> = {
     dataPoint: wrapInArray(dataPointXml),
@@ -270,4 +278,195 @@ function buildDataType(dataType: DataTypeFunctionalProfile): Record<string, unkn
 
   // Default to float64
   return buildSimpleDataType("float64");
+}
+
+/**
+ * Builds XML object for enum dataType from EnumMapFunctionalProfile model
+ */
+function buildEnumDataType(enumMap: EnumMapFunctionalProfile): Record<string, unknown> {
+  const enumXml: Record<string, unknown> = {};
+
+  // Add optional hexMask
+  setOptionalXmlField(enumXml, "hexMask", enumMap.hexMask);
+
+  // Add optional enumEntry array
+  setOptionalXmlArray(
+    enumXml,
+    "enumEntry",
+    enumMap.enumEntry?.map((entry) => buildEnumEntry(entry))
+  );
+
+  return enumXml;
+}
+
+/**
+ * Builds XML object for enumEntry from EnumEntryRecordFunctionalProfile model
+ */
+function buildEnumEntry(entry: EnumEntryRecordFunctionalProfile): Record<string, unknown> {
+  const entryXml: Record<string, unknown> = {
+    literal: wrapInArray(entry.literal),
+  };
+
+  // Add optional description
+  setOptionalXmlField(entryXml, "description", entry.description);
+
+  return entryXml;
+}
+
+/**
+ * Builds XML object for bitmap dataType from BitmapFunctionalProfile model
+ */
+function buildBitmapDataType(bitmap: BitmapFunctionalProfile): Record<string, unknown> {
+  const bitmapXml: Record<string, unknown> = {};
+
+  // Add optional bitmapEntry array
+  setOptionalXmlArray(
+    bitmapXml,
+    "bitmapEntry",
+    bitmap.bitmapEntry?.map((entry) => buildBitmapEntry(entry))
+  );
+
+  return bitmapXml;
+}
+
+/**
+ * Builds XML object for bitmapEntry from BitmapEntryFunctionalProfile model
+ */
+function buildBitmapEntry(entry: BitmapEntryFunctionalProfile): Record<string, unknown> {
+  const entryXml: Record<string, unknown> = {
+    literal: wrapInArray(entry.literal),
+  };
+
+  // Add optional description
+  setOptionalXmlField(entryXml, "description", entry.description);
+
+  return entryXml;
+}
+
+/**
+ * Builds XML object for json dataType from JSonOutputFunctionalProfile model
+ */
+function buildJsonDataType(jsonOutput: JSonOutputFunctionalProfile): Record<string, unknown> {
+  const jsonXml: Record<string, unknown> = {};
+
+  // Add optional items array
+  setOptionalXmlArray(
+    jsonXml,
+    "items",
+    jsonOutput.items?.map((item) => buildJsonItem(item))
+  );
+
+  return jsonXml;
+}
+
+/**
+ * Builds XML object for json item (array or element)
+ */
+function buildJsonItem(
+  item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
+): Record<string, unknown> {
+  // Check if it's an array (has name property)
+  if ("name" in item || "items" in item) {
+    return buildJsonArray(item as JSonArrayOutputFunctionalProfile);
+  }
+
+  // Otherwise it's an element (has key property)
+  return buildJsonElement(item as JSonElemFunctionalProfile);
+}
+
+/**
+ * Builds XML object for json array from JSonArrayOutputFunctionalProfile model
+ */
+function buildJsonArray(array: JSonArrayOutputFunctionalProfile): Record<string, unknown> {
+  const arrayXml: Record<string, unknown> = {};
+
+  // Add optional name
+  setOptionalXmlField(arrayXml, "name", array.name);
+
+  // Add optional items array
+  setOptionalXmlArray(
+    arrayXml,
+    "items",
+    array.items?.map((item) => buildJsonItem(item))
+  );
+
+  return arrayXml;
+}
+
+/**
+ * Builds XML object for json element from JSonElemFunctionalProfile model
+ */
+function buildJsonElement(element: JSonElemFunctionalProfile): Record<string, unknown> {
+  const elementXml: Record<string, unknown> = {
+    key: wrapInArray(element.key),
+  };
+
+  // Check which type it is (date, string, or number)
+  if ("date" in element) {
+    elementXml.date = wrapInArray("");
+  } else if ("number" in element) {
+    elementXml.number = wrapInArray("");
+  } else {
+    // Default to string
+    elementXml.string = wrapInArray("");
+  }
+
+  return elementXml;
+}
+
+/**
+ * Builds XML object for enum dataType from EnumMapProduct model (for parameterList)
+ */
+function buildEnumProductDataType(enumMap: EnumMapProduct): Record<string, unknown> {
+  const enumXml: Record<string, unknown> = {
+    enumEntry: enumMap.enumEntry.map((entry) => buildEnumProductEntry(entry)),
+  };
+
+  // Add optional hexMask
+  setOptionalXmlField(enumXml, "hexMask", enumMap.hexMask);
+
+  return enumXml;
+}
+
+/**
+ * Builds XML object for enumEntry from EnumEntryProductRecord model
+ */
+function buildEnumProductEntry(entry: EnumEntryProductRecord): Record<string, unknown> {
+  const entryXml: Record<string, unknown> = {
+    literal: wrapInArray(entry.literal),
+  };
+
+  // Add optional ordinal
+  if (entry.ordinal !== undefined) {
+    entryXml.ordinal = wrapInArray(entry.ordinal.toString());
+  }
+
+  // Add optional description
+  setOptionalXmlField(entryXml, "description", entry.description);
+
+  return entryXml;
+}
+
+/**
+ * Builds XML object for bitmap dataType from BitmapProduct model (for parameterList)
+ */
+function buildBitmapProductDataType(bitmap: BitmapProduct): Record<string, unknown> {
+  return {
+    bitmapEntry: bitmap.bitmapEntry.map((entry) => buildBitmapProductEntry(entry)),
+  };
+}
+
+/**
+ * Builds XML object for bitmapEntry from BitmapEntryProduct model
+ */
+function buildBitmapProductEntry(entry: BitmapEntryProduct): Record<string, unknown> {
+  const entryXml: Record<string, unknown> = {
+    literal: wrapInArray(entry.literal),
+    hexMask: wrapInArray(entry.hexMask), // Required for Product
+  };
+
+  // Add optional description
+  setOptionalXmlField(entryXml, "description", entry.description);
+
+  return entryXml;
 }

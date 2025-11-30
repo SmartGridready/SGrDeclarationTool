@@ -7,7 +7,7 @@ import {
   createEmpty as createEmptyProfile,
 } from "@/sections/shared/factory";
 import {
-  createReleaseNotesSlice,
+  createReleaseNotesSliceForProfile,
   ReleaseNotesSlice,
 } from "@/sections/functional-profile/release-notes/release-notes-slice";
 import {
@@ -72,7 +72,7 @@ export const useProfileStore = create<StoreState>()(
           state.profile = undefined;
         }),
 
-      ...createReleaseNotesSlice(set),
+      ...createReleaseNotesSliceForProfile(set),
       ...createFunctionalProfileIdentificationSlice(set),
       ...createAlternativeNamesSlice(set),
       ...createLegibleDescriptionSlice(set),

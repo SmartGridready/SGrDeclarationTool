@@ -3,7 +3,7 @@ import { FunctionalProfileFrame } from "@/models";
 import {
   releaseNotesSchema,
   changeLogSchema,
-} from "@/sections/functional-profile/release-notes/release-notes-schema";
+} from "@/sections/shared/sections/release-notes/release-notes-schema";
 import {
   functionalProfileIdentificationSchema,
   versionNumberSchema,
@@ -49,7 +49,7 @@ export type { VersionNumberInput } from "@/sections/functional-profile/profile-i
 export type {
   ChangeLogInput,
   ReleaseNotesInput,
-} from "@/sections/functional-profile/release-notes/release-notes-schema";
+} from "@/sections/shared/sections/release-notes/release-notes-schema";
 export type { FunctionalProfileIdentificationInput } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
 export type { AlternativeNamesInput } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
 export type { LegibleDescriptionsInput } from "@/sections/functional-profile/legible-description/legible-description-schema";

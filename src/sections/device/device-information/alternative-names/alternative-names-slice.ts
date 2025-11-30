@@ -16,9 +16,12 @@ export function createAlternativeNamesSliceForDevice<TState extends { device?: D
 ): AlternativeNamesSlice {
   return createAlternativeNamesSlice(
     set,
-    (state) => state.device?.deviceInformation.alternativeNames,
+    (state) => state.device?.deviceInformation?.alternativeNames,
     (state, alternativeNames) => {
       if (state.device) {
+        if (!state.device.deviceInformation) {
+          state.device.deviceInformation = { isLocalControl: false };
+        }
         state.device.deviceInformation.alternativeNames = alternativeNames;
       }
     },

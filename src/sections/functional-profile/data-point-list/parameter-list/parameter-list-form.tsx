@@ -13,6 +13,8 @@ import {
 } from "@/sections/functional-profile/data-point-list/data-type-utils";
 import { ParameterListSlice } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-list-slice";
 import { ParameterDescriptionsForm } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-descriptions/parameter-descriptions-form";
+import { ParameterListEnumForm } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-form";
+import { ParameterListBitmapForm } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-form";
 
 interface ParameterListFormProps {
   dataPointIndex: number;
@@ -126,153 +128,22 @@ export function ParameterListForm({
 
             {/* Enum Data Type Configuration for Parameter */}
             {isEnumDataTypeProduct(param.dataType) && (
-              <FormSection title="Enum Configuration" nested>
-                <InputField
-                  label="Hex Mask"
-                  name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-hexMask`}
-                  value={param.dataType.enum.hexMask || ""}
-                  onChange={(value) =>
-                    parameterListSlice.updateParameterListEnumHexMask(
-                      dataPointIndex,
-                      paramIndex,
-                      value || undefined
-                    )
-                  }
-                  placeholder="Enter hex mask (e.g., 0xFF)"
-                />
-                <ArrayField
-                  label="Enum Entries"
-                  items={param.dataType.enum.enumEntry}
-                  onAdd={() =>
-                    parameterListSlice.addEmptyParameterListEnumEntry(dataPointIndex, paramIndex)
-                  }
-                  onRemove={(entryIndex) =>
-                    parameterListSlice.removeParameterListEnumEntry(
-                      dataPointIndex,
-                      paramIndex,
-                      entryIndex
-                    )
-                  }
-                  emptyMessage="No enum entries added"
-                  renderItem={(entry, entryIndex) => (
-                    <>
-                      <InputField
-                        label="Literal"
-                        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-literal`}
-                        value={entry.literal}
-                        onChange={(value) =>
-                          parameterListSlice.updateParameterListEnumEntryLiteral(
-                            dataPointIndex,
-                            paramIndex,
-                            entryIndex,
-                            value
-                          )
-                        }
-                        placeholder="Enter enum literal"
-                        required={true}
-                      />
-                      <InputField
-                        label="Ordinal"
-                        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-ordinal`}
-                        type="number"
-                        value={entry.ordinal?.toString() || ""}
-                        onChange={(value) =>
-                          parameterListSlice.updateParameterListEnumEntryOrdinal(
-                            dataPointIndex,
-                            paramIndex,
-                            entryIndex,
-                            value ? parseInt(value, 10) : undefined
-                          )
-                        }
-                        placeholder="Enter ordinal number"
-                      />
-                      <InputField
-                        label="Description"
-                        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-description`}
-                        value={entry.description || ""}
-                        onChange={(value) =>
-                          parameterListSlice.updateParameterListEnumEntryDescription(
-                            dataPointIndex,
-                            paramIndex,
-                            entryIndex,
-                            value || undefined
-                          )
-                        }
-                        placeholder="Enter description"
-                      />
-                    </>
-                  )}
-                />
-              </FormSection>
+              <ParameterListEnumForm
+                dataPointIndex={dataPointIndex}
+                paramIndex={paramIndex}
+                enumMap={param.dataType.enum}
+                enumSlice={parameterListSlice}
+              />
             )}
 
             {/* Bitmap Data Type Configuration for Parameter */}
             {isBitmapDataTypeProduct(param.dataType) && (
-              <FormSection title="Bitmap Configuration" nested>
-                <ArrayField
-                  label="Bitmap Entries"
-                  items={param.dataType.bitmap.bitmapEntry}
-                  onAdd={() =>
-                    parameterListSlice.addEmptyParameterListBitmapEntry(dataPointIndex, paramIndex)
-                  }
-                  onRemove={(entryIndex) =>
-                    parameterListSlice.removeParameterListBitmapEntry(
-                      dataPointIndex,
-                      paramIndex,
-                      entryIndex
-                    )
-                  }
-                  emptyMessage="No bitmap entries added"
-                  renderItem={(entry, entryIndex) => (
-                    <>
-                      <InputField
-                        label="Literal"
-                        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-bitmap-${entryIndex}-literal`}
-                        value={entry.literal}
-                        onChange={(value) =>
-                          parameterListSlice.updateParameterListBitmapEntryLiteral(
-                            dataPointIndex,
-                            paramIndex,
-                            entryIndex,
-                            value
-                          )
-                        }
-                        placeholder="Enter bitmap literal"
-                        required={true}
-                      />
-                      <InputField
-                        label="Hex Mask"
-                        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-bitmap-${entryIndex}-hexMask`}
-                        value={entry.hexMask}
-                        onChange={(value) =>
-                          parameterListSlice.updateParameterListBitmapEntryHexMask(
-                            dataPointIndex,
-                            paramIndex,
-                            entryIndex,
-                            value
-                          )
-                        }
-                        placeholder="Enter hex mask (e.g., 0xFF)"
-                        required={true}
-                      />
-                      <InputField
-                        label="Description"
-                        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-bitmap-${entryIndex}-description`}
-                        value={entry.description || ""}
-                        onChange={(value) =>
-                          parameterListSlice.updateParameterListBitmapEntryDescription(
-                            dataPointIndex,
-                            paramIndex,
-                            entryIndex,
-                            value || undefined
-                          )
-                        }
-                        placeholder="Enter description"
-                      />
-                    </>
-                  )}
-                />
-              </FormSection>
+              <ParameterListBitmapForm
+                dataPointIndex={dataPointIndex}
+                paramIndex={paramIndex}
+                bitmap={param.dataType.bitmap}
+                bitmapSlice={parameterListSlice}
+              />
             )}
 
             {/* Parameter Descriptions */}

@@ -2,6 +2,7 @@
 
 import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { AlternativeNamesForm } from "@/sections/device/device-information/alternative-names/alternative-names-form";
+import { LegibleDescriptionForm } from "@/sections/device/device-information/legible-description/legible-description-form";
 import { useDeviceStore } from "@/sections/device/device-store";
 
 export function DeviceInformationForm() {
@@ -20,6 +21,7 @@ export function DeviceInformationForm() {
       defaultOpen={true}
     >
       <AlternativeNamesForm />
+      <LegibleDescriptionForm />
     </FormSection>
   );
 }

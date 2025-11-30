@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.11.0...v0.12.0) (2025-11-30)
+
+
+### Features
+
+* add AlternativeNames and ParameterList state management (GL-16) ([a61e443](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a61e4435b80475ab29f73a4c2e9f4c61d7dd9fc6))
+* add correct types to model (GL-9) ([028808e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/028808e878acdf0c72d1e5b472f645597ea362d5))
+* add DataTypeProduct utilities for ParameterList (GL-16) ([73a23ba](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/73a23ba276b5687d9458240972f9b6f65383788d))
+* add reusable AlternativeNames update helper (GL-16) ([be2e244](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/be2e244a4e6eeeee1b649835ec60c57a2ea40abc))
+* create seperate form components for data types (GL-13) ([7bd34c6](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7bd34c6c3cc351c609df4426a269ba16a5162945))
+* create seperate slices for data types (GL-16) ([48f3abb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/48f3abb3f17f1623324babdefba76faacc423af1))
+* implement form subsection and json array field component (GL-11) ([5534f53](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5534f532956382cc11298af4ef30810e8b902704))
+* implement mappers for datatypes (GL-7) ([1bd8e4c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1bd8e4cb63138732e1f1a566be4ad8f1dd2ecd5a))
+* implement new form section hook (GL-11) ([7ca8ae5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7ca8ae55bedeef641d62dbe907b7d30b9c7a3080))
+* integrate AlternativeNames and ParameterList forms (GL-13) ([bb874fa](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bb874faae5dca93331f525f40a39c2d47f81df71))
+* use datatype mappers and reuse legible descriptions mapper in data points mapper (GL-7) ([4acd178](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4acd1786f34669c3564cbf1342f187d1f7bd494c))
+
+
+### Bug Fixes
+
+* build empty json datatype correctly and move parameter list to correct place (GL-8) ([ad003b7](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ad003b72dc62fe17851e18300cbe34da588c52dd))
+* factory model data type definition ([d929cce](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d929ccee90b6022b4734f5c5a6b90d43c4093eba))
+* map empty json datatype correctly (GL-7) ([abbc6da](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/abbc6dafb397aaaf94b24f4f024f27345e29b27d))
+
+
+### Code Refactoring
+
+* add nested prop to form section (GL-11) ([d37e155](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d37e155ac4fe5163c57df9c5dc811a68fd4c3dbb))
+* always call hooks unconditionally (GL-11) ([8eebc63](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8eebc63cc1be27a3e90b736100c17ed7f251f09b))
+* implement builder utils (GL-8) ([3a220be](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3a220be9d18f0bc0a962b90d41a81dcb7a2ef903))
+* implement builder utils in builders (GL-8) ([5d6f1cf](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5d6f1cfbeb5aac67fe15ee29c3c2b13be8d211b0))
+* implement form section hook in form components (GL-13) ([283d331](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/283d3311a060e40aaedad600fcd27b12adb24b41))
+* implement mapper utils (GL-7) ([7df3bd3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7df3bd3809be5ec29682d3da0abdeaaf15760dba))
+* implement mapper utils in mappers (GL-7) ([61f1bfe](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/61f1bfeabb011824faa1d2eda47be3af81595787))
+* implement slice utils and use them in slices (GL-16) ([0b68a1f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0b68a1f4ac4f26664f23d42cfeb71359a110b1e4))
+* make all imports absolute ([fb33adc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fb33adc7f421e462895bdacc86817e76907c3f1a))
+* merge schemas with validators, remove unnecessary checks and comment partially implemented model sections ([5ec65e8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5ec65e8d633dd51643c0668ffc9f15ca70701361))
+* relax type constraint in setoptionalfield utils function (GL-7) ([fadbf01](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fadbf01767d2072402209e6184c6b59d60ebc49e))
+
+
+### Chores
+
+* increase prettier max line length and format all files ([a47c60c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a47c60c909012ebe71e8a45ff07671199accf39e))
+
 ## [0.11.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.10.0...v0.11.0) (2025-11-26)
 
 

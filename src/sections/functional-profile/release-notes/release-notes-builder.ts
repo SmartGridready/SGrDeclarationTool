@@ -2,7 +2,7 @@ import { ReleaseNotes, ChangeLog } from "@/models";
 import {
   validateChangeLog,
   validateReleaseNotes,
-} from "@/sections/functional-profile/release-notes/release-notes-schema";
+} from "@/sections/shared/sections/release-notes/release-notes-schema";
 import {
   wrapInArray,
   setOptionalXmlField,

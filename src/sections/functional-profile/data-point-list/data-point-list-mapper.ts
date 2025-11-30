@@ -27,11 +27,19 @@ import {
 } from "@/sections/functional-profile/legible-description/legible-description-mapper";
 import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
 import { mapGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-mapper";
-import { mapEnumDataType } from "@/sections/functional-profile/data-point-list/data-types/enum/enum-mapper";
-import { mapBitmapDataType } from "@/sections/functional-profile/data-point-list/data-types/bitmap/bitmap-mapper";
-import { mapJsonDataType } from "@/sections/functional-profile/data-point-list/data-types/json/json-mapper";
-import { mapEnumProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-product-mapper";
-import { mapBitmapProductDataType } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-product-mapper";
+import {
+  EnumMapFunctionalProfile,
+  EnumEntryRecordFunctionalProfile,
+  BitmapFunctionalProfile,
+  BitmapEntryFunctionalProfile,
+  JSonOutputFunctionalProfile,
+  JSonArrayOutputFunctionalProfile,
+  JSonElemFunctionalProfile,
+  EnumMapProduct,
+  EnumEntryProductRecord,
+  BitmapProduct,
+  BitmapEntryProduct,
+} from "@/models";
 
 /**
  * Maps XML dataPointList to FunctionalProfileDataPointList model
@@ -77,11 +85,6 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
     getOptionalNumberValue(dpXml, "arrayLength")
   );
 
-  // Map optional legibleDescription
-  if (dpXml.legibleDescription && Array.isArray(dpXml.legibleDescription)) {
-    dataPoint.dataPoint.legibleDescription = mapLegibleDescription(dpXml.legibleDescription);
-  }
-
   // Map optional alternativeNames
   const alternativeNamesXml = getFirstElement(dpXml, "alternativeNames");
   setOptionalField(
@@ -89,6 +92,11 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
     "alternativeNames",
     alternativeNamesXml && mapAlternativeNames(alternativeNamesXml)
   );
+
+  // Map optional legibleDescription
+  if (dpXml.legibleDescription && Array.isArray(dpXml.legibleDescription)) {
+    dataPoint.dataPoint.legibleDescription = mapLegibleDescription(dpXml.legibleDescription);
+  }
 
   // Map optional parameterList
   const parameterListXml = getFirstElement(dpXml, "parameterList");
@@ -259,4 +267,169 @@ function mapDataTypeProduct(dataTypeXml: any): DataTypeProduct {
   };
 
   return mapSimpleDataType(dataTypeXml, typeMap, { float64: {} });
+}
+
+/**
+ * Maps XML enum dataType to EnumMapFunctionalProfile model
+ */
+function mapEnumDataType(enumXml: any): EnumMapFunctionalProfile {
+  const enumMap: EnumMapFunctionalProfile = {};
+
+  // Map optional fields
+  setOptionalField(enumMap, "hexMask", getOptionalStringValue(enumXml, "hexMask"));
+  setOptionalField(enumMap, "enumEntry", mapOptionalArray(enumXml, "enumEntry", mapEnumEntry));
+
+  return enumMap;
+}
+
+/**
+ * Maps XML enumEntry to EnumEntryRecordFunctionalProfile model
+ */
+function mapEnumEntry(entryXml: any): EnumEntryRecordFunctionalProfile {
+  const entry: EnumEntryRecordFunctionalProfile = {
+    literal: getStringValue(entryXml, "literal"),
+  };
+
+  // Map optional description
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
+
+  return entry;
+}
+
+/**
+ * Maps XML bitmap dataType to BitmapFunctionalProfile model
+ */
+function mapBitmapDataType(bitmapXml: any): BitmapFunctionalProfile {
+  const bitmap: BitmapFunctionalProfile = {};
+
+  // Map optional bitmapEntry array
+  setOptionalField(
+    bitmap,
+    "bitmapEntry",
+    mapOptionalArray(bitmapXml, "bitmapEntry", mapBitmapEntry)
+  );
+
+  return bitmap;
+}
+
+/**
+ * Maps XML bitmapEntry to BitmapEntryFunctionalProfile model
+ */
+function mapBitmapEntry(entryXml: any): BitmapEntryFunctionalProfile {
+  const entry: BitmapEntryFunctionalProfile = {
+    literal: getStringValue(entryXml, "literal"),
+  };
+
+  // Map optional description
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
+
+  return entry;
+}
+
+/**
+ * Maps XML json dataType to JSonOutputFunctionalProfile model
+ */
+function mapJsonDataType(jsonXml: any): JSonOutputFunctionalProfile {
+  const jsonOutput: JSonOutputFunctionalProfile = {};
+
+  // Map optional items array
+  setOptionalField(jsonOutput, "items", mapOptionalArray(jsonXml, "items", mapJsonItem));
+
+  return jsonOutput;
+}
+
+/**
+ * Maps XML json item (array or element) to JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
+ */
+function mapJsonItem(itemXml: any): JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile {
+  // Check if it's an array (has name property)
+  if (itemXml.name !== undefined) {
+    return mapJsonArray(itemXml);
+  }
+
+  // Otherwise it's an element (has key property)
+  return mapJsonElement(itemXml);
+}
+
+/**
+ * Maps XML json array to JSonArrayOutputFunctionalProfile model
+ */
+function mapJsonArray(arrayXml: any): JSonArrayOutputFunctionalProfile {
+  const array: JSonArrayOutputFunctionalProfile = {};
+
+  // Map optional fields
+  setOptionalField(array, "name", getOptionalStringValue(arrayXml, "name"));
+  setOptionalField(array, "items", mapOptionalArray(arrayXml, "items", mapJsonItem));
+
+  return array;
+}
+
+/**
+ * Maps XML json element to JSonElemFunctionalProfile model
+ */
+function mapJsonElement(elementXml: any): JSonElemFunctionalProfile {
+  const key = getStringValue(elementXml, "key");
+
+  // Check which type it is (date, string, or number)
+  if (elementXml.date !== undefined) {
+    return { key, date: "" };
+  }
+  if (elementXml.number !== undefined) {
+    return { key, number: "" };
+  }
+  // Default to string
+  return { key, string: "" };
+}
+
+/**
+ * Maps XML enum dataType to EnumMapProduct model (for parameterList)
+ */
+function mapEnumProductDataType(enumXml: any): EnumMapProduct {
+  const enumMap: EnumMapProduct = {
+    enumEntry: mapArray(enumXml, "enumEntry", mapEnumProductEntry),
+  };
+
+  // Map optional hexMask
+  setOptionalField(enumMap, "hexMask", getOptionalStringValue(enumXml, "hexMask"));
+
+  return enumMap;
+}
+
+/**
+ * Maps XML enumEntry to EnumEntryProductRecord model
+ */
+function mapEnumProductEntry(entryXml: any): EnumEntryProductRecord {
+  const entry: EnumEntryProductRecord = {
+    literal: getStringValue(entryXml, "literal"),
+  };
+
+  // Map optional fields
+  setOptionalField(entry, "ordinal", getOptionalNumberValue(entryXml, "ordinal"));
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
+
+  return entry;
+}
+
+/**
+ * Maps XML bitmap dataType to BitmapProduct model (for parameterList)
+ */
+function mapBitmapProductDataType(bitmapXml: any): BitmapProduct {
+  return {
+    bitmapEntry: mapArray(bitmapXml, "bitmapEntry", mapBitmapProductEntry),
+  };
+}
+
+/**
+ * Maps XML bitmapEntry to BitmapEntryProduct model
+ */
+function mapBitmapProductEntry(entryXml: any): BitmapEntryProduct {
+  const entry: BitmapEntryProduct = {
+    literal: getStringValue(entryXml, "literal"),
+    hexMask: getStringValue(entryXml, "hexMask"), // Required for Product
+  };
+
+  // Map optional description
+  setOptionalField(entry, "description", getOptionalStringValue(entryXml, "description"));
+
+  return entry;
 }

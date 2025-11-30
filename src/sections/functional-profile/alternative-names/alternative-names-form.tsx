@@ -2,9 +2,13 @@ import { FormSection } from "@/sections/shared/components/forms/form-section";
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 export function AlternativeNamesForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    useStore: useProfileStore,
+    useValidation: useProfileValidation,
     stateSelector: (store) => ({
       alternativeNames: store.profile?.functionalProfile?.alternativeNames,
     }),

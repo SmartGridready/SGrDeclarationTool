@@ -3,9 +3,13 @@ import { InputField } from "@/sections/shared/components/forms/input-field";
 import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { GenericAttributeFunctionalProfile } from "@/models";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 export function GenericAttributeListForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    useStore: useProfileStore,
+    useValidation: useProfileValidation,
     stateSelector: (store) => ({
       genericAttributes: store.profile?.genericAttributeList?.genericAttributeListElement,
     }),

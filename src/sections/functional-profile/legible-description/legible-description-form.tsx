@@ -7,9 +7,13 @@ import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { LANGUAGE_OPTIONS } from "@/sections/functional-profile/legible-description/legible-description-form-options";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { LegibleDescription, Language } from "@/models";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 export function LegibleDescriptionForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    useStore: useProfileStore,
+    useValidation: useProfileValidation,
     stateSelector: (store) => ({
       legibleDescriptions: store.profile?.functionalProfile?.legibleDescription,
     }),

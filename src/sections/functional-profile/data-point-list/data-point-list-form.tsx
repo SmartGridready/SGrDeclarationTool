@@ -13,6 +13,8 @@ import {
   Language,
   LegibleDescription,
 } from "@/models";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 import {
   DATA_DIRECTION_OPTIONS,
   PRESENCE_LEVEL_OPTIONS,
@@ -38,6 +40,8 @@ import { JsonSlice } from "@/sections/functional-profile/data-point-list/json/js
 
 export function DataPointListForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    useStore: useProfileStore,
+    useValidation: useProfileValidation,
     stateSelector: (store) => ({
       dataPoints: store.profile?.dataPointList?.dataPointListElement,
     }),

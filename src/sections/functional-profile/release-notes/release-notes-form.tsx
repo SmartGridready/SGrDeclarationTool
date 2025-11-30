@@ -7,9 +7,13 @@ import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { RELEASE_STATE_OPTIONS } from "@/sections/functional-profile/release-notes/release-notes-form-options";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { ReleaseState, ChangeLog } from "@/models/generic/base-types";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 export function ReleaseNotesForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
+    useStore: useProfileStore,
+    useValidation: useProfileValidation,
     stateSelector: (store) => ({
       releaseState: store.profile?.releaseNotes?.state,
       remarks: store.profile?.releaseNotes?.remarks,

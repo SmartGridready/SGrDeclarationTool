@@ -8,9 +8,13 @@ import {
 import { InputField } from "@/sections/shared/components/forms/input-field";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
 import { FunctionalProfileCategory, LevelOfOperation } from "@/models";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 export function ProfileIdentificationForm() {
   const { state, actions, getError } = useFormSection({
+    useStore: useProfileStore,
+    useValidation: useProfileValidation,
     stateSelector: (store) => ({
       specificationOwnerIdentification:
         store.profile?.functionalProfile?.functionalProfileIdentification

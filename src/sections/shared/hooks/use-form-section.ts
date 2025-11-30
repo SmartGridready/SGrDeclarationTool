@@ -1,9 +1,4 @@
 import { useRef } from "react";
-import {
-  useProfileStore,
-  type StoreState,
-} from "@/sections/functional-profile/functional-profile-store";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
 
 /**
  * Shallow comparison for objects (one level deep)
@@ -25,23 +20,34 @@ function shallowEqual<T extends Record<string, unknown>>(objA: T, objB: T): bool
 }
 
 export function useFormSection<
+  TStoreState,
   TState extends Record<string, unknown>,
   TActions extends Record<string, unknown>,
 >(config: {
   /**
+   * Store hook function (e.g., useProfileStore, useDeviceStore)
+   * Should accept a selector function and return the selected value
+   */
+  useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
+  /**
+   * Validation hook function that returns an object with getError method
+   * getError should accept a field path and return an error message or undefined
+   */
+  useValidation: () => { getError: (fieldPath: string) => string | undefined };
+  /**
    * Selector function to get state from the store
    * State values are compared shallowly to prevent unnecessary re-renders
    */
-  stateSelector: (store: StoreState) => TState;
+  stateSelector: (store: TStoreState) => TState;
   /**
    * Selector function to get actions from the store
    * Actions are functions and are stable, so no comparison is needed
    */
-  actionsSelector: (store: StoreState) => TActions;
+  actionsSelector: (store: TStoreState) => TActions;
   /**
    * Optional selector to determine if the section is added
    */
-  isAddedSelector?: (store: StoreState) => boolean;
+  isAddedSelector?: (store: TStoreState) => boolean;
   /**
    * Optional add handler - will be called when section should be added
    * If not provided, handleAdd will be undefined
@@ -68,7 +74,7 @@ export function useFormSection<
   const actionsCache = useRef<TActions | null>(null);
 
   // Create stable selector functions that never change reference
-  const stableStateSelector = useRef((store: StoreState): TState => {
+  const stableStateSelector = useRef((store: TStoreState): TState => {
     const newState = stateSelectorRef.current(store);
     if (stateCache.current && shallowEqual(stateCache.current, newState)) {
       return stateCache.current;
@@ -77,7 +83,7 @@ export function useFormSection<
     return newState;
   }).current;
 
-  const stableActionsSelector = useRef((store: StoreState): TActions => {
+  const stableActionsSelector = useRef((store: TStoreState): TActions => {
     const newActions = actionsSelectorRef.current(store);
     if (actionsCache.current && shallowEqual(actionsCache.current, newActions)) {
       return actionsCache.current;
@@ -86,19 +92,19 @@ export function useFormSection<
     return newActions;
   }).current;
 
-  const stableIsAddedSelector = useRef((store: StoreState): boolean => {
+  const stableIsAddedSelector = useRef((store: TStoreState): boolean => {
     return isAddedSelectorRef.current?.(store) ?? false;
   }).current;
 
   // Use stable selectors with the store
-  const state = useProfileStore(stableStateSelector);
-  const actions = useProfileStore(stableActionsSelector);
-  const isAddedValue = useProfileStore(
+  const state = config.useStore(stableStateSelector);
+  const actions = config.useStore(stableActionsSelector);
+  const isAddedValue = config.useStore(
     config.isAddedSelector ? stableIsAddedSelector : () => false
   );
   const isAdded = config.isAddedSelector ? isAddedValue : false;
 
-  const { getError } = useProfileValidation();
+  const { getError } = config.useValidation();
 
   const handleAdd = config.onAdd
     ? () => {

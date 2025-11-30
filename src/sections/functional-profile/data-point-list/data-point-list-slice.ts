@@ -37,12 +37,17 @@ import {
   createDataPointAlternativeNamesSlice,
   DataPointAlternativeNamesSlice,
 } from "@/sections/functional-profile/data-point-list/alternative-names/alternative-names-slice";
+import {
+  createDataPointLegibleDescriptionSlice,
+  DataPointLegibleDescriptionSlice,
+} from "@/sections/functional-profile/data-point-list/legible-description/legible-description-slice";
 
 export interface DataPointListSlice
   extends EnumSlice,
     BitmapSlice,
     JsonSlice,
-    DataPointAlternativeNamesSlice {
+    DataPointAlternativeNamesSlice,
+    DataPointLegibleDescriptionSlice {
   // Main operations
   addDataPoint: (dataPoint: FunctionalProfileDataPoint) => void;
   removeDataPoint: (index: number) => void;
@@ -55,20 +60,6 @@ export interface DataPointListSlice
   updateDataType: (index: number, dataType: DataTypeFunctionalProfile) => void;
   updateUnit: (index: number, unit: Units) => void;
   updateArrayLength: (index: number, length: number | undefined) => void;
-
-  // Legible description operations for data points
-  addDataPointLegibleDescription: (dataPointIndex: number, description: LegibleDescription) => void;
-  removeDataPointLegibleDescription: (dataPointIndex: number, descIndex: number) => void;
-  updateDataPointLegibleDescriptionText: (
-    dataPointIndex: number,
-    descIndex: number,
-    text: string
-  ) => void;
-  updateDataPointLegibleDescriptionLanguage: (
-    dataPointIndex: number,
-    descIndex: number,
-    language: Language
-  ) => void;
 
   // ParameterList operations for data points
   addDataPointParameterList: (dataPointIndex: number) => void;
@@ -204,7 +195,6 @@ export interface DataPointListSlice
 
   // Convenience methods
   addEmptyDataPoint: () => void;
-  addEmptyDataPointLegibleDescription: (dataPointIndex: number) => void;
   addEmptyDataPointParameterDescription: (dataPointIndex: number, paramIndex: number) => void;
 }
 
@@ -223,12 +213,14 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
   const bitmapSlice = createBitmapSlice(set);
   const jsonSlice = createJsonSlice(set);
   const alternativeNamesSlice = createDataPointAlternativeNamesSlice(set);
+  const legibleDescriptionSlice = createDataPointLegibleDescriptionSlice(set);
 
   return {
     ...enumSlice,
     ...bitmapSlice,
     ...jsonSlice,
     ...alternativeNamesSlice,
+    ...legibleDescriptionSlice,
 
     addDataPoint: (dataPoint) =>
       set((state) => {
@@ -309,46 +301,6 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
         }
       }),
 
-    addDataPointLegibleDescription: (dataPointIndex, description) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          const list = ensureArray(dp.dataPoint.legibleDescription, () => []);
-          if (list.length < 4) {
-            list.push(description);
-            dp.dataPoint.legibleDescription = list;
-          }
-        }
-      }),
-
-    removeDataPointLegibleDescription: (dataPointIndex, descIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp?.dataPoint.legibleDescription) {
-          removeArrayItem(dp.dataPoint.legibleDescription, descIndex, () => {
-            dp.dataPoint.legibleDescription = undefined;
-          });
-        }
-      }),
-
-    updateDataPointLegibleDescriptionText: (dataPointIndex, descIndex, text) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) {
-          desc.textElement = text;
-        }
-      }),
-
-    updateDataPointLegibleDescriptionLanguage: (dataPointIndex, descIndex, language) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) {
-          desc.language = language;
-        }
-      }),
-
     addEmptyDataPoint: () =>
       set((state) => {
         if (state.profile) {
@@ -358,18 +310,6 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
             state.profile.dataPointList = { dataPointListElement: list };
           } else {
             state.profile.dataPointList.dataPointListElement = list;
-          }
-        }
-      }),
-
-    addEmptyDataPointLegibleDescription: (dataPointIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          const list = ensureArray(dp.dataPoint.legibleDescription, () => []);
-          if (list.length < 4) {
-            list.push({ textElement: "", language: "en" });
-            dp.dataPoint.legibleDescription = list;
           }
         }
       }),

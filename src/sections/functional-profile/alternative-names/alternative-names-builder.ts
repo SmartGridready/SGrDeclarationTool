@@ -1,5 +1,5 @@
 import { AlternativeNames } from "@/models";
-import { validateAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
+import { validateAlternativeNames } from "@/sections/shared/sections/alternative-names/alternative-names-schema";
 import { setOptionalXmlField } from "@/sections/shared/utils/builder-utils";
 
 /**

@@ -15,7 +15,7 @@ import {
   FunctionalProfileIdentificationSlice,
 } from "@/sections/functional-profile/profile-identification/profile-identification-slice";
 import {
-  createAlternativeNamesSlice,
+  createAlternativeNamesSliceForProfile,
   AlternativeNamesSlice,
 } from "@/sections/functional-profile/alternative-names/alternative-names-slice";
 import {
@@ -74,7 +74,7 @@ export const useProfileStore = create<StoreState>()(
 
       ...createReleaseNotesSliceForProfile(set),
       ...createFunctionalProfileIdentificationSlice(set),
-      ...createAlternativeNamesSlice(set),
+      ...createAlternativeNamesSliceForProfile(set),
       ...createLegibleDescriptionSlice(set),
       ...createGenericAttributeListSlice(set),
       ...createDataPointListSlice(set),

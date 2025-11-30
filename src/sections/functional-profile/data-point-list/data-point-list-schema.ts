@@ -7,7 +7,7 @@ import {
   UNIT_OPTIONS,
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { legibleDescriptionSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
-import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
+import { alternativeNamesSchema } from "@/sections/shared/sections/alternative-names/alternative-names-schema";
 import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
 
 /**

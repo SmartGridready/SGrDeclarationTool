@@ -6,8 +6,6 @@ import {
   Units,
   LegibleDescription,
   Language,
-  AlternativeNames,
-  DynamicParameterDescriptionList,
   DynamicParameterDescription,
   DataTypeProduct,
   EnumMapProduct,
@@ -23,7 +21,6 @@ import {
   removeArrayItem,
   normalizeString,
 } from "@/sections/shared/utils/slice-utils";
-import { updateAlternativeNamesField } from "@/sections/functional-profile/alternative-names/alternative-names-slice";
 import {
   createEnumSlice,
   EnumSlice,
@@ -36,8 +33,16 @@ import {
   createJsonSlice,
   JsonSlice,
 } from "@/sections/functional-profile/data-point-list/json/json-slice";
+import {
+  createDataPointAlternativeNamesSlice,
+  DataPointAlternativeNamesSlice,
+} from "@/sections/functional-profile/data-point-list/alternative-names/alternative-names-slice";
 
-export interface DataPointListSlice extends EnumSlice, BitmapSlice, JsonSlice {
+export interface DataPointListSlice
+  extends EnumSlice,
+    BitmapSlice,
+    JsonSlice,
+    DataPointAlternativeNamesSlice {
   // Main operations
   addDataPoint: (dataPoint: FunctionalProfileDataPoint) => void;
   removeDataPoint: (index: number) => void;
@@ -64,19 +69,6 @@ export interface DataPointListSlice extends EnumSlice, BitmapSlice, JsonSlice {
     descIndex: number,
     language: Language
   ) => void;
-
-  // AlternativeNames operations for data points
-  addDataPointAlternativeNames: (dataPointIndex: number) => void;
-  removeDataPointAlternativeNames: (dataPointIndex: number) => void;
-  updateDataPointSLV1Name: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointWorkName: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointManufName: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointIec61850Name: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointSarefName: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointEebusName: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointSunSpecName: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointHpBwpName: (dataPointIndex: number, value: string | undefined) => void;
-  updateDataPointEn17609Name: (dataPointIndex: number, value: string | undefined) => void;
 
   // ParameterList operations for data points
   addDataPointParameterList: (dataPointIndex: number) => void;
@@ -230,11 +222,13 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
   const enumSlice = createEnumSlice(set);
   const bitmapSlice = createBitmapSlice(set);
   const jsonSlice = createJsonSlice(set);
+  const alternativeNamesSlice = createDataPointAlternativeNamesSlice(set);
 
   return {
     ...enumSlice,
     ...bitmapSlice,
     ...jsonSlice,
+    ...alternativeNamesSlice,
 
     addDataPoint: (dataPoint) =>
       set((state) => {
@@ -377,95 +371,6 @@ export const createDataPointListSlice = (set: SetState): DataPointListSlice => {
             list.push({ textElement: "", language: "en" });
             dp.dataPoint.legibleDescription = list;
           }
-        }
-      }),
-
-    // AlternativeNames operations
-    addDataPointAlternativeNames: (dataPointIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          dp.dataPoint.alternativeNames = {};
-        }
-      }),
-
-    removeDataPointAlternativeNames: (dataPointIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          dp.dataPoint.alternativeNames = undefined;
-        }
-      }),
-
-    updateDataPointSLV1Name: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "sLV1Name", value);
-        }
-      }),
-
-    updateDataPointWorkName: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "workName", value);
-        }
-      }),
-
-    updateDataPointManufName: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "manufName", value);
-        }
-      }),
-
-    updateDataPointIec61850Name: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "iec61850Name", value);
-        }
-      }),
-
-    updateDataPointSarefName: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "sarefName", value);
-        }
-      }),
-
-    updateDataPointEebusName: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "eebusName", value);
-        }
-      }),
-
-    updateDataPointSunSpecName: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "sunSpecName", value);
-        }
-      }),
-
-    updateDataPointHpBwpName: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "hpBwpName", value);
-        }
-      }),
-
-    updateDataPointEn17609Name: (dataPointIndex, value) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          updateAlternativeNamesField(dp.dataPoint, "en17609Name", value);
         }
       }),
 

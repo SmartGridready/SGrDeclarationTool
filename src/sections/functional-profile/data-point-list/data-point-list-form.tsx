@@ -32,6 +32,7 @@ import { JsonSlice } from "@/sections/functional-profile/data-point-list/data-ty
 import { DataPointAlternativeNamesForm } from "@/sections/functional-profile/data-point-list/alternative-names/alternative-names-form";
 import { DataPointLegibleDescriptionForm } from "@/sections/functional-profile/data-point-list/legible-description/legible-description-form";
 import { ParameterListForm } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-list-form";
+import { DataPointGenericAttributeListForm } from "@/sections/functional-profile/data-point-list/generic-attribute-list/generic-attribute-list-form";
 
 export function DataPointListForm() {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
@@ -126,6 +127,12 @@ export function DataPointListForm() {
       removeJsonNestedItem: store.removeJsonNestedItem,
       updateJsonNestedArrayItem: store.updateJsonNestedArrayItem,
       updateJsonNestedElemItem: store.updateJsonNestedElemItem,
+      // Generic Attribute List methods
+      addDataPointGenericAttributeList: store.addDataPointGenericAttributeList,
+      removeDataPointGenericAttributeList: store.removeDataPointGenericAttributeList,
+      addDataPointGenericAttribute: store.addDataPointGenericAttribute,
+      removeDataPointGenericAttribute: store.removeDataPointGenericAttribute,
+      updateDataPointGenericAttributeName: store.updateDataPointGenericAttributeName,
     }),
     isAddedSelector: (store) => !!store.profile?.dataPointList,
     onAdd: (actions) => actions.addEmptyDataPoint(),
@@ -307,12 +314,6 @@ export function DataPointListForm() {
               />
             )}
 
-            {/* Legible Description */}
-            <DataPointLegibleDescriptionForm dataPointIndex={index} />
-
-            {/* Alternative Names */}
-            <DataPointAlternativeNamesForm dataPointIndex={index} />
-
             {/* Parameter List */}
             <ParameterListForm
               dataPointIndex={index}
@@ -321,6 +322,22 @@ export function DataPointListForm() {
               getError={getError}
               onAdd={() => actions.addDataPointParameterList(index)}
               onRemove={() => actions.removeDataPointParameterList(index)}
+            />
+
+            {/* Alternative Names */}
+            <DataPointAlternativeNamesForm dataPointIndex={index} />
+
+            {/* Legible Description */}
+            <DataPointLegibleDescriptionForm dataPointIndex={index} />
+
+            {/* Generic Attribute List */}
+            <DataPointGenericAttributeListForm
+              dataPointIndex={index}
+              genericAttributeList={item.genericAttributeList}
+              genericAttributeListSlice={actions}
+              getError={getError}
+              onAdd={() => actions.addDataPointGenericAttributeList(index)}
+              onRemove={() => actions.removeDataPointGenericAttributeList(index)}
             />
           </>
         )}

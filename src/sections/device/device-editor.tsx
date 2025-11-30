@@ -9,19 +9,13 @@ import { Button } from "@/sections/shared/components/shadcn/button";
 import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
 import { DEBUG } from "@/debug-config";
 import { INFO_MESSAGES } from "@/sections/shared/constants/info-messages";
-import { DeviceFrame } from "@/models/product/product";
 import { toast } from "sonner";
 
 export default function DeviceEditor() {
-  const { device, createNew, createEmpty, clear, setDevice } = useDeviceStore();
+  const { device, createEmpty, clear } = useDeviceStore();
   const resetValidation = useValidationStore((state) => state.resetValidation);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [showLoadEmptyDialog, setShowLoadEmptyDialog] = useState(false);
-
-  const handleSetDevice = (newDevice: DeviceFrame) => {
-    setDevice(newDevice);
-    resetValidation();
-  };
 
   const handleEmptyDevice = () => {
     if (device) {
@@ -106,15 +100,6 @@ export default function DeviceEditor() {
 
       {DEBUG && (
         <div className="fixed bottom-4 right-4 z-50 shadow-lg">
-          <Button
-            onClick={() => {
-              createNew();
-              resetValidation();
-            }}
-            size="sm"
-          >
-            Load Sample Device
-          </Button>
           <Button onClick={handleDebugPrint} size="sm" className="ml-2">
             Debug JSON
           </Button>

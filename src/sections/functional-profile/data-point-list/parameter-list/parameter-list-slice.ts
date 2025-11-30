@@ -14,10 +14,9 @@ import {
   createParameterListBitmapSlice,
   ParameterListBitmapSlice,
 } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-slice";
-import {
-  createParameterListJsonSlice,
-  ParameterListJsonSlice,
-} from "@/sections/functional-profile/data-point-list/parameter-list/data-types/json/json-slice";
+// Note: JSON data type for parameter lists (DataTypeProduct.json) is just an empty string (EmptyValue = "")
+// Unlike DataTypeFunctionalProfile.json which has a complex JSonOutputFunctionalProfile structure,
+// DataTypeProduct.json is simply { json: "" } and requires no slice, form component, or configuration.
 import {
   createParameterDescriptionsSlice,
   ParameterDescriptionsSlice,
@@ -26,7 +25,6 @@ import {
 export interface ParameterListSlice
   extends ParameterListEnumSlice,
     ParameterListBitmapSlice,
-    ParameterListJsonSlice,
     ParameterDescriptionsSlice {
   // ParameterList operations for data points
   addDataPointParameterList: (dataPointIndex: number) => void;
@@ -53,13 +51,12 @@ export interface ParameterListSlice
 export const createParameterListSlice = (set: SetState): ParameterListSlice => {
   const enumSlice = createParameterListEnumSlice(set);
   const bitmapSlice = createParameterListBitmapSlice(set);
-  const jsonSlice = createParameterListJsonSlice(set);
+  // JSON slice not needed - DataTypeProduct.json is just { json: "" }, no configuration required
   const descriptionsSlice = createParameterDescriptionsSlice(set);
 
   return {
     ...enumSlice,
     ...bitmapSlice,
-    ...jsonSlice,
     ...descriptionsSlice,
 
     // ParameterList operations

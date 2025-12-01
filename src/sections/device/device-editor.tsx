@@ -7,7 +7,7 @@ import { useValidationStore } from "@/sections/shared/validation-store";
 import { DeviceForm } from "@/sections/device/device-form";
 import { Button } from "@/sections/shared/components/shadcn/button";
 import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
-import { LibraryImportDialog } from "@/sections/shared/components/editor/library-import-dialog";
+import { LibraryImportModal } from "@/sections/shared/components/editor/library-import-modal";
 import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/sections/shared/utils/library-api";
 import { DeviceFrame } from "@/models";
 import { DEBUG } from "@/debug-config";
@@ -191,7 +191,7 @@ export default function DeviceEditor() {
         onConfirm={confirmLibraryImport}
       />
 
-      <LibraryImportDialog
+      <LibraryImportModal
         open={showLibraryImportDialog}
         onOpenChange={setShowLibraryImportDialog}
         title="Import from Library"

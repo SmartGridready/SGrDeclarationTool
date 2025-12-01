@@ -7,7 +7,7 @@ import { useValidationStore } from "@/sections/shared/validation-store";
 import { FunctionalProfileForm } from "@/sections/functional-profile/functional-profile-form";
 import { Button } from "@/sections/shared/components/shadcn/button";
 import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
-import { LibraryImportDialog } from "@/sections/shared/components/editor/library-import-dialog";
+import { LibraryImportModal } from "@/sections/shared/components/editor/library-import-modal";
 import { useFileImport } from "@/sections/shared/hooks/use-file-import";
 import { useFileExport } from "@/sections/shared/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
@@ -237,7 +237,7 @@ export default function FunctionalProfileEditor() {
         onConfirm={confirmLibraryImport}
       />
 
-      <LibraryImportDialog
+      <LibraryImportModal
         open={showLibraryImportDialog}
         onOpenChange={setShowLibraryImportDialog}
         title="Import from Library"

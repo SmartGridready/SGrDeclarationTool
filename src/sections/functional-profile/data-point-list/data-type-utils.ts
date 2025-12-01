@@ -12,31 +12,6 @@ import {
 } from "@/models/generic";
 
 /**
- * Type guard to check if a DataTypeFunctionalProfile is a simple type (from DataTypeChoice)
- */
-export function isSimpleDataType(dataType: DataTypeFunctionalProfile): dataType is DataTypeChoice {
-  return (
-    typeof dataType === "object" &&
-    !("enum" in dataType) &&
-    !("bitmap" in dataType) &&
-    !("json" in dataType) &&
-    ("boolean" in dataType ||
-      "int8" in dataType ||
-      "int16" in dataType ||
-      "int32" in dataType ||
-      "int64" in dataType ||
-      "int8U" in dataType ||
-      "int16U" in dataType ||
-      "int32U" in dataType ||
-      "int64U" in dataType ||
-      "float32" in dataType ||
-      "float64" in dataType ||
-      "dateTime" in dataType ||
-      "string" in dataType)
-  );
-}
-
-/**
  * Type guard to check if a DataTypeFunctionalProfile is an enum type
  */
 export function isEnumDataType(
@@ -68,7 +43,13 @@ export function isJsonDataType(
  * Returns undefined if not a simple type
  */
 export function getSimpleTypeName(dataType: DataTypeFunctionalProfile): string | undefined {
-  if (!isSimpleDataType(dataType)) {
+  // Check if it's a simple type (not enum, bitmap, or json)
+  if (
+    typeof dataType !== "object" ||
+    "enum" in dataType ||
+    "bitmap" in dataType ||
+    "json" in dataType
+  ) {
     return undefined;
   }
 
@@ -168,20 +149,13 @@ export function isBitmapDataTypeProduct(
 }
 
 /**
- * Type guard to check if a DataTypeProduct is a json type
- */
-export function isJsonDataTypeProduct(dataType: DataTypeProduct): dataType is { json: "" } {
-  return typeof dataType === "object" && "json" in dataType;
-}
-
-/**
  * Converts DataTypeProduct to a string value for form select
  * Reuses getDataTypeStringValue logic - both use DataTypeChoice for simple types
  */
 export function getDataTypeProductStringValue(dataType: DataTypeProduct): string {
   if (isEnumDataTypeProduct(dataType)) return "enum";
   if (isBitmapDataTypeProduct(dataType)) return "bitmap";
-  if (isJsonDataTypeProduct(dataType)) return "json";
+  if (typeof dataType === "object" && "json" in dataType) return "json";
   // Reuse getDataTypeStringValue for simple types - both use DataTypeChoice
   return getDataTypeStringValue(dataType as unknown as DataTypeFunctionalProfile);
 }

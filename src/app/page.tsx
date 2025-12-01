@@ -17,7 +17,7 @@ export default function Home() {
             <CardDescription className="mt-2 text-base">
               A quick introduction to the two core areas of this tool.
               <br />
-              To start off select device or functional profile- EIDs.
+              To start off select a device or functional profile Editor
             </CardDescription>
           </CardHeader>
 

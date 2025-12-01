@@ -9,7 +9,7 @@ import { Button } from "@/sections/shared/components/shadcn/button";
 import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
 import { LibraryImportDialog } from "@/sections/shared/components/editor/library-import-dialog";
 import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/sections/shared/utils/library-api";
-import { DeviceFrame } from "@/models/product/product";
+import { DeviceFrame } from "@/models";
 import { DEBUG } from "@/debug-config";
 import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/sections/shared/constants/success-messages";

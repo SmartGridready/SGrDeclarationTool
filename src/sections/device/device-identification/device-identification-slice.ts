@@ -1,5 +1,4 @@
-import { SpecificationOwnerIdentification } from "@/models";
-import { DeviceFrame } from "@/models/product/product";
+import { SpecificationOwnerIdentification, DeviceFrame } from "@/models";
 
 type DeviceSliceStoreState = {
   device?: DeviceFrame;

@@ -1,5 +1,4 @@
-import { FunctionalProfileFrame } from "@/models";
-import { DeviceFrame } from "@/models/product/product";
+import { FunctionalProfileFrame, DeviceFrame } from "@/models";
 
 /**
  * Creates a new empty DeviceFrame with minimal required values

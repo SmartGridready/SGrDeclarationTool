@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { DeviceFrame } from "@/models/product/product";
+import { DeviceFrame } from "@/models";
 import { createEmptyDevice } from "@/sections/shared/factory";
 import {
   createDeviceIdentificationSlice,

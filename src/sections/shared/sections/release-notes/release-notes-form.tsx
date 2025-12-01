@@ -6,7 +6,7 @@ import { ArrayField } from "@/sections/shared/components/forms/array-field";
 import { FormGroup } from "@/sections/shared/components/forms/form-group";
 import { RELEASE_STATE_OPTIONS } from "@/sections/shared/sections/release-notes/release-notes-form-options";
 import { useFormSection } from "@/sections/shared/hooks/use-form-section";
-import { ReleaseState, ChangeLog } from "@/models/generic/base-types";
+import { ReleaseState, ChangeLog } from "@/models";
 import { ReleaseNotesSlice } from "@/sections/shared/sections/release-notes/release-notes-slice";
 
 interface ReleaseNotesFormProps<TStoreState extends ReleaseNotesSlice> {

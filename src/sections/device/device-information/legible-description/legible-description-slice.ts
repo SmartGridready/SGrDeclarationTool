@@ -1,4 +1,4 @@
-import { DeviceFrame } from "@/models/product/product";
+import { DeviceFrame } from "@/models";
 import {
   createLegibleDescriptionSlice,
   LegibleDescriptionSlice,

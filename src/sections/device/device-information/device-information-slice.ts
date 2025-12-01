@@ -1,4 +1,4 @@
-import { DeviceFrame } from "@/models/product/product";
+import { DeviceFrame } from "@/models";
 import { AlternativeNamesSlice } from "@/sections/shared/sections/alternative-names/alternative-names-slice";
 import { LegibleDescriptionSlice } from "@/sections/shared/sections/legible-description/legible-description-slice";
 import { createAlternativeNamesSliceForDevice } from "@/sections/device/device-information/alternative-names/alternative-names-slice";

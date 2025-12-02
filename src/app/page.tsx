@@ -9,7 +9,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="flex h-[calc(100vh-4rem-3rem)] items-center justify-center">
+    <div className="flex h-[calc(100vh-4rem-3rem)] items-center justify-center ">
       <div className="w-full max-w-3xl">
         <Card className="border-border/50 bg-[#59b886]/5">
           <CardHeader className="text-center">

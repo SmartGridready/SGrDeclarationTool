@@ -1,22 +1,16 @@
 "use client";
 
-import { useDeviceStore } from "@/sections/device/device-store";
-import { DeviceIdentificationForm } from "@/sections/device/device-identification/device-identification-form";
-import { ReleaseNotesForm } from "@/sections/device/release-notes/release-notes-form";
-import { DeviceInformationForm } from "@/sections/device/device-information/device-information-form";
+import { StandaloneDeviceFormProvider } from "@/sections/device/device-form-provider";
+import { DeviceForm as SharedDeviceForm } from "@/sections/device/device-main-form";
 
+/**
+ * Standalone Device Form
+ * Wraps the shared DeviceForm with the StandaloneDeviceFormProvider.
+ */
 export function DeviceForm() {
-  const { device } = useDeviceStore();
-
-  if (!device) {
-    return null;
-  }
-
   return (
-    <div className="space-y-6">
-      <DeviceIdentificationForm />
-      <ReleaseNotesForm />
-      <DeviceInformationForm />
-    </div>
+    <StandaloneDeviceFormProvider>
+      <SharedDeviceForm />
+    </StandaloneDeviceFormProvider>
   );
 }

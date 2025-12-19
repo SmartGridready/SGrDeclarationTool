@@ -1,39 +1,52 @@
-import { InputField } from "@/sections/shared/components/forms/input-field";
-import { ArrayField } from "@/sections/shared/components/forms/array-field";
-import { FormSection } from "@/sections/shared/components/forms/form-section";
+"use client";
+
+import { InputField } from "@/components/forms/input-field";
+import { ArrayField } from "@/components/forms/array-field";
+import { FormSection } from "@/components/forms/form-section";
 import { EnumMapProduct, EnumEntryProductRecord } from "@/models";
-import { ParameterListEnumSlice } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-slice";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
 
 interface ParameterListEnumFormProps {
   dataPointIndex: number;
   paramIndex: number;
   enumMap: EnumMapProduct;
-  enumSlice: ParameterListEnumSlice;
 }
 
 export function ParameterListEnumForm({
   dataPointIndex,
   paramIndex,
   enumMap,
-  enumSlice,
 }: ParameterListEnumFormProps) {
+  const { dataPointListActions } = useFunctionalProfileFormContext();
+
   return (
-    <FormSection title="Enum Configuration" nested>
+    <FormSection
+      title="Enum Configuration"
+      description="Define enumeration entries with literal values, ordinals and optional hex mask"
+      nested
+      required
+    >
       <InputField
         label="Hex Mask"
         name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-hexMask`}
         value={enumMap.hexMask || ""}
         onChange={(value) =>
-          enumSlice.updateParameterListEnumHexMask(dataPointIndex, paramIndex, value || undefined)
+          dataPointListActions.updateParameterListEnumHexMask(
+            dataPointIndex,
+            paramIndex,
+            value || undefined
+          )
         }
         placeholder="Enter hex mask (e.g., 0xFF)"
       />
       <ArrayField<EnumEntryProductRecord>
         label="Enum Entries"
         items={enumMap.enumEntry}
-        onAdd={() => enumSlice.addEmptyParameterListEnumEntry(dataPointIndex, paramIndex)}
+        onAdd={() =>
+          dataPointListActions.addEmptyParameterListEnumEntry(dataPointIndex, paramIndex)
+        }
         onRemove={(entryIndex) =>
-          enumSlice.removeParameterListEnumEntry(dataPointIndex, paramIndex, entryIndex)
+          dataPointListActions.removeParameterListEnumEntry(dataPointIndex, paramIndex, entryIndex)
         }
         emptyMessage="No enum entries added"
         renderItem={(entry, entryIndex) => (
@@ -43,7 +56,7 @@ export function ParameterListEnumForm({
               name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-literal`}
               value={entry.literal}
               onChange={(value) =>
-                enumSlice.updateParameterListEnumEntryLiteral(
+                dataPointListActions.updateParameterListEnumEntryLiteral(
                   dataPointIndex,
                   paramIndex,
                   entryIndex,
@@ -59,7 +72,7 @@ export function ParameterListEnumForm({
               type="number"
               value={entry.ordinal?.toString() || ""}
               onChange={(value) =>
-                enumSlice.updateParameterListEnumEntryOrdinal(
+                dataPointListActions.updateParameterListEnumEntryOrdinal(
                   dataPointIndex,
                   paramIndex,
                   entryIndex,
@@ -73,7 +86,7 @@ export function ParameterListEnumForm({
               name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-description`}
               value={entry.description || ""}
               onChange={(value) =>
-                enumSlice.updateParameterListEnumEntryDescription(
+                dataPointListActions.updateParameterListEnumEntryDescription(
                   dataPointIndex,
                   paramIndex,
                   entryIndex,

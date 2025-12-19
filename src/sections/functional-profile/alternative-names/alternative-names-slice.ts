@@ -2,13 +2,13 @@ import { FunctionalProfileFrame } from "@/models";
 import {
   createAlternativeNamesSlice,
   AlternativeNamesSlice,
-} from "@/sections/shared/sections/alternative-names/alternative-names-slice";
+} from "@/sections/shared/alternative-names/alternative-names-slice";
 
 // Re-export the interface for convenience
-export type { AlternativeNamesSlice } from "@/sections/shared/sections/alternative-names/alternative-names-slice";
+export type { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
 
 // Re-export the helper function for convenience
-export { updateAlternativeNamesField } from "@/sections/shared/sections/alternative-names/alternative-names-slice";
+export { updateAlternativeNamesField } from "@/sections/shared/alternative-names/alternative-names-slice";
 
 /**
  * Creates an alternative names slice specifically for functional profile stores

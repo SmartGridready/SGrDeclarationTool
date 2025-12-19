@@ -3,16 +3,16 @@ import { FunctionalProfileFrame } from "@/models";
 import {
   releaseNotesSchema,
   changeLogSchema,
-} from "@/sections/functional-profile/release-notes/release-notes-schema";
+} from "@/sections/shared/release-notes/release-notes-schema";
 import {
   functionalProfileIdentificationSchema,
   versionNumberSchema,
-} from "@/sections/functional-profile/profile-identification/profile-identification-schema";
-import { alternativeNamesSchema } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
-import { legibleDescriptionsSchema } from "@/sections/functional-profile/legible-description/legible-description-schema";
+} from "@/sections/shared/profile-identification/profile-identification-schema";
+import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
+import { legibleDescriptionsSchema } from "@/sections/shared/legible-description/legible-description-schema";
 import { genericAttributeListFunctionalProfileSchema } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
 import { dataPointListSchema } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
-import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
+import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
  * Main validation schemas and validators for Functional Profile models
@@ -45,14 +45,14 @@ export {
 };
 
 // Re-export types for TypeScript inference
-export type { VersionNumberInput } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
+export type { VersionNumberInput } from "@/sections/shared/profile-identification/profile-identification-schema";
 export type {
   ChangeLogInput,
   ReleaseNotesInput,
-} from "@/sections/functional-profile/release-notes/release-notes-schema";
-export type { FunctionalProfileIdentificationInput } from "@/sections/functional-profile/profile-identification/profile-identification-schema";
-export type { AlternativeNamesInput } from "@/sections/functional-profile/alternative-names/alternative-names-schema";
-export type { LegibleDescriptionsInput } from "@/sections/functional-profile/legible-description/legible-description-schema";
+} from "@/sections/shared/release-notes/release-notes-schema";
+export type { FunctionalProfileIdentificationInput } from "@/sections/shared/profile-identification/profile-identification-schema";
+export type { AlternativeNamesInput } from "@/sections/shared/alternative-names/alternative-names-schema";
+export type { LegibleDescriptionsInput } from "@/sections/shared/legible-description/legible-description-schema";
 export type { GenericAttributeListFunctionalProfileInput } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
 export type { DataPointListInput } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
 export type FunctionalProfileFrameInput = z.input<typeof functionalProfileFrameSchema>;

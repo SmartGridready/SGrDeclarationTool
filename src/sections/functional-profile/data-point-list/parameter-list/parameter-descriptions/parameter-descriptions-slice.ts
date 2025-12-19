@@ -1,11 +1,5 @@
-import { DynamicParameterDescription, Language } from "@/models";
-import {
-  SetState,
-  getDataPoint,
-  ensureArray,
-  removeArrayItem,
-  normalizeString,
-} from "@/sections/shared/utils/slice-utils";
+import { DynamicParameterDescription, Language, FunctionalProfileDataPoint } from "@/models";
+import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
 
 export interface ParameterDescriptionsSlice {
   addDataPointParameterDescription: (
@@ -45,85 +39,87 @@ export interface ParameterDescriptionsSlice {
   addEmptyDataPointParameterDescription: (dataPointIndex: number, paramIndex: number) => void;
 }
 
-export const createParameterDescriptionsSlice = (set: SetState): ParameterDescriptionsSlice => ({
-  addDataPointParameterDescription: (dataPointIndex, paramIndex, description) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param) {
-        const list = ensureArray(param.parameterDescription, () => []);
-        list.push(description);
-        param.parameterDescription = list;
-      }
-    }),
+export function createParameterDescriptionsSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
+): ParameterDescriptionsSlice {
+  return {
+    addDataPointParameterDescription: (dataPointIndex, paramIndex, description) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          const list = ensureArray(param.parameterDescription, () => []);
+          list.push(description);
+          param.parameterDescription = list;
+        }
+      }),
 
-  removeDataPointParameterDescription: (dataPointIndex, paramIndex, descIndex) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param?.parameterDescription) {
-        removeArrayItem(param.parameterDescription, descIndex, () => {
-          param.parameterDescription = undefined;
-        });
-      }
-    }),
+    removeDataPointParameterDescription: (dataPointIndex, paramIndex, descIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param?.parameterDescription) {
+          removeArrayItem(param.parameterDescription, descIndex, () => {
+            param.parameterDescription = undefined;
+          });
+        }
+      }),
 
-  updateDataPointParameterDescriptionText: (dataPointIndex, paramIndex, descIndex, text) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const desc =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-          descIndex
-        ];
-      if (desc) {
-        desc.textElement = text;
-      }
-    }),
+    updateDataPointParameterDescriptionText: (dataPointIndex, paramIndex, descIndex, text) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) desc.textElement = text;
+      }),
 
-  updateDataPointParameterDescriptionLanguage: (dataPointIndex, paramIndex, descIndex, language) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const desc =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-          descIndex
-        ];
-      if (desc) {
-        desc.language = language;
-      }
-    }),
+    updateDataPointParameterDescriptionLanguage: (
+      dataPointIndex,
+      paramIndex,
+      descIndex,
+      language
+    ) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) desc.language = language;
+      }),
 
-  updateDataPointParameterDescriptionUri: (dataPointIndex, paramIndex, descIndex, uri) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const desc =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-          descIndex
-        ];
-      if (desc) {
-        desc.uri = normalizeString(uri);
-      }
-    }),
+    updateDataPointParameterDescriptionUri: (dataPointIndex, paramIndex, descIndex, uri) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) desc.uri = normalizeString(uri);
+      }),
 
-  updateDataPointParameterDescriptionLabel: (dataPointIndex, paramIndex, descIndex, label) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const desc =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-          descIndex
-        ];
-      if (desc) {
-        desc.label = normalizeString(label);
-      }
-    }),
+    updateDataPointParameterDescriptionLabel: (dataPointIndex, paramIndex, descIndex, label) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const desc =
+          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
+            descIndex
+          ];
+        if (desc) desc.label = normalizeString(label);
+      }),
 
-  addEmptyDataPointParameterDescription: (dataPointIndex, paramIndex) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param) {
-        const list = ensureArray(param.parameterDescription, () => []);
-        list.push({ textElement: "", language: "en" });
-        param.parameterDescription = list;
-      }
-    }),
-});
+    addEmptyDataPointParameterDescription: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const dp = getDataPoint(state, dataPointIndex);
+        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+        if (param) {
+          const list = ensureArray(param.parameterDescription, () => []);
+          list.push({ textElement: "", language: "en" });
+          param.parameterDescription = list;
+        }
+      }),
+  };
+}

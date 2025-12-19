@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "@/sections/shared/components/shadcn/card";
+} from "@/components/shadcn/card";
 
 export default function Home() {
   return (
@@ -13,11 +13,12 @@ export default function Home() {
       <div className="w-full max-w-3xl">
         <Card className="border-border/50 bg-[#59b886]/5">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">SmartGridready Wizard</CardTitle>
+            <CardTitle className="text-2xl font-bold">SmartGridready Declaration Tool</CardTitle>
             <CardDescription className="mt-2 text-base">
-              A quick introduction to the two core areas of this tool.
+              Create or edit device declarations and functional profiles for SmartGridready
+              compliant systems.
               <br />
-              To start off select a device or functional profile Editor
+              Select an editor below to get started.
             </CardDescription>
           </CardHeader>
 
@@ -27,7 +28,7 @@ export default function Home() {
                 href="/devices"
                 className="block rounded-lg border border-border/40 bg-white p-6 shadow-sm transition-shadow hover:shadow-md cursor-pointer"
               >
-                <h3 className="mb-1 text-lg font-semibold">Devices</h3>
+                <h3 className="mb-1 text-lg font-semibold">Product</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   Edit or create Device EIDs
                 </p>
@@ -37,7 +38,7 @@ export default function Home() {
                 href="/functional-profiles"
                 className="block rounded-lg border border-border/40 bg-white p-6 shadow-sm transition-shadow hover:shadow-md cursor-pointer"
               >
-                <h3 className="mb-1 text-lg font-semibold">Functional Profiles</h3>
+                <h3 className="mb-1 text-lg font-semibold">Functional Profile</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   Edit or create Functional Profiles
                 </p>

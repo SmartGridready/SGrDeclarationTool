@@ -1,11 +1,10 @@
-import { EnumMapProduct, EnumEntryProductRecord } from "@/models";
 import {
-  SetState,
-  getDataPoint,
-  ensureArray,
-  removeArrayItem,
-  normalizeString,
-} from "@/sections/shared/utils/slice-utils";
+  EnumMapProduct,
+  EnumEntryProductRecord,
+  FunctionalProfileDataPoint,
+  DynamicParameterDescriptionListElement,
+} from "@/models";
+import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface ParameterListEnumSlice {
   setParameterListEnumDataType: (
@@ -49,100 +48,97 @@ export interface ParameterListEnumSlice {
   addEmptyParameterListEnumEntry: (dataPointIndex: number, paramIndex: number) => void;
 }
 
-export const createParameterListEnumSlice = (set: SetState): ParameterListEnumSlice => ({
-  setParameterListEnumDataType: (dataPointIndex, paramIndex, enumMap) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param) {
-        param.dataType = { enum: enumMap };
-      }
-    }),
+export function createParameterListEnumSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
+): ParameterListEnumSlice {
+  const getParameter = (
+    state: TState,
+    dataPointIndex: number,
+    paramIndex: number
+  ): DynamicParameterDescriptionListElement | undefined => {
+    const dp = getDataPoint(state, dataPointIndex);
+    return dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+  };
 
-  addParameterListEnumEntry: (dataPointIndex, paramIndex, entry) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "enum" in param.dataType) {
-        const enumType = param.dataType.enum;
-        const entries = ensureArray(enumType.enumEntry, () => []);
-        entries.push(entry);
-        enumType.enumEntry = entries;
-      }
-    }),
+  return {
+    setParameterListEnumDataType: (dataPointIndex, paramIndex, enumMap) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param) param.dataType = { enum: enumMap };
+      }),
 
-  removeParameterListEnumEntry: (dataPointIndex, paramIndex, entryIndex) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "enum" in param.dataType) {
-        const enumType = param.dataType.enum;
-        removeArrayItem(enumType.enumEntry, entryIndex, () => {
-          enumType.enumEntry = [];
-        });
-      }
-    }),
+    addParameterListEnumEntry: (dataPointIndex, paramIndex, entry) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "enum" in param.dataType) {
+          const enumType = param.dataType.enum;
+          const entries = ensureArray(enumType.enumEntry, () => []);
+          entries.push(entry);
+          enumType.enumEntry = entries;
+        }
+      }),
 
-  updateParameterListEnumEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const entry =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
-        "enum" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
-        dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.enum.enumEntry?.[
-          entryIndex
-        ];
-      if (entry) {
-        entry.literal = literal;
-      }
-    }),
+    removeParameterListEnumEntry: (dataPointIndex, paramIndex, entryIndex) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "enum" in param.dataType) {
+          const enumType = param.dataType.enum;
+          removeArrayItem(enumType.enumEntry, entryIndex, () => {
+            enumType.enumEntry = [];
+          });
+        }
+      }),
 
-  updateParameterListEnumEntryOrdinal: (dataPointIndex, paramIndex, entryIndex, ordinal) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const entry =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
-        "enum" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
-        dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.enum.enumEntry?.[
-          entryIndex
-        ];
-      if (entry) {
-        entry.ordinal = ordinal;
-      }
-    }),
+    updateParameterListEnumEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        const entry =
+          param?.dataType &&
+          "enum" in param.dataType &&
+          param.dataType.enum.enumEntry?.[entryIndex];
+        if (entry) entry.literal = literal;
+      }),
 
-  updateParameterListEnumEntryDescription: (dataPointIndex, paramIndex, entryIndex, description) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const entry =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
-        "enum" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
-        dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.enum.enumEntry?.[
-          entryIndex
-        ];
-      if (entry) {
-        entry.description = normalizeString(description);
-      }
-    }),
+    updateParameterListEnumEntryOrdinal: (dataPointIndex, paramIndex, entryIndex, ordinal) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        const entry =
+          param?.dataType &&
+          "enum" in param.dataType &&
+          param.dataType.enum.enumEntry?.[entryIndex];
+        if (entry) entry.ordinal = ordinal;
+      }),
 
-  updateParameterListEnumHexMask: (dataPointIndex, paramIndex, hexMask) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "enum" in param.dataType) {
-        param.dataType.enum.hexMask = normalizeString(hexMask);
-      }
-    }),
+    updateParameterListEnumEntryDescription: (
+      dataPointIndex,
+      paramIndex,
+      entryIndex,
+      description
+    ) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        const entry =
+          param?.dataType &&
+          "enum" in param.dataType &&
+          param.dataType.enum.enumEntry?.[entryIndex];
+        if (entry) entry.description = description;
+      }),
 
-  addEmptyParameterListEnumEntry: (dataPointIndex, paramIndex) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "enum" in param.dataType) {
-        const enumType = param.dataType.enum;
-        const entries = ensureArray(enumType.enumEntry, () => []);
-        entries.push({ literal: "" });
-        enumType.enumEntry = entries;
-      }
-    }),
-});
+    updateParameterListEnumHexMask: (dataPointIndex, paramIndex, hexMask) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "enum" in param.dataType) param.dataType.enum.hexMask = hexMask;
+      }),
+
+    addEmptyParameterListEnumEntry: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "enum" in param.dataType) {
+          const entries = ensureArray(param.dataType.enum.enumEntry, () => []);
+          entries.push({ literal: "" });
+          param.dataType.enum.enumEntry = entries;
+        }
+      }),
+  };
+}

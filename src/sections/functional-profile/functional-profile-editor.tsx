@@ -1,28 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { EditorActions } from "@/sections/shared/components/editor/editor-actions";
+
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { FunctionalProfileForm } from "@/sections/functional-profile/functional-profile-form";
-import { Button } from "@/sections/shared/components/shadcn/button";
-import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
-import { LibraryImportModal } from "@/sections/shared/components/editor/library-import-modal";
-import { useFileImport } from "@/sections/shared/hooks/use-file-import";
-import { useFileExport } from "@/sections/shared/hooks/use-file-export";
+
+import { useFileImport } from "@/hooks/use-file-import";
+import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/sections/functional-profile/functional-profile-builder";
 import {
   fetchFunctionalProfiles,
   fetchFunctionalProfileXml,
   LibraryItem,
-} from "@/sections/shared/utils/library-api";
+} from "@/utils/library-api";
 import { DEBUG } from "@/debug-config";
-import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
-import { SUCCESS_MESSAGES } from "@/sections/shared/constants/success-messages";
-import { INFO_MESSAGES } from "@/sections/shared/constants/info-messages";
+import { ERROR_MESSAGES } from "@/constants/error-messages";
+import { SUCCESS_MESSAGES } from "@/constants/success-messages";
+import { INFO_MESSAGES } from "@/constants/info-messages";
 import { FunctionalProfileFrame } from "@/models";
 import { toast } from "sonner";
+import { EditorActions } from "@/components/editor/editor-actions";
+import { ConfirmationDialog } from "@/components/editor/confirmation-dialog";
+import { LibraryImportModal } from "@/components/editor/library-import-modal";
+import { Button } from "@/components/shadcn/button";
 
 export default function FunctionalProfileEditor() {
   const { profile, createNew, createEmpty, clear, setProfile } = useProfileStore();
@@ -139,7 +141,7 @@ export default function FunctionalProfileEditor() {
     ) {
       loadLibraryProfiles();
     }
-  }, [showLibraryImportDialog]);
+  }, [showLibraryImportDialog, libraryProfiles.length, libraryLoading, libraryError]);
 
   const handleEmptyProfile = () => {
     if (profile) {

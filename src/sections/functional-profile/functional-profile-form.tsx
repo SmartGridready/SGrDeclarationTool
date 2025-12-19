@@ -1,13 +1,14 @@
 "use client";
 
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { ReleaseNotesForm } from "@/sections/functional-profile/release-notes/release-notes-form";
-import { ProfileIdentificationForm } from "@/sections/functional-profile/profile-identification/profile-identification-form";
-import { AlternativeNamesForm } from "@/sections/functional-profile/alternative-names/alternative-names-form";
-import { LegibleDescriptionForm } from "@/sections/functional-profile/legible-description/legible-description-form";
-import { GenericAttributeListForm } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-form";
-import { DataPointListForm } from "@/sections/functional-profile/data-point-list/data-point-list-form";
+import { StandaloneFunctionalProfileFormProvider } from "@/sections/functional-profile/functional-profile-form-provider";
+import { FunctionalProfileForm as SharedFunctionalProfileForm } from "@/sections/functional-profile/functional-profile-main-form";
 
+/**
+ * Standalone Functional Profile Form
+ * This wraps the shared FunctionalProfileForm with the provider
+ * that connects it to the standalone profile store.
+ */
 export function FunctionalProfileForm() {
   const { profile } = useProfileStore();
 
@@ -16,13 +17,8 @@ export function FunctionalProfileForm() {
   }
 
   return (
-    <div className="space-y-6">
-      <ReleaseNotesForm />
-      <ProfileIdentificationForm />
-      <AlternativeNamesForm />
-      <LegibleDescriptionForm />
-      <GenericAttributeListForm />
-      <DataPointListForm />
-    </div>
+    <StandaloneFunctionalProfileFormProvider>
+      <SharedFunctionalProfileForm />
+    </StandaloneFunctionalProfileFormProvider>
   );
 }

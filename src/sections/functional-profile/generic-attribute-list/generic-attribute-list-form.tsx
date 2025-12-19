@@ -1,28 +1,30 @@
-import { FormSection } from "@/sections/shared/components/forms/form-section";
-import { InputField } from "@/sections/shared/components/forms/input-field";
-import { ArrayField } from "@/sections/shared/components/forms/array-field";
-import { useFormSection } from "@/sections/shared/hooks/use-form-section";
+"use client";
+
+import { FormSection } from "@/components/forms/form-section";
+import { InputField } from "@/components/forms/input-field";
+import { ArrayField } from "@/components/forms/array-field";
 import { GenericAttributeFunctionalProfile } from "@/models";
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
+import {
+  useFunctionalProfileFormContext,
+  buildProfileFieldPath,
+} from "@/context/functional-profile-form-context";
 
 export function GenericAttributeListForm() {
-  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection({
-    useStore: useProfileStore,
-    useValidation: useProfileValidation,
-    stateSelector: (store) => ({
-      genericAttributes: store.profile?.genericAttributeList?.genericAttributeListElement,
-    }),
-    actionsSelector: (store) => ({
-      addEmptyGenericAttribute: store.addEmptyGenericAttribute,
-      removeGenericAttribute: store.removeGenericAttribute,
-      removeAllGenericAttributes: store.removeAllGenericAttributes,
-      updateGenericAttributeName: store.updateGenericAttributeName,
-    }),
-    isAddedSelector: (store) => !!store.profile?.genericAttributeList,
-    onAdd: (actions) => actions.addEmptyGenericAttribute(),
-    onRemove: (actions) => actions.removeAllGenericAttributes(),
-  });
+  const { useProfileState, useValidation, pathPrefix, genericAttributeListActions } =
+    useFunctionalProfileFormContext();
+
+  const state = useProfileState((profile) => ({
+    genericAttributes: profile?.genericAttributeList?.genericAttributeListElement,
+  }));
+  const isAdded = useProfileState((profile) => !!profile?.genericAttributeList);
+
+  const { getError: getRawError } = useValidation();
+  const getError = (fieldPath: string) => getRawError(buildProfileFieldPath(pathPrefix, fieldPath));
+
+  const actions = genericAttributeListActions;
+
+  const handleAdd = () => actions.addEmptyGenericAttribute();
+  const handleRemove = () => actions.removeAllGenericAttributes();
 
   return (
     <FormSection

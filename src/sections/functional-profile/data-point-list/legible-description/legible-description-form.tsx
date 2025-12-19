@@ -1,75 +1,78 @@
-import { LegibleDescriptionForm } from "@/sections/shared/sections/legible-description/legible-description-form";
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
-import { LegibleDescriptionSlice } from "@/sections/shared/sections/legible-description/legible-description-slice";
-import { StoreState } from "@/sections/functional-profile/functional-profile-store";
+"use client";
+
+import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
+import { FunctionalProfileFrame } from "@/models";
 
 interface DataPointLegibleDescriptionFormProps {
   dataPointIndex: number;
 }
 
-/**
- * Custom hook that creates an adapted store hook for a specific data point
- * This hook returns a function that can be used as a store hook
- */
 function useDataPointStoreAdapter(dataPointIndex: number) {
-  return <TSelected,>(selector: (store: StoreState & LegibleDescriptionSlice) => TSelected) => {
-    // Get the current store state (this will cause re-renders when store changes)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const store = useProfileStore();
+  const { useProfileState, dataPointListActions } = useFunctionalProfileFormContext();
 
-    // Create an adapter that implements LegibleDescriptionSlice methods
-    const adaptedStore: StoreState & LegibleDescriptionSlice = {
-      ...store,
-      // Implement LegibleDescriptionSlice methods that delegate to data point methods
-      addLegibleDescription: (legibleDescription) => {
-        // Add the provided legible description
-        const dp = store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex];
-        if (dp) {
-          const list = dp.dataPoint.legibleDescription || [];
-          if (list.length < 4) {
-            list.push(legibleDescription);
-            dp.dataPoint.legibleDescription = list;
-          }
-        }
+  return <TSelected,>(
+    selector: (store: { profile?: FunctionalProfileFrame } & LegibleDescriptionSlice) => TSelected
+  ) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const profile = useProfileState((p) => p);
+
+    const adaptedStore: { profile?: FunctionalProfileFrame } & LegibleDescriptionSlice = {
+      profile,
+      addLegibleDescription: () => {
+        dataPointListActions.addDataPointLegibleDescription(dataPointIndex);
       },
       removeLegibleDescription: (index) =>
-        store.removeDataPointLegibleDescription(dataPointIndex, index),
+        dataPointListActions.removeDataPointLegibleDescription(dataPointIndex, index),
       removeAllLegibleDescriptions: () =>
-        store.removeAllDataPointLegibleDescriptions(dataPointIndex),
+        dataPointListActions.removeAllDataPointLegibleDescriptions(dataPointIndex),
       updateTextElement: (index, textElement) =>
-        store.updateDataPointLegibleDescriptionText(dataPointIndex, index, textElement),
+        dataPointListActions.updateDataPointLegibleDescriptionText(
+          dataPointIndex,
+          index,
+          textElement
+        ),
       updateLanguage: (index, language) =>
-        store.updateDataPointLegibleDescriptionLanguage(dataPointIndex, index, language),
+        dataPointListActions.updateDataPointLegibleDescriptionLanguage(
+          dataPointIndex,
+          index,
+          language
+        ),
       updateUri: (index, uri) =>
-        store.updateDataPointLegibleDescriptionUri(dataPointIndex, index, uri),
-      addEmptyLegibleDescription: () => store.addDataPointLegibleDescription(dataPointIndex),
+        dataPointListActions.updateDataPointLegibleDescriptionUri(dataPointIndex, index, uri),
+      addEmptyLegibleDescription: () =>
+        dataPointListActions.addDataPointLegibleDescription(dataPointIndex),
     };
 
     return selector(adaptedStore);
   };
 }
 
-/**
- * Wrapper component that adapts the shared LegibleDescriptionForm for use with data points
- * It creates a store adapter that implements LegibleDescriptionSlice for a specific data point index
- */
 export function DataPointLegibleDescriptionForm({
   dataPointIndex,
 }: DataPointLegibleDescriptionFormProps) {
-  // Create a hook function that provides an adapted store with LegibleDescriptionSlice for this data point
+  const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
   const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
+
+  const fullPathPrefix = pathPrefix
+    ? `${pathPrefix}.dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`
+    : `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`;
 
   return (
     <LegibleDescriptionForm
       useStore={useAdaptedStore}
-      useValidation={useProfileValidation}
+      useValidation={useValidation}
       stateSelector={(store) => ({
         legibleDescriptions:
           store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
             ?.legibleDescription,
       })}
-      fieldPathPrefix={`dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`}
+      isAddedSelector={(store) =>
+        !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
+          ?.legibleDescription
+      }
+      fieldPathPrefix={fullPathPrefix}
       required={false}
       title="Legible Description"
       description="Human-readable descriptions for this data point (max 4)"

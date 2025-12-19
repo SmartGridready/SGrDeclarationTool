@@ -2,10 +2,10 @@ import { FunctionalProfileFrame } from "@/models";
 import {
   createReleaseNotesSlice,
   ReleaseNotesSlice,
-} from "@/sections/shared/sections/release-notes/release-notes-slice";
+} from "@/sections/shared/release-notes/release-notes-slice";
 
 // Re-export the interface for convenience
-export type { ReleaseNotesSlice } from "@/sections/shared/sections/release-notes/release-notes-slice";
+export type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 
 /**
  * Creates a release notes slice specifically for functional profile stores

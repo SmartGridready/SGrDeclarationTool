@@ -1,9 +1,11 @@
-import { InputField } from "@/sections/shared/components/forms/input-field";
-import { SelectField } from "@/sections/shared/components/forms/select-field";
-import { JsonArrayField } from "@/sections/shared/components/forms/json-array-field";
-import { FormSection } from "@/sections/shared/components/forms/form-section";
+"use client";
+
+import { InputField } from "@/components/forms/input-field";
+import { SelectField } from "@/components/forms/select-field";
+import { JsonArrayField } from "@/components/forms/json-array-field";
+import { FormSection } from "@/components/forms/form-section";
 import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
-import { JsonSlice } from "@/sections/functional-profile/data-point-list/data-types/json/json-slice";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
 import {
   isJsonArray,
   isJsonElement,
@@ -17,14 +19,11 @@ import {
 interface JsonFormProps {
   dataPointIndex: number;
   items?: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[];
-  jsonSlice: JsonSlice;
 }
 
-// Recursive JSON Items Editor Component
 interface JsonItemsEditorProps {
   dataPointIndex: number;
   items?: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[];
-  jsonSlice: JsonSlice;
   pathPrefix: string;
   level?: number;
   currentPath?: number[];
@@ -33,32 +32,41 @@ interface JsonItemsEditorProps {
 function JsonItemsEditor({
   dataPointIndex,
   items = [],
-  jsonSlice,
   pathPrefix,
   level = 0,
   currentPath = [],
 }: JsonItemsEditorProps) {
+  const { dataPointListActions } = useFunctionalProfileFormContext();
+
   const handleAddArray = () => {
-    jsonSlice.addJsonItemAtPath(dataPointIndex, currentPath, createJsonArray());
+    dataPointListActions.addJsonItemAtPath(dataPointIndex, currentPath, createJsonArray());
   };
 
   const handleAddElement = () => {
-    jsonSlice.addJsonItemAtPath(dataPointIndex, currentPath, createEmptyJsonElement());
+    dataPointListActions.addJsonItemAtPath(dataPointIndex, currentPath, createEmptyJsonElement());
   };
 
   const handleRemoveItem = (itemIndex: number) => {
-    jsonSlice.removeJsonItemAtPath(dataPointIndex, [...currentPath, itemIndex]);
+    dataPointListActions.removeJsonItemAtPath(dataPointIndex, [...currentPath, itemIndex]);
   };
 
   const handleUpdateArrayItem = (
     itemIndex: number,
     updatedItem: JSonArrayOutputFunctionalProfile
   ) => {
-    jsonSlice.updateJsonArrayItemAtPath(dataPointIndex, [...currentPath, itemIndex], updatedItem);
+    dataPointListActions.updateJsonArrayItemAtPath(
+      dataPointIndex,
+      [...currentPath, itemIndex],
+      updatedItem
+    );
   };
 
   const handleUpdateElemItem = (itemIndex: number, updatedItem: JSonElemFunctionalProfile) => {
-    jsonSlice.updateJsonElemItemAtPath(dataPointIndex, [...currentPath, itemIndex], updatedItem);
+    dataPointListActions.updateJsonElemItemAtPath(
+      dataPointIndex,
+      [...currentPath, itemIndex],
+      updatedItem
+    );
   };
 
   return (
@@ -80,17 +88,13 @@ function JsonItemsEditor({
                 name={`${pathPrefix}-json-${itemIndex}-name`}
                 value={jsonItem.name || ""}
                 onChange={(value) => {
-                  handleUpdateArrayItem(itemIndex, {
-                    ...jsonItem,
-                    name: value,
-                  });
+                  handleUpdateArrayItem(itemIndex, { ...jsonItem, name: value });
                 }}
                 placeholder="Enter array name"
               />
               <JsonItemsEditor
                 dataPointIndex={dataPointIndex}
                 items={jsonItem.items}
-                jsonSlice={jsonSlice}
                 pathPrefix={`${pathPrefix}-json-${itemIndex}`}
                 level={level + 1}
                 currentPath={[...currentPath, itemIndex]}
@@ -108,10 +112,7 @@ function JsonItemsEditor({
                 name={`${pathPrefix}-json-${itemIndex}-key`}
                 value={jsonItem.key}
                 onChange={(value) => {
-                  handleUpdateElemItem(itemIndex, {
-                    ...jsonItem,
-                    key: value,
-                  });
+                  handleUpdateElemItem(itemIndex, { ...jsonItem, key: value });
                 }}
                 placeholder="Enter key"
                 required={true}
@@ -119,7 +120,7 @@ function JsonItemsEditor({
               <SelectField
                 label="Type"
                 name={`${pathPrefix}-json-${itemIndex}-type`}
-                options={JSON_ELEMENT_TYPE_OPTIONS}
+                options={JSON_ELEMENT_TYPE_OPTIONS as unknown as { value: string; label: string }[]}
                 value={getJsonElementType(jsonItem)}
                 onChange={(value) => {
                   handleUpdateElemItem(
@@ -139,13 +140,17 @@ function JsonItemsEditor({
   );
 }
 
-export function JsonForm({ dataPointIndex, items, jsonSlice }: JsonFormProps) {
+export function JsonForm({ dataPointIndex, items }: JsonFormProps) {
   return (
-    <FormSection title="JSON Configuration" nested>
+    <FormSection
+      title="JSON Configuration"
+      description="Define JSON structure with elements and nested arrays"
+      nested
+      required
+    >
       <JsonItemsEditor
         dataPointIndex={dataPointIndex}
         items={items}
-        jsonSlice={jsonSlice}
         pathPrefix={`dataPoint-${dataPointIndex}`}
         currentPath={[]}
       />

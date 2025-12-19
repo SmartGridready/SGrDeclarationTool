@@ -1,30 +1,43 @@
-import { InputField } from "@/sections/shared/components/forms/input-field";
-import { ArrayField } from "@/sections/shared/components/forms/array-field";
-import { FormSection } from "@/sections/shared/components/forms/form-section";
+"use client";
+
+import { InputField } from "@/components/forms/input-field";
+import { ArrayField } from "@/components/forms/array-field";
+import { FormSection } from "@/components/forms/form-section";
 import { BitmapProduct, BitmapEntryProduct } from "@/models";
-import { ParameterListBitmapSlice } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-slice";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
 
 interface ParameterListBitmapFormProps {
   dataPointIndex: number;
   paramIndex: number;
   bitmap: BitmapProduct;
-  bitmapSlice: ParameterListBitmapSlice;
 }
 
 export function ParameterListBitmapForm({
   dataPointIndex,
   paramIndex,
   bitmap,
-  bitmapSlice,
 }: ParameterListBitmapFormProps) {
+  const { dataPointListActions } = useFunctionalProfileFormContext();
+
   return (
-    <FormSection title="Bitmap Configuration" nested>
+    <FormSection
+      title="Bitmap Configuration"
+      description="Define bitmap entries with literal values, hex masks and descriptions"
+      nested
+      required
+    >
       <ArrayField<BitmapEntryProduct>
         label="Bitmap Entries"
         items={bitmap.bitmapEntry}
-        onAdd={() => bitmapSlice.addEmptyParameterListBitmapEntry(dataPointIndex, paramIndex)}
+        onAdd={() =>
+          dataPointListActions.addEmptyParameterListBitmapEntry(dataPointIndex, paramIndex)
+        }
         onRemove={(entryIndex) =>
-          bitmapSlice.removeParameterListBitmapEntry(dataPointIndex, paramIndex, entryIndex)
+          dataPointListActions.removeParameterListBitmapEntry(
+            dataPointIndex,
+            paramIndex,
+            entryIndex
+          )
         }
         emptyMessage="No bitmap entries added"
         renderItem={(entry, entryIndex) => (
@@ -34,7 +47,7 @@ export function ParameterListBitmapForm({
               name={`dataPoint-${dataPointIndex}-param-${paramIndex}-bitmap-${entryIndex}-literal`}
               value={entry.literal}
               onChange={(value) =>
-                bitmapSlice.updateParameterListBitmapEntryLiteral(
+                dataPointListActions.updateParameterListBitmapEntryLiteral(
                   dataPointIndex,
                   paramIndex,
                   entryIndex,
@@ -49,7 +62,7 @@ export function ParameterListBitmapForm({
               name={`dataPoint-${dataPointIndex}-param-${paramIndex}-bitmap-${entryIndex}-hexMask`}
               value={entry.hexMask}
               onChange={(value) =>
-                bitmapSlice.updateParameterListBitmapEntryHexMask(
+                dataPointListActions.updateParameterListBitmapEntryHexMask(
                   dataPointIndex,
                   paramIndex,
                   entryIndex,
@@ -64,7 +77,7 @@ export function ParameterListBitmapForm({
               name={`dataPoint-${dataPointIndex}-param-${paramIndex}-bitmap-${entryIndex}-description`}
               value={entry.description || ""}
               onChange={(value) =>
-                bitmapSlice.updateParameterListBitmapEntryDescription(
+                dataPointListActions.updateParameterListBitmapEntryDescription(
                   dataPointIndex,
                   paramIndex,
                   entryIndex,

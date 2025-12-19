@@ -1,10 +1,4 @@
-import { SpecificationOwnerIdentification, DeviceFrame } from "@/models";
-
-type DeviceSliceStoreState = {
-  device?: DeviceFrame;
-};
-
-type SetState = (fn: (state: DeviceSliceStoreState) => void) => void;
+import { DeviceFrame, SpecificationOwnerIdentification } from "@/models";
 
 export interface DeviceIdentificationSlice {
   updateDeviceName: (deviceName: string) => void;
@@ -14,25 +8,32 @@ export interface DeviceIdentificationSlice {
   ) => void;
 }
 
-export const createDeviceIdentificationSlice = (set: SetState): DeviceIdentificationSlice => ({
-  updateDeviceName: (value) =>
-    set((state) => {
-      if (state.device) {
-        state.device.deviceName = value;
-      }
-    }),
+/**
+ * Creates a device identification slice specifically for device stores
+ * This is a convenience function that pre-configures the getters/setters
+ */
+export function createDeviceIdentificationSlice<TState extends { device?: DeviceFrame }>(
+  set: (fn: (state: TState) => void) => void
+): DeviceIdentificationSlice {
+  const getDevice = (state: TState) => state.device;
 
-  updateManufacturerName: (value) =>
-    set((state) => {
-      if (state.device) {
-        state.device.manufacturerName = value;
-      }
-    }),
+  return {
+    updateDeviceName: (value) =>
+      set((state) => {
+        const device = getDevice(state);
+        if (device) device.deviceName = value;
+      }),
 
-  updateSpecificationOwnerIdentification: (value) =>
-    set((state) => {
-      if (state.device) {
-        state.device.specificationOwnerIdentification = value;
-      }
-    }),
-});
+    updateManufacturerName: (value) =>
+      set((state) => {
+        const device = getDevice(state);
+        if (device) device.manufacturerName = value;
+      }),
+
+    updateSpecificationOwnerIdentification: (value) =>
+      set((state) => {
+        const device = getDevice(state);
+        if (device) device.specificationOwnerIdentification = value;
+      }),
+  };
+}

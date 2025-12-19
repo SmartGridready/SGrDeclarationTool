@@ -2,10 +2,10 @@ import { FunctionalProfileFrame } from "@/models";
 import {
   createLegibleDescriptionSlice,
   LegibleDescriptionSlice,
-} from "@/sections/shared/sections/legible-description/legible-description-slice";
+} from "@/sections/shared/legible-description/legible-description-slice";
 
 // Re-export the interface for convenience
-export type { LegibleDescriptionSlice } from "@/sections/shared/sections/legible-description/legible-description-slice";
+export type { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 
 /**
  * Creates a legible description slice specifically for functional profile stores

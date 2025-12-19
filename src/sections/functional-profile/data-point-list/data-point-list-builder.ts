@@ -8,12 +8,14 @@ import {
   DynamicParameterDescription,
   DataTypeProduct,
 } from "@/models";
-import { validateDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
+import {
+  validateDataPointList,
+  parameterListSchema,
+} from "@/sections/functional-profile/data-point-list/data-point-list-schema";
 import { validateGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
-import { parameterListSchema } from "@/sections/functional-profile/data-point-list/data-point-list-schema";
-import { validateWithSchema } from "@/sections/shared/utils/validation-utils";
-import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
-import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
+import { validateWithSchema } from "@/utils/validation-utils";
+import { buildLegibleDescription } from "@/sections/shared/legible-description/legible-description-builder";
+import { buildAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-builder";
 import {
   EnumMapFunctionalProfile,
   EnumEntryRecordFunctionalProfile,
@@ -38,7 +40,7 @@ import {
   setOptionalXmlField,
   wrapInArray,
   setOptionalXmlArray,
-} from "@/sections/shared/utils/builder-utils";
+} from "@/utils/builder-utils";
 
 /**
  * Builds XML object for dataPointList from FunctionalProfileDataPointList model

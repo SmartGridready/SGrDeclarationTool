@@ -1,7 +1,9 @@
 import {
   AlternativeNames,
+  DeviceCategory,
   LegibleDescription,
   LevelOfOperation,
+  PowerSource,
   ReleaseNotes,
   SpecificationOwnerIdentification,
   VersionNumber,
@@ -21,18 +23,20 @@ export interface DeviceFrame {
 export interface DeviceInformation {
   alternativeNames?: AlternativeNames;
   legibleDescription?: LegibleDescription[]; // maxOccurs="4"
-  // deviceCategory: DeviceCategory;
+  deviceCategory: DeviceCategory;
   isLocalControl: boolean;
   softwareRevision?: string;
   hardwareRevision?: string;
   brandName?: string;
-  //powerSource?: PowerSource;
+  powerSource?: PowerSource;
   nominalPower?: string;
   manufacturerSpecificationIdentification?: string;
   manufacturerLabel?: string;
   generalRemarks?: string;
   levelOfOperation?: LevelOfOperation;
   versionNumber?: VersionNumber;
-  // testState?: TestState;
+  testState?: TestState;
   programmerHints?: LegibleDescription[]; // maxOccurs="4"
 }
+
+export type TestState = "None" | "Tested" | "Confirmed" | "Verified";

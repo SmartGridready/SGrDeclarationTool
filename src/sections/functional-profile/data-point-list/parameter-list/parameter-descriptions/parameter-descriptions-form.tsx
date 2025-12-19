@@ -1,18 +1,19 @@
-import { FormSection } from "@/sections/shared/components/forms/form-section";
-import { InputField } from "@/sections/shared/components/forms/input-field";
-import { SelectField } from "@/sections/shared/components/forms/select-field";
-import { TextareaField } from "@/sections/shared/components/forms/textarea-field";
-import { ArrayField } from "@/sections/shared/components/forms/array-field";
-import { FormGroup } from "@/sections/shared/components/forms/form-group";
+"use client";
+
+import { FormSection } from "@/components/forms/form-section";
+import { InputField } from "@/components/forms/input-field";
+import { SelectField } from "@/components/forms/select-field";
+import { TextareaField } from "@/components/forms/textarea-field";
+import { ArrayField } from "@/components/forms/array-field";
+import { FormGroup } from "@/components/forms/form-group";
 import { DynamicParameterDescription, Language } from "@/models";
-import { ParameterDescriptionsSlice } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-descriptions/parameter-descriptions-slice";
-import { LANGUAGE_OPTIONS } from "@/sections/shared/sections/legible-description/legible-description-form-options";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { LANGUAGE_OPTIONS } from "@/sections/shared/legible-description/legible-description-form-options";
 
 interface ParameterDescriptionsFormProps {
   dataPointIndex: number;
   paramIndex: number;
   parameterDescriptions: DynamicParameterDescription[] | undefined;
-  parameterDescriptionsSlice: ParameterDescriptionsSlice;
   getError: (path: string) => string | undefined;
 }
 
@@ -20,22 +21,20 @@ export function ParameterDescriptionsForm({
   dataPointIndex,
   paramIndex,
   parameterDescriptions,
-  parameterDescriptionsSlice,
   getError,
 }: ParameterDescriptionsFormProps) {
+  const { dataPointListActions } = useFunctionalProfileFormContext();
+
   return (
     <FormSection title="Parameter Descriptions" nested>
       <ArrayField
         label="Descriptions"
         items={parameterDescriptions}
         onAdd={() =>
-          parameterDescriptionsSlice.addEmptyDataPointParameterDescription(
-            dataPointIndex,
-            paramIndex
-          )
+          dataPointListActions.addEmptyDataPointParameterDescription(dataPointIndex, paramIndex)
         }
         onRemove={(descIndex) =>
-          parameterDescriptionsSlice.removeDataPointParameterDescription(
+          dataPointListActions.removeDataPointParameterDescription(
             dataPointIndex,
             paramIndex,
             descIndex
@@ -49,7 +48,7 @@ export function ParameterDescriptionsForm({
               name={`dataPoint-${dataPointIndex}-param-${paramIndex}-desc-${descIndex}-text`}
               value={desc.textElement}
               onChange={(value) =>
-                parameterDescriptionsSlice.updateDataPointParameterDescriptionText(
+                dataPointListActions.updateDataPointParameterDescriptionText(
                   dataPointIndex,
                   paramIndex,
                   descIndex,
@@ -70,7 +69,7 @@ export function ParameterDescriptionsForm({
                 options={LANGUAGE_OPTIONS}
                 value={desc.language}
                 onChange={(value) =>
-                  parameterDescriptionsSlice.updateDataPointParameterDescriptionLanguage(
+                  dataPointListActions.updateDataPointParameterDescriptionLanguage(
                     dataPointIndex,
                     paramIndex,
                     descIndex,
@@ -88,7 +87,7 @@ export function ParameterDescriptionsForm({
                 type="text"
                 value={desc.uri || ""}
                 onChange={(value) =>
-                  parameterDescriptionsSlice.updateDataPointParameterDescriptionUri(
+                  dataPointListActions.updateDataPointParameterDescriptionUri(
                     dataPointIndex,
                     paramIndex,
                     descIndex,
@@ -107,7 +106,7 @@ export function ParameterDescriptionsForm({
                 type="text"
                 value={desc.label || ""}
                 onChange={(value) =>
-                  parameterDescriptionsSlice.updateDataPointParameterDescriptionLabel(
+                  dataPointListActions.updateDataPointParameterDescriptionLabel(
                     dataPointIndex,
                     paramIndex,
                     descIndex,

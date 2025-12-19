@@ -1,11 +1,5 @@
-import { DataTypeProduct } from "@/models";
-import {
-  SetState,
-  getDataPoint,
-  ensureArray,
-  removeArrayItem,
-  normalizeString,
-} from "@/sections/shared/utils/slice-utils";
+import { DataTypeProduct, FunctionalProfileDataPoint } from "@/models";
+import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
 import {
   createParameterListEnumSlice,
   ParameterListEnumSlice,
@@ -14,9 +8,6 @@ import {
   createParameterListBitmapSlice,
   ParameterListBitmapSlice,
 } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-slice";
-// Note: JSON data type for parameter lists (DataTypeProduct.json) is just an empty string (EmptyValue = "")
-// Unlike DataTypeFunctionalProfile.json which has a complex JSonOutputFunctionalProfile structure,
-// DataTypeProduct.json is simply { json: "" } and requires no slice, form component, or configuration.
 import {
   createParameterDescriptionsSlice,
   ParameterDescriptionsSlice,
@@ -26,7 +17,6 @@ export interface ParameterListSlice
   extends ParameterListEnumSlice,
     ParameterListBitmapSlice,
     ParameterDescriptionsSlice {
-  // ParameterList operations for data points
   addDataPointParameterList: (dataPointIndex: number) => void;
   removeDataPointParameterList: (dataPointIndex: number) => void;
   addDataPointParameterListElement: (dataPointIndex: number) => void;
@@ -48,46 +38,38 @@ export interface ParameterListSlice
   ) => void;
 }
 
-export const createParameterListSlice = (set: SetState): ParameterListSlice => {
-  const enumSlice = createParameterListEnumSlice(set);
-  const bitmapSlice = createParameterListBitmapSlice(set);
-  // JSON slice not needed - DataTypeProduct.json is just { json: "" }, no configuration required
-  const descriptionsSlice = createParameterDescriptionsSlice(set);
+export function createParameterListSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
+): ParameterListSlice {
+  const enumSlice = createParameterListEnumSlice(set, getDataPoint);
+  const bitmapSlice = createParameterListBitmapSlice(set, getDataPoint);
+  const descriptionsSlice = createParameterDescriptionsSlice(set, getDataPoint);
 
   return {
     ...enumSlice,
     ...bitmapSlice,
     ...descriptionsSlice,
 
-    // ParameterList operations
     addDataPointParameterList: (dataPointIndex) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          dp.dataPoint.parameterList = {};
-        }
+        if (dp) dp.dataPoint.parameterList = {};
       }),
 
     removeDataPointParameterList: (dataPointIndex) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          dp.dataPoint.parameterList = undefined;
-        }
+        if (dp) dp.dataPoint.parameterList = undefined;
       }),
 
     addDataPointParameterListElement: (dataPointIndex) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         if (dp) {
-          if (!dp.dataPoint.parameterList) {
-            dp.dataPoint.parameterList = {};
-          }
+          if (!dp.dataPoint.parameterList) dp.dataPoint.parameterList = {};
           const list = ensureArray(dp.dataPoint.parameterList.parameterListElement, () => []);
-          list.push({
-            name: "",
-            dataType: { float64: {} },
-          });
+          list.push({ name: "", dataType: { float64: {} } });
           dp.dataPoint.parameterList.parameterListElement = list;
         }
       }),
@@ -97,9 +79,8 @@ export const createParameterListSlice = (set: SetState): ParameterListSlice => {
         const dp = getDataPoint(state, dataPointIndex);
         if (dp?.dataPoint.parameterList?.parameterListElement) {
           removeArrayItem(dp.dataPoint.parameterList.parameterListElement, paramIndex, () => {
-            if (dp.dataPoint.parameterList) {
+            if (dp.dataPoint.parameterList)
               dp.dataPoint.parameterList.parameterListElement = undefined;
-            }
           });
         }
       }),
@@ -108,27 +89,21 @@ export const createParameterListSlice = (set: SetState): ParameterListSlice => {
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-        if (param) {
-          param.name = name;
-        }
+        if (param) param.name = name;
       }),
 
     updateDataPointParameterListElementDataType: (dataPointIndex, paramIndex, dataType) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-        if (param) {
-          param.dataType = dataType;
-        }
+        if (param) param.dataType = dataType;
       }),
 
     updateDataPointParameterListElementDefaultValue: (dataPointIndex, paramIndex, defaultValue) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-        if (param) {
-          param.defaultValue = normalizeString(defaultValue);
-        }
+        if (param) param.defaultValue = normalizeString(defaultValue);
       }),
   };
-};
+}

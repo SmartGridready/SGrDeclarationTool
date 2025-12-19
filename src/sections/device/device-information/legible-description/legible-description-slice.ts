@@ -2,10 +2,10 @@ import { DeviceFrame } from "@/models";
 import {
   createLegibleDescriptionSlice,
   LegibleDescriptionSlice,
-} from "@/sections/shared/sections/legible-description/legible-description-slice";
+} from "@/sections/shared/legible-description/legible-description-slice";
 
 // Re-export the interface for convenience
-export type { LegibleDescriptionSlice } from "@/sections/shared/sections/legible-description/legible-description-slice";
+export type { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 
 /**
  * Creates a legible description slice specifically for device stores
@@ -18,10 +18,7 @@ export function createLegibleDescriptionSliceForDevice<TState extends { device?:
     set,
     (state) => state.device?.deviceInformation?.legibleDescription,
     (state, legibleDescriptions) => {
-      if (state.device) {
-        if (!state.device.deviceInformation) {
-          state.device.deviceInformation = { isLocalControl: false };
-        }
+      if (state.device?.deviceInformation) {
         state.device.deviceInformation.legibleDescription = legibleDescriptions;
       }
     },

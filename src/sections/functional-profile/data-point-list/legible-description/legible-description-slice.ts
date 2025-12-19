@@ -1,8 +1,7 @@
-import { SetState, getDataPoint } from "@/sections/shared/utils/slice-utils";
-import { Language } from "@/models";
+import { FunctionalProfileDataPoint, Language } from "@/models";
+import { normalizeString } from "@/utils/slice-utils";
 
 export interface DataPointLegibleDescriptionSlice {
-  // LegibleDescription operations for data points
   addDataPointLegibleDescription: (dataPointIndex: number) => void;
   removeDataPointLegibleDescription: (dataPointIndex: number, descIndex: number) => void;
   removeAllDataPointLegibleDescriptions: (dataPointIndex: number) => void;
@@ -24,11 +23,12 @@ export interface DataPointLegibleDescriptionSlice {
 }
 
 /**
- * Creates legible description slice for data points
+ * Creates a generic data point legible description slice that works with any store state
  */
-export const createDataPointLegibleDescriptionSlice = (
-  set: SetState
-): DataPointLegibleDescriptionSlice => {
+export function createDataPointLegibleDescriptionSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
+): DataPointLegibleDescriptionSlice {
   return {
     addDataPointLegibleDescription: (dataPointIndex) =>
       set((state) => {
@@ -49,9 +49,7 @@ export const createDataPointLegibleDescriptionSlice = (
           const list = dp.dataPoint.legibleDescription;
           if (descIndex >= 0 && descIndex < list.length) {
             list.splice(descIndex, 1);
-            if (list.length === 0) {
-              dp.dataPoint.legibleDescription = undefined;
-            }
+            if (list.length === 0) dp.dataPoint.legibleDescription = undefined;
           }
         }
       }),
@@ -59,36 +57,28 @@ export const createDataPointLegibleDescriptionSlice = (
     removeAllDataPointLegibleDescriptions: (dataPointIndex) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
-        if (dp) {
-          dp.dataPoint.legibleDescription = undefined;
-        }
+        if (dp) dp.dataPoint.legibleDescription = undefined;
       }),
 
     updateDataPointLegibleDescriptionText: (dataPointIndex, descIndex, text) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) {
-          desc.textElement = text;
-        }
+        if (desc) desc.textElement = text;
       }),
 
     updateDataPointLegibleDescriptionLanguage: (dataPointIndex, descIndex, language) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) {
-          desc.language = language;
-        }
+        if (desc) desc.language = language;
       }),
 
     updateDataPointLegibleDescriptionUri: (dataPointIndex, descIndex, uri) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) {
-          desc.uri = uri;
-        }
+        if (desc) desc.uri = normalizeString(uri);
       }),
   };
-};
+}

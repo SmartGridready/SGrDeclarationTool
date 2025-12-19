@@ -1,23 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { EditorActions } from "@/sections/shared/components/editor/editor-actions";
+
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { DeviceForm } from "@/sections/device/device-form";
-import { Button } from "@/sections/shared/components/shadcn/button";
-import { ConfirmationDialog } from "@/sections/shared/components/editor/confirmation-dialog";
-import { LibraryImportModal } from "@/sections/shared/components/editor/library-import-modal";
-import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/sections/shared/utils/library-api";
+
+import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/utils/library-api";
 import { DeviceFrame } from "@/models";
 import { DEBUG } from "@/debug-config";
-import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
-import { SUCCESS_MESSAGES } from "@/sections/shared/constants/success-messages";
-import { INFO_MESSAGES } from "@/sections/shared/constants/info-messages";
+import { ERROR_MESSAGES } from "@/constants/error-messages";
+import { SUCCESS_MESSAGES } from "@/constants/success-messages";
+import { INFO_MESSAGES } from "@/constants/info-messages";
 import { toast } from "sonner";
+import { EditorActions } from "@/components/editor/editor-actions";
+import { ConfirmationDialog } from "@/components/editor/confirmation-dialog";
+import { LibraryImportModal } from "@/components/editor/library-import-modal";
+import { Button } from "@/components/shadcn/button";
 
 // Placeholder function for device parsing - to be implemented when device mapper is created
-async function parseDevice(xmlString: string): Promise<DeviceFrame> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function parseDevice(_xmlString: string): Promise<DeviceFrame> {
   // TODO: Implement device mapper similar to parseFunctionalProfile
   throw new Error("Device mapper not yet implemented. Please use filesystem import for now.");
 }
@@ -139,7 +142,7 @@ export default function DeviceEditor() {
     ) {
       loadLibraryDevices();
     }
-  }, [showLibraryImportDialog]);
+  }, [showLibraryImportDialog, libraryDevices.length, libraryLoading, libraryError]);
 
   const handleDebugPrint = () => {
     if (device) {

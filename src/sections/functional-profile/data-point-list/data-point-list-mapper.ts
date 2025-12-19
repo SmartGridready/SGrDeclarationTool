@@ -20,12 +20,12 @@ import {
   getOptionalStringValue,
   mapSimpleDataType,
   setOptionalField,
-} from "@/sections/shared/utils/mapper-utils";
+} from "@/utils/mapper-utils";
 import {
   mapLegibleDescription,
   mapLegibleDescriptionItem,
-} from "@/sections/functional-profile/legible-description/legible-description-mapper";
-import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
+} from "@/sections/shared/legible-description/legible-description-mapper";
+import { mapAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-mapper";
 import { mapGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-mapper";
 import {
   EnumMapFunctionalProfile,

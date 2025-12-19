@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Button } from "@/sections/shared/components/shadcn/button";
+import { Button } from "@/components/shadcn/button";
 import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/sections/functional-profile/functional-profile-builder";
 import { diffLines } from "diff";

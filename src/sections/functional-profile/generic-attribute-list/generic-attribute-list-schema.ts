@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { GenericAttributeFunctionalProfile, GenericAttributeListFunctionalProfile } from "@/models";
-import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
+import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
  * Generic Attribute List validation schemas and validators

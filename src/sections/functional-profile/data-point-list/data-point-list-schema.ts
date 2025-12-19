@@ -6,9 +6,9 @@ import {
   DATA_TYPE_OPTIONS,
   UNIT_OPTIONS,
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
-import { legibleDescriptionSchema } from "@/sections/shared/sections/legible-description/legible-description-schema";
-import { alternativeNamesSchema } from "@/sections/shared/sections/alternative-names/alternative-names-schema";
-import { ValidationResult, validateWithSchema } from "@/sections/shared/utils/validation-utils";
+import { legibleDescriptionSchema } from "@/sections/shared/legible-description/legible-description-schema";
+import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
+import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
  * Generic Attribute List validation schemas (for data points)

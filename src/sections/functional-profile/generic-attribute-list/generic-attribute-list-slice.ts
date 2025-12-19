@@ -1,5 +1,9 @@
-import { GenericAttributeFunctionalProfile } from "@/models";
-import { SetState, ensureArray, removeArrayItem } from "@/sections/shared/utils/slice-utils";
+import {
+  FunctionalProfileFrame,
+  GenericAttributeFunctionalProfile,
+  GenericAttributeListFunctionalProfile,
+} from "@/models";
+import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface GenericAttributeListSlice {
   // Main operations
@@ -18,70 +22,73 @@ const createEmptyGenericAttribute = (): GenericAttributeFunctionalProfile => ({
   name: "",
 });
 
-export const createGenericAttributeListSlice = (set: SetState): GenericAttributeListSlice => ({
-  addGenericAttribute: (attribute) =>
-    set((state) => {
-      if (state.profile) {
-        const list = ensureArray(
-          state.profile.genericAttributeList?.genericAttributeListElement,
-          () => []
-        );
-        list.push(attribute);
-        if (!state.profile.genericAttributeList) {
-          state.profile.genericAttributeList = {
-            genericAttributeListElement: list,
-          };
+/**
+ * Creates a generic attribute list slice specifically for functional profile stores
+ * This is a convenience function that pre-configures the getters/setters
+ */
+export function createGenericAttributeListSlice<
+  TState extends { profile?: FunctionalProfileFrame },
+>(set: (fn: (state: TState) => void) => void): GenericAttributeListSlice {
+  const getGenericAttributeList = (state: TState) => state.profile?.genericAttributeList;
+  const setGenericAttributeList = (
+    state: TState,
+    list: GenericAttributeListFunctionalProfile | undefined
+  ) => {
+    if (state.profile) {
+      state.profile.genericAttributeList = list;
+    }
+  };
+
+  return {
+    addGenericAttribute: (attribute) =>
+      set((state) => {
+        const currentList = getGenericAttributeList(state);
+        if (currentList) {
+          const list = ensureArray(currentList.genericAttributeListElement, () => []);
+          list.push(attribute);
+          currentList.genericAttributeListElement = list;
         } else {
-          state.profile.genericAttributeList.genericAttributeListElement = list;
+          setGenericAttributeList(state, {
+            genericAttributeListElement: [attribute],
+          });
         }
-      }
-    }),
+      }),
 
-  removeGenericAttribute: (index) =>
-    set((state) => {
-      if (state.profile?.genericAttributeList?.genericAttributeListElement) {
-        removeArrayItem(
-          state.profile.genericAttributeList.genericAttributeListElement,
-          index,
-          () => {
-            if (state.profile) {
-              state.profile.genericAttributeList = undefined;
-            }
-          }
-        );
-      }
-    }),
+    removeGenericAttribute: (index) =>
+      set((state) => {
+        const currentList = getGenericAttributeList(state);
+        if (currentList?.genericAttributeListElement) {
+          removeArrayItem(currentList.genericAttributeListElement, index, () => {
+            setGenericAttributeList(state, undefined);
+          });
+        }
+      }),
 
-  removeAllGenericAttributes: () =>
-    set((state) => {
-      if (state.profile) {
-        state.profile.genericAttributeList = undefined;
-      }
-    }),
+    removeAllGenericAttributes: () =>
+      set((state) => {
+        setGenericAttributeList(state, undefined);
+      }),
 
-  updateGenericAttributeName: (index, name) =>
-    set((state) => {
-      const attributeArray = state.profile?.genericAttributeList?.genericAttributeListElement;
-      if (attributeArray?.[index]) {
-        attributeArray[index] = { ...attributeArray[index], name };
-      }
-    }),
+    updateGenericAttributeName: (index, name) =>
+      set((state) => {
+        const attributeArray = getGenericAttributeList(state)?.genericAttributeListElement;
+        if (attributeArray?.[index]) {
+          attributeArray[index] = { ...attributeArray[index], name };
+        }
+      }),
 
-  addEmptyGenericAttribute: () =>
-    set((state) => {
-      if (state.profile) {
-        const list = ensureArray(
-          state.profile.genericAttributeList?.genericAttributeListElement,
-          () => []
-        );
-        list.push(createEmptyGenericAttribute());
-        if (!state.profile.genericAttributeList) {
-          state.profile.genericAttributeList = {
-            genericAttributeListElement: list,
-          };
+    addEmptyGenericAttribute: () =>
+      set((state) => {
+        const currentList = getGenericAttributeList(state);
+        if (currentList) {
+          const list = ensureArray(currentList.genericAttributeListElement, () => []);
+          list.push(createEmptyGenericAttribute());
+          currentList.genericAttributeListElement = list;
         } else {
-          state.profile.genericAttributeList.genericAttributeListElement = list;
+          setGenericAttributeList(state, {
+            genericAttributeListElement: [createEmptyGenericAttribute()],
+          });
         }
-      }
-    }),
-});
+      }),
+  };
+}

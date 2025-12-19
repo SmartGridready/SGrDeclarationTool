@@ -1,5 +1,5 @@
 import { GenericAttributeListFunctionalProfile } from "@/models";
-import { mapArray, getStringValue } from "@/sections/shared/utils/mapper-utils";
+import { mapArray, getStringValue } from "@/utils/mapper-utils";
 
 /**
  * Maps XML genericAttributeList to GenericAttributeListFunctionalProfile model

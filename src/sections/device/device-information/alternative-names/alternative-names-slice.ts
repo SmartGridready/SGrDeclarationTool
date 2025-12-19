@@ -2,10 +2,10 @@ import { DeviceFrame } from "@/models";
 import {
   createAlternativeNamesSlice,
   AlternativeNamesSlice,
-} from "@/sections/shared/sections/alternative-names/alternative-names-slice";
+} from "@/sections/shared/alternative-names/alternative-names-slice";
 
 // Re-export the interface for convenience
-export type { AlternativeNamesSlice } from "@/sections/shared/sections/alternative-names/alternative-names-slice";
+export type { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
 
 /**
  * Creates an alternative names slice specifically for device stores
@@ -18,10 +18,7 @@ export function createAlternativeNamesSliceForDevice<TState extends { device?: D
     set,
     (state) => state.device?.deviceInformation?.alternativeNames,
     (state, alternativeNames) => {
-      if (state.device) {
-        if (!state.device.deviceInformation) {
-          state.device.deviceInformation = { isLocalControl: false };
-        }
+      if (state.device?.deviceInformation) {
         state.device.deviceInformation.alternativeNames = alternativeNames;
       }
     },

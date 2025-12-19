@@ -1,6 +1,6 @@
 import { GenericAttributeListFunctionalProfile } from "@/models";
 import { validateGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-schema";
-import { wrapInArray } from "@/sections/shared/utils/builder-utils";
+import { wrapInArray } from "@/utils/builder-utils";
 
 /**
  * Builds XML object for genericAttributeList from GenericAttributeListFunctionalProfile model

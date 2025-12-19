@@ -1,13 +1,13 @@
 import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
-import { getFirstElement, setOptionalField } from "@/sections/shared/utils/mapper-utils";
-import { mapReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-mapper";
-import { mapProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-mapper";
-import { mapAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-mapper";
-import { mapLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-mapper";
+import { getFirstElement, setOptionalField } from "@/utils/mapper-utils";
+import { mapReleaseNotes } from "@/sections/shared/release-notes/release-notes-mapper";
+import { mapProfileIdentification } from "@/sections/shared/profile-identification/profile-identification-mapper";
+import { mapAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-mapper";
+import { mapLegibleDescription } from "@/sections/shared/legible-description/legible-description-mapper";
 import { mapGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-mapper";
 import { mapDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-mapper";
-import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
+import { ERROR_MESSAGES } from "@/constants/error-messages";
 
 /**
  * Parses XML string and maps it to FunctionalProfileFrame model

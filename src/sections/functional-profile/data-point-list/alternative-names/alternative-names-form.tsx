@@ -1,58 +1,66 @@
-import { AlternativeNamesForm } from "@/sections/shared/sections/alternative-names/alternative-names-form";
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { useProfileValidation } from "@/sections/shared/hooks/use-profile-validation";
-import { AlternativeNamesSlice } from "@/sections/shared/sections/alternative-names/alternative-names-slice";
-import { StoreState } from "@/sections/functional-profile/functional-profile-store";
+"use client";
+
+import { AlternativeNamesForm } from "@/sections/shared/alternative-names/alternative-names-form";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
+import { FunctionalProfileFrame } from "@/models";
 
 interface DataPointAlternativeNamesFormProps {
   dataPointIndex: number;
 }
 
-/**
- * Custom hook that creates an adapted store hook for a specific data point
- * This hook returns a function that can be used as a store hook
- */
 function useDataPointStoreAdapter(dataPointIndex: number) {
-  return <TSelected,>(selector: (store: StoreState & AlternativeNamesSlice) => TSelected) => {
-    // Get the current store state (this will cause re-renders when store changes)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const store = useProfileStore();
+  const { useProfileState, dataPointListActions } = useFunctionalProfileFormContext();
 
-    // Create an adapter that implements AlternativeNamesSlice methods
-    const adaptedStore: StoreState & AlternativeNamesSlice = {
-      ...store,
-      // Implement AlternativeNamesSlice methods that delegate to data point methods
-      addAlternativeNames: () => store.addDataPointAlternativeNames(dataPointIndex),
-      removeAlternativeNames: () => store.removeDataPointAlternativeNames(dataPointIndex),
-      updateSLV1Name: (value) => store.updateDataPointSLV1Name(dataPointIndex, value),
-      updateWorkName: (value) => store.updateDataPointWorkName(dataPointIndex, value),
-      updateManufName: (value) => store.updateDataPointManufName(dataPointIndex, value),
-      updateIec61850Name: (value) => store.updateDataPointIec61850Name(dataPointIndex, value),
-      updateSarefName: (value) => store.updateDataPointSarefName(dataPointIndex, value),
-      updateEebusName: (value) => store.updateDataPointEebusName(dataPointIndex, value),
-      updateSunSpecName: (value) => store.updateDataPointSunSpecName(dataPointIndex, value),
-      updateHpBwpName: (value) => store.updateDataPointHpBwpName(dataPointIndex, value),
-      updateEn17609Name: (value) => store.updateDataPointEn17609Name(dataPointIndex, value),
+  return <TSelected,>(
+    selector: (store: { profile?: FunctionalProfileFrame } & AlternativeNamesSlice) => TSelected
+  ) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const profile = useProfileState((p) => p);
+
+    const adaptedStore: { profile?: FunctionalProfileFrame } & AlternativeNamesSlice = {
+      profile,
+      addAlternativeNames: () => dataPointListActions.addDataPointAlternativeNames(dataPointIndex),
+      removeAlternativeNames: () =>
+        dataPointListActions.removeDataPointAlternativeNames(dataPointIndex),
+      updateSLV1Name: (value) =>
+        dataPointListActions.updateDataPointSLV1Name(dataPointIndex, value),
+      updateWorkName: (value) =>
+        dataPointListActions.updateDataPointWorkName(dataPointIndex, value),
+      updateManufName: (value) =>
+        dataPointListActions.updateDataPointManufName(dataPointIndex, value),
+      updateIec61850Name: (value) =>
+        dataPointListActions.updateDataPointIec61850Name(dataPointIndex, value),
+      updateSarefName: (value) =>
+        dataPointListActions.updateDataPointSarefName(dataPointIndex, value),
+      updateEebusName: (value) =>
+        dataPointListActions.updateDataPointEebusName(dataPointIndex, value),
+      updateSunSpecName: (value) =>
+        dataPointListActions.updateDataPointSunSpecName(dataPointIndex, value),
+      updateHpBwpName: (value) =>
+        dataPointListActions.updateDataPointHpBwpName(dataPointIndex, value),
+      updateEn17609Name: (value) =>
+        dataPointListActions.updateDataPointEn17609Name(dataPointIndex, value),
     };
 
     return selector(adaptedStore);
   };
 }
 
-/**
- * Wrapper component that adapts the shared AlternativeNamesForm for use with data points
- * It creates a store adapter that implements AlternativeNamesSlice for a specific data point index
- */
 export function DataPointAlternativeNamesForm({
   dataPointIndex,
 }: DataPointAlternativeNamesFormProps) {
-  // Create a hook function that provides an adapted store with AlternativeNamesSlice for this data point
+  const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
   const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
+
+  const fullPathPrefix = pathPrefix
+    ? `${pathPrefix}.dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`
+    : `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`;
 
   return (
     <AlternativeNamesForm
       useStore={useAdaptedStore}
-      useValidation={useProfileValidation}
+      useValidation={useValidation}
       stateSelector={(store) => ({
         alternativeNames:
           store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
@@ -62,7 +70,7 @@ export function DataPointAlternativeNamesForm({
         !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
           ?.alternativeNames
       }
-      fieldPathPrefix={`dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`}
+      fieldPathPrefix={fullPathPrefix}
       required={false}
       title="Alternative Names"
       description="Alternative naming conventions for this data point"

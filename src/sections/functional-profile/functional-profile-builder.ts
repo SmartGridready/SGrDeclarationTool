@@ -1,14 +1,14 @@
 import { Builder } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
-import { buildReleaseNotes } from "@/sections/functional-profile/release-notes/release-notes-builder";
-import { buildProfileIdentification } from "@/sections/functional-profile/profile-identification/profile-identification-builder";
-import { buildAlternativeNames } from "@/sections/functional-profile/alternative-names/alternative-names-builder";
-import { buildLegibleDescription } from "@/sections/functional-profile/legible-description/legible-description-builder";
+import { buildReleaseNotes } from "@/sections/shared/release-notes/release-notes-builder";
+import { buildProfileIdentification } from "@/sections/shared/profile-identification/profile-identification-builder";
+import { buildAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-builder";
+import { buildLegibleDescription } from "@/sections/shared/legible-description/legible-description-builder";
 import { buildGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-builder";
 import { buildDataPointList } from "@/sections/functional-profile/data-point-list/data-point-list-builder";
-import { ERROR_MESSAGES } from "@/sections/shared/constants/error-messages";
+import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
-import { wrapInArray, setOptionalXmlArray } from "@/sections/shared/utils/builder-utils";
+import { wrapInArray, setOptionalXmlArray } from "@/utils/builder-utils";
 
 /**
  * Converts FunctionalProfileFrame model to XML string

@@ -1,11 +1,10 @@
-import { BitmapProduct, BitmapEntryProduct } from "@/models";
 import {
-  SetState,
-  getDataPoint,
-  ensureArray,
-  removeArrayItem,
-  normalizeString,
-} from "@/sections/shared/utils/slice-utils";
+  BitmapProduct,
+  BitmapEntryProduct,
+  FunctionalProfileDataPoint,
+  DynamicParameterDescriptionListElement,
+} from "@/models";
+import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface ParameterListBitmapSlice {
   setParameterListBitmapDataType: (
@@ -44,96 +43,90 @@ export interface ParameterListBitmapSlice {
   addEmptyParameterListBitmapEntry: (dataPointIndex: number, paramIndex: number) => void;
 }
 
-export const createParameterListBitmapSlice = (set: SetState): ParameterListBitmapSlice => ({
-  setParameterListBitmapDataType: (dataPointIndex, paramIndex, bitmap) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param) {
-        param.dataType = { bitmap: bitmap };
-      }
-    }),
+export function createParameterListBitmapSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
+): ParameterListBitmapSlice {
+  const getParameter = (
+    state: TState,
+    dataPointIndex: number,
+    paramIndex: number
+  ): DynamicParameterDescriptionListElement | undefined => {
+    const dp = getDataPoint(state, dataPointIndex);
+    return dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+  };
 
-  addParameterListBitmapEntry: (dataPointIndex, paramIndex, entry) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "bitmap" in param.dataType) {
-        const bitmapType = param.dataType.bitmap;
-        const entries = ensureArray(bitmapType.bitmapEntry, () => []);
-        entries.push(entry);
-        bitmapType.bitmapEntry = entries;
-      }
-    }),
+  return {
+    setParameterListBitmapDataType: (dataPointIndex, paramIndex, bitmap) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param) param.dataType = { bitmap: bitmap };
+      }),
 
-  removeParameterListBitmapEntry: (dataPointIndex, paramIndex, entryIndex) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "bitmap" in param.dataType) {
-        const bitmapType = param.dataType.bitmap;
-        removeArrayItem(bitmapType.bitmapEntry, entryIndex, () => {
-          bitmapType.bitmapEntry = [];
-        });
-      }
-    }),
+    addParameterListBitmapEntry: (dataPointIndex, paramIndex, entry) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "bitmap" in param.dataType) {
+          const entries = ensureArray(param.dataType.bitmap.bitmapEntry, () => []);
+          entries.push(entry);
+          param.dataType.bitmap.bitmapEntry = entries;
+        }
+      }),
 
-  updateParameterListBitmapEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const entry =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
-        "bitmap" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
-        dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.bitmap.bitmapEntry?.[
-          entryIndex
-        ];
-      if (entry) {
-        entry.literal = literal;
-      }
-    }),
+    removeParameterListBitmapEntry: (dataPointIndex, paramIndex, entryIndex) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "bitmap" in param.dataType) {
+          const bitmapType = param.dataType.bitmap;
+          removeArrayItem(bitmapType.bitmapEntry, entryIndex, () => {
+            bitmapType.bitmapEntry = [];
+          });
+        }
+      }),
 
-  updateParameterListBitmapEntryHexMask: (dataPointIndex, paramIndex, entryIndex, hexMask) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const entry =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
-        "bitmap" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
-        dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.bitmap.bitmapEntry?.[
-          entryIndex
-        ];
-      if (entry) {
-        entry.hexMask = hexMask;
-      }
-    }),
+    updateParameterListBitmapEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        const entry =
+          param?.dataType &&
+          "bitmap" in param.dataType &&
+          param.dataType.bitmap.bitmapEntry?.[entryIndex];
+        if (entry) entry.literal = literal;
+      }),
 
-  updateParameterListBitmapEntryDescription: (
-    dataPointIndex,
-    paramIndex,
-    entryIndex,
-    description
-  ) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const entry =
-        dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.dataType &&
-        "bitmap" in dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType &&
-        dp.dataPoint.parameterList.parameterListElement[paramIndex].dataType.bitmap.bitmapEntry?.[
-          entryIndex
-        ];
-      if (entry) {
-        entry.description = normalizeString(description);
-      }
-    }),
+    updateParameterListBitmapEntryHexMask: (dataPointIndex, paramIndex, entryIndex, hexMask) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        const entry =
+          param?.dataType &&
+          "bitmap" in param.dataType &&
+          param.dataType.bitmap.bitmapEntry?.[entryIndex];
+        if (entry) entry.hexMask = hexMask;
+      }),
 
-  addEmptyParameterListBitmapEntry: (dataPointIndex, paramIndex) =>
-    set((state) => {
-      const dp = getDataPoint(state, dataPointIndex);
-      const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-      if (param && "bitmap" in param.dataType) {
-        const bitmapType = param.dataType.bitmap;
-        const entries = ensureArray(bitmapType.bitmapEntry, () => []);
-        entries.push({ literal: "", hexMask: "" });
-        bitmapType.bitmapEntry = entries;
-      }
-    }),
-});
+    updateParameterListBitmapEntryDescription: (
+      dataPointIndex,
+      paramIndex,
+      entryIndex,
+      description
+    ) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        const entry =
+          param?.dataType &&
+          "bitmap" in param.dataType &&
+          param.dataType.bitmap.bitmapEntry?.[entryIndex];
+        if (entry) entry.description = description;
+      }),
+
+    addEmptyParameterListBitmapEntry: (dataPointIndex, paramIndex) =>
+      set((state) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param && "bitmap" in param.dataType) {
+          const entries = ensureArray(param.dataType.bitmap.bitmapEntry, () => []);
+          entries.push({ literal: "", hexMask: "" });
+          param.dataType.bitmap.bitmapEntry = entries;
+        }
+      }),
+  };
+}

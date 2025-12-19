@@ -1,15 +1,16 @@
-import { FormSection } from "@/sections/shared/components/forms/form-section";
-import { InputField } from "@/sections/shared/components/forms/input-field";
-import { ArrayField } from "@/sections/shared/components/forms/array-field";
+"use client";
+
+import { FormSection } from "@/components/forms/form-section";
+import { InputField } from "@/components/forms/input-field";
+import { ArrayField } from "@/components/forms/array-field";
 import { GenericAttributeFunctionalProfile } from "@/models";
-import { DataPointGenericAttributeListSlice } from "./generic-attribute-list-slice";
+import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
 
 interface DataPointGenericAttributeListFormProps {
   dataPointIndex: number;
   genericAttributeList:
     | { genericAttributeListElement?: GenericAttributeFunctionalProfile[] }
     | undefined;
-  genericAttributeListSlice: DataPointGenericAttributeListSlice;
   getError: (path: string) => string | undefined;
   onAdd: () => void;
   onRemove: () => void;
@@ -18,11 +19,12 @@ interface DataPointGenericAttributeListFormProps {
 export function DataPointGenericAttributeListForm({
   dataPointIndex,
   genericAttributeList,
-  genericAttributeListSlice,
   getError,
   onAdd,
   onRemove,
 }: DataPointGenericAttributeListFormProps) {
+  const { dataPointListActions } = useFunctionalProfileFormContext();
+
   return (
     <FormSection
       title="Generic Attribute List"
@@ -36,9 +38,9 @@ export function DataPointGenericAttributeListForm({
       <ArrayField<GenericAttributeFunctionalProfile>
         label="Attributes"
         items={genericAttributeList?.genericAttributeListElement}
-        onAdd={() => genericAttributeListSlice.addDataPointGenericAttribute(dataPointIndex)}
+        onAdd={() => dataPointListActions.addDataPointGenericAttribute(dataPointIndex)}
         onRemove={(attributeIndex) =>
-          genericAttributeListSlice.removeDataPointGenericAttribute(dataPointIndex, attributeIndex)
+          dataPointListActions.removeDataPointGenericAttribute(dataPointIndex, attributeIndex)
         }
         emptyMessage="No attributes added"
         renderItem={(item, attributeIndex) => (
@@ -47,7 +49,7 @@ export function DataPointGenericAttributeListForm({
             name={`dataPoint-${dataPointIndex}-genericAttribute-${attributeIndex}-name`}
             value={item.name}
             onChange={(value) =>
-              genericAttributeListSlice.updateDataPointGenericAttributeName(
+              dataPointListActions.updateDataPointGenericAttributeName(
                 dataPointIndex,
                 attributeIndex,
                 value

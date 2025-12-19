@@ -1,5 +1,6 @@
 import {
   AlternativeNames,
+  DataTypeProduct,
   DeviceCategory,
   LegibleDescription,
   LevelOfOperation,
@@ -15,7 +16,7 @@ export interface DeviceFrame {
   specificationOwnerIdentification: SpecificationOwnerIdentification;
   releaseNotes: ReleaseNotes;
   deviceInformation: DeviceInformation;
-  // configurationList?: ConfigurationList;
+  configurationList?: ConfigurationList;
   // genericAttributeList?: GenericAttributeListProduct;
   // interfaceList: InterfaceList;
 }
@@ -40,3 +41,18 @@ export interface DeviceInformation {
 }
 
 export type TestState = "None" | "Tested" | "Confirmed" | "Verified";
+
+export interface ConfigurationList {
+  configurationListElement: ConfigurationListElement[]; // minOccurs=1, maxOccurs=unbounded
+}
+
+export interface ConfigurationListElement {
+  name: string;
+  dataType: DataTypeProduct; // sgr:DataTypeProduct
+  defaultValue?: string;
+  configurationDescription?: ConfigurationDescription[]; // maxOccurs="4"
+}
+
+export interface ConfigurationDescription extends LegibleDescription {
+  label?: string;
+}

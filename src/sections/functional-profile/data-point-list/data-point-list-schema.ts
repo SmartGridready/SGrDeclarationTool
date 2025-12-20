@@ -8,6 +8,7 @@ import {
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { legibleDescriptionSchema } from "@/sections/shared/legible-description/legible-description-schema";
 import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
+import { dataTypeProductSchema } from "@/sections/shared/data-type-product/data-type-product-schema";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -29,27 +30,7 @@ const dynamicParameterDescriptionSchema = legibleDescriptionSchema.extend({
   label: z.string().optional(),
 });
 
-// Data Type Product Schema - simplified for validation
-// Note: Full validation of enum/bitmap/json structures would require more complex schemas
-// This provides basic structure validation
-const dataTypeProductSchema = z.union([
-  z.object({ boolean: z.object({}) }),
-  z.object({ int8: z.object({}) }),
-  z.object({ int16: z.object({}) }),
-  z.object({ int32: z.object({}) }),
-  z.object({ int64: z.object({}) }),
-  z.object({ int8U: z.object({}) }),
-  z.object({ int16U: z.object({}) }),
-  z.object({ int32U: z.object({}) }),
-  z.object({ int64U: z.object({}) }),
-  z.object({ float32: z.object({}) }),
-  z.object({ float64: z.object({}) }),
-  z.object({ dateTime: z.object({}) }),
-  z.object({ string: z.object({}) }),
-  z.object({ enum: z.any() }), // Complex type - validated separately
-  z.object({ bitmap: z.any() }), // Complex type - validated separately
-  z.object({ json: z.string() }),
-]);
+// Data Type Product Schema - using shared schema
 
 // Parameter List Element Schema
 const parameterListElementSchema = z.object({

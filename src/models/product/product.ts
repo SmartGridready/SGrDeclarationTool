@@ -2,6 +2,7 @@ import {
   AlternativeNames,
   DataTypeProduct,
   DeviceCategory,
+  GenericAttributeListProduct,
   LegibleDescription,
   LevelOfOperation,
   PowerSource,
@@ -17,7 +18,7 @@ export interface DeviceFrame {
   releaseNotes: ReleaseNotes;
   deviceInformation: DeviceInformation;
   configurationList?: ConfigurationList;
-  // genericAttributeList?: GenericAttributeListProduct;
+  genericAttributeList?: GenericAttributeListProduct;
   // interfaceList: InterfaceList;
 }
 

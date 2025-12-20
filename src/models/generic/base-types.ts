@@ -310,3 +310,34 @@ export type PowerSource =
   | "mains1Phase, mains3Phase"
   | "battery"
   | "dc";
+
+export interface GenericAttributeListProduct {
+  genericAttributeListElement: GenericAttributeProduct[];
+}
+
+// Union type for the two possible configurations
+export type GenericAttributeProduct =
+  | (GenericAttributeProductBase & {
+      dataType: DataTypeProduct;
+      value: string;
+      unit: Units;
+    })
+  | (GenericAttributeProductBase & {
+      genericAttributeList: GenericAttributeListProductEnd;
+    });
+
+// Base interface for GenericAttributeProduct
+interface GenericAttributeProductBase {
+  name: string;
+}
+
+export interface GenericAttributeListProductEnd {
+  genericAttributeListElement: GenericAttributeProductEnd[];
+}
+
+export interface GenericAttributeProductEnd {
+  name: string;
+  dataType: DataTypeProduct;
+  value: string;
+  unit: Units;
+}

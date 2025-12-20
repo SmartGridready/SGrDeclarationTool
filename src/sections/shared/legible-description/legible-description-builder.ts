@@ -28,7 +28,9 @@ export function buildLegibleDescription(
  * Builds XML object for a single legibleDescription item
  * Uses CDATA for textElement to preserve HTML content and special characters
  */
-function buildLegibleDescriptionItem(description: LegibleDescription): Record<string, unknown> {
+export function buildLegibleDescriptionItem(
+  description: LegibleDescription
+): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateLegibleDescription(description);
   if (!validation.success) {

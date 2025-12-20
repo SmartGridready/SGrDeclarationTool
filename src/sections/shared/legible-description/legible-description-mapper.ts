@@ -30,5 +30,12 @@ export function mapLegibleDescriptionItem(itemXml: unknown): LegibleDescription 
   // Map optional URI
   setOptionalField(legibleDescription, "uri", getOptionalStringValue(xml, "uri"));
 
+  // Map optional label (for descriptions that extend legible descriptions with a label)
+  // Use type assertion since label only exists on types that extend LegibleDescription
+  const labelValue = getOptionalStringValue(xml, "label");
+  if (labelValue !== undefined) {
+    (legibleDescription as { label?: string }).label = labelValue;
+  }
+
   return legibleDescription;
 }

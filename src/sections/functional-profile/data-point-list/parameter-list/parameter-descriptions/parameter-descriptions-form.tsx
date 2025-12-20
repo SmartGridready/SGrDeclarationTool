@@ -10,14 +10,12 @@ interface ParameterDescriptionsFormProps {
   dataPointIndex: number;
   paramIndex: number;
   parameterDescriptions: DynamicParameterDescription[] | undefined;
-  getError: (path: string) => string | undefined;
 }
 
 export function ParameterDescriptionsForm({
   dataPointIndex,
   paramIndex,
   parameterDescriptions,
-  getError,
 }: ParameterDescriptionsFormProps) {
   const { dataPointListActions, useValidation } = useFunctionalProfileFormContext();
 

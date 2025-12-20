@@ -12,7 +12,7 @@ import {
   createDataTypeProductFromString,
   isEnumDataTypeProduct,
   isBitmapDataTypeProduct,
-} from "@/sections/functional-profile/data-point-list/data-type-utils";
+} from "@/sections/shared/data-type-product/data-type-product-utils";
 import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
 import { ParameterDescriptionsForm } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-descriptions/parameter-descriptions-form";
 import { ParameterListEnumForm } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-form";
@@ -144,7 +144,6 @@ export function ParameterListForm({
               dataPointIndex={dataPointIndex}
               paramIndex={paramIndex}
               parameterDescriptions={param.parameterDescription}
-              getError={getError}
             />
           </>
         )}

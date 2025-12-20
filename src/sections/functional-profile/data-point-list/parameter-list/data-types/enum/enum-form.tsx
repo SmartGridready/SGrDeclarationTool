@@ -1,10 +1,10 @@
 "use client";
 
-import { InputField } from "@/components/forms/input-field";
-import { ArrayField } from "@/components/forms/array-field";
-import { FormSection } from "@/components/forms/form-section";
-import { EnumMapProduct, EnumEntryProductRecord } from "@/models";
+import { EnumMapProduct } from "@/models";
 import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { DataTypeProductEnumForm } from "@/sections/shared/data-type-product/enum/enum-form";
+import { DataTypeProductEnumSlice } from "@/sections/shared/data-type-product/enum/enum-slice";
+import { useMemo } from "react";
 
 interface ParameterListEnumFormProps {
   dataPointIndex: number;
@@ -19,85 +19,48 @@ export function ParameterListEnumForm({
 }: ParameterListEnumFormProps) {
   const { dataPointListActions } = useFunctionalProfileFormContext();
 
+  // Create an adapter that maps parameter list actions to the shared enum slice interface
+  const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
+    return {
+      setEnumDataType: (enumMap) =>
+        dataPointListActions.setParameterListEnumDataType(dataPointIndex, paramIndex, enumMap),
+      addEnumEntry: (entry) =>
+        dataPointListActions.addParameterListEnumEntry(dataPointIndex, paramIndex, entry),
+      removeEnumEntry: (entryIndex) =>
+        dataPointListActions.removeParameterListEnumEntry(dataPointIndex, paramIndex, entryIndex),
+      updateEnumEntryLiteral: (entryIndex, literal) =>
+        dataPointListActions.updateParameterListEnumEntryLiteral(
+          dataPointIndex,
+          paramIndex,
+          entryIndex,
+          literal
+        ),
+      updateEnumEntryOrdinal: (entryIndex, ordinal) =>
+        dataPointListActions.updateParameterListEnumEntryOrdinal(
+          dataPointIndex,
+          paramIndex,
+          entryIndex,
+          ordinal
+        ),
+      updateEnumEntryDescription: (entryIndex, description) =>
+        dataPointListActions.updateParameterListEnumEntryDescription(
+          dataPointIndex,
+          paramIndex,
+          entryIndex,
+          description
+        ),
+      updateEnumHexMask: (hexMask) =>
+        dataPointListActions.updateParameterListEnumHexMask(dataPointIndex, paramIndex, hexMask),
+      addEmptyEnumEntry: () =>
+        dataPointListActions.addEmptyParameterListEnumEntry(dataPointIndex, paramIndex),
+    };
+  }, [dataPointIndex, paramIndex, dataPointListActions]);
+
   return (
-    <FormSection
-      title="Enum Configuration"
-      description="Define enumeration entries with literal values, ordinals and optional hex mask"
-      nested
-      required
-    >
-      <InputField
-        label="Hex Mask"
-        name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-hexMask`}
-        value={enumMap.hexMask || ""}
-        onChange={(value) =>
-          dataPointListActions.updateParameterListEnumHexMask(
-            dataPointIndex,
-            paramIndex,
-            value || undefined
-          )
-        }
-        placeholder="Enter hex mask (e.g., 0xFF)"
-      />
-      <ArrayField<EnumEntryProductRecord>
-        label="Enum Entries"
-        items={enumMap.enumEntry}
-        onAdd={() =>
-          dataPointListActions.addEmptyParameterListEnumEntry(dataPointIndex, paramIndex)
-        }
-        onRemove={(entryIndex) =>
-          dataPointListActions.removeParameterListEnumEntry(dataPointIndex, paramIndex, entryIndex)
-        }
-        emptyMessage="No enum entries added"
-        renderItem={(entry, entryIndex) => (
-          <>
-            <InputField
-              label="Literal"
-              name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-literal`}
-              value={entry.literal}
-              onChange={(value) =>
-                dataPointListActions.updateParameterListEnumEntryLiteral(
-                  dataPointIndex,
-                  paramIndex,
-                  entryIndex,
-                  value
-                )
-              }
-              placeholder="Enter enum literal"
-              required={true}
-            />
-            <InputField
-              label="Ordinal"
-              name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-ordinal`}
-              type="number"
-              value={entry.ordinal?.toString() || ""}
-              onChange={(value) =>
-                dataPointListActions.updateParameterListEnumEntryOrdinal(
-                  dataPointIndex,
-                  paramIndex,
-                  entryIndex,
-                  value ? parseInt(value, 10) : undefined
-                )
-              }
-              placeholder="Enter ordinal number"
-            />
-            <InputField
-              label="Description"
-              name={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum-${entryIndex}-description`}
-              value={entry.description || ""}
-              onChange={(value) =>
-                dataPointListActions.updateParameterListEnumEntryDescription(
-                  dataPointIndex,
-                  paramIndex,
-                  entryIndex,
-                  value || undefined
-                )
-              }
-              placeholder="Enter description"
-            />
-          </>
-        )}
-      />
-    </FormSection>
+    <DataTypeProductEnumForm
+      enumMap={enumMap}
+      actions={adaptedActions}
+      fieldPathPrefix={`dataPoint-${dataPointIndex}-param-${paramIndex}-enum`}
+    />
   );
 }

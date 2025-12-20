@@ -8,7 +8,6 @@ import {
   EnumMapFunctionalProfile,
   BitmapFunctionalProfile,
   JSonOutputFunctionalProfile,
-  DataTypeProduct,
 } from "@/models/generic";
 
 /**
@@ -123,57 +122,4 @@ export function createDataTypeFromString(value: string): DataTypeFunctionalProfi
     return { json: {} };
   }
   return createSimpleDataType(value);
-}
-
-/**
- * Utilities for DataTypeProduct (used in ParameterList)
- * Reuses the same logic as DataTypeFunctionalProfile since both use DataTypeChoice for simple types
- */
-
-/**
- * Type guard to check if a DataTypeProduct is an enum type
- */
-export function isEnumDataTypeProduct(
-  dataType: DataTypeProduct
-): dataType is { enum: import("@/models/generic").EnumMapProduct } {
-  return typeof dataType === "object" && "enum" in dataType;
-}
-
-/**
- * Type guard to check if a DataTypeProduct is a bitmap type
- */
-export function isBitmapDataTypeProduct(
-  dataType: DataTypeProduct
-): dataType is { bitmap: import("@/models/generic").BitmapProduct } {
-  return typeof dataType === "object" && "bitmap" in dataType;
-}
-
-/**
- * Converts DataTypeProduct to a string value for form select
- * Reuses getDataTypeStringValue logic - both use DataTypeChoice for simple types
- */
-export function getDataTypeProductStringValue(dataType: DataTypeProduct): string {
-  if (isEnumDataTypeProduct(dataType)) return "enum";
-  if (isBitmapDataTypeProduct(dataType)) return "bitmap";
-  if (typeof dataType === "object" && "json" in dataType) return "json";
-  // Reuse getDataTypeStringValue for simple types - both use DataTypeChoice
-  return getDataTypeStringValue(dataType as unknown as DataTypeFunctionalProfile);
-}
-
-/**
- * Creates DataTypeProduct from a string value (for form select)
- * Reuses createDataTypeFromString for simple types, only differs for enum/bitmap/json
- */
-export function createDataTypeProductFromString(value: string): DataTypeProduct {
-  if (value === "enum") {
-    return { enum: { enumEntry: [] } };
-  }
-  if (value === "bitmap") {
-    return { bitmap: { bitmapEntry: [] } };
-  }
-  if (value === "json") {
-    return { json: "" };
-  }
-  // Reuse createDataTypeFromString - both use DataTypeChoice for simple types
-  return createDataTypeFromString(value) as DataTypeProduct;
 }

@@ -11,6 +11,7 @@ export interface LegibleDescriptionSlice {
   updateTextElement: (index: number, textElement: string) => void;
   updateLanguage: (index: number, language: Language) => void;
   updateUri: (index: number, uri: string | undefined) => void;
+  updateLabel?: (index: number, label: string | undefined) => void;
 
   // Convenience methods
   addEmptyLegibleDescription: () => void;
@@ -98,6 +99,17 @@ export function createLegibleDescriptionSlice<TState>(
         if (array?.[index]) {
           const updated = [...array];
           updated[index] = { ...updated[index], uri: normalizeString(uri) };
+          setLegibleDescriptions(state, updated);
+        }
+      }),
+
+    updateLabel: (index, label) =>
+      set((state) => {
+        const array = getLegibleDescriptions(state);
+        if (array?.[index]) {
+          const updated = [...array];
+          // Use type assertion since updateLabel is only used with types that extend LegibleDescription with label
+          (updated[index] as { label?: string }).label = normalizeString(label);
           setLegibleDescriptions(state, updated);
         }
       }),

@@ -2,6 +2,94 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.14.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.12.0...v0.14.0) (2025-12-20)
+
+
+### Features
+
+* add configuration list to model (GL-9) ([3ecbf77](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3ecbf777f53fe2b2a9ba5a18eb7b1eb52b7d643c))
+* add content to landing page (GL-6) ([50e6eca](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/50e6eca967175a865430885bb16f506bbd2407c8))
+* add device frame and device information to model (GL-9) ([6cf921d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6cf921d8fd71f3416185376e3c906d2a1cdd7983))
+* add library API utilities for importing functional profiles and devices (GL-10) ([bc53e55](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bc53e55ffdd39ad243e36b6d1e99691a654172e9))
+* add library import dialog component (GL-14) ([913336f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/913336f72f6e81d58fbc27714efbf2ca613703e8))
+* create device identification slice and use in store (GL-16) ([5807f63](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5807f63e46a621ccea86e97520d08594cd330aaf))
+* display identifier for imported profiles and devices ([bbdf161](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bbdf1611b205a268a0f015a685a5de5e714cdf04))
+* implement alternative names forms for devices (GL-12) ([18a3afb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/18a3afbe5a91b1a38be7b96f5b2e3da038aeb12d))
+* implement configuration list forms (GL-13) ([3c59af5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3c59af5730288d30fc60ed972fc2dfc36ae846e1))
+* implement configuration list slices (GL-16) ([3f5e1f8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3f5e1f838c9d0be5bd2e7b2dc035cc8f5fbd07e9))
+* implement device alternative names in device information slice (GL-16) ([f178d6c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f178d6c76e676cd324e87767f575efdfca040ef4))
+* implement device editor and empty form (GL-14) ([d728604](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d728604f45745bdcc858ee29ce874831985a98db))
+* implement device identification form (GL-12) ([cdac577](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/cdac5774b24e75734fbf8d16d78d5df2d6db3775))
+* implement device store and create empty factory method (GL-16) ([1f0a26a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1f0a26a49cf20e11dc4d4cf998e95a0ba1aa5009))
+* implement generic attributes forms for data points (GL-13) ([10274cd](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/10274cddf97a37993b55f82b5af34c6ab8234860))
+* implement generic attributes slice for datapoints (GL-16) ([f72d20b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f72d20b0744ed3f9c59fb3351915479347052bd6))
+* implement legible descriptions form for device information (GL-12) ([8d4e106](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8d4e106efe3e770b7cd3faec912f489436accc89))
+* implement legible descriptions slice for device information (GL-16) ([28d0fe6](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/28d0fe653aeb9314d2fa94f57ac4cd278a28b755))
+* implement modal to import from library (GL-10) ([ec330a6](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ec330a64f9060a5a228ef7aefe397e4010932775))
+* import dialog component for library import modal (GL-10) ([d3fbaac](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d3fbaac4d99bddb13fe06c1374585e6b3efc403c))
+* include library-import-modal ([a7bd531](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a7bd53166f9031174379363899ef191871637abc))
+* integrate library import into functional profile and device editor (GL-14) ([90fb558](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/90fb558a74e62ddf62c7787a21e50176dffc5fa8))
+
+
+### Bug Fixes
+
+* add guard to check for device information and add empty if not present (GL-16) ([c8bd497](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c8bd49700fcdf9bedb07c2ae8cd9c767a3b4081e))
+* remove over-flow hidden since it blocks scrolling everywehere ([caaf3ca](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/caaf3cabca86ae2c55e7014bf9cbd8af243c0229))
+
+
+### Chores
+
+* change description of card (GL-6) ([fe06971](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fe06971f4d62a21c0702c12160572ce819de539a))
+* format description slice (GL-16) ([e6d7c10](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e6d7c10ebd31d550d1e5e4b8852822933e3d9491))
+* **release:** 0.12.1 ([113d723](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/113d7230bb2505675af33c5c28a6be03c5d5ecfa))
+* **release:** 0.13.0 ([ba66d6f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ba66d6fc8458b72719aef75fd2e8d883a4bfdbfd))
+* stop scrolling of the landing page (GL-6) ([da9c6ae](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/da9c6ae94bdaaafb7a2325701aef17c91c49f4de))
+* update react and nextjs versions resolving cve's ([bf42295](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bf42295ab8ca77f637a9ed8d49ef08159d11eaf7))
+
+
+### Code Refactoring
+
+* add label builder to support descriptions that need a label (extend legible descriptions) (GL-8) ([3cacc47](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3cacc47020ec212154776213842c10bb89be35c8))
+* add label mapper to support descriptions that need a label (extend legible descriptions) (GL-7) ([c794f54](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c794f5427d41e2f0acf93082b22e10b2e42c8138))
+* add label prop to legible description form to support descriptions that need a label (extend legible descriptions) (GL-13) ([3648fd9](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3648fd9f2cbf6eabc0bb331c9d8eb072c7ed5184))
+* add label support to legible description slice and refactor parameter descriptions to use shared slice (GL-16) ([22bfb24](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/22bfb244d25f82afdd1892e13c34cd572f241de4))
+* add label to form validation to support descriptions that need a label (extend legible descriptions) (GL-18) ([e05376b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e05376b9f3e7cfb7b18acff5fabd8869d2c567a1))
+* add updateLabel function to legible description slice to support descriptions that need a label (extend legible descriptions) (GL-16) ([b963a08](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b963a086ac67fbfe1a86efe7928c74bc03a2706a))
+* big restructure of folders/files and migrate to context-based form state management ([5a2b251](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5a2b2516516fd44aa429928a02f6d00799eb63fa))
+* create barrel export for devices for consitancy (GL-9) ([de8ff06](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/de8ff067d4b2dd37f6c2a6bfbd81389380d60978))
+* implement builders for shared sections (GL-8) ([25f500f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/25f500f4645d647b70a11266a861e776b8f6b1b8))
+* implement form component for each data type product (GL-13) ([75c47ee](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/75c47ee654784655ee49b3fc6ef0634d6cd1777a))
+* implement mappers for shared sections (GL-7) ([6b10a9d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6b10a9d9b3f2f806e848fe17bb1e46325fa09fc9))
+* implement one builder file per top level section (GL-8) ([164fd95](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/164fd95e01324a6b61e48279e5076cd35f88204c))
+* implement one mapper file per top level section (GL-7) ([3bc5d16](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3bc5d16d1106f734d13d8b15dce00636a7ff685f))
+* implement one schema file per top level section (GL-18) ([20f0edb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/20f0edb225e8eb16b33f039ca5f541869356af75))
+* implement reusable alternative names slice and schema (GL-16) ([d17c24c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d17c24c1cc177574422b93869e48a39e2093566f))
+* implement reusable legible descriptions form components (GL-13) ([b5cca22](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b5cca2241d630b595754466489b4ad87d3718b91))
+* implement reusable legible descriptions slice and schema (GL-16) ([f86cd7b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f86cd7b3fbb711bd15d95c67bdf3ebdb373cf138))
+* implement shared release notes form (GL-12) ([a65bb23](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a65bb230668a2789ba1e3e7b7c5a1154a91c80d4))
+* implement shared release notes slice and schema (GL-16) ([0b936fa](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0b936fa6ff8a33f67e8b9f3fb049204334dd9cae))
+* make alternative names in functional profiles use generic slice and schema (GL-16) ([2dcdd39](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2dcdd395c51686b385e63e50b16c061233f10041))
+* make data points alternative names use generic slice and schema (GL-16) ([695656f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/695656f60c2508b6d451c9f5015dd9d482ab9a69))
+* make functional profile alternative names forms use generic alternative names form (GL-13) ([b8a80b4](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b8a80b478b898dee686de075b600ebb1d9a6c690))
+* make parameter description use the shared legible description form with the extended label (GL-13) ([24a1036](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/24a1036f815b50b05229df3b58e7fcc78acfe71c))
+* make use-form-section generic for reuse across stores (GL-11) ([896e30c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/896e30cbce1dfbb588ce4be63dbfcfcdc0a5af92))
+* re-import legibledescription mapper (GL-7) ([02a2e5f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/02a2e5f75f49bac772c6e55171d317ed97d2b0ba))
+* remove json dir in parameter-list since its just a string (GL-16) ([e1e0d6f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e1e0d6fa087870c8cab4606bec7aa7a08de020b3))
+* remove unused functions ([4b7f768](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4b7f768e77cab309aab66cca2ff13c2970e100c2))
+* split up data point list into multiple folders ([3ff826e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3ff826e966e4d23771f18af9687e5cff6a8a7ecb))
+* use generic legible description slice in functional profiles (GL-16) ([9579959](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9579959e10aff6bdd25a0f7a130e9d08dff7afdb))
+* use generic legible descriptions form in data points legible descriptions (GL-13) ([7f8ab5f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7f8ab5f827e8e050af131d148e87f34b745610a7))
+* use generic legible descriptions form in functional profile (GL-13) ([d22d7ce](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d22d7cefdf8a191d4cdf7fdf6207678c99387deb))
+* use generic legible descriptions slice for data points legible descriptions (GL-16) ([7321fd8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7321fd8e85e12ebc29ae0140afba237dfc820df6))
+* use shared builders (GL-8) ([b6dfcd0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b6dfcd01ee43fd77b965922db72f679a0f6444f7))
+* use shared forms and move utils to shared (GL-13) ([a632da0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a632da03c80979b3f3c6e5e02200d487f16882bc))
+* use shared mappers (GL-7) ([3f31d98](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3f31d982c8091da32b4d6cb98ee9a5727f256429))
+* use shared release notes forms in devices (GL-12) ([e2f9105](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e2f9105cac09154baacac7ed6f17738134a0a2d3))
+* use shared release notes forms in functional profiles (GL-13) ([07f6e56](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/07f6e569c95af5c2306752f94287ad5a6f6381e2))
+* use shared release notes slice in functional profiles (GL-16) ([a960954](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a960954ed6705e689710af2a97a5d6cf1cc7277a))
+* use shared schema (GL-18) ([acb779e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/acb779e620ffc08687d9f4d14905eb6524f2e93c))
+* use shared slices (GL-16) ([15e23bd](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/15e23bd0d381ed945b3c58060b1532387149fb2a))
+
 ## [0.13.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.12.0...v0.13.0) (2025-12-19)
 
 

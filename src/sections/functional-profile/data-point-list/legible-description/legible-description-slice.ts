@@ -1,5 +1,8 @@
-import { FunctionalProfileDataPoint, Language } from "@/models";
-import { normalizeString } from "@/utils/slice-utils";
+import { FunctionalProfileDataPoint, Language, LegibleDescription } from "@/models";
+import {
+  createLegibleDescriptionSlice,
+  LegibleDescriptionSlice,
+} from "@/sections/shared/legible-description/legible-description-slice";
 
 export interface DataPointLegibleDescriptionSlice {
   addDataPointLegibleDescription: (dataPointIndex: number) => void;
@@ -23,62 +26,46 @@ export interface DataPointLegibleDescriptionSlice {
 }
 
 /**
- * Creates a generic data point legible description slice that works with any store state
+ * Creates a generic data point legible description slice that works with any store state.
+ * Uses the shared createLegibleDescriptionSlice internally for consistency.
  */
 export function createDataPointLegibleDescriptionSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
 ): DataPointLegibleDescriptionSlice {
-  return {
-    addDataPointLegibleDescription: (dataPointIndex) =>
-      set((state) => {
+  // Helper function to get a slice bound to a specific dataPointIndex
+  const getSliceForIndex = (dataPointIndex: number): LegibleDescriptionSlice => {
+    return createLegibleDescriptionSlice(
+      set,
+      (state) => getDataPoint(state, dataPointIndex)?.dataPoint.legibleDescription,
+      (state, legibleDescriptions) => {
         const dp = getDataPoint(state, dataPointIndex);
         if (dp) {
-          const list = dp.dataPoint.legibleDescription || [];
-          if (list.length < 4) {
-            list.push({ textElement: "", language: "en" });
-            dp.dataPoint.legibleDescription = list;
-          }
+          dp.dataPoint.legibleDescription = legibleDescriptions;
         }
-      }),
+      },
+      4, // maxItems - legibleDescription has maxOccurs="4"
+      true // isOptional - legibleDescription is optional
+    );
+  };
+
+  return {
+    addDataPointLegibleDescription: (dataPointIndex) =>
+      getSliceForIndex(dataPointIndex).addEmptyLegibleDescription(),
 
     removeDataPointLegibleDescription: (dataPointIndex, descIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp?.dataPoint.legibleDescription) {
-          const list = dp.dataPoint.legibleDescription;
-          if (descIndex >= 0 && descIndex < list.length) {
-            list.splice(descIndex, 1);
-            if (list.length === 0) dp.dataPoint.legibleDescription = undefined;
-          }
-        }
-      }),
+      getSliceForIndex(dataPointIndex).removeLegibleDescription(descIndex),
 
     removeAllDataPointLegibleDescriptions: (dataPointIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        if (dp) dp.dataPoint.legibleDescription = undefined;
-      }),
+      getSliceForIndex(dataPointIndex).removeAllLegibleDescriptions(),
 
     updateDataPointLegibleDescriptionText: (dataPointIndex, descIndex, text) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) desc.textElement = text;
-      }),
+      getSliceForIndex(dataPointIndex).updateTextElement(descIndex, text),
 
     updateDataPointLegibleDescriptionLanguage: (dataPointIndex, descIndex, language) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) desc.language = language;
-      }),
+      getSliceForIndex(dataPointIndex).updateLanguage(descIndex, language),
 
     updateDataPointLegibleDescriptionUri: (dataPointIndex, descIndex, uri) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc = dp?.dataPoint.legibleDescription?.[descIndex];
-        if (desc) desc.uri = normalizeString(uri);
-      }),
+      getSliceForIndex(dataPointIndex).updateUri(descIndex, uri),
   };
 }

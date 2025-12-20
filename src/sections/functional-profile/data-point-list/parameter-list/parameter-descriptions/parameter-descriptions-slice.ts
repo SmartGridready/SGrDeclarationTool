@@ -1,5 +1,8 @@
 import { DynamicParameterDescription, Language, FunctionalProfileDataPoint } from "@/models";
-import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
+import {
+  createLegibleDescriptionSlice,
+  LegibleDescriptionSlice,
+} from "@/sections/shared/legible-description/legible-description-slice";
 
 export interface ParameterDescriptionsSlice {
   addDataPointParameterDescription: (
@@ -39,87 +42,68 @@ export interface ParameterDescriptionsSlice {
   addEmptyDataPointParameterDescription: (dataPointIndex: number, paramIndex: number) => void;
 }
 
+/**
+ * Creates a parameter descriptions slice that works with any store state.
+ * Uses the shared createLegibleDescriptionSlice internally for consistency.
+ * Parameter descriptions extend legible descriptions with an optional label field.
+ */
 export function createParameterDescriptionsSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
 ): ParameterDescriptionsSlice {
-  return {
-    addDataPointParameterDescription: (dataPointIndex, paramIndex, description) =>
-      set((state) => {
+  // Helper function to get a slice bound to specific dataPointIndex and paramIndex
+  const getSliceForIndices = (
+    dataPointIndex: number,
+    paramIndex: number
+  ): LegibleDescriptionSlice => {
+    return createLegibleDescriptionSlice(
+      set,
+      (state) =>
+        getDataPoint(state, dataPointIndex)?.dataPoint.parameterList?.parameterListElement?.[
+          paramIndex
+        ]?.parameterDescription,
+      (state, descriptions) => {
         const dp = getDataPoint(state, dataPointIndex);
         const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
         if (param) {
-          const list = ensureArray(param.parameterDescription, () => []);
-          list.push(description);
-          param.parameterDescription = list;
+          param.parameterDescription = descriptions;
         }
-      }),
+      },
+      4, // maxItems - parameterDescription has maxOccurs="4"
+      true // isOptional - parameterDescription is optional
+    );
+  };
+
+  return {
+    addDataPointParameterDescription: (dataPointIndex, paramIndex, description) =>
+      getSliceForIndices(dataPointIndex, paramIndex).addLegibleDescription(
+        description as DynamicParameterDescription
+      ),
 
     removeDataPointParameterDescription: (dataPointIndex, paramIndex, descIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-        if (param?.parameterDescription) {
-          removeArrayItem(param.parameterDescription, descIndex, () => {
-            param.parameterDescription = undefined;
-          });
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).removeLegibleDescription(descIndex),
 
     updateDataPointParameterDescriptionText: (dataPointIndex, paramIndex, descIndex, text) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc =
-          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-            descIndex
-          ];
-        if (desc) desc.textElement = text;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateTextElement(descIndex, text),
 
     updateDataPointParameterDescriptionLanguage: (
       dataPointIndex,
       paramIndex,
       descIndex,
       language
-    ) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc =
-          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-            descIndex
-          ];
-        if (desc) desc.language = language;
-      }),
+    ) => getSliceForIndices(dataPointIndex, paramIndex).updateLanguage(descIndex, language),
 
     updateDataPointParameterDescriptionUri: (dataPointIndex, paramIndex, descIndex, uri) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc =
-          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-            descIndex
-          ];
-        if (desc) desc.uri = normalizeString(uri);
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateUri(descIndex, uri),
 
-    updateDataPointParameterDescriptionLabel: (dataPointIndex, paramIndex, descIndex, label) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const desc =
-          dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex]?.parameterDescription?.[
-            descIndex
-          ];
-        if (desc) desc.label = normalizeString(label);
-      }),
+    updateDataPointParameterDescriptionLabel: (dataPointIndex, paramIndex, descIndex, label) => {
+      const slice = getSliceForIndices(dataPointIndex, paramIndex);
+      if (slice.updateLabel) {
+        slice.updateLabel(descIndex, label);
+      }
+    },
 
     addEmptyDataPointParameterDescription: (dataPointIndex, paramIndex) =>
-      set((state) => {
-        const dp = getDataPoint(state, dataPointIndex);
-        const param = dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
-        if (param) {
-          const list = ensureArray(param.parameterDescription, () => []);
-          list.push({ textElement: "", language: "en" });
-          param.parameterDescription = list;
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).addEmptyLegibleDescription(),
   };
 }

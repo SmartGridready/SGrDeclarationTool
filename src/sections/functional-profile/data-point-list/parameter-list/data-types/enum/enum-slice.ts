@@ -4,7 +4,10 @@ import {
   FunctionalProfileDataPoint,
   DynamicParameterDescriptionListElement,
 } from "@/models";
-import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
+import {
+  createDataTypeProductEnumSlice,
+  DataTypeProductEnumSlice,
+} from "@/sections/shared/data-type-product/enum/enum-slice";
 
 export interface ParameterListEnumSlice {
   setParameterListEnumDataType: (
@@ -48,6 +51,10 @@ export interface ParameterListEnumSlice {
   addEmptyParameterListEnumEntry: (dataPointIndex: number, paramIndex: number) => void;
 }
 
+/**
+ * Creates a parameter list enum slice that works with any store state.
+ * Uses the shared createDataTypeProductEnumSlice internally for consistency.
+ */
 export function createParameterListEnumSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
@@ -61,54 +68,38 @@ export function createParameterListEnumSlice<TState>(
     return dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
   };
 
+  // Helper function to get a slice bound to specific dataPointIndex and paramIndex
+  const getSliceForIndices = (
+    dataPointIndex: number,
+    paramIndex: number
+  ): DataTypeProductEnumSlice => {
+    return createDataTypeProductEnumSlice(
+      set,
+      (state) => getParameter(state, dataPointIndex, paramIndex)?.dataType,
+      (state, dataType) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param) {
+          param.dataType = dataType;
+        }
+      }
+    );
+  };
+
   return {
     setParameterListEnumDataType: (dataPointIndex, paramIndex, enumMap) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param) param.dataType = { enum: enumMap };
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).setEnumDataType(enumMap),
 
     addParameterListEnumEntry: (dataPointIndex, paramIndex, entry) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "enum" in param.dataType) {
-          const enumType = param.dataType.enum;
-          const entries = ensureArray(enumType.enumEntry, () => []);
-          entries.push(entry);
-          enumType.enumEntry = entries;
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).addEnumEntry(entry),
 
     removeParameterListEnumEntry: (dataPointIndex, paramIndex, entryIndex) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "enum" in param.dataType) {
-          const enumType = param.dataType.enum;
-          removeArrayItem(enumType.enumEntry, entryIndex, () => {
-            enumType.enumEntry = [];
-          });
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).removeEnumEntry(entryIndex),
 
     updateParameterListEnumEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        const entry =
-          param?.dataType &&
-          "enum" in param.dataType &&
-          param.dataType.enum.enumEntry?.[entryIndex];
-        if (entry) entry.literal = literal;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateEnumEntryLiteral(entryIndex, literal),
 
     updateParameterListEnumEntryOrdinal: (dataPointIndex, paramIndex, entryIndex, ordinal) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        const entry =
-          param?.dataType &&
-          "enum" in param.dataType &&
-          param.dataType.enum.enumEntry?.[entryIndex];
-        if (entry) entry.ordinal = ordinal;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateEnumEntryOrdinal(entryIndex, ordinal),
 
     updateParameterListEnumEntryDescription: (
       dataPointIndex,
@@ -116,29 +107,15 @@ export function createParameterListEnumSlice<TState>(
       entryIndex,
       description
     ) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        const entry =
-          param?.dataType &&
-          "enum" in param.dataType &&
-          param.dataType.enum.enumEntry?.[entryIndex];
-        if (entry) entry.description = description;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateEnumEntryDescription(
+        entryIndex,
+        description
+      ),
 
     updateParameterListEnumHexMask: (dataPointIndex, paramIndex, hexMask) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "enum" in param.dataType) param.dataType.enum.hexMask = hexMask;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateEnumHexMask(hexMask),
 
     addEmptyParameterListEnumEntry: (dataPointIndex, paramIndex) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "enum" in param.dataType) {
-          const entries = ensureArray(param.dataType.enum.enumEntry, () => []);
-          entries.push({ literal: "" });
-          param.dataType.enum.enumEntry = entries;
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).addEmptyEnumEntry(),
   };
 }

@@ -4,7 +4,10 @@ import {
   FunctionalProfileDataPoint,
   DynamicParameterDescriptionListElement,
 } from "@/models";
-import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
+import {
+  createDataTypeProductBitmapSlice,
+  DataTypeProductBitmapSlice,
+} from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
 
 export interface ParameterListBitmapSlice {
   setParameterListBitmapDataType: (
@@ -43,6 +46,10 @@ export interface ParameterListBitmapSlice {
   addEmptyParameterListBitmapEntry: (dataPointIndex: number, paramIndex: number) => void;
 }
 
+/**
+ * Creates a parameter list bitmap slice that works with any store state.
+ * Uses the shared createDataTypeProductBitmapSlice internally for consistency.
+ */
 export function createParameterListBitmapSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
@@ -56,53 +63,38 @@ export function createParameterListBitmapSlice<TState>(
     return dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
   };
 
+  // Helper function to get a slice bound to specific dataPointIndex and paramIndex
+  const getSliceForIndices = (
+    dataPointIndex: number,
+    paramIndex: number
+  ): DataTypeProductBitmapSlice => {
+    return createDataTypeProductBitmapSlice(
+      set,
+      (state) => getParameter(state, dataPointIndex, paramIndex)?.dataType,
+      (state, dataType) => {
+        const param = getParameter(state, dataPointIndex, paramIndex);
+        if (param) {
+          param.dataType = dataType;
+        }
+      }
+    );
+  };
+
   return {
     setParameterListBitmapDataType: (dataPointIndex, paramIndex, bitmap) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param) param.dataType = { bitmap: bitmap };
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).setBitmapDataType(bitmap),
 
     addParameterListBitmapEntry: (dataPointIndex, paramIndex, entry) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "bitmap" in param.dataType) {
-          const entries = ensureArray(param.dataType.bitmap.bitmapEntry, () => []);
-          entries.push(entry);
-          param.dataType.bitmap.bitmapEntry = entries;
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).addBitmapEntry(entry),
 
     removeParameterListBitmapEntry: (dataPointIndex, paramIndex, entryIndex) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "bitmap" in param.dataType) {
-          const bitmapType = param.dataType.bitmap;
-          removeArrayItem(bitmapType.bitmapEntry, entryIndex, () => {
-            bitmapType.bitmapEntry = [];
-          });
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).removeBitmapEntry(entryIndex),
 
     updateParameterListBitmapEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        const entry =
-          param?.dataType &&
-          "bitmap" in param.dataType &&
-          param.dataType.bitmap.bitmapEntry?.[entryIndex];
-        if (entry) entry.literal = literal;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateBitmapEntryLiteral(entryIndex, literal),
 
     updateParameterListBitmapEntryHexMask: (dataPointIndex, paramIndex, entryIndex, hexMask) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        const entry =
-          param?.dataType &&
-          "bitmap" in param.dataType &&
-          param.dataType.bitmap.bitmapEntry?.[entryIndex];
-        if (entry) entry.hexMask = hexMask;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateBitmapEntryHexMask(entryIndex, hexMask),
 
     updateParameterListBitmapEntryDescription: (
       dataPointIndex,
@@ -110,23 +102,12 @@ export function createParameterListBitmapSlice<TState>(
       entryIndex,
       description
     ) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        const entry =
-          param?.dataType &&
-          "bitmap" in param.dataType &&
-          param.dataType.bitmap.bitmapEntry?.[entryIndex];
-        if (entry) entry.description = description;
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).updateBitmapEntryDescription(
+        entryIndex,
+        description
+      ),
 
     addEmptyParameterListBitmapEntry: (dataPointIndex, paramIndex) =>
-      set((state) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
-        if (param && "bitmap" in param.dataType) {
-          const entries = ensureArray(param.dataType.bitmap.bitmapEntry, () => []);
-          entries.push({ literal: "", hexMask: "" });
-          param.dataType.bitmap.bitmapEntry = entries;
-        }
-      }),
+      getSliceForIndices(dataPointIndex, paramIndex).addEmptyBitmapEntry(),
   };
 }

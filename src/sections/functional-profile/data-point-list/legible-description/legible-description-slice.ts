@@ -1,4 +1,4 @@
-import { FunctionalProfileDataPoint, Language, LegibleDescription } from "@/models";
+import { FunctionalProfileDataPoint, Language } from "@/models";
 import {
   createLegibleDescriptionSlice,
   LegibleDescriptionSlice,

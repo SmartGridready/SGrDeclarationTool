@@ -20,6 +20,7 @@ export const legibleDescriptionSchema = z.object({
     message: "Language is required",
   }),
   uri: z.string().optional(),
+  label: z.string().optional(),
 });
 
 // Legible Descriptions Schema (array, maxOccurs="4")

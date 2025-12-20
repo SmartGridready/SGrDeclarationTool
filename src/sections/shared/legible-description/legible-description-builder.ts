@@ -48,5 +48,8 @@ function buildLegibleDescriptionItem(description: LegibleDescription): Record<st
   // Include optional URI if present
   setOptionalXmlField(itemXml, "uri", description.uri);
 
+  // Include optional label if present (for descriptions that extend legible descriptions with a label)
+  setOptionalXmlField(itemXml, "label", (description as { label?: string }).label);
+
   return itemXml;
 }

@@ -1,14 +1,10 @@
 "use client";
 
-import { FormSection } from "@/components/forms/form-section";
-import { InputField } from "@/components/forms/input-field";
-import { SelectField } from "@/components/forms/select-field";
-import { TextareaField } from "@/components/forms/textarea-field";
-import { ArrayField } from "@/components/forms/array-field";
-import { FormGroup } from "@/components/forms/form-group";
-import { DynamicParameterDescription, Language } from "@/models";
+import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
+import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
+import { DynamicParameterDescription } from "@/models";
 import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
-import { LANGUAGE_OPTIONS } from "@/sections/shared/legible-description/legible-description-form-options";
+import { useMemo } from "react";
 
 interface ParameterDescriptionsFormProps {
   dataPointIndex: number;
@@ -23,106 +19,111 @@ export function ParameterDescriptionsForm({
   parameterDescriptions,
   getError,
 }: ParameterDescriptionsFormProps) {
-  const { dataPointListActions } = useFunctionalProfileFormContext();
+  const { dataPointListActions, useValidation } = useFunctionalProfileFormContext();
 
-  return (
-    <FormSection title="Parameter Descriptions" nested>
-      <ArrayField
-        label="Descriptions"
-        items={parameterDescriptions}
-        onAdd={() =>
-          dataPointListActions.addEmptyDataPointParameterDescription(dataPointIndex, paramIndex)
-        }
-        onRemove={(descIndex) =>
+  // Create an adapter store that wraps the parameter descriptions
+  const adaptedStore = useMemo(() => {
+    const store: { legibleDescriptions?: DynamicParameterDescription[] } & LegibleDescriptionSlice =
+      {
+        legibleDescriptions: parameterDescriptions,
+        addLegibleDescription: (description) => {
+          dataPointListActions.addDataPointParameterDescription(
+            dataPointIndex,
+            paramIndex,
+            description as DynamicParameterDescription
+          );
+        },
+        removeLegibleDescription: (index) => {
           dataPointListActions.removeDataPointParameterDescription(
             dataPointIndex,
             paramIndex,
-            descIndex
-          )
-        }
-        emptyMessage="No descriptions added"
-        renderItem={(desc, descIndex) => (
-          <>
-            <TextareaField
-              label="Text"
-              name={`dataPoint-${dataPointIndex}-param-${paramIndex}-desc-${descIndex}-text`}
-              value={desc.textElement}
-              onChange={(value) =>
-                dataPointListActions.updateDataPointParameterDescriptionText(
-                  dataPointIndex,
-                  paramIndex,
-                  descIndex,
-                  value
-                )
-              }
-              placeholder="Enter description"
-              required={true}
-              rows={3}
-              error={getError(
-                `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.textElement`
-              )}
-            />
-            <FormGroup columns={3}>
-              <SelectField
-                label="Language"
-                name={`dataPoint-${dataPointIndex}-param-${paramIndex}-desc-${descIndex}-lang`}
-                options={LANGUAGE_OPTIONS}
-                value={desc.language}
-                onChange={(value) =>
-                  dataPointListActions.updateDataPointParameterDescriptionLanguage(
-                    dataPointIndex,
-                    paramIndex,
-                    descIndex,
-                    value as Language
-                  )
-                }
-                required={true}
-                error={getError(
-                  `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.language`
-                )}
-              />
-              <InputField
-                label="URI"
-                name={`dataPoint-${dataPointIndex}-param-${paramIndex}-desc-${descIndex}-uri`}
-                type="text"
-                value={desc.uri || ""}
-                onChange={(value) =>
-                  dataPointListActions.updateDataPointParameterDescriptionUri(
-                    dataPointIndex,
-                    paramIndex,
-                    descIndex,
-                    value || undefined
-                  )
-                }
-                placeholder="Enter URI"
-                required={false}
-                error={getError(
-                  `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.uri`
-                )}
-              />
-              <InputField
-                label="Label"
-                name={`dataPoint-${dataPointIndex}-param-${paramIndex}-desc-${descIndex}-label`}
-                type="text"
-                value={desc.label || ""}
-                onChange={(value) =>
-                  dataPointListActions.updateDataPointParameterDescriptionLabel(
-                    dataPointIndex,
-                    paramIndex,
-                    descIndex,
-                    value || undefined
-                  )
-                }
-                placeholder="Enter label"
-                required={false}
-                error={getError(
-                  `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription.${descIndex}.label`
-                )}
-              />
-            </FormGroup>
-          </>
-        )}
-      />
-    </FormSection>
+            index
+          );
+        },
+        removeAllLegibleDescriptions: () => {
+          // Remove all descriptions by removing them one by one
+          if (parameterDescriptions) {
+            for (let i = parameterDescriptions.length - 1; i >= 0; i--) {
+              dataPointListActions.removeDataPointParameterDescription(
+                dataPointIndex,
+                paramIndex,
+                i
+              );
+            }
+          }
+        },
+        updateTextElement: (index, textElement) => {
+          dataPointListActions.updateDataPointParameterDescriptionText(
+            dataPointIndex,
+            paramIndex,
+            index,
+            textElement
+          );
+        },
+        updateLanguage: (index, language) => {
+          dataPointListActions.updateDataPointParameterDescriptionLanguage(
+            dataPointIndex,
+            paramIndex,
+            index,
+            language
+          );
+        },
+        updateUri: (index, uri) => {
+          dataPointListActions.updateDataPointParameterDescriptionUri(
+            dataPointIndex,
+            paramIndex,
+            index,
+            uri
+          );
+        },
+        updateLabel: (index, label) => {
+          dataPointListActions.updateDataPointParameterDescriptionLabel(
+            dataPointIndex,
+            paramIndex,
+            index,
+            label
+          );
+        },
+        addEmptyLegibleDescription: () => {
+          dataPointListActions.addEmptyDataPointParameterDescription(dataPointIndex, paramIndex);
+        },
+      };
+    return store;
+  }, [dataPointIndex, paramIndex, parameterDescriptions, dataPointListActions]);
+
+  // Create a store hook that returns the adapted store
+  const useStore = <TSelected,>(selector: (store: typeof adaptedStore) => TSelected): TSelected => {
+    return selector(adaptedStore);
+  };
+
+  // Create a validation hook adapter
+  const useValidationAdapter = () => {
+    const { getError: getRawError } = useValidation();
+    return {
+      getError: (fieldPath: string) => {
+        // Convert the field path from legible description format to parameter description format
+        const basePath = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription`;
+        const fullPath = fieldPath.replace("legibleDescription", basePath);
+        return getRawError(fullPath);
+      },
+    };
+  };
+
+  return (
+    <LegibleDescriptionForm
+      useStore={useStore}
+      useValidation={useValidationAdapter}
+      stateSelector={(store) => ({
+        legibleDescriptions: store.legibleDescriptions,
+      })}
+      isAddedSelector={(store) => !!store.legibleDescriptions}
+      fieldPathPrefix={`dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList.parameterListElement.${paramIndex}.parameterDescription`}
+      required={false}
+      title="Parameter Descriptions"
+      description="Human-readable descriptions for the parameter (max 4)"
+      nested={true}
+      maxItems={4}
+      showLabel={true}
+    />
   );
 }

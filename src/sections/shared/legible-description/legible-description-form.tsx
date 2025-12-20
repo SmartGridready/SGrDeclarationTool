@@ -52,6 +52,10 @@ interface LegibleDescriptionFormProps<TStoreState extends LegibleDescriptionSlic
    * Maximum number of items allowed (default: 4)
    */
   maxItems?: number;
+  /**
+   * Whether to show the label field (for descriptions that extend legible descriptions with a label)
+   */
+  showLabel?: boolean;
 }
 
 export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSlice>({
@@ -65,6 +69,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
   description = "Human-readable descriptions (max 4)",
   nested = false,
   maxItems = 4,
+  showLabel = false,
 }: LegibleDescriptionFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
@@ -78,6 +83,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
       updateTextElement: (index: number, textElement: string) => void;
       updateLanguage: (index: number, language: Language) => void;
       updateUri: (index: number, uri: string | undefined) => void;
+      updateLabel?: (index: number, label: string | undefined) => void;
     }
   >({
     useStore,
@@ -90,6 +96,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
       updateTextElement: store.updateTextElement,
       updateLanguage: store.updateLanguage,
       updateUri: store.updateUri,
+      updateLabel: store.updateLabel,
     }),
     // Only include add/remove functionality if not required
     isAddedSelector: required ? undefined : isAddedSelector,
@@ -130,7 +137,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
                 rows={6}
                 error={getError(`${fieldPathPrefix}.${index}.textElement`)}
               />
-              <FormGroup columns={2}>
+              <FormGroup columns={showLabel ? 3 : 2}>
                 <SelectField
                   label="Language"
                   name={`${fieldPathPrefix}-${index}-language`}
@@ -150,6 +157,18 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
                   placeholder="Optional URI reference"
                   error={getError(`${fieldPathPrefix}.${index}.uri`)}
                 />
+                {showLabel && (
+                  <InputField
+                    label="Label"
+                    name={`${fieldPathPrefix}-${index}-label`}
+                    required={false}
+                    type="text"
+                    value={(item as { label?: string }).label || ""}
+                    onChange={(value) => actions.updateLabel?.(index, value || undefined)}
+                    placeholder="Optional label"
+                    error={getError(`${fieldPathPrefix}.${index}.label`)}
+                  />
+                )}
               </FormGroup>
             </div>
           )}

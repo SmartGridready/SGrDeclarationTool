@@ -14,7 +14,7 @@ import {
   fetchFunctionalProfiles,
   fetchFunctionalProfileXml,
   LibraryItem,
-} from "@/utils/library-api";
+} from "@/utils/library-api-utils";
 import { DEBUG } from "@/debug-config";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/constants/success-messages";

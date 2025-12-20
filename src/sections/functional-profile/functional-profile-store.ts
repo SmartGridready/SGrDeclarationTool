@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { FunctionalProfileFrame } from "@/models";
-import { createSampleFunctionalProfile, createEmpty as createEmptyProfile } from "@/utils/factory";
+import {
+  createSampleFunctionalProfile,
+  createEmpty as createEmptyProfile,
+} from "@/utils/factory-utils";
 import {
   createReleaseNotesSliceForProfile,
   ReleaseNotesSlice,

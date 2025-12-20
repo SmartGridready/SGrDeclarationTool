@@ -6,7 +6,7 @@ import { useDeviceStore } from "@/sections/device/device-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { DeviceForm } from "@/sections/device/device-form";
 
-import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/utils/library-api";
+import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/utils/library-api-utils";
 import { DeviceFrame } from "@/models";
 import { DEBUG } from "@/debug-config";
 import { ERROR_MESSAGES } from "@/constants/error-messages";

@@ -7,10 +7,12 @@ import { DeviceFrame } from "@/models";
 export type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 export type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
 export type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
+export type { ConfigurationListSlice } from "@/sections/device/configuration-list/configuration-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
 import type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
+import type { ConfigurationListSlice } from "@/sections/device/configuration-list/configuration-list-slice";
 
 /**
  * Context value for device forms.
@@ -49,6 +51,11 @@ export interface DeviceFormContextValue {
    * Release notes actions, already bound to the correct path.
    */
   releaseNotesActions: ReleaseNotesSlice;
+
+  /**
+   * Configuration list actions, already bound to the correct path.
+   */
+  configurationListActions: ConfigurationListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

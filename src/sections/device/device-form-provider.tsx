@@ -107,6 +107,45 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         updateChangeLogField: store.updateChangeLogField,
         addEmptyChangeLog: store.addEmptyChangeLog,
       },
+
+      // Configuration list actions
+      configurationListActions: {
+        addConfigurationList: store.addConfigurationList,
+        removeConfigurationList: store.removeConfigurationList,
+        addConfigurationListElement: store.addConfigurationListElement,
+        removeConfigurationListElement: store.removeConfigurationListElement,
+        updateConfigurationListElementName: store.updateConfigurationListElementName,
+        updateConfigurationListElementDataType: store.updateConfigurationListElementDataType,
+        updateConfigurationListElementDefaultValue:
+          store.updateConfigurationListElementDefaultValue,
+        // Enum actions
+        setConfigurationListEnumDataType: store.setConfigurationListEnumDataType,
+        addConfigurationListEnumEntry: store.addConfigurationListEnumEntry,
+        removeConfigurationListEnumEntry: store.removeConfigurationListEnumEntry,
+        updateConfigurationListEnumEntryLiteral: store.updateConfigurationListEnumEntryLiteral,
+        updateConfigurationListEnumEntryOrdinal: store.updateConfigurationListEnumEntryOrdinal,
+        updateConfigurationListEnumEntryDescription:
+          store.updateConfigurationListEnumEntryDescription,
+        updateConfigurationListEnumHexMask: store.updateConfigurationListEnumHexMask,
+        addEmptyConfigurationListEnumEntry: store.addEmptyConfigurationListEnumEntry,
+        // Bitmap actions
+        setConfigurationListBitmapDataType: store.setConfigurationListBitmapDataType,
+        addConfigurationListBitmapEntry: store.addConfigurationListBitmapEntry,
+        removeConfigurationListBitmapEntry: store.removeConfigurationListBitmapEntry,
+        updateConfigurationListBitmapEntryLiteral: store.updateConfigurationListBitmapEntryLiteral,
+        updateConfigurationListBitmapEntryHexMask: store.updateConfigurationListBitmapEntryHexMask,
+        updateConfigurationListBitmapEntryDescription:
+          store.updateConfigurationListBitmapEntryDescription,
+        addEmptyConfigurationListBitmapEntry: store.addEmptyConfigurationListBitmapEntry,
+        // Description actions
+        addConfigurationDescription: store.addConfigurationDescription,
+        removeConfigurationDescription: store.removeConfigurationDescription,
+        updateConfigurationDescriptionText: store.updateConfigurationDescriptionText,
+        updateConfigurationDescriptionLanguage: store.updateConfigurationDescriptionLanguage,
+        updateConfigurationDescriptionUri: store.updateConfigurationDescriptionUri,
+        updateConfigurationDescriptionLabel: store.updateConfigurationDescriptionLabel,
+        addEmptyConfigurationDescription: store.addEmptyConfigurationDescription,
+      },
     };
   }, [store]);
 

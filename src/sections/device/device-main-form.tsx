@@ -4,6 +4,7 @@ import { DeviceIdentificationForm } from "@/sections/device/device-identificatio
 import { ReleaseNotesForm } from "@/sections/device/release-notes/release-notes-form";
 import { DeviceInformationForm } from "@/sections/device/device-information/device-information-form";
 import { useDeviceFormContext } from "@/context/device-form-context";
+import { ConfigurationListForm } from "@/sections/device/configuration-list/configuration-list-form";
 
 /**
  * Shared Device Form
@@ -24,6 +25,7 @@ export function DeviceForm() {
       <DeviceIdentificationForm />
       <ReleaseNotesForm />
       <DeviceInformationForm />
+      <ConfigurationListForm />
     </div>
   );
 }

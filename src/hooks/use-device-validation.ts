@@ -1,16 +1,13 @@
 import { useMemo } from "react";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
-
+import { validateDeviceFrame } from "@/sections/device/device-schema";
 import { getFieldError, hasFieldError } from "@/utils/validation-utils";
 
 /**
  * Hook to get validation errors for the current device
  * Returns field-level errors that can be used to highlight invalid fields
  * Only shows errors when validation has been attempted (e.g., on export)
- *
- * Note: Device validation schema is not yet implemented, so this currently
- * returns empty errors. This hook is provided for consistency with useProfileValidation.
  */
 export function useDeviceValidation() {
   const device = useDeviceStore((state) => state.device);
@@ -24,12 +21,10 @@ export function useDeviceValidation() {
       };
     }
 
-    // TODO: Implement device validation schema
-    // const result = validateDeviceFrame(device);
-    // For now, return empty errors
+    const result = validateDeviceFrame(device);
     return {
-      isValid: true,
-      fieldErrors: {},
+      isValid: result.success,
+      fieldErrors: result.fieldErrors || {},
     };
   }, [device]);
 

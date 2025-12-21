@@ -146,6 +146,88 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         updateConfigurationDescriptionLabel: store.updateConfigurationDescriptionLabel,
         addEmptyConfigurationDescription: store.addEmptyConfigurationDescription,
       },
+
+      // Generic attribute list actions
+      genericAttributeListActions: {
+        addGenericAttributeList: store.addGenericAttributeList,
+        removeGenericAttributeList: store.removeGenericAttributeList,
+        addGenericAttributeListElement: store.addGenericAttributeListElement,
+        removeGenericAttributeListElement: store.removeGenericAttributeListElement,
+        updateGenericAttributeListElementName: store.updateGenericAttributeListElementName,
+        // Simple attribute actions
+        setGenericAttributeListElementAsSimple: store.setGenericAttributeListElementAsSimple,
+        updateGenericAttributeListElementDataType: store.updateGenericAttributeListElementDataType,
+        updateGenericAttributeListElementValue: store.updateGenericAttributeListElementValue,
+        updateGenericAttributeListElementUnit: store.updateGenericAttributeListElementUnit,
+        // Nested attribute actions
+        setGenericAttributeListElementAsNested: store.setGenericAttributeListElementAsNested,
+        addNestedGenericAttributeListElement: store.addNestedGenericAttributeListElement,
+        removeNestedGenericAttributeListElement: store.removeNestedGenericAttributeListElement,
+        updateNestedGenericAttributeListElementName:
+          store.updateNestedGenericAttributeListElementName,
+        updateNestedGenericAttributeListElementDataType:
+          store.updateNestedGenericAttributeListElementDataType,
+        updateNestedGenericAttributeListElementValue:
+          store.updateNestedGenericAttributeListElementValue,
+        updateNestedGenericAttributeListElementUnit:
+          store.updateNestedGenericAttributeListElementUnit,
+        // Simple enum actions
+        setGenericAttributeListSimpleEnumDataType: store.setGenericAttributeListSimpleEnumDataType,
+        addGenericAttributeListSimpleEnumEntry: store.addGenericAttributeListSimpleEnumEntry,
+        removeGenericAttributeListSimpleEnumEntry: store.removeGenericAttributeListSimpleEnumEntry,
+        updateGenericAttributeListSimpleEnumEntryLiteral:
+          store.updateGenericAttributeListSimpleEnumEntryLiteral,
+        updateGenericAttributeListSimpleEnumEntryOrdinal:
+          store.updateGenericAttributeListSimpleEnumEntryOrdinal,
+        updateGenericAttributeListSimpleEnumEntryDescription:
+          store.updateGenericAttributeListSimpleEnumEntryDescription,
+        updateGenericAttributeListSimpleEnumHexMask:
+          store.updateGenericAttributeListSimpleEnumHexMask,
+        addEmptyGenericAttributeListSimpleEnumEntry:
+          store.addEmptyGenericAttributeListSimpleEnumEntry,
+        // Simple bitmap actions
+        setGenericAttributeListSimpleBitmapDataType:
+          store.setGenericAttributeListSimpleBitmapDataType,
+        addGenericAttributeListSimpleBitmapEntry: store.addGenericAttributeListSimpleBitmapEntry,
+        removeGenericAttributeListSimpleBitmapEntry:
+          store.removeGenericAttributeListSimpleBitmapEntry,
+        updateGenericAttributeListSimpleBitmapEntryLiteral:
+          store.updateGenericAttributeListSimpleBitmapEntryLiteral,
+        updateGenericAttributeListSimpleBitmapEntryHexMask:
+          store.updateGenericAttributeListSimpleBitmapEntryHexMask,
+        updateGenericAttributeListSimpleBitmapEntryDescription:
+          store.updateGenericAttributeListSimpleBitmapEntryDescription,
+        addEmptyGenericAttributeListSimpleBitmapEntry:
+          store.addEmptyGenericAttributeListSimpleBitmapEntry,
+        // Nested enum actions
+        setGenericAttributeListNestedEnumDataType: store.setGenericAttributeListNestedEnumDataType,
+        addGenericAttributeListNestedEnumEntry: store.addGenericAttributeListNestedEnumEntry,
+        removeGenericAttributeListNestedEnumEntry: store.removeGenericAttributeListNestedEnumEntry,
+        updateGenericAttributeListNestedEnumEntryLiteral:
+          store.updateGenericAttributeListNestedEnumEntryLiteral,
+        updateGenericAttributeListNestedEnumEntryOrdinal:
+          store.updateGenericAttributeListNestedEnumEntryOrdinal,
+        updateGenericAttributeListNestedEnumEntryDescription:
+          store.updateGenericAttributeListNestedEnumEntryDescription,
+        updateGenericAttributeListNestedEnumHexMask:
+          store.updateGenericAttributeListNestedEnumHexMask,
+        addEmptyGenericAttributeListNestedEnumEntry:
+          store.addEmptyGenericAttributeListNestedEnumEntry,
+        // Nested bitmap actions
+        setGenericAttributeListNestedBitmapDataType:
+          store.setGenericAttributeListNestedBitmapDataType,
+        addGenericAttributeListNestedBitmapEntry: store.addGenericAttributeListNestedBitmapEntry,
+        removeGenericAttributeListNestedBitmapEntry:
+          store.removeGenericAttributeListNestedBitmapEntry,
+        updateGenericAttributeListNestedBitmapEntryLiteral:
+          store.updateGenericAttributeListNestedBitmapEntryLiteral,
+        updateGenericAttributeListNestedBitmapEntryHexMask:
+          store.updateGenericAttributeListNestedBitmapEntryHexMask,
+        updateGenericAttributeListNestedBitmapEntryDescription:
+          store.updateGenericAttributeListNestedBitmapEntryDescription,
+        addEmptyGenericAttributeListNestedBitmapEntry:
+          store.addEmptyGenericAttributeListNestedBitmapEntry,
+      },
     };
   }, [store]);
 

@@ -38,7 +38,6 @@ export default function FunctionalProfileEditor() {
   const [libraryProfiles, setLibraryProfiles] = useState<LibraryItem[]>([]);
   const [libraryLoading, setLibraryLoading] = useState(false);
   const [libraryError, setLibraryError] = useState<string | null>(null);
-  const [profileIdentifier, setProfileIdentifier] = useState<string | null>(null);
 
   const handleSetProfile = (newProfile: FunctionalProfileFrame) => {
     setProfile(newProfile);
@@ -116,7 +115,6 @@ export default function FunctionalProfileEditor() {
       // Parse and set profile
       const parsedProfile = await parseFunctionalProfile(xmlSource);
       handleSetProfile(parsedProfile);
-      setProfileIdentifier(selectedItem.identifier);
 
       toast.dismiss(loadingToast);
       toast.success(SUCCESS_MESSAGES.FILE_IMPORT.SUCCESS, {
@@ -174,7 +172,6 @@ export default function FunctionalProfileEditor() {
   const confirmClear = () => {
     clear();
     resetValidation();
-    setProfileIdentifier(null);
     setShowClearDialog(false);
   };
 
@@ -256,10 +253,6 @@ export default function FunctionalProfileEditor() {
         confirmLabel="Import"
         searchPlaceholder="Search functional profiles..."
       />
-
-      {profileIdentifier && (
-        <div className="text-center text-muted-foreground py-2">{profileIdentifier}</div>
-      )}
 
       {profile ? (
         <FunctionalProfileForm />

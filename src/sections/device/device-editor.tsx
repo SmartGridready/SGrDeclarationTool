@@ -34,7 +34,6 @@ export default function DeviceEditor() {
   const [libraryDevices, setLibraryDevices] = useState<LibraryItem[]>([]);
   const [libraryLoading, setLibraryLoading] = useState(false);
   const [libraryError, setLibraryError] = useState<string | null>(null);
-  const [deviceIdentifier, setDeviceIdentifier] = useState<string | null>(null);
 
   const handleSetDevice = (newDevice: DeviceFrame) => {
     setDevice(newDevice);
@@ -84,7 +83,6 @@ export default function DeviceEditor() {
   const confirmClear = () => {
     clear();
     resetValidation();
-    setDeviceIdentifier(null);
     setShowClearDialog(false);
   };
 
@@ -146,7 +144,6 @@ export default function DeviceEditor() {
       const parsedDevice = await parseDevice(xmlSource);
       setDevice(parsedDevice);
       resetValidation();
-      setDeviceIdentifier(selectedItem.identifier);
 
       toast.dismiss(loadingToast);
       toast.success(SUCCESS_MESSAGES.FILE_IMPORT.SUCCESS, {
@@ -253,10 +250,6 @@ export default function DeviceEditor() {
         confirmLabel="Import"
         searchPlaceholder="Search devices..."
       />
-
-      {deviceIdentifier && (
-        <div className="text-center text-muted-foreground py-2">{deviceIdentifier}</div>
-      )}
 
       {device ? (
         <DeviceForm />

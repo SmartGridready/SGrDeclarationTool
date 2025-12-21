@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, CardHeader, CardDescription, CardContent } from "@/components/shadcn/card";
 import { Logo } from "@/components/menu/logo";
+import { ChevronRight } from "lucide-react";
 
 export default function Home() {
   return (
@@ -23,22 +24,28 @@ export default function Home() {
             <div className="space-y-4">
               <Link
                 href="/devices"
-                className="block rounded-lg border border-border/40 bg-card p-6 shadow-sm transition-shadow hover:shadow-md cursor-pointer"
+                className="flex items-center justify-between rounded-lg border border-border/40 bg-card p-6 shadow-sm transition-shadow hover:shadow-md cursor-pointer group"
               >
-                <h3 className="mb-1 text-lg font-semibold">Product</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Edit or create Device EIDs
-                </p>
+                <div>
+                  <h3 className="mb-1 text-lg font-semibold">Devices</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Edit or create Device EIDs
+                  </p>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
               </Link>
 
               <Link
                 href="/functional-profiles"
-                className="block rounded-lg border border-border/40 bg-card p-6 shadow-sm transition-shadow hover:shadow-md cursor-pointer"
+                className="flex items-center justify-between rounded-lg border border-border/40 bg-card p-6 shadow-sm transition-shadow hover:shadow-md cursor-pointer group"
               >
-                <h3 className="mb-1 text-lg font-semibold">Functional Profile</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Edit or create Functional Profiles
-                </p>
+                <div>
+                  <h3 className="mb-1 text-lg font-semibold">Functional Profiles</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Edit or create Functional Profiles
+                  </p>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </CardContent>

@@ -3,8 +3,7 @@ import { toast } from "sonner";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/constants/success-messages";
 import { useValidationStore } from "@/sections/shared/validation-store";
-import { FunctionalProfileFrame } from "@/models";
-import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
+import { ValidationResult } from "@/utils/validation-utils";
 
 /**
  * Generic file export hook for XML files
@@ -14,6 +13,7 @@ import { validateFunctionalProfileFrame } from "@/sections/functional-profile/fu
  * @param options.data - The data to export
  * @param options.filename - The filename for the exported file (default: "export.xml")
  * @param options.errorMessage - Custom error message when data is missing
+ * @param options.validator - Optional validator function to validate data before export
  * @returns Object with exportFile function
  */
 export function useFileExport<T>({
@@ -21,13 +21,41 @@ export function useFileExport<T>({
   data,
   filename = "export.xml",
   errorMessage = ERROR_MESSAGES.FILE_EXPORT.NO_DATA,
+  validator,
 }: {
   builder: (data: T) => Promise<string>;
   data: T | null | undefined;
   filename?: string;
   errorMessage?: string;
+  validator?: (data: T) => ValidationResult<T>;
 }) {
   const setValidationAttempted = useValidationStore((state) => state.setValidationAttempted);
+
+  /**
+   * Gets the first field error message from validation result
+   * Returns a user-friendly message showing which field is missing/invalid
+   */
+  const getFirstFieldError = (validation: ValidationResult<unknown>): string | undefined => {
+    if (validation.success) return undefined;
+
+    // Try to get the first field error from fieldErrors
+    if (validation.fieldErrors) {
+      const firstFieldPath = Object.keys(validation.fieldErrors)[0];
+      if (firstFieldPath) {
+        const firstError = validation.fieldErrors[firstFieldPath]?.[0];
+        if (firstError) {
+          return firstError;
+        }
+      }
+    }
+
+    // Fallback to first error from issues
+    if (validation.errors?.issues?.[0]) {
+      return validation.errors.issues[0].message;
+    }
+
+    return undefined;
+  };
 
   const exportFile = useCallback(async () => {
     if (!data) {
@@ -38,20 +66,16 @@ export function useFileExport<T>({
     }
 
     // Validate before exporting - this triggers validation error display
-    // Check if data is a FunctionalProfileFrame (for validation)
-    if (data && typeof data === "object" && "functionalProfile" in data) {
-      const validation = validateFunctionalProfileFrame(data as FunctionalProfileFrame);
+    if (validator) {
+      const validation = validator(data);
 
       // Mark validation as attempted so errors will be displayed
       setValidationAttempted(true);
 
       if (!validation.success) {
-        // Count validation errors
-        const errorCount = Object.keys(validation.fieldErrors || {}).length;
+        const firstFieldError = getFirstFieldError(validation);
         const errorMessageText =
-          errorCount > 0
-            ? `Please fix ${errorCount} validation error${errorCount > 1 ? "s" : ""} before exporting.`
-            : ERROR_MESSAGES.FILE_EXPORT.FAILED;
+          firstFieldError || "Please fix validation errors before exporting.";
 
         toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
           description: errorMessageText,
@@ -95,7 +119,7 @@ export function useFileExport<T>({
         duration: 5000,
       });
     }
-  }, [builder, data, filename, errorMessage, setValidationAttempted]);
+  }, [builder, data, filename, errorMessage, validator, setValidationAttempted]);
 
   return {
     exportFile,

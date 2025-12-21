@@ -21,6 +21,7 @@ import { LibraryImportModal } from "@/components/editor/library-import-modal";
 import { Button } from "@/components/shadcn/button";
 import { parseDevice } from "@/sections/device/device-mapper";
 import { buildDeviceToXml } from "@/sections/device/device-builder";
+import { validateDeviceFrame } from "@/sections/device/device-schema";
 
 export default function DeviceEditor() {
   const { device, createEmpty, clear, setDevice } = useDeviceStore();
@@ -51,6 +52,7 @@ export default function DeviceEditor() {
     data: device,
     filename: "device.xml",
     errorMessage: ERROR_MESSAGES.FILE_EXPORT.NO_DATA,
+    validator: validateDeviceFrame,
   });
 
   const handleEmptyDevice = () => {

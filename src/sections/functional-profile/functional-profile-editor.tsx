@@ -10,6 +10,7 @@ import { useFileImport } from "@/hooks/use-file-import";
 import { useFileExport } from "@/hooks/use-file-export";
 import { parseFunctionalProfile } from "@/sections/functional-profile/functional-profile-mapper";
 import { buildFunctionalProfileToXml } from "@/sections/functional-profile/functional-profile-builder";
+import { validateFunctionalProfileFrame } from "@/sections/functional-profile/functional-profile-schema";
 import {
   fetchFunctionalProfiles,
   fetchFunctionalProfileXml,
@@ -55,6 +56,7 @@ export default function FunctionalProfileEditor() {
     data: profile,
     filename: "functional-profile.xml",
     errorMessage: ERROR_MESSAGES.FILE_EXPORT.PROFILE_REQUIRED,
+    validator: validateFunctionalProfileFrame,
   });
 
   const handleImport = () => {

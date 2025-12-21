@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
 import { Logo } from "@/components/menu/logo";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export function Navbar() {
   return (
@@ -14,6 +15,7 @@ export function Navbar() {
           <Button key="/functional-profiles" variant="ghost" asChild>
             <Link href="/functional-profiles">Functional Profiles</Link>
           </Button>
+          <ThemeToggle />
         </div>
       </div>
     </nav>

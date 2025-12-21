@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex h-[calc(100vh-4rem-3rem)] items-start justify-center pt-8">
+    <div className="flex items-start justify-center pt-8">
       <div className="w-full max-w-3xl">
         <Card className="border-border/50">
           <CardHeader className="text-center">

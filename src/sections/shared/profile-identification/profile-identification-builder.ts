@@ -36,7 +36,7 @@ export function buildProfileIdentification(
  * Builds XML object for versionNumber from VersionNumber model
  * @throws Error if required fields are missing
  */
-function buildVersionNumber(versionNumber: VersionNumber): Record<string, unknown> {
+export function buildVersionNumber(versionNumber: VersionNumber): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateVersionNumber(versionNumber);
   if (!validation.success) {

@@ -7,6 +7,7 @@ import { useValidationStore } from "@/sections/shared/validation-store";
 import { DeviceForm } from "@/sections/device/device-form";
 
 import { useFileImport } from "@/hooks/use-file-import";
+import { useFileExport } from "@/hooks/use-file-export";
 import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/utils/library-api-utils";
 import { DeviceFrame } from "@/models";
 import { DEBUG } from "@/debug-config";
@@ -19,6 +20,7 @@ import { ConfirmationDialog } from "@/components/editor/confirmation-dialog";
 import { LibraryImportModal } from "@/components/editor/library-import-modal";
 import { Button } from "@/components/shadcn/button";
 import { parseDevice } from "@/sections/device/device-mapper";
+import { buildDeviceToXml } from "@/sections/device/device-builder";
 
 export default function DeviceEditor() {
   const { device, createEmpty, clear, setDevice } = useDeviceStore();
@@ -42,6 +44,13 @@ export default function DeviceEditor() {
     parser: parseDevice,
     onSuccess: handleSetDevice,
     accept: ".xml",
+  });
+
+  const { exportFile } = useFileExport({
+    builder: buildDeviceToXml,
+    data: device,
+    filename: "device.xml",
+    errorMessage: ERROR_MESSAGES.FILE_EXPORT.NO_DATA,
   });
 
   const handleEmptyDevice = () => {
@@ -190,9 +199,7 @@ export default function DeviceEditor() {
         onClear={handleClear}
         onImportFromFilesystem={handleImport}
         onImportFromLibrary={handleLibraryImport}
-        onExport={() => {
-          toast.info("Export functionality will be implemented with builder");
-        }}
+        onExport={exportFile}
         emptyButtonLabel="Load Empty Device"
       />
 

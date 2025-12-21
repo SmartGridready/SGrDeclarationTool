@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.16.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.15.0...v0.16.0) (2025-12-21)
+
+
+### Features
+
+* add hover effect to wizard cards (GL-6) ([c1a1a2f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c1a1a2f1041788902573e61cf41bf28b240d0f18))
+* implement theme switching and update wizard for compatibility (GL-14) ([013e36d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/013e36dc52ccd9feed406b8b857a96196784b52a))
+* readd green color to diffs (GL-5) ([8ee87f2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8ee87f2cc05e58330534acbf26ef4820a6804348))
+
+
+### Code Refactoring
+
+* remove unnecessary height calculation (GL-6) ([2c521ad](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2c521adb4889bacf7fab749062215929f8540efa))
+* return first field error when validating (GL-18) ([fd3b41d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fd3b41d938507482be51604992d58c8e38216ef9))
+
 ## [0.15.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.14.0...v0.15.0) (2025-12-21)
 
 

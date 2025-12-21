@@ -65,7 +65,10 @@ export default function FunctionalProfileTestPage() {
           {diff.map((part, index) => {
             if (part.added) {
               return (
-                <span key={index} className="bg-primary/20 text-primary block">
+                <span
+                  key={index}
+                  className="bg-green-500/20 text-green-700 dark:text-green-400 block"
+                >
                   + {part.value}
                 </span>
               );

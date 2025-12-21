@@ -81,12 +81,17 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
     alternativeNamesXml && mapAlternativeNames(alternativeNamesXml)
   );
 
+  // Map optional legibleDescription
   if (
     functionalProfileXml.legibleDescription &&
-    Array.isArray(functionalProfileXml.legibleDescription)
+    Array.isArray(functionalProfileXml.legibleDescription) &&
+    functionalProfileXml.legibleDescription.length > 0
   ) {
-    frame.functionalProfile.legibleDescription = mapLegibleDescription(
-      functionalProfileXml.legibleDescription
+    const mappedLegibleDescription = mapLegibleDescription(functionalProfileXml.legibleDescription);
+    setOptionalField(
+      frame.functionalProfile,
+      "legibleDescription",
+      mappedLegibleDescription.length > 0 ? mappedLegibleDescription : undefined
     );
   }
 

@@ -11,18 +11,17 @@ import {
 /**
  * Maps XML releaseNotes to ReleaseNotes model
  */
-export function mapReleaseNotes(releaseNotesXml: unknown): ReleaseNotes {
-  const xml = releaseNotesXml as Xml2JsObject | undefined;
+export function mapReleaseNotes(releaseNotesXml: Xml2JsObject | undefined): ReleaseNotes {
   const releaseNotes: ReleaseNotes = {
-    state: getTypedValue<ReleaseState>(xml, "state", "Draft"),
+    state: getTypedValue<ReleaseState>(releaseNotesXml, "state", "Draft"),
   };
 
   // Map optional fields
-  setOptionalField(releaseNotes, "remarks", getOptionalStringValue(xml, "remarks"));
+  setOptionalField(releaseNotes, "remarks", getOptionalStringValue(releaseNotesXml, "remarks"));
   setOptionalField(
     releaseNotes,
     "changeLog",
-    mapOptionalArray(xml, "changeLog", mapChangeLogEntry)
+    mapOptionalArray(releaseNotesXml, "changeLog", mapChangeLogEntry)
   );
 
   return releaseNotes;
@@ -31,12 +30,11 @@ export function mapReleaseNotes(releaseNotesXml: unknown): ReleaseNotes {
 /**
  * Maps XML changeLog to ChangeLog model
  */
-function mapChangeLogEntry(entryXml: unknown): ChangeLog {
-  const xml = entryXml as Xml2JsObject | undefined;
+function mapChangeLogEntry(entryXml: Xml2JsObject | undefined): ChangeLog {
   return {
-    version: getStringValue(xml, "version"),
-    date: getStringValue(xml, "date"),
-    author: getStringValue(xml, "author"),
-    comment: getStringValue(xml, "comment"),
+    version: getStringValue(entryXml, "version"),
+    date: getStringValue(entryXml, "date"),
+    author: getStringValue(entryXml, "author"),
+    comment: getStringValue(entryXml, "comment"),
   };
 }

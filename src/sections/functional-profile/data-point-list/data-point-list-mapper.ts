@@ -90,8 +90,17 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
   );
 
   // Map optional legibleDescription
-  if (dpXml.legibleDescription && Array.isArray(dpXml.legibleDescription)) {
-    dataPoint.dataPoint.legibleDescription = mapLegibleDescription(dpXml.legibleDescription);
+  if (
+    dpXml.legibleDescription &&
+    Array.isArray(dpXml.legibleDescription) &&
+    dpXml.legibleDescription.length > 0
+  ) {
+    const mappedLegibleDescription = mapLegibleDescription(dpXml.legibleDescription);
+    setOptionalField(
+      dataPoint.dataPoint,
+      "legibleDescription",
+      mappedLegibleDescription.length > 0 ? mappedLegibleDescription : undefined
+    );
   }
 
   // Map optional parameterList
@@ -169,14 +178,11 @@ function mapParameterList(parameterListXml: any): DynamicParameterDescriptionLis
   const parameterList: DynamicParameterDescriptionList = {};
 
   // Map optional parameterListElement
-  const parameterListElement = mapOptionalArray(
-    parameterListXml,
+  setOptionalField(
+    parameterList,
     "parameterListElement",
-    mapParameterListElement
+    mapOptionalArray(parameterListXml, "parameterListElement", mapParameterListElement)
   );
-  if (parameterListElement) {
-    parameterList.parameterListElement = parameterListElement;
-  }
 
   return parameterList;
 }

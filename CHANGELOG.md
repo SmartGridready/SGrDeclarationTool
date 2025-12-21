@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.15.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.14.0...v0.15.0) (2025-12-21)
+
+
+### Features
+
+* add generic attribute list product to model (GL-9) ([7d86dba](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7d86dbaf98f2bffe74f515857388dd1d3f0e10e7))
+* implement builders for device sections config list, identification, generic list and information (GL-18) ([10624bc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/10624bcb1087445e9547d083da1f81315077818b))
+* implement generic attribute list forms (GL-13) ([1eb3ad1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1eb3ad1b3380f054fdc6ae6a9324093578491df3))
+* implement generic attribute list slices (GL-16) ([4e77f1f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4e77f1f73920ca6b0107926c02a13c92f4531720))
+* implement mappers for device sections information, generic attribute list and configuration list (GL-7) ([9a62bdc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9a62bdc8e359d4e943e267d77b5b317e7cf5e484))
+* implement schemas for device sections config list, identification and information (GL-18) ([2249dfc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2249dfc309ff80cb3acdb37da2a7e7da08383563))
+
+
+### Code Refactoring
+
+* implement device mappers following functional profile patterns with shared utilities (GL-7) ([c1dbc76](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c1dbc7625c7ec15d4b80ba89221271a769275133))
+* rename util files with utils suffix ([31871e2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/31871e2b63bae24bc16d2ad0a9329def46c5af5d))
+* standardize mapper implementations for consistency (GL-7) ([a595559](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a59555943f2ee594755394e8d64e48917f638337))
+
+
+### Tests
+
+* implement diff test for devices (GL-5) ([24e485e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/24e485e65be1ff1cd53fbc4edb67d5e6a971a863))
+
 ## [0.14.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.12.0...v0.14.0) (2025-12-20)
 
 

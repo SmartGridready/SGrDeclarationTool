@@ -4,6 +4,7 @@ import {
   TestState,
   LevelOfOperation,
   PowerSource,
+  VersionNumber,
 } from "@/models";
 import {
   getStringValue,
@@ -16,7 +17,6 @@ import {
 } from "@/utils/mapper-utils";
 import { mapAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-mapper";
 import { mapLegibleDescription } from "@/sections/shared/legible-description/legible-description-mapper";
-import { mapLegibleDescriptionItem } from "@/sections/shared/legible-description/legible-description-mapper";
 
 /**
  * Maps XML deviceInformation to DeviceInformation model
@@ -110,11 +110,7 @@ export function mapDeviceInformation(
   // Map optional versionNumber
   const versionNumberXml = getFirstElement(deviceInformationXml, "versionNumber");
   if (versionNumberXml) {
-    deviceInformation.versionNumber = {
-      primaryVersionNumber: getNumberValue(versionNumberXml, "primaryVersionNumber", 0),
-      secondaryVersionNumber: getNumberValue(versionNumberXml, "secondaryVersionNumber", 0),
-      subReleaseVersionNumber: getNumberValue(versionNumberXml, "subReleaseVersionNumber", 0),
-    };
+    deviceInformation.versionNumber = mapVersionNumber(versionNumberXml);
   }
 
   const testStateValue = getOptionalStringValue(deviceInformationXml, "testState");
@@ -130,9 +126,7 @@ export function mapDeviceInformation(
     Array.isArray(deviceInformationXml.programmerHints) &&
     deviceInformationXml.programmerHints.length > 0
   ) {
-    const mappedProgrammerHints = deviceInformationXml.programmerHints.map((hint: Xml2JsObject) =>
-      mapLegibleDescriptionItem(hint)
-    );
+    const mappedProgrammerHints = mapLegibleDescription(deviceInformationXml.programmerHints);
     setOptionalField(
       deviceInformation,
       "programmerHints",
@@ -141,4 +135,23 @@ export function mapDeviceInformation(
   }
 
   return deviceInformation;
+}
+
+/**
+ * Maps XML versionNumber to VersionNumber model
+ */
+function mapVersionNumber(versionNumberXml: Xml2JsObject | undefined): VersionNumber {
+  if (!versionNumberXml) {
+    return {
+      primaryVersionNumber: 0,
+      secondaryVersionNumber: 0,
+      subReleaseVersionNumber: 0,
+    };
+  }
+
+  return {
+    primaryVersionNumber: getNumberValue(versionNumberXml, "primaryVersionNumber", 0),
+    secondaryVersionNumber: getNumberValue(versionNumberXml, "secondaryVersionNumber", 0),
+    subReleaseVersionNumber: getNumberValue(versionNumberXml, "subReleaseVersionNumber", 0),
+  };
 }

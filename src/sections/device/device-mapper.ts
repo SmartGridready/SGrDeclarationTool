@@ -1,7 +1,8 @@
 import { parseString } from "xml2js";
 import { DeviceFrame } from "@/models";
-import { getFirstElement, getStringValue, setOptionalField } from "@/utils/mapper-utils";
+import { getFirstElement, setOptionalField } from "@/utils/mapper-utils";
 import { mapReleaseNotes } from "@/sections/shared/release-notes/release-notes-mapper";
+import { mapDeviceIdentification } from "@/sections/device/device-identification/device-identification-mapper";
 import { mapDeviceInformation } from "@/sections/device/device-information/device-information-mapper";
 import { mapConfigurationList } from "@/sections/device/configuration-list/configuration-list-mapper";
 import { mapGenericAttributeListProduct } from "@/sections/device/generic-attribute-list/generic-attribute-list-mapper";
@@ -62,15 +63,13 @@ function mapDevice(parsed: any): DeviceFrame {
     throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
   }
 
+  const identification = mapDeviceIdentification(frameData);
+
   const device: DeviceFrame = {
-    deviceName: getStringValue(frameData, "deviceName"),
-    specificationOwnerIdentification: getStringValue(frameData, "specificationOwnerIdentification"),
+    ...identification,
     releaseNotes: mapReleaseNotes(releaseNotesXml),
     deviceInformation: mapDeviceInformation(deviceInformationXml),
   };
-
-  // Map optional fields
-  setOptionalField(device, "manufacturerName", getStringValue(frameData, "manufacturerName"));
 
   const configurationListXml = getFirstElement(frameData, "configurationList");
   setOptionalField(

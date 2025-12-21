@@ -7,7 +7,7 @@ import {
   Xml2JsObject,
 } from "@/utils/mapper-utils";
 import { mapDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-mapper";
-import { mapLegibleDescriptionItem } from "@/sections/shared/legible-description/legible-description-mapper";
+import { mapLegibleDescription } from "@/sections/shared/legible-description/legible-description-mapper";
 
 /**
  * Maps XML configurationList to ConfigurationList model
@@ -43,9 +43,7 @@ function mapConfigurationListElement(elementXml: Xml2JsObject): ConfigurationLis
     Array.isArray(elementXml.configurationDescription) &&
     elementXml.configurationDescription.length > 0
   ) {
-    const mappedDescriptions = elementXml.configurationDescription.map((desc: Xml2JsObject) =>
-      mapLegibleDescriptionItem(desc)
-    );
+    const mappedDescriptions = mapLegibleDescription(elementXml.configurationDescription);
     setOptionalField(
       element,
       "configurationDescription",

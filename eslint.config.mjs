@@ -28,6 +28,12 @@ const eslintConfig = [
     },
   },
   {
+    files: ["src/sections/device/**/*mapper*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  {
     files: ["src/sections/functional-profile/**/*builder*.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

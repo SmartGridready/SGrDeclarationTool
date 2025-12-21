@@ -6,6 +6,7 @@ import { useDeviceStore } from "@/sections/device/device-store";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { DeviceForm } from "@/sections/device/device-form";
 
+import { useFileImport } from "@/hooks/use-file-import";
 import { fetchDevices, fetchDeviceXml, LibraryItem } from "@/utils/library-api-utils";
 import { DeviceFrame } from "@/models";
 import { DEBUG } from "@/debug-config";
@@ -17,25 +18,31 @@ import { EditorActions } from "@/components/editor/editor-actions";
 import { ConfirmationDialog } from "@/components/editor/confirmation-dialog";
 import { LibraryImportModal } from "@/components/editor/library-import-modal";
 import { Button } from "@/components/shadcn/button";
-
-// Placeholder function for device parsing - to be implemented when device mapper is created
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function parseDevice(_xmlString: string): Promise<DeviceFrame> {
-  // TODO: Implement device mapper similar to parseFunctionalProfile
-  throw new Error("Device mapper not yet implemented. Please use filesystem import for now.");
-}
+import { parseDevice } from "@/sections/device/device-mapper";
 
 export default function DeviceEditor() {
   const { device, createEmpty, clear, setDevice } = useDeviceStore();
   const resetValidation = useValidationStore((state) => state.resetValidation);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [showLoadEmptyDialog, setShowLoadEmptyDialog] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
   const [showLibraryImportDialog, setShowLibraryImportDialog] = useState(false);
   const [showLibraryImportConfirmation, setShowLibraryImportConfirmation] = useState(false);
   const [libraryDevices, setLibraryDevices] = useState<LibraryItem[]>([]);
   const [libraryLoading, setLibraryLoading] = useState(false);
   const [libraryError, setLibraryError] = useState<string | null>(null);
   const [deviceIdentifier, setDeviceIdentifier] = useState<string | null>(null);
+
+  const handleSetDevice = (newDevice: DeviceFrame) => {
+    setDevice(newDevice);
+    resetValidation();
+  };
+
+  const { importFile, inputRef, handleFileChange, accept } = useFileImport({
+    parser: parseDevice,
+    onSuccess: handleSetDevice,
+    accept: ".xml",
+  });
 
   const handleEmptyDevice = () => {
     if (device) {
@@ -68,6 +75,19 @@ export default function DeviceEditor() {
     resetValidation();
     setDeviceIdentifier(null);
     setShowClearDialog(false);
+  };
+
+  const handleImport = () => {
+    if (device) {
+      setShowImportDialog(true);
+    } else {
+      importFile();
+    }
+  };
+
+  const confirmImport = () => {
+    setShowImportDialog(false);
+    importFile();
   };
 
   const handleLibraryImport = () => {
@@ -156,13 +176,19 @@ export default function DeviceEditor() {
 
   return (
     <div className="space-y-6">
+      <input
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        onChange={handleFileChange}
+        className="hidden"
+        aria-label="Import XML file"
+      />
       <EditorActions
         title="Device Editor"
         onEmpty={handleEmptyDevice}
         onClear={handleClear}
-        onImportFromFilesystem={() => {
-          toast.info("Import functionality will be implemented with mapper");
-        }}
+        onImportFromFilesystem={handleImport}
         onImportFromLibrary={handleLibraryImport}
         onExport={() => {
           toast.info("Export functionality will be implemented with builder");
@@ -186,6 +212,15 @@ export default function DeviceEditor() {
         description="Current device will not be saved. Are you sure you want to load an empty device?"
         confirmLabel="Load Empty"
         onConfirm={confirmLoadEmpty}
+      />
+
+      <ConfirmationDialog
+        open={showImportDialog}
+        onOpenChange={setShowImportDialog}
+        title="Import Device"
+        description="Current device will not be saved. Are you sure you want to import a new device?"
+        confirmLabel="Import"
+        onConfirm={confirmImport}
       />
 
       <ConfirmationDialog

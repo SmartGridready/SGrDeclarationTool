@@ -5,9 +5,6 @@ import {
   PresenceLevel,
   DataTypeFunctionalProfile,
   Units,
-  DynamicParameterDescriptionList,
-  DynamicParameterDescriptionListElement,
-  DynamicParameterDescription,
 } from "@/models";
 import {
   mapArray,
@@ -20,12 +17,9 @@ import {
   mapSimpleDataType,
   setOptionalField,
 } from "@/utils/mapper-utils";
-import {
-  mapLegibleDescription,
-  mapLegibleDescriptionItem,
-} from "@/sections/shared/legible-description/legible-description-mapper";
-import { mapDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-mapper";
+import { mapLegibleDescription } from "@/sections/shared/legible-description/legible-description-mapper";
 import { mapAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-mapper";
+import { mapDynamicParameterList } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-mapper";
 import { mapGenericAttributeList } from "@/sections/functional-profile/generic-attribute-list/generic-attribute-list-mapper";
 import {
   EnumMapFunctionalProfile,
@@ -108,7 +102,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
   setOptionalField(
     dataPoint.dataPoint,
     "parameterList",
-    parameterListXml && mapParameterList(parameterListXml)
+    parameterListXml && mapDynamicParameterList(parameterListXml)
   );
 
   // Map optional genericAttributeList at element level
@@ -169,53 +163,6 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
   };
 
   return mapSimpleDataType(dataTypeXml, typeMap, { float64: {} });
-}
-
-/**
- * Maps XML parameterList to DynamicParameterDescriptionList model
- */
-function mapParameterList(parameterListXml: any): DynamicParameterDescriptionList {
-  const parameterList: DynamicParameterDescriptionList = {};
-
-  // Map optional parameterListElement
-  setOptionalField(
-    parameterList,
-    "parameterListElement",
-    mapOptionalArray(parameterListXml, "parameterListElement", mapParameterListElement)
-  );
-
-  return parameterList;
-}
-
-/**
- * Maps a single XML parameterListElement to DynamicParameterDescriptionListElement model
- */
-function mapParameterListElement(elementXml: any): DynamicParameterDescriptionListElement {
-  const element: DynamicParameterDescriptionListElement = {
-    name: getStringValue(elementXml, "name"),
-    dataType: mapDataTypeProduct(getFirstElement(elementXml, "dataType")),
-  };
-
-  // Map optional defaultValue
-  setOptionalField(element, "defaultValue", getOptionalStringValue(elementXml, "defaultValue"));
-
-  // Map optional parameterDescription
-  if (elementXml.parameterDescription && Array.isArray(elementXml.parameterDescription)) {
-    element.parameterDescription = elementXml.parameterDescription.map((desc: any) =>
-      mapParameterDescription(desc)
-    );
-  }
-
-  return element;
-}
-
-/**
- * Maps XML parameterDescription to DynamicParameterDescription model
- * Uses the shared mapLegibleDescriptionItem which already handles label
- */
-function mapParameterDescription(descXml: any): DynamicParameterDescription {
-  // mapLegibleDescriptionItem already handles label field for descriptions that extend LegibleDescription
-  return mapLegibleDescriptionItem(descXml) as DynamicParameterDescription;
 }
 
 /**

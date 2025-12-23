@@ -38,6 +38,18 @@ interface ReleaseNotesFormProps<TStoreState extends ReleaseNotesSlice> {
    * Whether release notes are required (if true, add/remove buttons are hidden)
    */
   required?: boolean;
+  /**
+   * Title for the form section
+   */
+  title?: string;
+  /**
+   * Description for the form section
+   */
+  description?: string;
+  /**
+   * Whether this is a nested section (affects styling)
+   */
+  nested?: boolean;
 }
 
 export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
@@ -47,6 +59,9 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
   isAddedSelector,
   fieldPathPrefix = "releaseNotes",
   required = false,
+  title = "Release Notes",
+  description = "Version and release information",
+  nested = false,
 }: ReleaseNotesFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
@@ -85,12 +100,13 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
 
   return (
     <FormSection
-      title={"Release Notes"}
-      description={"Version and release information"}
+      title={title}
+      description={description}
       required={required}
       isAdded={required ? true : isAdded}
       onAdd={required ? undefined : handleAdd}
       onRemove={required ? undefined : handleRemove}
+      nested={nested}
     >
       <FormGroup columns={2}>
         <SelectField

@@ -38,9 +38,17 @@ interface ProfileIdentificationFormProps<TStoreState extends FunctionalProfileId
     subReleaseVersionNumber?: number;
   };
   /**
+   * Selector to check if profile identification exists (for optional profile identification)
+   */
+  isAddedSelector?: (store: TStoreState) => boolean;
+  /**
    * Field path prefix for validation errors
    */
   fieldPathPrefix?: string;
+  /**
+   * Whether profile identification is required (if true, add/remove buttons are hidden)
+   */
+  required?: boolean;
   /**
    * Title for the form section
    */
@@ -49,6 +57,10 @@ interface ProfileIdentificationFormProps<TStoreState extends FunctionalProfileId
    * Description for the form section
    */
   description?: string;
+  /**
+   * Whether this is a nested section (affects styling)
+   */
+  nested?: boolean;
 }
 
 export function ProfileIdentificationForm<
@@ -57,11 +69,14 @@ export function ProfileIdentificationForm<
   useStore,
   useValidation,
   stateSelector,
+  isAddedSelector,
   fieldPathPrefix = "functionalProfile.functionalProfileIdentification",
+  required = true,
   title = "Functional Profile Identification",
   description = "Basic identification data of the functional profile",
+  nested = false,
 }: ProfileIdentificationFormProps<TStoreState>) {
-  const { state, actions, getError } = useFormSection<
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
     {
       specificationOwnerIdentification?: SpecificationOwnerIdentification;
@@ -86,12 +101,23 @@ export function ProfileIdentificationForm<
       updateSecondaryVersionNumber: store.updateSecondaryVersionNumber,
       updateSubReleaseVersionNumber: store.updateSubReleaseVersionNumber,
     }),
+    // Only include add/remove functionality if not required
+    // Note: ProfileIdentificationSlice doesn't have add/remove actions since it's always required
+    isAddedSelector: required ? undefined : isAddedSelector,
   });
 
   const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
 
   return (
-    <FormSection title={title} description={description} required={true}>
+    <FormSection
+      title={title}
+      description={description}
+      required={required}
+      isAdded={required ? true : isAdded}
+      onAdd={required ? undefined : handleAdd}
+      onRemove={required ? undefined : handleRemove}
+      nested={nested}
+    >
       <FormGroup>
         <InputField
           label="Specification Owner Identification"

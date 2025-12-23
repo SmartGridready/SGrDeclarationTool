@@ -167,13 +167,7 @@ export function DataPointListForm() {
               <JsonForm dataPointIndex={index} items={item.dataPoint.dataType.json.items} />
             )}
 
-            <ParameterListForm
-              dataPointIndex={index}
-              parameterList={item.dataPoint.parameterList}
-              getError={getError}
-              onAdd={() => actions.addParameterList(index)}
-              onRemove={() => actions.removeParameterList(index)}
-            />
+            <ParameterListForm dataPointIndex={index} />
 
             <DataPointAlternativeNamesForm dataPointIndex={index} />
 

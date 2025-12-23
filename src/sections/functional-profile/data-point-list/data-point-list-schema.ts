@@ -8,7 +8,7 @@ import {
 } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { legibleDescriptionSchema } from "@/sections/shared/legible-description/legible-description-schema";
 import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
-import { dataTypeProductSchema } from "@/sections/shared/data-type-product/data-type-product-schema";
+import { dynamicParameterListSchema } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-schema";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -20,31 +20,6 @@ const genericAttributeFunctionalProfileSchema = z.object({
 
 const genericAttributeListFunctionalProfileSchema = z.object({
   genericAttributeListElement: z.array(genericAttributeFunctionalProfileSchema),
-});
-
-/**
- * Parameter List validation schemas (for data points)
- */
-// Dynamic Parameter Description Schema (extends LegibleDescription with optional label)
-const dynamicParameterDescriptionSchema = legibleDescriptionSchema.extend({
-  label: z.string().optional(),
-});
-
-// Data Type Product Schema - using shared schema
-
-// Parameter List Element Schema
-const parameterListElementSchema = z.object({
-  name: z
-    .string({ message: "Parameter name is required" })
-    .min(1, "Parameter name cannot be empty"),
-  dataType: dataTypeProductSchema,
-  defaultValue: z.string().optional(),
-  parameterDescription: z.array(dynamicParameterDescriptionSchema).optional(),
-});
-
-// Parameter List Schema
-export const parameterListSchema = z.object({
-  parameterListElement: z.array(parameterListElementSchema).optional(),
 });
 
 /**
@@ -129,7 +104,7 @@ export const dataPointDescriptionSchema = z.object({
   arrayLength: z.number().int().positive().optional(),
   legibleDescription: z.array(legibleDescriptionSchema).max(4).optional(),
   alternativeNames: alternativeNamesSchema.optional(),
-  parameterList: parameterListSchema.optional(),
+  parameterList: dynamicParameterListSchema.optional(),
 });
 
 // Functional Profile Data Point Schema

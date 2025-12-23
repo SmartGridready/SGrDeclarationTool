@@ -10,6 +10,7 @@ import {
   SpecificationOwnerIdentification,
   VersionNumber,
 } from "@/models/generic";
+import { ModbusInterface } from "./ModbusInterface";
 
 export interface DeviceFrame {
   deviceName: string;
@@ -19,7 +20,7 @@ export interface DeviceFrame {
   deviceInformation: DeviceInformation;
   configurationList?: ConfigurationList;
   genericAttributeList?: GenericAttributeListProduct;
-  // interfaceList: InterfaceList;
+  interfaceList: InterfaceList;
 }
 
 export interface DeviceInformation {
@@ -57,3 +58,11 @@ export interface ConfigurationListElement {
 export interface ConfigurationDescription extends LegibleDescription {
   label?: string;
 }
+
+// Product core: Interfaces list
+
+export type InterfaceList = { modbusInterface: ModbusInterface };
+//  | { restApiInterface: RestApiInterface }
+//  | { contactInterface: ContactInterface }
+//  | { genericInterface: GenericInterface }
+//  | { messagingInterface: MessagingInterface };

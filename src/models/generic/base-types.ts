@@ -343,3 +343,62 @@ export interface GenericAttributeProductEnd {
   value: string;
   unit: Units;
 }
+
+// ============================================================================
+// Modbus and Serial Interface Types
+// ============================================================================
+
+export interface ScalingFactor {
+  multiplicator: number;
+  powerof10: number;
+}
+
+export type UnsignedIntParameter = string; // Pattern: \{\{.+\}\}|\d+
+
+// Enum for Product (used in Modbus)
+export interface Enum {
+  enumEntry: EnumEntry[];
+  hexMask?: string; // hexBinary
+}
+
+export interface EnumEntry {
+  literal: string;
+  ordinal: number;
+  description?: string;
+}
+
+// Serial Interface Capability
+export type BaudRate =
+  | "300"
+  | "600"
+  | "1200"
+  | "2400"
+  | "4800"
+  | "5600"
+  | "9600"
+  | "14400"
+  | "19200"
+  | "38400"
+  | "57600"
+  | "115200"
+  | "128000"
+  | "230400"
+  | "256000";
+
+export type BaudRateParameter = string; // Pattern: {{.+}}|300|600|...|256000
+
+export type ByteLength = "7" | "8";
+export type ByteLengthParameter = string; // Pattern: {{.+}}|7|8
+
+export type Parity = "EVEN" | "ODD" | "NONE";
+export type ParityParameter = string; // Pattern: ({{.+}})|(^\d+$)|EVEN|ODD|NONE
+
+export type StopBitLength = "1" | "1.5" | "2";
+export type StopBitLengthParameter = string; // Pattern: ({{.+}})|0|1|1.5|2
+
+export interface SerialInterfaceCapability {
+  baudRatesSupported: BaudRate[]; // maxOccurs="unbounded"
+  byteLenSupported: ByteLength[]; // maxOccurs="unbounded"
+  paritySupported: Parity[]; // maxOccurs="unbounded"
+  stopBitLenSupported: StopBitLength[]; // maxOccurs="unbounded"
+}

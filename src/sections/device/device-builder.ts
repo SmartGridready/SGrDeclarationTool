@@ -4,7 +4,7 @@ import { buildReleaseNotes } from "@/sections/shared/release-notes/release-notes
 import { buildDeviceIdentification } from "@/sections/device/device-identification/device-identification-builder";
 import { buildDeviceInformation } from "@/sections/device/device-information/device-information-builder";
 import { buildConfigurationList } from "@/sections/device/configuration-list/configuration-list-builder";
-import { buildGenericAttributeListProduct } from "@/sections/device/generic-attribute-list/generic-attribute-list-builder";
+import { buildGenericAttributeListProduct } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-builder";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { validateDeviceFrame } from "@/sections/device/device-schema";
 import { wrapInArray } from "@/utils/builder-utils";

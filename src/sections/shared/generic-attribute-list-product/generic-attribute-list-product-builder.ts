@@ -4,7 +4,7 @@ import {
   GenericAttributeListProductEnd,
   GenericAttributeProductEnd,
 } from "@/models";
-import { validateGenericAttributeListProduct } from "@/sections/device/generic-attribute-list/generic-attribute-list-schema";
+import { validateGenericAttributeListProduct } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-schema";
 import { buildDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-builder";
 import { wrapInArray } from "@/utils/builder-utils";
 

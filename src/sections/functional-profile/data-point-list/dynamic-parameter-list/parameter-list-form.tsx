@@ -14,9 +14,9 @@ import {
   isBitmapDataTypeProduct,
 } from "@/sections/shared/data-type-product/data-type-product-utils";
 import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
-import { ParameterDescriptionsForm } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-descriptions/parameter-descriptions-form";
-import { ParameterListEnumForm } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-form";
-import { ParameterListBitmapForm } from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-form";
+import { ParameterDescriptionsForm } from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/dynamic-parameter-descriptions/parameter-descriptions-form";
+import { ParameterListEnumForm } from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/data-types/enum/enum-form";
+import { ParameterListBitmapForm } from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/data-types/bitmap/bitmap-form";
 
 interface ParameterListFormProps {
   dataPointIndex: number;

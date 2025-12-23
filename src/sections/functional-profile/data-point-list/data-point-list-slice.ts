@@ -24,7 +24,7 @@ import {
 import {
   createParameterListSlice,
   ParameterListSlice,
-} from "@/sections/functional-profile/data-point-list/parameter-list/parameter-list-slice";
+} from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/parameter-list-slice";
 import {
   createDataPointAlternativeNamesSlice,
   DataPointAlternativeNamesSlice,

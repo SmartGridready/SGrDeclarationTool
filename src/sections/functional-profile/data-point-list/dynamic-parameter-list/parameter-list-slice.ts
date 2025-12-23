@@ -3,15 +3,15 @@ import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-uti
 import {
   createParameterListEnumSlice,
   ParameterListEnumSlice,
-} from "@/sections/functional-profile/data-point-list/parameter-list/data-types/enum/enum-slice";
+} from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/data-types/enum/enum-slice";
 import {
   createParameterListBitmapSlice,
   ParameterListBitmapSlice,
-} from "@/sections/functional-profile/data-point-list/parameter-list/data-types/bitmap/bitmap-slice";
+} from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/data-types/bitmap/bitmap-slice";
 import {
   createParameterDescriptionsSlice,
   ParameterDescriptionsSlice,
-} from "@/sections/functional-profile/data-point-list/parameter-list/parameter-descriptions/parameter-descriptions-slice";
+} from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/dynamic-parameter-descriptions/parameter-descriptions-slice";
 
 export interface ParameterListSlice
   extends ParameterListEnumSlice,

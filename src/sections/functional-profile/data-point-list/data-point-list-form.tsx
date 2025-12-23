@@ -33,7 +33,7 @@ import { BitmapForm } from "@/sections/functional-profile/data-point-list/data-t
 import { JsonForm } from "@/sections/functional-profile/data-point-list/data-types/json/json-form";
 import { DataPointAlternativeNamesForm } from "@/sections/functional-profile/data-point-list/alternative-names/alternative-names-form";
 import { DataPointLegibleDescriptionForm } from "@/sections/functional-profile/data-point-list/legible-description/legible-description-form";
-import { ParameterListForm } from "@/sections/functional-profile/data-point-list/parameter-list/parameter-list-form";
+import { ParameterListForm } from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/parameter-list-form";
 import { DataPointGenericAttributeListForm } from "@/sections/functional-profile/data-point-list/generic-attribute-list/generic-attribute-list-form";
 
 export function DataPointListForm() {

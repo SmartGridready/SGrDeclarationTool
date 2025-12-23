@@ -21,10 +21,8 @@ import {
   createJsonSlice,
   JsonSlice,
 } from "@/sections/functional-profile/data-point-list/data-types/json/json-slice";
-import {
-  createParameterListSlice,
-  ParameterListSlice,
-} from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/parameter-list-slice";
+import { createParameterListSlice } from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/parameter-list-slice";
+import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-slice";
 import {
   createDataPointAlternativeNamesSlice,
   DataPointAlternativeNamesSlice,
@@ -44,7 +42,7 @@ export interface DataPointListSlice
     JsonSlice,
     DataPointAlternativeNamesSlice,
     DataPointLegibleDescriptionSlice,
-    ParameterListSlice,
+    DynamicParameterListSlice,
     DataPointGenericAttributeListSlice {
   addDataPoint: (dataPoint: FunctionalProfileDataPoint) => void;
   removeDataPoint: (index: number) => void;

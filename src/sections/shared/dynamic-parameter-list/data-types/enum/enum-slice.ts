@@ -1,15 +1,15 @@
 import {
   EnumMapProduct,
   EnumEntryProductRecord,
-  FunctionalProfileDataPoint,
-  DynamicParameterDescriptionListElement,
+  DataTypeProduct,
+  DynamicParameterDescriptionList,
 } from "@/models";
 import {
   createDataTypeProductEnumSlice,
   DataTypeProductEnumSlice,
 } from "@/sections/shared/data-type-product/enum/enum-slice";
 
-export interface ParameterListEnumSlice {
+export interface DynamicParameterListEnumSlice {
   setParameterListEnumDataType: (
     dataPointIndex: number,
     paramIndex: number,
@@ -52,20 +52,23 @@ export interface ParameterListEnumSlice {
 }
 
 /**
- * Creates a parameter list enum slice that works with any store state.
+ * Creates a dynamic parameter list enum slice that works with any store state.
  * Uses the shared createDataTypeProductEnumSlice internally for consistency.
  */
-export function createParameterListEnumSlice<TState>(
+export function createDynamicParameterListEnumSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
-): ParameterListEnumSlice {
+  getParameterList: (
+    state: TState,
+    dataPointIndex: number
+  ) => DynamicParameterDescriptionList | undefined
+): DynamicParameterListEnumSlice {
   const getParameter = (
     state: TState,
     dataPointIndex: number,
     paramIndex: number
-  ): DynamicParameterDescriptionListElement | undefined => {
-    const dp = getDataPoint(state, dataPointIndex);
-    return dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+  ): { dataType: DataTypeProduct } | undefined => {
+    const paramList = getParameterList(state, dataPointIndex);
+    return paramList?.parameterListElement?.[paramIndex];
   };
 
   // Helper function to get a slice bound to specific dataPointIndex and paramIndex

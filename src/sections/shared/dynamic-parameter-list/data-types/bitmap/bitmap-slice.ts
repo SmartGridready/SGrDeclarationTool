@@ -1,15 +1,15 @@
 import {
   BitmapProduct,
   BitmapEntryProduct,
-  FunctionalProfileDataPoint,
-  DynamicParameterDescriptionListElement,
+  DataTypeProduct,
+  DynamicParameterDescriptionList,
 } from "@/models";
 import {
   createDataTypeProductBitmapSlice,
   DataTypeProductBitmapSlice,
 } from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
 
-export interface ParameterListBitmapSlice {
+export interface DynamicParameterListBitmapSlice {
   setParameterListBitmapDataType: (
     dataPointIndex: number,
     paramIndex: number,
@@ -47,20 +47,23 @@ export interface ParameterListBitmapSlice {
 }
 
 /**
- * Creates a parameter list bitmap slice that works with any store state.
+ * Creates a dynamic parameter list bitmap slice that works with any store state.
  * Uses the shared createDataTypeProductBitmapSlice internally for consistency.
  */
-export function createParameterListBitmapSlice<TState>(
+export function createDynamicParameterListBitmapSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getDataPoint: (state: TState, index: number) => FunctionalProfileDataPoint | undefined
-): ParameterListBitmapSlice {
+  getParameterList: (
+    state: TState,
+    dataPointIndex: number
+  ) => DynamicParameterDescriptionList | undefined
+): DynamicParameterListBitmapSlice {
   const getParameter = (
     state: TState,
     dataPointIndex: number,
     paramIndex: number
-  ): DynamicParameterDescriptionListElement | undefined => {
-    const dp = getDataPoint(state, dataPointIndex);
-    return dp?.dataPoint.parameterList?.parameterListElement?.[paramIndex];
+  ): { dataType: DataTypeProduct } | undefined => {
+    const paramList = getParameterList(state, dataPointIndex);
+    return paramList?.parameterListElement?.[paramIndex];
   };
 
   // Helper function to get a slice bound to specific dataPointIndex and paramIndex

@@ -23,22 +23,31 @@ import { GenericAttributeListProductSimpleBitmapForm } from "@/sections/shared/g
 import { GenericAttributeListProductNestedEnumForm } from "@/sections/shared/generic-attribute-list-product/data-types/nested/enum/enum-form";
 import { GenericAttributeListProductNestedBitmapForm } from "@/sections/shared/generic-attribute-list-product/data-types/nested/bitmap/bitmap-form";
 import { GenericAttributeListProduct, GenericAttributeProductEnd, Units } from "@/models";
+import { useFormSection } from "@/hooks/use-form-section";
 
-interface GenericAttributeListProductFormProps {
+interface GenericAttributeListProductFormProps<
+  TStoreState extends GenericAttributeListProductSlice,
+> {
   /**
-   * The generic attribute list data
+   * Store hook function (e.g., useProfileStore, useDeviceStore)
    */
-  genericAttributeList: GenericAttributeListProduct | undefined;
+  useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
   /**
-   * Actions for manipulating the generic attribute list
+   * Validation hook function that returns an object with getError method
    */
-  actions: GenericAttributeListProductSlice;
+  useValidation: () => { getError: (fieldPath: string) => string | undefined };
   /**
-   * Function to get validation errors
+   * Selector to get genericAttributeList state from the store
    */
-  getError: (fieldPath: string) => string | undefined;
+  stateSelector: (store: TStoreState) => {
+    genericAttributeList?: GenericAttributeListProduct;
+  };
   /**
-   * Field path prefix for validation errors
+   * Selector to check if genericAttributeList exists (for optional genericAttributeList)
+   */
+  isAddedSelector?: (store: TStoreState) => boolean;
+  /**
+   * Field path prefix for validation errors (e.g., "genericAttributeList" or "device.genericAttributeList")
    */
   fieldPathPrefix?: string;
   /**
@@ -53,25 +62,131 @@ interface GenericAttributeListProductFormProps {
    * Whether this is a nested section (affects styling)
    */
   nested?: boolean;
+  /**
+   * Whether generic attribute list is required (if true, add/remove buttons are hidden)
+   */
+  required?: boolean;
 }
 
-export function GenericAttributeListProductForm({
-  genericAttributeList,
-  actions,
-  getError,
+export function GenericAttributeListProductForm<
+  TStoreState extends GenericAttributeListProductSlice,
+>({
+  useStore,
+  useValidation,
+  stateSelector,
+  isAddedSelector,
   fieldPathPrefix = "genericAttributeList",
   title = "Generic Attribute List",
   description = "Generic attributes for the element",
   nested = true,
-}: GenericAttributeListProductFormProps) {
+  required = false,
+}: GenericAttributeListProductFormProps<TStoreState>) {
+  const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
+    TStoreState,
+    {
+      genericAttributeList?: GenericAttributeListProduct;
+    },
+    GenericAttributeListProductSlice & Record<string, unknown>
+  >({
+    useStore,
+    useValidation,
+    stateSelector,
+    actionsSelector: (store) => ({
+      // Main list actions
+      addGenericAttributeList: store.addGenericAttributeList,
+      removeGenericAttributeList: store.removeGenericAttributeList,
+      addGenericAttributeListElement: store.addGenericAttributeListElement,
+      removeGenericAttributeListElement: store.removeGenericAttributeListElement,
+      updateGenericAttributeListElementName: store.updateGenericAttributeListElementName,
+      // Simple attribute actions
+      setGenericAttributeListElementAsSimple: store.setGenericAttributeListElementAsSimple,
+      updateGenericAttributeListElementDataType: store.updateGenericAttributeListElementDataType,
+      updateGenericAttributeListElementValue: store.updateGenericAttributeListElementValue,
+      updateGenericAttributeListElementUnit: store.updateGenericAttributeListElementUnit,
+      // Nested attribute actions
+      setGenericAttributeListElementAsNested: store.setGenericAttributeListElementAsNested,
+      addNestedGenericAttributeListElement: store.addNestedGenericAttributeListElement,
+      removeNestedGenericAttributeListElement: store.removeNestedGenericAttributeListElement,
+      updateNestedGenericAttributeListElementName:
+        store.updateNestedGenericAttributeListElementName,
+      updateNestedGenericAttributeListElementDataType:
+        store.updateNestedGenericAttributeListElementDataType,
+      updateNestedGenericAttributeListElementValue:
+        store.updateNestedGenericAttributeListElementValue,
+      updateNestedGenericAttributeListElementUnit:
+        store.updateNestedGenericAttributeListElementUnit,
+      // Simple enum actions
+      setGenericAttributeListSimpleEnumDataType: store.setGenericAttributeListSimpleEnumDataType,
+      addGenericAttributeListSimpleEnumEntry: store.addGenericAttributeListSimpleEnumEntry,
+      removeGenericAttributeListSimpleEnumEntry: store.removeGenericAttributeListSimpleEnumEntry,
+      updateGenericAttributeListSimpleEnumEntryLiteral:
+        store.updateGenericAttributeListSimpleEnumEntryLiteral,
+      updateGenericAttributeListSimpleEnumEntryOrdinal:
+        store.updateGenericAttributeListSimpleEnumEntryOrdinal,
+      updateGenericAttributeListSimpleEnumEntryDescription:
+        store.updateGenericAttributeListSimpleEnumEntryDescription,
+      updateGenericAttributeListSimpleEnumHexMask:
+        store.updateGenericAttributeListSimpleEnumHexMask,
+      addEmptyGenericAttributeListSimpleEnumEntry:
+        store.addEmptyGenericAttributeListSimpleEnumEntry,
+      // Simple bitmap actions
+      setGenericAttributeListSimpleBitmapDataType:
+        store.setGenericAttributeListSimpleBitmapDataType,
+      addGenericAttributeListSimpleBitmapEntry: store.addGenericAttributeListSimpleBitmapEntry,
+      removeGenericAttributeListSimpleBitmapEntry:
+        store.removeGenericAttributeListSimpleBitmapEntry,
+      updateGenericAttributeListSimpleBitmapEntryLiteral:
+        store.updateGenericAttributeListSimpleBitmapEntryLiteral,
+      updateGenericAttributeListSimpleBitmapEntryHexMask:
+        store.updateGenericAttributeListSimpleBitmapEntryHexMask,
+      updateGenericAttributeListSimpleBitmapEntryDescription:
+        store.updateGenericAttributeListSimpleBitmapEntryDescription,
+      addEmptyGenericAttributeListSimpleBitmapEntry:
+        store.addEmptyGenericAttributeListSimpleBitmapEntry,
+      // Nested enum actions
+      setGenericAttributeListNestedEnumDataType: store.setGenericAttributeListNestedEnumDataType,
+      addGenericAttributeListNestedEnumEntry: store.addGenericAttributeListNestedEnumEntry,
+      removeGenericAttributeListNestedEnumEntry: store.removeGenericAttributeListNestedEnumEntry,
+      updateGenericAttributeListNestedEnumEntryLiteral:
+        store.updateGenericAttributeListNestedEnumEntryLiteral,
+      updateGenericAttributeListNestedEnumEntryOrdinal:
+        store.updateGenericAttributeListNestedEnumEntryOrdinal,
+      updateGenericAttributeListNestedEnumEntryDescription:
+        store.updateGenericAttributeListNestedEnumEntryDescription,
+      updateGenericAttributeListNestedEnumHexMask:
+        store.updateGenericAttributeListNestedEnumHexMask,
+      addEmptyGenericAttributeListNestedEnumEntry:
+        store.addEmptyGenericAttributeListNestedEnumEntry,
+      // Nested bitmap actions
+      setGenericAttributeListNestedBitmapDataType:
+        store.setGenericAttributeListNestedBitmapDataType,
+      addGenericAttributeListNestedBitmapEntry: store.addGenericAttributeListNestedBitmapEntry,
+      removeGenericAttributeListNestedBitmapEntry:
+        store.removeGenericAttributeListNestedBitmapEntry,
+      updateGenericAttributeListNestedBitmapEntryLiteral:
+        store.updateGenericAttributeListNestedBitmapEntryLiteral,
+      updateGenericAttributeListNestedBitmapEntryHexMask:
+        store.updateGenericAttributeListNestedBitmapEntryHexMask,
+      updateGenericAttributeListNestedBitmapEntryDescription:
+        store.updateGenericAttributeListNestedBitmapEntryDescription,
+      addEmptyGenericAttributeListNestedBitmapEntry:
+        store.addEmptyGenericAttributeListNestedBitmapEntry,
+    }),
+    // Only include add/remove functionality if not required
+    isAddedSelector: required ? undefined : isAddedSelector,
+    onAdd: required ? undefined : (actions) => actions.addGenericAttributeList(),
+    onRemove: required ? undefined : (actions) => actions.removeGenericAttributeList(),
+  });
+
+  const genericAttributeList = state.genericAttributeList;
   return (
     <FormSection
       title={title}
       description={description}
-      required={false}
-      isAdded={!!genericAttributeList}
-      onAdd={() => actions.addGenericAttributeList()}
-      onRemove={() => actions.removeGenericAttributeList()}
+      required={required}
+      isAdded={required ? true : isAdded}
+      onAdd={required ? undefined : handleAdd}
+      onRemove={required ? undefined : handleRemove}
       nested={nested}
     >
       <ArrayField

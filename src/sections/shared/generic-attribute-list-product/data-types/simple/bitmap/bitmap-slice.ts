@@ -1,10 +1,10 @@
-import { BitmapProduct, BitmapEntryProduct, DeviceFrame, GenericAttributeProduct } from "@/models";
+import { BitmapProduct, BitmapEntryProduct, GenericAttributeProduct } from "@/models";
 import {
   createDataTypeProductBitmapSlice,
   DataTypeProductBitmapSlice,
 } from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
 
-export interface GenericAttributeListSimpleBitmapSlice {
+export interface GenericAttributeListProductSimpleBitmapSlice {
   setGenericAttributeListSimpleBitmapDataType: (
     elementIndex: number,
     bitmap: BitmapProduct
@@ -33,19 +33,13 @@ export interface GenericAttributeListSimpleBitmapSlice {
 }
 
 /**
- * Creates a generic attribute list simple bitmap slice that works with any store state.
+ * Creates a generic attribute list product simple bitmap slice that works with any store state.
  * Uses the shared createDataTypeProductBitmapSlice internally for consistency.
  */
-export function createGenericAttributeListSimpleBitmapSlice<
-  TState extends { device?: DeviceFrame },
->(set: (fn: (state: TState) => void) => void): GenericAttributeListSimpleBitmapSlice {
-  const getAttribute = (
-    state: TState,
-    elementIndex: number
-  ): GenericAttributeProduct | undefined => {
-    return state.device?.genericAttributeList?.genericAttributeListElement?.[elementIndex];
-  };
-
+export function createGenericAttributeListProductSimpleBitmapSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getAttribute: (state: TState, elementIndex: number) => GenericAttributeProduct | undefined
+): GenericAttributeListProductSimpleBitmapSlice {
   // Helper function to get a slice bound to specific elementIndex
   const getSliceForIndex = (elementIndex: number): DataTypeProductBitmapSlice => {
     return createDataTypeProductBitmapSlice(

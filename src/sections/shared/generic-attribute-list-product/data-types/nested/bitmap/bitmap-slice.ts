@@ -1,15 +1,15 @@
 import {
   BitmapProduct,
   BitmapEntryProduct,
-  DeviceFrame,
-  GenericAttributeProductEnd,
+  GenericAttributeProduct,
+  GenericAttributeListProductEnd,
 } from "@/models";
 import {
   createDataTypeProductBitmapSlice,
   DataTypeProductBitmapSlice,
 } from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
 
-export interface GenericAttributeListNestedBitmapSlice {
+export interface GenericAttributeListProductNestedBitmapSlice {
   setGenericAttributeListNestedBitmapDataType: (
     elementIndex: number,
     nestedElementIndex: number,
@@ -50,39 +50,45 @@ export interface GenericAttributeListNestedBitmapSlice {
 }
 
 /**
- * Creates a generic attribute list nested bitmap slice that works with any store state.
+ * Type guard to check if attribute is nested
+ */
+function isNestedGenericAttribute(
+  attr: GenericAttributeProduct
+): attr is GenericAttributeProduct & { genericAttributeList: GenericAttributeListProductEnd } {
+  return "genericAttributeList" in attr;
+}
+
+/**
+ * Creates a generic attribute list product nested bitmap slice that works with any store state.
  * Uses the shared createDataTypeProductBitmapSlice internally for consistency.
  */
-export function createGenericAttributeListNestedBitmapSlice<
-  TState extends { device?: DeviceFrame },
->(set: (fn: (state: TState) => void) => void): GenericAttributeListNestedBitmapSlice {
-  const getNestedAttribute = (
-    state: TState,
-    elementIndex: number,
-    nestedElementIndex: number
-  ): GenericAttributeProductEnd | undefined => {
-    const attr = state.device?.genericAttributeList?.genericAttributeListElement?.[elementIndex];
-    if (attr && "genericAttributeList" in attr) {
-      return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
-    }
-    return undefined;
-  };
-
-  // Helper function to get a slice bound to specific elementIndex and nestedElementIndex
-  const getSliceForIndex = (
+export function createGenericAttributeListProductNestedBitmapSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getAttribute: (state: TState, elementIndex: number) => GenericAttributeProduct | undefined
+): GenericAttributeListProductNestedBitmapSlice {
+  // Helper function to get a slice bound to specific element and nested element indices
+  const getSliceForIndices = (
     elementIndex: number,
     nestedElementIndex: number
   ): DataTypeProductBitmapSlice => {
     return createDataTypeProductBitmapSlice(
       set,
       (state) => {
-        const nestedAttr = getNestedAttribute(state, elementIndex, nestedElementIndex);
-        return nestedAttr?.dataType;
+        const attr = getAttribute(state, elementIndex);
+        if (attr && isNestedGenericAttribute(attr)) {
+          return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex]
+            ?.dataType;
+        }
+        return undefined;
       },
       (state, dataType) => {
-        const nestedAttr = getNestedAttribute(state, elementIndex, nestedElementIndex);
-        if (nestedAttr) {
-          nestedAttr.dataType = dataType;
+        const attr = getAttribute(state, elementIndex);
+        if (attr && isNestedGenericAttribute(attr)) {
+          const nestedElement =
+            attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          if (nestedElement) {
+            nestedElement.dataType = dataType;
+          }
         }
       }
     );
@@ -90,13 +96,13 @@ export function createGenericAttributeListNestedBitmapSlice<
 
   return {
     setGenericAttributeListNestedBitmapDataType: (elementIndex, nestedElementIndex, bitmap) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).setBitmapDataType(bitmap),
+      getSliceForIndices(elementIndex, nestedElementIndex).setBitmapDataType(bitmap),
 
     addGenericAttributeListNestedBitmapEntry: (elementIndex, nestedElementIndex, entry) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).addBitmapEntry(entry),
+      getSliceForIndices(elementIndex, nestedElementIndex).addBitmapEntry(entry),
 
     removeGenericAttributeListNestedBitmapEntry: (elementIndex, nestedElementIndex, entryIndex) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).removeBitmapEntry(entryIndex),
+      getSliceForIndices(elementIndex, nestedElementIndex).removeBitmapEntry(entryIndex),
 
     updateGenericAttributeListNestedBitmapEntryLiteral: (
       elementIndex,
@@ -104,7 +110,7 @@ export function createGenericAttributeListNestedBitmapSlice<
       entryIndex,
       literal
     ) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateBitmapEntryLiteral(
+      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryLiteral(
         entryIndex,
         literal
       ),
@@ -115,7 +121,7 @@ export function createGenericAttributeListNestedBitmapSlice<
       entryIndex,
       hexMask
     ) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateBitmapEntryHexMask(
+      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryHexMask(
         entryIndex,
         hexMask
       ),
@@ -126,12 +132,12 @@ export function createGenericAttributeListNestedBitmapSlice<
       entryIndex,
       description
     ) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateBitmapEntryDescription(
+      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryDescription(
         entryIndex,
         description
       ),
 
     addEmptyGenericAttributeListNestedBitmapEntry: (elementIndex, nestedElementIndex) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).addEmptyBitmapEntry(),
+      getSliceForIndices(elementIndex, nestedElementIndex).addEmptyBitmapEntry(),
   };
 }

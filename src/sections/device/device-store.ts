@@ -19,10 +19,8 @@ import {
   createConfigurationListSlice,
   ConfigurationListSlice,
 } from "@/sections/device/configuration-list/configuration-list-slice";
-import {
-  createGenericAttributeListSlice,
-  GenericAttributeListSlice,
-} from "@/sections/device/generic-attribute-list/generic-attribute-list-slice";
+import { createGenericAttributeListSlice } from "@/sections/device/generic-attribute-list/generic-attribute-list-slice";
+import { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
 
 interface DeviceStore {
   device?: DeviceFrame;
@@ -36,7 +34,7 @@ export type DeviceStoreState = DeviceStore &
   ReleaseNotesSlice &
   DeviceInformationSlice &
   ConfigurationListSlice &
-  GenericAttributeListSlice;
+  GenericAttributeListProductSlice;
 
 export const useDeviceStore = create<DeviceStoreState>()(
   persist(

@@ -1,15 +1,10 @@
-import {
-  EnumMapProduct,
-  EnumEntryProductRecord,
-  DeviceFrame,
-  GenericAttributeProduct,
-} from "@/models";
+import { EnumMapProduct, EnumEntryProductRecord, GenericAttributeProduct } from "@/models";
 import {
   createDataTypeProductEnumSlice,
   DataTypeProductEnumSlice,
 } from "@/sections/shared/data-type-product/enum/enum-slice";
 
-export interface GenericAttributeListSimpleEnumSlice {
+export interface GenericAttributeListProductSimpleEnumSlice {
   setGenericAttributeListSimpleEnumDataType: (
     elementIndex: number,
     enumMap: EnumMapProduct
@@ -42,19 +37,13 @@ export interface GenericAttributeListSimpleEnumSlice {
 }
 
 /**
- * Creates a generic attribute list simple enum slice that works with any store state.
+ * Creates a generic attribute list product simple enum slice that works with any store state.
  * Uses the shared createDataTypeProductEnumSlice internally for consistency.
  */
-export function createGenericAttributeListSimpleEnumSlice<TState extends { device?: DeviceFrame }>(
-  set: (fn: (state: TState) => void) => void
-): GenericAttributeListSimpleEnumSlice {
-  const getAttribute = (
-    state: TState,
-    elementIndex: number
-  ): GenericAttributeProduct | undefined => {
-    return state.device?.genericAttributeList?.genericAttributeListElement?.[elementIndex];
-  };
-
+export function createGenericAttributeListProductSimpleEnumSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getAttribute: (state: TState, elementIndex: number) => GenericAttributeProduct | undefined
+): GenericAttributeListProductSimpleEnumSlice {
   // Helper function to get a slice bound to specific elementIndex
   const getSliceForIndex = (elementIndex: number): DataTypeProductEnumSlice => {
     return createDataTypeProductEnumSlice(

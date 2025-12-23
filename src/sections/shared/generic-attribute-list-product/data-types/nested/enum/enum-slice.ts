@@ -1,15 +1,15 @@
 import {
   EnumMapProduct,
   EnumEntryProductRecord,
-  DeviceFrame,
-  GenericAttributeProductEnd,
+  GenericAttributeProduct,
+  GenericAttributeListProductEnd,
 } from "@/models";
 import {
   createDataTypeProductEnumSlice,
   DataTypeProductEnumSlice,
 } from "@/sections/shared/data-type-product/enum/enum-slice";
 
-export interface GenericAttributeListNestedEnumSlice {
+export interface GenericAttributeListProductNestedEnumSlice {
   setGenericAttributeListNestedEnumDataType: (
     elementIndex: number,
     nestedElementIndex: number,
@@ -55,39 +55,45 @@ export interface GenericAttributeListNestedEnumSlice {
 }
 
 /**
- * Creates a generic attribute list nested enum slice that works with any store state.
+ * Type guard to check if attribute is nested
+ */
+function isNestedGenericAttribute(
+  attr: GenericAttributeProduct
+): attr is GenericAttributeProduct & { genericAttributeList: GenericAttributeListProductEnd } {
+  return "genericAttributeList" in attr;
+}
+
+/**
+ * Creates a generic attribute list product nested enum slice that works with any store state.
  * Uses the shared createDataTypeProductEnumSlice internally for consistency.
  */
-export function createGenericAttributeListNestedEnumSlice<TState extends { device?: DeviceFrame }>(
-  set: (fn: (state: TState) => void) => void
-): GenericAttributeListNestedEnumSlice {
-  const getNestedAttribute = (
-    state: TState,
-    elementIndex: number,
-    nestedElementIndex: number
-  ): GenericAttributeProductEnd | undefined => {
-    const attr = state.device?.genericAttributeList?.genericAttributeListElement?.[elementIndex];
-    if (attr && "genericAttributeList" in attr) {
-      return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
-    }
-    return undefined;
-  };
-
-  // Helper function to get a slice bound to specific elementIndex and nestedElementIndex
-  const getSliceForIndex = (
+export function createGenericAttributeListProductNestedEnumSlice<TState>(
+  set: (fn: (state: TState) => void) => void,
+  getAttribute: (state: TState, elementIndex: number) => GenericAttributeProduct | undefined
+): GenericAttributeListProductNestedEnumSlice {
+  // Helper function to get a slice bound to specific element and nested element indices
+  const getSliceForIndices = (
     elementIndex: number,
     nestedElementIndex: number
   ): DataTypeProductEnumSlice => {
     return createDataTypeProductEnumSlice(
       set,
       (state) => {
-        const nestedAttr = getNestedAttribute(state, elementIndex, nestedElementIndex);
-        return nestedAttr?.dataType;
+        const attr = getAttribute(state, elementIndex);
+        if (attr && isNestedGenericAttribute(attr)) {
+          return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex]
+            ?.dataType;
+        }
+        return undefined;
       },
       (state, dataType) => {
-        const nestedAttr = getNestedAttribute(state, elementIndex, nestedElementIndex);
-        if (nestedAttr) {
-          nestedAttr.dataType = dataType;
+        const attr = getAttribute(state, elementIndex);
+        if (attr && isNestedGenericAttribute(attr)) {
+          const nestedElement =
+            attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          if (nestedElement) {
+            nestedElement.dataType = dataType;
+          }
         }
       }
     );
@@ -95,13 +101,13 @@ export function createGenericAttributeListNestedEnumSlice<TState extends { devic
 
   return {
     setGenericAttributeListNestedEnumDataType: (elementIndex, nestedElementIndex, enumMap) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).setEnumDataType(enumMap),
+      getSliceForIndices(elementIndex, nestedElementIndex).setEnumDataType(enumMap),
 
     addGenericAttributeListNestedEnumEntry: (elementIndex, nestedElementIndex, entry) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).addEnumEntry(entry),
+      getSliceForIndices(elementIndex, nestedElementIndex).addEnumEntry(entry),
 
     removeGenericAttributeListNestedEnumEntry: (elementIndex, nestedElementIndex, entryIndex) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).removeEnumEntry(entryIndex),
+      getSliceForIndices(elementIndex, nestedElementIndex).removeEnumEntry(entryIndex),
 
     updateGenericAttributeListNestedEnumEntryLiteral: (
       elementIndex,
@@ -109,7 +115,7 @@ export function createGenericAttributeListNestedEnumSlice<TState extends { devic
       entryIndex,
       literal
     ) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateEnumEntryLiteral(
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryLiteral(
         entryIndex,
         literal
       ),
@@ -120,7 +126,7 @@ export function createGenericAttributeListNestedEnumSlice<TState extends { devic
       entryIndex,
       ordinal
     ) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateEnumEntryOrdinal(
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryOrdinal(
         entryIndex,
         ordinal
       ),
@@ -131,15 +137,15 @@ export function createGenericAttributeListNestedEnumSlice<TState extends { devic
       entryIndex,
       description
     ) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateEnumEntryDescription(
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryDescription(
         entryIndex,
         description
       ),
 
     updateGenericAttributeListNestedEnumHexMask: (elementIndex, nestedElementIndex, hexMask) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).updateEnumHexMask(hexMask),
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumHexMask(hexMask),
 
     addEmptyGenericAttributeListNestedEnumEntry: (elementIndex, nestedElementIndex) =>
-      getSliceForIndex(elementIndex, nestedElementIndex).addEmptyEnumEntry(),
+      getSliceForIndices(elementIndex, nestedElementIndex).addEmptyEnumEntry(),
   };
 }

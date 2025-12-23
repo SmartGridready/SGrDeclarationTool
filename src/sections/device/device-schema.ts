@@ -4,7 +4,7 @@ import { releaseNotesSchema } from "@/sections/shared/release-notes/release-note
 import { deviceIdentificationSchema } from "@/sections/device/device-identification/device-identification-schema";
 import { deviceInformationSchema } from "@/sections/device/device-information/device-information-schema";
 import { configurationListSchema } from "@/sections/device/configuration-list/configuration-list-schema";
-import { genericAttributeListProductSchema } from "@/sections/device/generic-attribute-list/generic-attribute-list-schema";
+import { genericAttributeListProductSchema } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-schema";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -42,7 +42,7 @@ export type { ReleaseNotesInput } from "@/sections/shared/release-notes/release-
 export type { DeviceIdentificationInput } from "@/sections/device/device-identification/device-identification-schema";
 export type { DeviceInformationInput } from "@/sections/device/device-information/device-information-schema";
 export type { ConfigurationListInput } from "@/sections/device/configuration-list/configuration-list-schema";
-export type { GenericAttributeListProductInput } from "@/sections/device/generic-attribute-list/generic-attribute-list-schema";
+export type { GenericAttributeListProductInput } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-schema";
 export type DeviceFrameInput = z.input<typeof deviceFrameSchema>;
 
 // Validators

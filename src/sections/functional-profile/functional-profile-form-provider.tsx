@@ -166,24 +166,22 @@ export function StandaloneFunctionalProfileFormProvider({
         updateDataPointLegibleDescriptionText: store.updateDataPointLegibleDescriptionText,
         updateDataPointLegibleDescriptionLanguage: store.updateDataPointLegibleDescriptionLanguage,
         updateDataPointLegibleDescriptionUri: store.updateDataPointLegibleDescriptionUri,
-        // ParameterList slice
-        addDataPointParameterList: store.addDataPointParameterList,
-        removeDataPointParameterList: store.removeDataPointParameterList,
-        addDataPointParameterListElement: store.addDataPointParameterListElement,
-        removeDataPointParameterListElement: store.removeDataPointParameterListElement,
-        updateDataPointParameterListElementName: store.updateDataPointParameterListElementName,
-        updateDataPointParameterListElementDataType:
-          store.updateDataPointParameterListElementDataType,
-        updateDataPointParameterListElementDefaultValue:
-          store.updateDataPointParameterListElementDefaultValue,
-        addDataPointParameterDescription: store.addDataPointParameterDescription,
-        addEmptyDataPointParameterDescription: store.addEmptyDataPointParameterDescription,
-        removeDataPointParameterDescription: store.removeDataPointParameterDescription,
-        updateDataPointParameterDescriptionText: store.updateDataPointParameterDescriptionText,
-        updateDataPointParameterDescriptionLanguage:
-          store.updateDataPointParameterDescriptionLanguage,
-        updateDataPointParameterDescriptionUri: store.updateDataPointParameterDescriptionUri,
-        updateDataPointParameterDescriptionLabel: store.updateDataPointParameterDescriptionLabel,
+        // ParameterList slice (from shared DynamicParameterListSlice)
+        addParameterList: store.addParameterList,
+        removeParameterList: store.removeParameterList,
+        addParameterListElement: store.addParameterListElement,
+        removeParameterListElement: store.removeParameterListElement,
+        updateParameterListElementName: store.updateParameterListElementName,
+        updateParameterListElementDataType: store.updateParameterListElementDataType,
+        updateParameterListElementDefaultValue: store.updateParameterListElementDefaultValue,
+        // ParameterList Descriptions slice
+        addParameterDescription: store.addParameterDescription,
+        removeParameterDescription: store.removeParameterDescription,
+        updateParameterDescriptionText: store.updateParameterDescriptionText,
+        updateParameterDescriptionLanguage: store.updateParameterDescriptionLanguage,
+        updateParameterDescriptionUri: store.updateParameterDescriptionUri,
+        updateParameterDescriptionLabel: store.updateParameterDescriptionLabel,
+        addEmptyParameterDescription: store.addEmptyParameterDescription,
         // ParameterList Enum slice
         setParameterListEnumDataType: store.setParameterListEnumDataType,
         addParameterListEnumEntry: store.addParameterListEnumEntry,

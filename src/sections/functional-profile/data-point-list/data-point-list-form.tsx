@@ -171,8 +171,8 @@ export function DataPointListForm() {
               dataPointIndex={index}
               parameterList={item.dataPoint.parameterList}
               getError={getError}
-              onAdd={() => actions.addDataPointParameterList(index)}
-              onRemove={() => actions.removeDataPointParameterList(index)}
+              onAdd={() => actions.addParameterList(index)}
+              onRemove={() => actions.removeParameterList(index)}
             />
 
             <DataPointAlternativeNamesForm dataPointIndex={index} />

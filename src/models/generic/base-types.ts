@@ -161,6 +161,8 @@ interface JSonElemFunctionalProfileBase {
 // Data Types - Product
 // ============================================================================
 
+export type DataDirectionProduct = "C" | "R" | "W" | "RW" | "RWP"; // Constant, Read, Write, Read-Write, Read-Write-Persistent
+
 export type DataTypeProduct =
   | { enum: EnumMapProduct }
   | { bitmap: BitmapProduct }

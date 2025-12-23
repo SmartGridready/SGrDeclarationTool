@@ -1,70 +1,80 @@
 "use client";
 
 import { EnumMapProduct } from "@/models";
-import { useDeviceFormContext } from "@/context/device-form-context";
 import { DataTypeProductEnumForm } from "@/sections/shared/data-type-product/enum/enum-form";
 import { DataTypeProductEnumSlice } from "@/sections/shared/data-type-product/enum/enum-slice";
+import { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
 import { useMemo } from "react";
 
-interface GenericAttributeListSimpleEnumFormProps {
+interface GenericAttributeListProductNestedEnumFormProps {
   elementIndex: number;
+  nestedElementIndex: number;
   enumMap: EnumMapProduct;
+  actions: GenericAttributeListProductSlice;
+  fieldPathPrefix?: string;
 }
 
-export function GenericAttributeListSimpleEnumForm({
+export function GenericAttributeListProductNestedEnumForm({
   elementIndex,
+  nestedElementIndex,
   enumMap,
-}: GenericAttributeListSimpleEnumFormProps) {
-  const { genericAttributeListActions } = useDeviceFormContext();
-
+  actions,
+  fieldPathPrefix = "generic-attribute",
+}: GenericAttributeListProductNestedEnumFormProps) {
   // Create an adapter that maps generic attribute list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
       setEnumDataType: (enumMap) =>
-        genericAttributeListActions.setGenericAttributeListSimpleEnumDataType(
+        actions.setGenericAttributeListNestedEnumDataType(
           elementIndex,
+          nestedElementIndex,
           enumMap
         ),
       addEnumEntry: (entry) =>
-        genericAttributeListActions.addGenericAttributeListSimpleEnumEntry(elementIndex, entry),
+        actions.addGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex, entry),
       removeEnumEntry: (entryIndex) =>
-        genericAttributeListActions.removeGenericAttributeListSimpleEnumEntry(
+        actions.removeGenericAttributeListNestedEnumEntry(
           elementIndex,
+          nestedElementIndex,
           entryIndex
         ),
       updateEnumEntryLiteral: (entryIndex, literal) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleEnumEntryLiteral(
+        actions.updateGenericAttributeListNestedEnumEntryLiteral(
           elementIndex,
+          nestedElementIndex,
           entryIndex,
           literal
         ),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleEnumEntryOrdinal(
+        actions.updateGenericAttributeListNestedEnumEntryOrdinal(
           elementIndex,
+          nestedElementIndex,
           entryIndex,
           ordinal
         ),
       updateEnumEntryDescription: (entryIndex, description) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleEnumEntryDescription(
+        actions.updateGenericAttributeListNestedEnumEntryDescription(
           elementIndex,
+          nestedElementIndex,
           entryIndex,
           description
         ),
       updateEnumHexMask: (hexMask) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleEnumHexMask(
+        actions.updateGenericAttributeListNestedEnumHexMask(
           elementIndex,
+          nestedElementIndex,
           hexMask
         ),
       addEmptyEnumEntry: () =>
-        genericAttributeListActions.addEmptyGenericAttributeListSimpleEnumEntry(elementIndex),
+        actions.addEmptyGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex),
     };
-  }, [elementIndex, genericAttributeListActions]);
+  }, [elementIndex, nestedElementIndex, actions]);
 
   return (
     <DataTypeProductEnumForm
       enumMap={enumMap}
       actions={adaptedActions}
-      fieldPathPrefix={`generic-attribute-${elementIndex}-simple-enum`}
+      fieldPathPrefix={`${fieldPathPrefix}-${elementIndex}-nested-${nestedElementIndex}-enum`}
     />
   );
 }

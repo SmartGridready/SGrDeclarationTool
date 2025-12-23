@@ -1,65 +1,74 @@
 "use client";
 
 import { BitmapProduct } from "@/models";
-import { useDeviceFormContext } from "@/context/device-form-context";
 import { DataTypeProductBitmapForm } from "@/sections/shared/data-type-product/bitmap/bitmap-form";
 import { DataTypeProductBitmapSlice } from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
+import { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
 import { useMemo } from "react";
 
-interface GenericAttributeListSimpleBitmapFormProps {
+interface GenericAttributeListProductNestedBitmapFormProps {
   elementIndex: number;
+  nestedElementIndex: number;
   bitmap: BitmapProduct;
+  actions: GenericAttributeListProductSlice;
+  fieldPathPrefix?: string;
 }
 
-export function GenericAttributeListSimpleBitmapForm({
+export function GenericAttributeListProductNestedBitmapForm({
   elementIndex,
+  nestedElementIndex,
   bitmap,
-}: GenericAttributeListSimpleBitmapFormProps) {
-  const { genericAttributeListActions } = useDeviceFormContext();
-
+  actions,
+  fieldPathPrefix = "generic-attribute",
+}: GenericAttributeListProductNestedBitmapFormProps) {
   // Create an adapter that maps generic attribute list actions to the shared bitmap slice interface
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
     return {
       setBitmapDataType: (bitmap) =>
-        genericAttributeListActions.setGenericAttributeListSimpleBitmapDataType(
+        actions.setGenericAttributeListNestedBitmapDataType(
           elementIndex,
+          nestedElementIndex,
           bitmap
         ),
       addBitmapEntry: (entry) =>
-        genericAttributeListActions.addGenericAttributeListSimpleBitmapEntry(elementIndex, entry),
+        actions.addGenericAttributeListNestedBitmapEntry(elementIndex, nestedElementIndex, entry),
       removeBitmapEntry: (entryIndex) =>
-        genericAttributeListActions.removeGenericAttributeListSimpleBitmapEntry(
+        actions.removeGenericAttributeListNestedBitmapEntry(
           elementIndex,
+          nestedElementIndex,
           entryIndex
         ),
       updateBitmapEntryLiteral: (entryIndex, literal) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleBitmapEntryLiteral(
+        actions.updateGenericAttributeListNestedBitmapEntryLiteral(
           elementIndex,
+          nestedElementIndex,
           entryIndex,
           literal
         ),
       updateBitmapEntryHexMask: (entryIndex, hexMask) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleBitmapEntryHexMask(
+        actions.updateGenericAttributeListNestedBitmapEntryHexMask(
           elementIndex,
+          nestedElementIndex,
           entryIndex,
           hexMask
         ),
       updateBitmapEntryDescription: (entryIndex, description) =>
-        genericAttributeListActions.updateGenericAttributeListSimpleBitmapEntryDescription(
+        actions.updateGenericAttributeListNestedBitmapEntryDescription(
           elementIndex,
+          nestedElementIndex,
           entryIndex,
           description
         ),
       addEmptyBitmapEntry: () =>
-        genericAttributeListActions.addEmptyGenericAttributeListSimpleBitmapEntry(elementIndex),
+        actions.addEmptyGenericAttributeListNestedBitmapEntry(elementIndex, nestedElementIndex),
     };
-  }, [elementIndex, genericAttributeListActions]);
+  }, [elementIndex, nestedElementIndex, actions]);
 
   return (
     <DataTypeProductBitmapForm
       bitmap={bitmap}
       actions={adaptedActions}
-      fieldPathPrefix={`generic-attribute-${elementIndex}-simple-bitmap`}
+      fieldPathPrefix={`${fieldPathPrefix}-${elementIndex}-nested-${nestedElementIndex}-bitmap`}
     />
   );
 }

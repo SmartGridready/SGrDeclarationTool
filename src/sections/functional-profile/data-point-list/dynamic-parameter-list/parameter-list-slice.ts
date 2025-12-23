@@ -14,9 +14,9 @@ export function createParameterListSlice<TState>(
 ): DynamicParameterListSlice {
   return createDynamicParameterListSlice(
     set,
-    (state, dataPointIndex) => getDataPoint(state, dataPointIndex)?.dataPoint.parameterList,
-    (state, dataPointIndex, parameterList) => {
-      const dp = getDataPoint(state, dataPointIndex);
+    (state, listIndex) => getDataPoint(state, listIndex)?.dataPoint.parameterList,
+    (state, listIndex, parameterList) => {
+      const dp = getDataPoint(state, listIndex);
       if (dp) {
         dp.dataPoint.parameterList = parameterList;
       }

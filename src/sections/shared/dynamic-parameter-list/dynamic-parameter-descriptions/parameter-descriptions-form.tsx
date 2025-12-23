@@ -7,7 +7,7 @@ import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-l
 import { useMemo } from "react";
 
 interface DynamicParameterDescriptionsFormProps {
-  dataPointIndex: number;
+  listIndex: number;
   paramIndex: number;
   parameterDescriptions: DynamicParameterDescription[] | undefined;
   actions: DynamicParameterListSlice;
@@ -16,7 +16,7 @@ interface DynamicParameterDescriptionsFormProps {
 }
 
 export function DynamicParameterDescriptionsForm({
-  dataPointIndex,
+  listIndex,
   paramIndex,
   parameterDescriptions,
   actions,
@@ -30,40 +30,40 @@ export function DynamicParameterDescriptionsForm({
         legibleDescriptions: parameterDescriptions,
         addLegibleDescription: (description) => {
           actions.addParameterDescription(
-            dataPointIndex,
+            listIndex,
             paramIndex,
             description as DynamicParameterDescription
           );
         },
         removeLegibleDescription: (index) => {
-          actions.removeParameterDescription(dataPointIndex, paramIndex, index);
+          actions.removeParameterDescription(listIndex, paramIndex, index);
         },
         removeAllLegibleDescriptions: () => {
           // Remove all descriptions by removing them one by one
           if (parameterDescriptions) {
             for (let i = parameterDescriptions.length - 1; i >= 0; i--) {
-              actions.removeParameterDescription(dataPointIndex, paramIndex, i);
+              actions.removeParameterDescription(listIndex, paramIndex, i);
             }
           }
         },
         updateTextElement: (index, textElement) => {
-          actions.updateParameterDescriptionText(dataPointIndex, paramIndex, index, textElement);
+          actions.updateParameterDescriptionText(listIndex, paramIndex, index, textElement);
         },
         updateLanguage: (index, language) => {
-          actions.updateParameterDescriptionLanguage(dataPointIndex, paramIndex, index, language);
+          actions.updateParameterDescriptionLanguage(listIndex, paramIndex, index, language);
         },
         updateUri: (index, uri) => {
-          actions.updateParameterDescriptionUri(dataPointIndex, paramIndex, index, uri);
+          actions.updateParameterDescriptionUri(listIndex, paramIndex, index, uri);
         },
         updateLabel: (index, label) => {
-          actions.updateParameterDescriptionLabel(dataPointIndex, paramIndex, index, label);
+          actions.updateParameterDescriptionLabel(listIndex, paramIndex, index, label);
         },
         addEmptyLegibleDescription: () => {
-          actions.addEmptyParameterDescription(dataPointIndex, paramIndex);
+          actions.addEmptyParameterDescription(listIndex, paramIndex);
         },
       };
     return store;
-  }, [dataPointIndex, paramIndex, parameterDescriptions, actions]);
+  }, [listIndex, paramIndex, parameterDescriptions, actions]);
 
   // Create a store hook that returns the adapted store
   const useStore = <TSelected,>(selector: (store: typeof adaptedStore) => TSelected): TSelected => {

@@ -11,39 +11,39 @@ import {
 
 export interface DynamicParameterListBitmapSlice {
   setParameterListBitmapDataType: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     bitmap: BitmapProduct
   ) => void;
   addParameterListBitmapEntry: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entry: BitmapEntryProduct
   ) => void;
   removeParameterListBitmapEntry: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number
   ) => void;
   updateParameterListBitmapEntryLiteral: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number,
     literal: string
   ) => void;
   updateParameterListBitmapEntryHexMask: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number,
     hexMask: string
   ) => void;
   updateParameterListBitmapEntryDescription: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number,
     description: string | undefined
   ) => void;
-  addEmptyParameterListBitmapEntry: (dataPointIndex: number, paramIndex: number) => void;
+  addEmptyParameterListBitmapEntry: (listIndex: number, paramIndex: number) => void;
 }
 
 /**
@@ -54,28 +54,28 @@ export function createDynamicParameterListBitmapSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getParameterList: (
     state: TState,
-    dataPointIndex: number
+    listIndex: number
   ) => DynamicParameterDescriptionList | undefined
 ): DynamicParameterListBitmapSlice {
   const getParameter = (
     state: TState,
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number
   ): { dataType: DataTypeProduct } | undefined => {
-    const paramList = getParameterList(state, dataPointIndex);
+    const paramList = getParameterList(state, listIndex);
     return paramList?.parameterListElement?.[paramIndex];
   };
 
-  // Helper function to get a slice bound to specific dataPointIndex and paramIndex
+  // Helper function to get a slice bound to specific listIndex and paramIndex
   const getSliceForIndices = (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number
   ): DataTypeProductBitmapSlice => {
     return createDataTypeProductBitmapSlice(
       set,
-      (state) => getParameter(state, dataPointIndex, paramIndex)?.dataType,
+      (state) => getParameter(state, listIndex, paramIndex)?.dataType,
       (state, dataType) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
+        const param = getParameter(state, listIndex, paramIndex);
         if (param) {
           param.dataType = dataType;
         }
@@ -84,33 +84,28 @@ export function createDynamicParameterListBitmapSlice<TState>(
   };
 
   return {
-    setParameterListBitmapDataType: (dataPointIndex, paramIndex, bitmap) =>
-      getSliceForIndices(dataPointIndex, paramIndex).setBitmapDataType(bitmap),
+    setParameterListBitmapDataType: (listIndex, paramIndex, bitmap) =>
+      getSliceForIndices(listIndex, paramIndex).setBitmapDataType(bitmap),
 
-    addParameterListBitmapEntry: (dataPointIndex, paramIndex, entry) =>
-      getSliceForIndices(dataPointIndex, paramIndex).addBitmapEntry(entry),
+    addParameterListBitmapEntry: (listIndex, paramIndex, entry) =>
+      getSliceForIndices(listIndex, paramIndex).addBitmapEntry(entry),
 
-    removeParameterListBitmapEntry: (dataPointIndex, paramIndex, entryIndex) =>
-      getSliceForIndices(dataPointIndex, paramIndex).removeBitmapEntry(entryIndex),
+    removeParameterListBitmapEntry: (listIndex, paramIndex, entryIndex) =>
+      getSliceForIndices(listIndex, paramIndex).removeBitmapEntry(entryIndex),
 
-    updateParameterListBitmapEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateBitmapEntryLiteral(entryIndex, literal),
+    updateParameterListBitmapEntryLiteral: (listIndex, paramIndex, entryIndex, literal) =>
+      getSliceForIndices(listIndex, paramIndex).updateBitmapEntryLiteral(entryIndex, literal),
 
-    updateParameterListBitmapEntryHexMask: (dataPointIndex, paramIndex, entryIndex, hexMask) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateBitmapEntryHexMask(entryIndex, hexMask),
+    updateParameterListBitmapEntryHexMask: (listIndex, paramIndex, entryIndex, hexMask) =>
+      getSliceForIndices(listIndex, paramIndex).updateBitmapEntryHexMask(entryIndex, hexMask),
 
-    updateParameterListBitmapEntryDescription: (
-      dataPointIndex,
-      paramIndex,
-      entryIndex,
-      description
-    ) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateBitmapEntryDescription(
+    updateParameterListBitmapEntryDescription: (listIndex, paramIndex, entryIndex, description) =>
+      getSliceForIndices(listIndex, paramIndex).updateBitmapEntryDescription(
         entryIndex,
         description
       ),
 
-    addEmptyParameterListBitmapEntry: (dataPointIndex, paramIndex) =>
-      getSliceForIndices(dataPointIndex, paramIndex).addEmptyBitmapEntry(),
+    addEmptyParameterListBitmapEntry: (listIndex, paramIndex) =>
+      getSliceForIndices(listIndex, paramIndex).addEmptyBitmapEntry(),
   };
 }

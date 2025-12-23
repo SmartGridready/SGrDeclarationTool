@@ -7,7 +7,7 @@ import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-l
 import { useMemo } from "react";
 
 interface DynamicParameterListEnumFormProps {
-  dataPointIndex: number;
+  listIndex: number;
   paramIndex: number;
   enumMap: EnumMapProduct;
   actions: DynamicParameterListSlice;
@@ -15,7 +15,7 @@ interface DynamicParameterListEnumFormProps {
 }
 
 export function DynamicParameterListEnumForm({
-  dataPointIndex,
+  listIndex,
   paramIndex,
   enumMap,
   actions,
@@ -25,36 +25,26 @@ export function DynamicParameterListEnumForm({
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
       setEnumDataType: (enumMap) =>
-        actions.setParameterListEnumDataType(dataPointIndex, paramIndex, enumMap),
-      addEnumEntry: (entry) => actions.addParameterListEnumEntry(dataPointIndex, paramIndex, entry),
+        actions.setParameterListEnumDataType(listIndex, paramIndex, enumMap),
+      addEnumEntry: (entry) => actions.addParameterListEnumEntry(listIndex, paramIndex, entry),
       removeEnumEntry: (entryIndex) =>
-        actions.removeParameterListEnumEntry(dataPointIndex, paramIndex, entryIndex),
+        actions.removeParameterListEnumEntry(listIndex, paramIndex, entryIndex),
       updateEnumEntryLiteral: (entryIndex, literal) =>
-        actions.updateParameterListEnumEntryLiteral(
-          dataPointIndex,
-          paramIndex,
-          entryIndex,
-          literal
-        ),
+        actions.updateParameterListEnumEntryLiteral(listIndex, paramIndex, entryIndex, literal),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
-        actions.updateParameterListEnumEntryOrdinal(
-          dataPointIndex,
-          paramIndex,
-          entryIndex,
-          ordinal
-        ),
+        actions.updateParameterListEnumEntryOrdinal(listIndex, paramIndex, entryIndex, ordinal),
       updateEnumEntryDescription: (entryIndex, description) =>
         actions.updateParameterListEnumEntryDescription(
-          dataPointIndex,
+          listIndex,
           paramIndex,
           entryIndex,
           description
         ),
       updateEnumHexMask: (hexMask) =>
-        actions.updateParameterListEnumHexMask(dataPointIndex, paramIndex, hexMask),
-      addEmptyEnumEntry: () => actions.addEmptyParameterListEnumEntry(dataPointIndex, paramIndex),
+        actions.updateParameterListEnumHexMask(listIndex, paramIndex, hexMask),
+      addEmptyEnumEntry: () => actions.addEmptyParameterListEnumEntry(listIndex, paramIndex),
     };
-  }, [dataPointIndex, paramIndex, actions]);
+  }, [listIndex, paramIndex, actions]);
 
   return (
     <DataTypeProductEnumForm

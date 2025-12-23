@@ -23,7 +23,7 @@ export function ParameterListForm({
 
   return (
     <DynamicParameterListForm
-      dataPointIndex={dataPointIndex}
+      listIndex={dataPointIndex}
       parameterList={parameterList}
       actions={dataPointListActions}
       getError={getError}

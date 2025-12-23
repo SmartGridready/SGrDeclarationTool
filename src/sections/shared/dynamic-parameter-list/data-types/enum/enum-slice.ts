@@ -11,44 +11,40 @@ import {
 
 export interface DynamicParameterListEnumSlice {
   setParameterListEnumDataType: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     enumMap: EnumMapProduct
   ) => void;
   addParameterListEnumEntry: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entry: EnumEntryProductRecord
   ) => void;
-  removeParameterListEnumEntry: (
-    dataPointIndex: number,
-    paramIndex: number,
-    entryIndex: number
-  ) => void;
+  removeParameterListEnumEntry: (listIndex: number, paramIndex: number, entryIndex: number) => void;
   updateParameterListEnumEntryLiteral: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number,
     literal: string
   ) => void;
   updateParameterListEnumEntryOrdinal: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number,
     ordinal: number | undefined
   ) => void;
   updateParameterListEnumEntryDescription: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     entryIndex: number,
     description: string | undefined
   ) => void;
   updateParameterListEnumHexMask: (
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number,
     hexMask: string | undefined
   ) => void;
-  addEmptyParameterListEnumEntry: (dataPointIndex: number, paramIndex: number) => void;
+  addEmptyParameterListEnumEntry: (listIndex: number, paramIndex: number) => void;
 }
 
 /**
@@ -59,28 +55,25 @@ export function createDynamicParameterListEnumSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getParameterList: (
     state: TState,
-    dataPointIndex: number
+    listIndex: number
   ) => DynamicParameterDescriptionList | undefined
 ): DynamicParameterListEnumSlice {
   const getParameter = (
     state: TState,
-    dataPointIndex: number,
+    listIndex: number,
     paramIndex: number
   ): { dataType: DataTypeProduct } | undefined => {
-    const paramList = getParameterList(state, dataPointIndex);
+    const paramList = getParameterList(state, listIndex);
     return paramList?.parameterListElement?.[paramIndex];
   };
 
-  // Helper function to get a slice bound to specific dataPointIndex and paramIndex
-  const getSliceForIndices = (
-    dataPointIndex: number,
-    paramIndex: number
-  ): DataTypeProductEnumSlice => {
+  // Helper function to get a slice bound to specific listIndex and paramIndex
+  const getSliceForIndices = (listIndex: number, paramIndex: number): DataTypeProductEnumSlice => {
     return createDataTypeProductEnumSlice(
       set,
-      (state) => getParameter(state, dataPointIndex, paramIndex)?.dataType,
+      (state) => getParameter(state, listIndex, paramIndex)?.dataType,
       (state, dataType) => {
-        const param = getParameter(state, dataPointIndex, paramIndex);
+        const param = getParameter(state, listIndex, paramIndex);
         if (param) {
           param.dataType = dataType;
         }
@@ -89,36 +82,28 @@ export function createDynamicParameterListEnumSlice<TState>(
   };
 
   return {
-    setParameterListEnumDataType: (dataPointIndex, paramIndex, enumMap) =>
-      getSliceForIndices(dataPointIndex, paramIndex).setEnumDataType(enumMap),
+    setParameterListEnumDataType: (listIndex, paramIndex, enumMap) =>
+      getSliceForIndices(listIndex, paramIndex).setEnumDataType(enumMap),
 
-    addParameterListEnumEntry: (dataPointIndex, paramIndex, entry) =>
-      getSliceForIndices(dataPointIndex, paramIndex).addEnumEntry(entry),
+    addParameterListEnumEntry: (listIndex, paramIndex, entry) =>
+      getSliceForIndices(listIndex, paramIndex).addEnumEntry(entry),
 
-    removeParameterListEnumEntry: (dataPointIndex, paramIndex, entryIndex) =>
-      getSliceForIndices(dataPointIndex, paramIndex).removeEnumEntry(entryIndex),
+    removeParameterListEnumEntry: (listIndex, paramIndex, entryIndex) =>
+      getSliceForIndices(listIndex, paramIndex).removeEnumEntry(entryIndex),
 
-    updateParameterListEnumEntryLiteral: (dataPointIndex, paramIndex, entryIndex, literal) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateEnumEntryLiteral(entryIndex, literal),
+    updateParameterListEnumEntryLiteral: (listIndex, paramIndex, entryIndex, literal) =>
+      getSliceForIndices(listIndex, paramIndex).updateEnumEntryLiteral(entryIndex, literal),
 
-    updateParameterListEnumEntryOrdinal: (dataPointIndex, paramIndex, entryIndex, ordinal) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateEnumEntryOrdinal(entryIndex, ordinal),
+    updateParameterListEnumEntryOrdinal: (listIndex, paramIndex, entryIndex, ordinal) =>
+      getSliceForIndices(listIndex, paramIndex).updateEnumEntryOrdinal(entryIndex, ordinal),
 
-    updateParameterListEnumEntryDescription: (
-      dataPointIndex,
-      paramIndex,
-      entryIndex,
-      description
-    ) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateEnumEntryDescription(
-        entryIndex,
-        description
-      ),
+    updateParameterListEnumEntryDescription: (listIndex, paramIndex, entryIndex, description) =>
+      getSliceForIndices(listIndex, paramIndex).updateEnumEntryDescription(entryIndex, description),
 
-    updateParameterListEnumHexMask: (dataPointIndex, paramIndex, hexMask) =>
-      getSliceForIndices(dataPointIndex, paramIndex).updateEnumHexMask(hexMask),
+    updateParameterListEnumHexMask: (listIndex, paramIndex, hexMask) =>
+      getSliceForIndices(listIndex, paramIndex).updateEnumHexMask(hexMask),
 
-    addEmptyParameterListEnumEntry: (dataPointIndex, paramIndex) =>
-      getSliceForIndices(dataPointIndex, paramIndex).addEmptyEnumEntry(),
+    addEmptyParameterListEnumEntry: (listIndex, paramIndex) =>
+      getSliceForIndices(listIndex, paramIndex).addEmptyEnumEntry(),
   };
 }

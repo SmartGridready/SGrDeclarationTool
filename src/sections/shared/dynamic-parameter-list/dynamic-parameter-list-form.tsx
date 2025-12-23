@@ -19,7 +19,7 @@ import { DynamicParameterListEnumForm } from "@/sections/shared/dynamic-paramete
 import { DynamicParameterListBitmapForm } from "@/sections/shared/dynamic-parameter-list/data-types/bitmap/bitmap-form";
 
 interface DynamicParameterListFormProps {
-  dataPointIndex: number;
+  listIndex: number;
   parameterList: DynamicParameterDescriptionList | undefined;
   actions: DynamicParameterListSlice;
   getError: (path: string) => string | undefined;
@@ -31,7 +31,7 @@ interface DynamicParameterListFormProps {
 }
 
 export function DynamicParameterListForm({
-  dataPointIndex,
+  listIndex,
   parameterList,
   actions,
   getError,
@@ -41,8 +41,8 @@ export function DynamicParameterListForm({
   onAdd,
   onRemove,
 }: DynamicParameterListFormProps) {
-  const handleAdd = onAdd ?? (() => actions.addParameterList(dataPointIndex));
-  const handleRemove = onRemove ?? (() => actions.removeParameterList(dataPointIndex));
+  const handleAdd = onAdd ?? (() => actions.addParameterList(listIndex));
+  const handleRemove = onRemove ?? (() => actions.removeParameterList(listIndex));
 
   return (
     <FormSection
@@ -57,19 +57,19 @@ export function DynamicParameterListForm({
       <ArrayField
         label="Parameters"
         items={parameterList?.parameterListElement}
-        onAdd={() => actions.addParameterListElement(dataPointIndex)}
-        onRemove={(paramIndex) => actions.removeParameterListElement(dataPointIndex, paramIndex)}
+        onAdd={() => actions.addParameterListElement(listIndex)}
+        onRemove={(paramIndex) => actions.removeParameterListElement(listIndex, paramIndex)}
         emptyMessage="No parameters added"
         renderItem={(param, paramIndex) => (
           <>
             <FormGroup columns={3}>
               <InputField
                 label="Parameter Name"
-                name={`${fieldPathPrefix}-${dataPointIndex}-param-${paramIndex}-name`}
+                name={`${fieldPathPrefix}-${listIndex}-param-${paramIndex}-name`}
                 type="text"
                 value={param.name}
                 onChange={(value) =>
-                  actions.updateParameterListElementName(dataPointIndex, paramIndex, value)
+                  actions.updateParameterListElementName(listIndex, paramIndex, value)
                 }
                 placeholder="Enter parameter name"
                 required={true}
@@ -77,25 +77,21 @@ export function DynamicParameterListForm({
               />
               <SelectField
                 label="Data Type"
-                name={`${fieldPathPrefix}-${dataPointIndex}-param-${paramIndex}-dataType`}
+                name={`${fieldPathPrefix}-${listIndex}-param-${paramIndex}-dataType`}
                 options={DATA_TYPE_OPTIONS as unknown as { value: string; label: string }[]}
                 value={getDataTypeProductStringValue(param.dataType)}
                 onChange={(value) => {
                   const newDataType = createDataTypeProductFromString(value);
                   if (value === "enum" && !isEnumDataTypeProduct(param.dataType)) {
-                    actions.setParameterListEnumDataType(dataPointIndex, paramIndex, {
+                    actions.setParameterListEnumDataType(listIndex, paramIndex, {
                       enumEntry: [],
                     });
                   } else if (value === "bitmap" && !isBitmapDataTypeProduct(param.dataType)) {
-                    actions.setParameterListBitmapDataType(dataPointIndex, paramIndex, {
+                    actions.setParameterListBitmapDataType(listIndex, paramIndex, {
                       bitmapEntry: [],
                     });
                   } else {
-                    actions.updateParameterListElementDataType(
-                      dataPointIndex,
-                      paramIndex,
-                      newDataType
-                    );
+                    actions.updateParameterListElementDataType(listIndex, paramIndex, newDataType);
                   }
                 }}
                 required={true}
@@ -103,12 +99,12 @@ export function DynamicParameterListForm({
               />
               <InputField
                 label="Default Value"
-                name={`${fieldPathPrefix}-${dataPointIndex}-param-${paramIndex}-defaultValue`}
+                name={`${fieldPathPrefix}-${listIndex}-param-${paramIndex}-defaultValue`}
                 type="text"
                 value={param.defaultValue || ""}
                 onChange={(value) =>
                   actions.updateParameterListElementDefaultValue(
-                    dataPointIndex,
+                    listIndex,
                     paramIndex,
                     value || undefined
                   )
@@ -123,7 +119,7 @@ export function DynamicParameterListForm({
 
             {isEnumDataTypeProduct(param.dataType) && (
               <DynamicParameterListEnumForm
-                dataPointIndex={dataPointIndex}
+                listIndex={listIndex}
                 paramIndex={paramIndex}
                 enumMap={param.dataType.enum}
                 actions={actions}
@@ -133,7 +129,7 @@ export function DynamicParameterListForm({
 
             {isBitmapDataTypeProduct(param.dataType) && (
               <DynamicParameterListBitmapForm
-                dataPointIndex={dataPointIndex}
+                listIndex={listIndex}
                 paramIndex={paramIndex}
                 bitmap={param.dataType.bitmap}
                 actions={actions}
@@ -142,7 +138,7 @@ export function DynamicParameterListForm({
             )}
 
             <DynamicParameterDescriptionsForm
-              dataPointIndex={dataPointIndex}
+              listIndex={listIndex}
               paramIndex={paramIndex}
               parameterDescriptions={param.parameterDescription}
               actions={actions}

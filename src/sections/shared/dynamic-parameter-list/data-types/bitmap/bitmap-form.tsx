@@ -7,7 +7,7 @@ import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-l
 import { useMemo } from "react";
 
 interface DynamicParameterListBitmapFormProps {
-  dataPointIndex: number;
+  listIndex: number;
   paramIndex: number;
   bitmap: BitmapProduct;
   actions: DynamicParameterListSlice;
@@ -15,7 +15,7 @@ interface DynamicParameterListBitmapFormProps {
 }
 
 export function DynamicParameterListBitmapForm({
-  dataPointIndex,
+  listIndex,
   paramIndex,
   bitmap,
   actions,
@@ -25,36 +25,24 @@ export function DynamicParameterListBitmapForm({
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
     return {
       setBitmapDataType: (bitmap) =>
-        actions.setParameterListBitmapDataType(dataPointIndex, paramIndex, bitmap),
-      addBitmapEntry: (entry) =>
-        actions.addParameterListBitmapEntry(dataPointIndex, paramIndex, entry),
+        actions.setParameterListBitmapDataType(listIndex, paramIndex, bitmap),
+      addBitmapEntry: (entry) => actions.addParameterListBitmapEntry(listIndex, paramIndex, entry),
       removeBitmapEntry: (entryIndex) =>
-        actions.removeParameterListBitmapEntry(dataPointIndex, paramIndex, entryIndex),
+        actions.removeParameterListBitmapEntry(listIndex, paramIndex, entryIndex),
       updateBitmapEntryLiteral: (entryIndex, literal) =>
-        actions.updateParameterListBitmapEntryLiteral(
-          dataPointIndex,
-          paramIndex,
-          entryIndex,
-          literal
-        ),
+        actions.updateParameterListBitmapEntryLiteral(listIndex, paramIndex, entryIndex, literal),
       updateBitmapEntryHexMask: (entryIndex, hexMask) =>
-        actions.updateParameterListBitmapEntryHexMask(
-          dataPointIndex,
-          paramIndex,
-          entryIndex,
-          hexMask
-        ),
+        actions.updateParameterListBitmapEntryHexMask(listIndex, paramIndex, entryIndex, hexMask),
       updateBitmapEntryDescription: (entryIndex, description) =>
         actions.updateParameterListBitmapEntryDescription(
-          dataPointIndex,
+          listIndex,
           paramIndex,
           entryIndex,
           description
         ),
-      addEmptyBitmapEntry: () =>
-        actions.addEmptyParameterListBitmapEntry(dataPointIndex, paramIndex),
+      addEmptyBitmapEntry: () => actions.addEmptyParameterListBitmapEntry(listIndex, paramIndex),
     };
-  }, [dataPointIndex, paramIndex, actions]);
+  }, [listIndex, paramIndex, actions]);
 
   return (
     <DataTypeProductBitmapForm

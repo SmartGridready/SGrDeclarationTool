@@ -5,7 +5,7 @@ import { mapReleaseNotes } from "@/sections/shared/release-notes/release-notes-m
 import { mapDeviceIdentification } from "@/sections/device/device-identification/device-identification-mapper";
 import { mapDeviceInformation } from "@/sections/device/device-information/device-information-mapper";
 import { mapConfigurationList } from "@/sections/device/configuration-list/configuration-list-mapper";
-import { mapGenericAttributeListProduct } from "@/sections/device/generic-attribute-list/generic-attribute-list-mapper";
+import { mapGenericAttributeListProduct } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-mapper";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 
 /**

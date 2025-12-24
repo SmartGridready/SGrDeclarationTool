@@ -10,7 +10,7 @@ import {
   SpecificationOwnerIdentification,
   VersionNumber,
 } from "@/models/generic";
-import { ModbusInterface } from "./ModbusInterface";
+import { ModbusInterface } from "./modbus-interface";
 
 export interface DeviceFrame {
   deviceName: string;

@@ -1,5 +1,5 @@
 import { FunctionalProfileFrame, DeviceFrame } from "@/models";
-import { ModbusInterface } from "@/models/product/ModbusInterface";
+import { ModbusInterface } from "@/models/product/modbus-interface";
 
 /**
  * Creates an empty ModbusInterface with minimal required values

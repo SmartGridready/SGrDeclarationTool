@@ -1,4 +1,7 @@
-import { LANGUAGE_OPTIONS } from "@/sections/shared/legible-description/legible-description-form-options";
+import { LANGUAGE_VALUES } from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
+
+const LANGUAGE_OPTIONS = createFormOptions(LANGUAGE_VALUES);
 import { useFormSection } from "@/hooks/use-form-section";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { LegibleDescription, Language } from "@/models";

@@ -3,53 +3,55 @@
  * Äquivalent to BaseType_FunctionalProfileCategory.xsd
  */
 
-export type FunctionalProfileCategory =
-  | "Battery"
-  | "Compressor"
-  | "DeviceInformation"
-  | "DHWCircuit"
-  | "DHWStorage"
-  | "Dishwasher"
-  | "Dryer"
-  | "ElectricalImmersionHeater"
-  | "Fan"
-  | "GasHeatingAppliance"
-  | "Metering"
-  | "HeatingBufferStorage"
-  | "HeatingCircuit"
-  | "HeatingObject"
-  | "HeatingZone"
-  | "HeatPumpControl"
-  | "HeatSinkCircuit"
-  | "HeatSourceCircuit"
-  | "HeatSourceUnit"
-  | "HVACController"
-  | "HVACRoom"
-  | "InstantDHWHeater"
-  | "Inverter"
-  | "OilHeatingAppliance"
-  | "Pump"
-  | "RefrigerantCircuit"
-  | "SmartEnergyAppliance"
-  | "SolarDHWStorage"
-  | "SolarThermalCircuit"
-  | "SubMeterElectricity"
-  | "TemperatureSensor"
-  | "Washer"
-  | "BatterySystem"
-  | "ElectricityGenerationSystem"
-  | "ElectricityStorageSystem"
-  | "SGCP"
-  | "Household"
-  | "PVSystem"
-  | "EV"
-  | "EVSE"
-  | "ChargingOutlet"
-  | "CEM"
-  | "Actuator"
-  | "Sensor"
-  | "Controller"
-  | "EnvCondition"
-  | "FlexBuildingCampus"
-  | "DynamicTariff"
-  | "R50";
+export const FUNCTIONAL_PROFILE_CATEGORY_VALUES = [
+  "Battery",
+  "Compressor",
+  "DeviceInformation",
+  "DHWCircuit",
+  "DHWStorage",
+  "Dishwasher",
+  "Dryer",
+  "ElectricalImmersionHeater",
+  "Fan",
+  "GasHeatingAppliance",
+  "Metering",
+  "HeatingBufferStorage",
+  "HeatingCircuit",
+  "HeatingObject",
+  "HeatingZone",
+  "HeatPumpControl",
+  "HeatSinkCircuit",
+  "HeatSourceCircuit",
+  "HeatSourceUnit",
+  "HVACController",
+  "HVACRoom",
+  "InstantDHWHeater",
+  "Inverter",
+  "OilHeatingAppliance",
+  "Pump",
+  "RefrigerantCircuit",
+  "SmartEnergyAppliance",
+  "SolarDHWStorage",
+  "SolarThermalCircuit",
+  "SubMeterElectricity",
+  "TemperatureSensor",
+  "Washer",
+  "BatterySystem",
+  "ElectricityGenerationSystem",
+  "ElectricityStorageSystem",
+  "SGCP",
+  "Household",
+  "PVSystem",
+  "EV",
+  "EVSE",
+  "ChargingOutlet",
+  "CEM",
+  "Actuator",
+  "Sensor",
+  "Controller",
+  "EnvCondition",
+  "FlexBuildingCampus",
+  "DynamicTariff",
+  "R50",
+] as const;
+export type FunctionalProfileCategory = (typeof FUNCTIONAL_PROFILE_CATEGORY_VALUES)[number];

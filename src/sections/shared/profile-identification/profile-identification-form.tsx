@@ -5,16 +5,18 @@ import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import {
-  PROFILE_IDENTIFICATION_CATEGORY,
-  LEVEL_OF_OPERATION,
-} from "@/sections/shared/profile-identification/profile-identification-form-options";
-import {
+  FUNCTIONAL_PROFILE_CATEGORY_VALUES,
+  LEVEL_OF_OPERATION_VALUES,
   FunctionalProfileCategory,
   LevelOfOperation,
   SpecificationOwnerIdentification,
 } from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
 import { FunctionalProfileIdentificationSlice } from "@/sections/shared/profile-identification/profile-identification-slice";
 import { useFormSection } from "@/hooks/use-form-section";
+
+const PROFILE_IDENTIFICATION_CATEGORY = createFormOptions(FUNCTIONAL_PROFILE_CATEGORY_VALUES);
+const LEVEL_OF_OPERATION = createFormOptions(LEVEL_OF_OPERATION_VALUES);
 
 interface ProfileIdentificationFormProps<TStoreState extends FunctionalProfileIdentificationSlice> {
   /**

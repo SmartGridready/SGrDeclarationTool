@@ -9,14 +9,24 @@ import { LegibleDescriptionForm } from "@/sections/device/device-information/leg
 import { ProgrammerHintsForm } from "@/sections/device/device-information/programmer-hints/programmer-hints-form";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
 import {
-  DEVICE_CATEGORY_OPTIONS,
-  POWER_SOURCE_OPTIONS,
-  TEST_STATE_OPTIONS,
-  LEVEL_OF_OPERATION_OPTIONS,
-  BOOLEAN_OPTIONS,
-} from "@/sections/device/device-information/device-information-form-options";
-import { DeviceCategory, LevelOfOperation, PowerSource } from "@/models";
-import { TestState } from "@/models/product/product";
+  DeviceCategory,
+  LevelOfOperation,
+  PowerSource,
+  DEVICE_CATEGORY_VALUES,
+  POWER_SOURCE_VALUES,
+  LEVEL_OF_OPERATION_VALUES,
+} from "@/models";
+import { TestState, TEST_STATE_VALUES } from "@/models/product/product";
+import { createFormOptions } from "@/models/form-options-helper";
+
+const DEVICE_CATEGORY_OPTIONS = createFormOptions(DEVICE_CATEGORY_VALUES);
+const POWER_SOURCE_OPTIONS = createFormOptions(POWER_SOURCE_VALUES);
+const TEST_STATE_OPTIONS = createFormOptions(TEST_STATE_VALUES);
+const LEVEL_OF_OPERATION_OPTIONS = createFormOptions(LEVEL_OF_OPERATION_VALUES);
+const BOOLEAN_OPTIONS = [
+  { value: "true", label: "Yes" },
+  { value: "false", label: "No" },
+] as const;
 
 export function DeviceInformationForm() {
   const { useDeviceState, useValidation, pathPrefix, deviceInformationActions } =

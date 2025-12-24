@@ -10,17 +10,21 @@ import {
   DataDirectionFunctionalProfile,
   PresenceLevel,
   Units,
+  DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES,
+  PRESENCE_LEVEL_VALUES,
+  DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES,
+  UNITS_VALUES,
 } from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
 import {
   useFunctionalProfileFormContext,
   buildProfileFieldPath,
 } from "@/context/functional-profile-form-context";
-import {
-  DATA_DIRECTION_OPTIONS,
-  PRESENCE_LEVEL_OPTIONS,
-  DATA_TYPE_OPTIONS,
-  UNIT_OPTIONS,
-} from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
+
+const DATA_DIRECTION_OPTIONS = createFormOptions(DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES);
+const PRESENCE_LEVEL_OPTIONS = createFormOptions(PRESENCE_LEVEL_VALUES);
+const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES);
+const UNIT_OPTIONS = createFormOptions(UNITS_VALUES);
 import {
   isEnumDataType,
   isBitmapDataType,

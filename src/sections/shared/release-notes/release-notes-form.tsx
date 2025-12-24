@@ -4,9 +4,11 @@ import { InputField } from "@/components/forms/input-field";
 import { DateField } from "@/components/forms/date-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { RELEASE_STATE_OPTIONS } from "@/sections/shared/release-notes/release-notes-form-options";
 import { useFormSection } from "@/hooks/use-form-section";
-import { ReleaseState, ChangeLog } from "@/models";
+import { ReleaseState, ChangeLog, RELEASE_STATE_VALUES } from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
+
+const RELEASE_STATE_OPTIONS = createFormOptions(RELEASE_STATE_VALUES);
 import { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 
 interface ReleaseNotesFormProps<TStoreState extends ReleaseNotesSlice> {

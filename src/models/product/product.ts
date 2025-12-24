@@ -42,7 +42,8 @@ export interface DeviceInformation {
   programmerHints?: LegibleDescription[]; // maxOccurs="4"
 }
 
-export type TestState = "None" | "Tested" | "Confirmed" | "Verified";
+export const TEST_STATE_VALUES = ["None", "Tested", "Confirmed", "Verified"] as const;
+export type TestState = (typeof TEST_STATE_VALUES)[number];
 
 export interface ConfigurationList {
   configurationListElement: ConfigurationListElement[]; // minOccurs=1, maxOccurs=unbounded

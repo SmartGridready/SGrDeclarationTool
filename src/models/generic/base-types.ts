@@ -16,7 +16,8 @@ export interface ReleaseNotes {
   changeLog?: ChangeLog[];
 }
 
-export type ReleaseState = "Draft" | "Review" | "Published" | "Revoked";
+export const RELEASE_STATE_VALUES = ["Draft", "Review", "Published", "Revoked"] as const;
+export type ReleaseState = (typeof RELEASE_STATE_VALUES)[number];
 
 export interface ChangeLog {
   version: string;
@@ -55,7 +56,8 @@ export interface LegibleDescription {
   uri?: string;
 }
 
-export type Language = "de" | "en" | "fr" | "it";
+export const LANGUAGE_VALUES = ["de", "en", "fr", "it"] as const;
+export type Language = (typeof LANGUAGE_VALUES)[number];
 
 export interface AlternativeNames {
   sLV1Name?: string;
@@ -89,6 +91,22 @@ export type EmptyValue = "";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface EmptyType {}
 
+export const DATA_TYPE_CHOICE_VALUES = [
+  "boolean",
+  "int8",
+  "int16",
+  "int32",
+  "int64",
+  "int8U",
+  "int16U",
+  "int32U",
+  "int64U",
+  "float32",
+  "float64",
+  "dateTime",
+  "string",
+] as const;
+
 export type DataTypeChoice =
   | { boolean: EmptyType }
   | { int8: EmptyType }
@@ -108,8 +126,19 @@ export type DataTypeChoice =
 // Data Types - Functional Profile
 // ============================================================================
 
-export type DataDirectionFunctionalProfile = "R" | "W" | "RW";
-export type PresenceLevel = "M" | "R" | "O";
+export const DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES = ["R", "W", "RW"] as const;
+export type DataDirectionFunctionalProfile =
+  (typeof DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES)[number];
+
+export const PRESENCE_LEVEL_VALUES = ["M", "R", "O"] as const;
+export type PresenceLevel = (typeof PRESENCE_LEVEL_VALUES)[number];
+
+export const DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES = [
+  ...DATA_TYPE_CHOICE_VALUES,
+  "enum",
+  "bitmap",
+  "json",
+] as const;
 
 export type DataTypeFunctionalProfile =
   | { enum: EnumMapFunctionalProfile }
@@ -161,7 +190,15 @@ interface JSonElemFunctionalProfileBase {
 // Data Types - Product
 // ============================================================================
 
-export type DataDirectionProduct = "C" | "R" | "W" | "RW" | "RWP"; // Constant, Read, Write, Read-Write, Read-Write-Persistent
+export const DATA_DIRECTION_PRODUCT_VALUES = ["C", "R", "W", "RW", "RWP"] as const; // Constant, Read, Write, Read-Write, Read-Write-Persistent
+export type DataDirectionProduct = (typeof DATA_DIRECTION_PRODUCT_VALUES)[number];
+
+export const DATA_TYPE_PRODUCT_EXTENDED_VALUES = [
+  ...DATA_TYPE_CHOICE_VALUES,
+  "enum",
+  "bitmap",
+  "json",
+] as const;
 
 export type DataTypeProduct =
   | { enum: EnumMapProduct }
@@ -215,103 +252,109 @@ export interface DynamicParameterDescription extends LegibleDescription {
 // Units
 // ============================================================================
 
-export type Units =
-  | "AMPERES"
-  | "BARS"
-  | "CUBIC_METERS"
-  | "CUBIC_METERS_PER_SECOND"
-  | "DEGREES_CELSIUS"
-  | "DEGREES_KELVIN"
-  | "DEGREES_PHASE"
-  | "HERTZ"
-  | "HOURS"
-  | "JOULES"
-  | "KILOGRAMS"
-  | "KILOVOLT_AMPERES"
-  | "KILOVOLT_AMPERE_HOURS"
-  | "KILOVOLT_AMPERES_REACTIVE"
-  | "KILOVOLT_AMPERES_REACTIVE_HOURS"
-  | "KILOWATT_HOURS"
-  | "KILOWATTS"
-  | "METERS"
-  | "METERS_PER_SECOND"
-  | "METERS_PER_SECOND_PER_SECOND"
-  | "MINUTES"
-  | "NO_UNITS"
-  | "OHMS"
-  | "PARTS_PER_MILLION"
-  | "PASCALS"
-  | "PER_HOUR"
-  | "PERCENT"
-  | "PERCENT_RELATIVE_HUMIDITY"
-  | "POWER_FACTOR"
-  | "RADIANS"
-  | "RADIANS_PER_SECOND"
-  | "REVOLUTIONS_PER_MINUTE"
-  | "SECONDS"
-  | "SQUARE_METERS"
-  | "VOLT_AMPERES"
-  | "VOLT_AMPERES_REACTIVE"
-  | "VOLTS"
-  | "WATT_HOURS"
-  | "WATTS"
-  | "WATTS_PER_SQUARE_METER"
-  | "MEGAWATT_HOURS"
-  | "NONE";
+export const UNITS_VALUES = [
+  "AMPERES",
+  "BARS",
+  "CUBIC_METERS",
+  "CUBIC_METERS_PER_SECOND",
+  "DEGREES_CELSIUS",
+  "DEGREES_KELVIN",
+  "DEGREES_PHASE",
+  "HERTZ",
+  "HOURS",
+  "JOULES",
+  "KILOGRAMS",
+  "KILOVOLT_AMPERES",
+  "KILOVOLT_AMPERE_HOURS",
+  "KILOVOLT_AMPERES_REACTIVE",
+  "KILOVOLT_AMPERES_REACTIVE_HOURS",
+  "KILOWATT_HOURS",
+  "KILOWATTS",
+  "METERS",
+  "METERS_PER_SECOND",
+  "METERS_PER_SECOND_PER_SECOND",
+  "MINUTES",
+  "NO_UNITS",
+  "OHMS",
+  "PARTS_PER_MILLION",
+  "PASCALS",
+  "PER_HOUR",
+  "PERCENT",
+  "PERCENT_RELATIVE_HUMIDITY",
+  "POWER_FACTOR",
+  "RADIANS",
+  "RADIANS_PER_SECOND",
+  "REVOLUTIONS_PER_MINUTE",
+  "SECONDS",
+  "SQUARE_METERS",
+  "VOLT_AMPERES",
+  "VOLT_AMPERES_REACTIVE",
+  "VOLTS",
+  "WATT_HOURS",
+  "WATTS",
+  "WATTS_PER_SQUARE_METER",
+  "MEGAWATT_HOURS",
+  "NONE",
+] as const;
+export type Units = (typeof UNITS_VALUES)[number];
 
 // Device categories
-export type DeviceCategory =
-  | "Battery"
-  | "Compressor"
-  | "DeviceInformation"
-  | "DHWCircuit"
-  | "DHWStorage"
-  | "Dishwasher"
-  | "Dryer"
-  | "ElectricalImmersionHeater"
-  | "Fan"
-  | "GasHeatingAppliance"
-  | "Generic"
-  | "HeatingBufferStorage"
-  | "HeatingCircuit"
-  | "HeatingObject"
-  | "HeatingZone"
-  | "HeatPumpAppliance"
-  | "HeatSinkCircuit"
-  | "HeatSourceCircuit"
-  | "HeatSourceUnit"
-  | "HVACController"
-  | "HVACRoom"
-  | "InstantDHWHeater"
-  | "Inverter"
-  | "OilHeatingAppliance"
-  | "Pump"
-  | "RefrigerantCircuit"
-  | "SmartEnergyAppliance"
-  | "SolarDHWStorage"
-  | "SolarThermalCircuit"
-  | "SubMeterElectricity"
-  | "TemperatureSensor"
-  | "Washer"
-  | "BatterySystem"
-  | "ElectricityGenerationSystem"
-  | "ElectricityStorageSystem"
-  | "SGCP"
-  | "Household"
-  | "PVSystem"
-  | "EV"
-  | "EVSE"
-  | "ChargingStation"
-  | "Actuator"
-  | "CEM";
+export const DEVICE_CATEGORY_VALUES = [
+  "Battery",
+  "Compressor",
+  "DeviceInformation",
+  "DHWCircuit",
+  "DHWStorage",
+  "Dishwasher",
+  "Dryer",
+  "ElectricalImmersionHeater",
+  "Fan",
+  "GasHeatingAppliance",
+  "Generic",
+  "HeatingBufferStorage",
+  "HeatingCircuit",
+  "HeatingObject",
+  "HeatingZone",
+  "HeatPumpAppliance",
+  "HeatSinkCircuit",
+  "HeatSourceCircuit",
+  "HeatSourceUnit",
+  "HVACController",
+  "HVACRoom",
+  "InstantDHWHeater",
+  "Inverter",
+  "OilHeatingAppliance",
+  "Pump",
+  "RefrigerantCircuit",
+  "SmartEnergyAppliance",
+  "SolarDHWStorage",
+  "SolarThermalCircuit",
+  "SubMeterElectricity",
+  "TemperatureSensor",
+  "Washer",
+  "BatterySystem",
+  "ElectricityGenerationSystem",
+  "ElectricityStorageSystem",
+  "SGCP",
+  "Household",
+  "PVSystem",
+  "EV",
+  "EVSE",
+  "ChargingStation",
+  "Actuator",
+  "CEM",
+] as const;
+export type DeviceCategory = (typeof DEVICE_CATEGORY_VALUES)[number];
 
-export type PowerSource =
-  | "unknown"
-  | "mains1Phase"
-  | "mains3Phase"
-  | "mains1Phase, mains3Phase"
-  | "battery"
-  | "dc";
+export const POWER_SOURCE_VALUES = [
+  "unknown",
+  "mains1Phase",
+  "mains3Phase",
+  "mains1Phase, mains3Phase",
+  "battery",
+  "dc",
+] as const;
+export type PowerSource = (typeof POWER_SOURCE_VALUES)[number];
 
 export interface GenericAttributeListProduct {
   genericAttributeListElement: GenericAttributeProduct[];
@@ -368,32 +411,37 @@ export interface EnumEntry {
 }
 
 // Serial Interface Capability
-export type BaudRate =
-  | "300"
-  | "600"
-  | "1200"
-  | "2400"
-  | "4800"
-  | "5600"
-  | "9600"
-  | "14400"
-  | "19200"
-  | "38400"
-  | "57600"
-  | "115200"
-  | "128000"
-  | "230400"
-  | "256000";
+export const BAUD_RATE_VALUES = [
+  "300",
+  "600",
+  "1200",
+  "2400",
+  "4800",
+  "5600",
+  "9600",
+  "14400",
+  "19200",
+  "38400",
+  "57600",
+  "115200",
+  "128000",
+  "230400",
+  "256000",
+] as const;
+export type BaudRate = (typeof BAUD_RATE_VALUES)[number];
 
 export type BaudRateParameter = string; // Pattern: {{.+}}|300|600|...|256000
 
-export type ByteLength = "7" | "8";
+export const BYTE_LENGTH_VALUES = ["7", "8"] as const;
+export type ByteLength = (typeof BYTE_LENGTH_VALUES)[number];
 export type ByteLengthParameter = string; // Pattern: {{.+}}|7|8
 
-export type Parity = "EVEN" | "ODD" | "NONE";
+export const PARITY_VALUES = ["EVEN", "ODD", "NONE"] as const;
+export type Parity = (typeof PARITY_VALUES)[number];
 export type ParityParameter = string; // Pattern: ({{.+}})|(^\d+$)|EVEN|ODD|NONE
 
-export type StopBitLength = "1" | "1.5" | "2";
+export const STOP_BIT_LENGTH_VALUES = ["1", "1.5", "2"] as const;
+export type StopBitLength = (typeof STOP_BIT_LENGTH_VALUES)[number];
 export type StopBitLengthParameter = string; // Pattern: ({{.+}})|0|1|1.5|2
 
 export interface SerialInterfaceCapability {

@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { FunctionalProfileIdentification, VersionNumber } from "@/models";
 import {
-  PROFILE_IDENTIFICATION_CATEGORY,
-  LEVEL_OF_OPERATION,
-} from "@/sections/shared/profile-identification/profile-identification-form-options";
+  FunctionalProfileIdentification,
+  VersionNumber,
+  FUNCTIONAL_PROFILE_CATEGORY_VALUES,
+  LEVEL_OF_OPERATION_VALUES,
+} from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -11,12 +12,13 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract category values from constants
-const FUNCTIONAL_PROFILE_CATEGORY_VALUES = PROFILE_IDENTIFICATION_CATEGORY.map(
-  (option) => option.value
-) as [string, ...string[]];
+const FUNCTIONAL_PROFILE_CATEGORY_VALUES_ARRAY = FUNCTIONAL_PROFILE_CATEGORY_VALUES as unknown as [
+  string,
+  ...string[],
+];
 
 // Extract level of operation values from constants
-const LEVEL_OF_OPERATION_VALUES = LEVEL_OF_OPERATION.map((option) => option.value) as [
+const LEVEL_OF_OPERATION_VALUES_ARRAY = LEVEL_OF_OPERATION_VALUES as unknown as [
   string,
   ...string[],
 ];
@@ -39,13 +41,13 @@ export const functionalProfileIdentificationSchema = z.object({
   specificationOwnerIdentification: z
     .string({ message: "Specification owner identification is required" })
     .min(1, "Specification owner identification cannot be empty"),
-  functionalProfileCategory: z.enum(FUNCTIONAL_PROFILE_CATEGORY_VALUES, {
+  functionalProfileCategory: z.enum(FUNCTIONAL_PROFILE_CATEGORY_VALUES_ARRAY, {
     message: "Functional profile category is required",
   }),
   functionalProfileType: z
     .string({ message: "Functional profile type is required" })
     .min(1, "Functional profile type cannot be empty"),
-  levelOfOperation: z.enum(LEVEL_OF_OPERATION_VALUES, {
+  levelOfOperation: z.enum(LEVEL_OF_OPERATION_VALUES_ARRAY, {
     message: "Level of operation is required",
   }),
   versionNumber: versionNumberSchema,

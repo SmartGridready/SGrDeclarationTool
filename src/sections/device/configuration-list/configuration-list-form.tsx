@@ -5,7 +5,10 @@ import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { DATA_TYPE_OPTIONS } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
+import { DATA_TYPE_PRODUCT_EXTENDED_VALUES } from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
+
+const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 import {
   getDataTypeProductStringValue,
   createDataTypeProductFromString,

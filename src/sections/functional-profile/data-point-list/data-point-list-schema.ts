@@ -1,11 +1,12 @@
 import { z } from "zod";
-import { FunctionalProfileDataPoint, FunctionalProfileDataPointList } from "@/models";
 import {
-  DATA_DIRECTION_OPTIONS,
-  PRESENCE_LEVEL_OPTIONS,
-  DATA_TYPE_OPTIONS,
-  UNIT_OPTIONS,
-} from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
+  FunctionalProfileDataPoint,
+  FunctionalProfileDataPointList,
+  DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES,
+  PRESENCE_LEVEL_VALUES,
+  DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES,
+  UNITS_VALUES,
+} from "@/models";
 import { legibleDescriptionSchema } from "@/sections/shared/legible-description/legible-description-schema";
 import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
 import { dynamicParameterListSchema } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-schema";
@@ -26,10 +27,16 @@ const genericAttributeListFunctionalProfileSchema = z.object({
  * Data Point List validation schemas
  */
 
-const DATA_DIRECTION_VALUES = DATA_DIRECTION_OPTIONS.map((o) => o.value) as [string, ...string[]];
-const PRESENCE_LEVEL_VALUES = PRESENCE_LEVEL_OPTIONS.map((o) => o.value) as [string, ...string[]];
-const DATA_TYPE_VALUES = DATA_TYPE_OPTIONS.map((o) => o.value) as [string, ...string[]];
-const UNIT_VALUES = UNIT_OPTIONS.map((o) => o.value) as [string, ...string[]];
+const DATA_DIRECTION_VALUES = DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES as unknown as [
+  string,
+  ...string[],
+];
+const PRESENCE_LEVEL_VALUES_ARRAY = PRESENCE_LEVEL_VALUES as unknown as [string, ...string[]];
+const DATA_TYPE_VALUES = DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES as unknown as [
+  string,
+  ...string[],
+];
+const UNIT_VALUES = UNITS_VALUES as unknown as [string, ...string[]];
 
 // Data Type Functional Profile Schema - accepts both string (for form) and object (for model)
 // The schema accepts either a string representation or the full DataTypeFunctionalProfile object
@@ -94,7 +101,7 @@ export const dataPointDescriptionSchema = z.object({
   dataDirection: z.enum(DATA_DIRECTION_VALUES, {
     message: "Data direction is required",
   }),
-  presenceLevel: z.enum(PRESENCE_LEVEL_VALUES, {
+  presenceLevel: z.enum(PRESENCE_LEVEL_VALUES_ARRAY, {
     message: "Presence level is required",
   }),
   dataType: dataTypeFunctionalProfileSchema,

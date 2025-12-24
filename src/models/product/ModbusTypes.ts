@@ -38,14 +38,16 @@ export interface ModbusInterfaceDescription {
   masterFunctionsSupportedList?: MasterFunctionsSupportedList;
 }
 
-export type ModbusInterfaceSelection =
-  | "RTU"
-  | "TCPIP"
-  | "UDPIP"
-  | "RTU-ASCII"
-  | "TCPIP-ASCII"
-  | "UDPIP-ASCII"
-  | "RTU-TCPIP";
+export const MODBUS_INTERFACE_SELECTION_VALUES = [
+  "RTU",
+  "TCPIP",
+  "UDPIP",
+  "RTU-ASCII",
+  "TCPIP-ASCII",
+  "UDPIP-ASCII",
+  "RTU-TCPIP",
+] as const;
+export type ModbusInterfaceSelection = (typeof MODBUS_INTERFACE_SELECTION_VALUES)[number];
 
 export interface ModbusDataPointConfiguration {
   modbusDataType: ModbusDataType;
@@ -59,27 +61,29 @@ export interface MasterFunctionsSupportedList {
   masterFunctionsSupported: MasterFunctionsSupported[]; // maxOccurs="unbounded"
 }
 
-export type MasterFunctionsSupported =
-  | "Primitives"
-  | "ReadDiscreteInputs"
-  | "ReadCoils"
-  | "WriteSingleCoil"
-  | "WriteMultipleCoils"
-  | "ReadInputRegisters"
-  | "ReadMultipleHoldingRegisters"
-  | "WriteSingleHoldingRegister"
-  | "WriteMultipleHoldingRegisters"
-  | "ReadWriteMultipleRegisters"
-  | "MaskWriteRegister"
-  | "ReadFIFOQueue"
-  | "ReadFileRecord"
-  | "WriteFileRecord"
-  | "ReadExceptionStatus"
-  | "Diagnostic"
-  | "GetComEventCounter"
-  | "GetComEventLog"
-  | "ReportSlaveID"
-  | "ReadDeviceIdentification";
+export const MASTER_FUNCTIONS_SUPPORTED_VALUES = [
+  "Primitives",
+  "ReadDiscreteInputs",
+  "ReadCoils",
+  "WriteSingleCoil",
+  "WriteMultipleCoils",
+  "ReadInputRegisters",
+  "ReadMultipleHoldingRegisters",
+  "WriteSingleHoldingRegister",
+  "WriteMultipleHoldingRegisters",
+  "ReadWriteMultipleRegisters",
+  "MaskWriteRegister",
+  "ReadFIFOQueue",
+  "ReadFileRecord",
+  "WriteFileRecord",
+  "ReadExceptionStatus",
+  "Diagnostic",
+  "GetComEventCounter",
+  "GetComEventLog",
+  "ReportSlaveID",
+  "ReadDeviceIdentification",
+] as const;
+export type MasterFunctionsSupported = (typeof MASTER_FUNCTIONS_SUPPORTED_VALUES)[number];
 
 export interface AccessProtectionEnabled {
   modbusExceptionCode: ModbusExceptionCode[]; // maxOccurs="unbounded", minOccurs="1"
@@ -96,28 +100,38 @@ export interface ModbusTcp {
 
 export type ModbusIpAddress = string; // pattern: \d+\.\d+\.\d+\.\d+|\{\{.*\}\}
 
-export type BitOrder =
-  | "BigEndian"
-  | "ChangeDWordOrder"
-  | "ChangeWordOrder"
-  | "ChangeByteOrder"
-  | "ChangeBitOrder";
+export const BIT_ORDER_VALUES = [
+  "BigEndian",
+  "ChangeDWordOrder",
+  "ChangeWordOrder",
+  "ChangeByteOrder",
+  "ChangeBitOrder",
+] as const;
+export type BitOrder = (typeof BIT_ORDER_VALUES)[number];
 
-export type RegisterType = "Coil" | "DiscreteInput" | "InputRegister" | "HoldRegister";
+export const REGISTER_TYPE_VALUES = [
+  "Coil",
+  "DiscreteInput",
+  "InputRegister",
+  "HoldRegister",
+] as const;
+export type RegisterType = (typeof REGISTER_TYPE_VALUES)[number];
 
 export type BitRank = number; // 0..15
 
-export type ModbusExceptionCode =
-  | "IllegalFunction"
-  | "IllegalAddress"
-  | "IllegalDataValue"
-  | "SlaveFailure"
-  | "ACK"
-  | "SlaveBusy"
-  | "NACK"
-  | "MemoryParityErr"
-  | "GtwyPathErr"
-  | "GtwyTargetErr";
+export const MODBUS_EXCEPTION_CODE_VALUES = [
+  "IllegalFunction",
+  "IllegalAddress",
+  "IllegalDataValue",
+  "SlaveFailure",
+  "ACK",
+  "SlaveBusy",
+  "NACK",
+  "MemoryParityErr",
+  "GtwyPathErr",
+  "GtwyTargetErr",
+] as const;
+export type ModbusExceptionCode = (typeof MODBUS_EXCEPTION_CODE_VALUES)[number];
 
 export interface ModbusRtu {
   slaveAddr: UnsignedIntParameter;

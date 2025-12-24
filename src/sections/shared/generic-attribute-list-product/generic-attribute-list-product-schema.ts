@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { GenericAttributeListProduct, GenericAttributeProduct } from "@/models";
+import { GenericAttributeListProduct, GenericAttributeProduct, UNITS_VALUES } from "@/models";
 import { dataTypeProductSchema } from "@/sections/shared/data-type-product/data-type-product-schema";
-import { UNIT_OPTIONS } from "@/sections/functional-profile/data-point-list/data-point-list-form-options";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -9,7 +8,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract unit values from constants
-const UNIT_VALUES = UNIT_OPTIONS.map((option) => option.value) as [string, ...string[]];
+const UNIT_VALUES = UNITS_VALUES as unknown as [string, ...string[]];
 
 // Generic Attribute Product End Schema (for nested attributes)
 export const genericAttributeProductEndSchema = z.object({

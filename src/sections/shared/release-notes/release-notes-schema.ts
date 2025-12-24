@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { ReleaseNotes, ChangeLog } from "@/models";
-import { RELEASE_STATE_OPTIONS } from "@/sections/shared/release-notes/release-notes-form-options";
+import { ReleaseNotes, ChangeLog, RELEASE_STATE_VALUES } from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -8,10 +7,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract release state values from constants
-const RELEASE_STATE_VALUES = RELEASE_STATE_OPTIONS.map((option) => option.value) as [
-  string,
-  ...string[],
-];
+const RELEASE_STATE_VALUES_ARRAY = RELEASE_STATE_VALUES as unknown as [string, ...string[]];
 
 // Change Log Entry Schema
 export const changeLogSchema = z.object({
@@ -23,7 +19,7 @@ export const changeLogSchema = z.object({
 
 // Release Notes Schema
 export const releaseNotesSchema = z.object({
-  state: z.enum(RELEASE_STATE_VALUES, {
+  state: z.enum(RELEASE_STATE_VALUES_ARRAY, {
     message: "Release state is required",
   }),
   remarks: z.string().optional(),

@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { LegibleDescription } from "@/models";
-import { LANGUAGE_OPTIONS } from "@/sections/shared/legible-description/legible-description-form-options";
+import { LegibleDescription, LANGUAGE_VALUES } from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -8,7 +7,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract language values from constants
-const LANGUAGE_VALUES = LANGUAGE_OPTIONS.map((option) => option.value) as [string, ...string[]];
+const LANGUAGE_VALUES_ARRAY = LANGUAGE_VALUES as unknown as [string, ...string[]];
 
 // Legible Description Schema
 export const legibleDescriptionSchema = z.object({
@@ -16,7 +15,7 @@ export const legibleDescriptionSchema = z.object({
     .string({ message: "Text element is required" })
     .min(1, "Text element cannot be empty")
     .max(4000, "Text element cannot exceed 4000 characters"),
-  language: z.enum(LANGUAGE_VALUES, {
+  language: z.enum(LANGUAGE_VALUES_ARRAY, {
     message: "Language is required",
   }),
   uri: z.string().optional(),

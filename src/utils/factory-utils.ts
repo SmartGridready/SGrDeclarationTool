@@ -1,4 +1,21 @@
 import { FunctionalProfileFrame, DeviceFrame } from "@/models";
+import { ModbusInterface } from "@/models/product/ModbusInterface";
+
+/**
+ * Creates an empty ModbusInterface with minimal required values
+ */
+export function createEmptyModbusInterface(): ModbusInterface {
+  return {
+    modbusInterfaceDescription: {
+      modbusInterfaceSelection: "TCPIP",
+      firstRegisterAddressIsOne: false,
+      bitOrder: "BigEndian",
+    },
+    functionalProfileList: {
+      functionalProfileListElement: [],
+    },
+  };
+}
 
 /**
  * Creates a new empty DeviceFrame with minimal required values
@@ -13,6 +30,9 @@ export function createEmptyDevice(): DeviceFrame {
     deviceInformation: {
       deviceCategory: "Generic",
       isLocalControl: false,
+    },
+    interfaceList: {
+      modbusInterface: createEmptyModbusInterface(),
     },
   };
 }

@@ -21,6 +21,10 @@ import {
 } from "@/sections/device/configuration-list/configuration-list-slice";
 import { createGenericAttributeListSlice } from "@/sections/device/generic-attribute-list/generic-attribute-list-slice";
 import { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
+import {
+  createInterfaceListSlice,
+  InterfaceListSlice,
+} from "@/sections/device/interface-list/interface-list-slice";
 
 interface DeviceStore {
   device?: DeviceFrame;
@@ -34,7 +38,8 @@ export type DeviceStoreState = DeviceStore &
   ReleaseNotesSlice &
   DeviceInformationSlice &
   ConfigurationListSlice &
-  GenericAttributeListProductSlice;
+  GenericAttributeListProductSlice &
+  InterfaceListSlice;
 
 export const useDeviceStore = create<DeviceStoreState>()(
   persist(
@@ -61,6 +66,7 @@ export const useDeviceStore = create<DeviceStoreState>()(
       ...createDeviceInformationSlice(set),
       ...createConfigurationListSlice(set),
       ...createGenericAttributeListSlice(set),
+      ...createInterfaceListSlice(set),
     })),
     {
       name: "sgr-device-storage",

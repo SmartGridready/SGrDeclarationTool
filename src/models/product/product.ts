@@ -67,3 +67,12 @@ export type InterfaceList = { modbusInterface: ModbusInterface };
 //  | { contactInterface: ContactInterface }
 //  | { genericInterface: GenericInterface }
 //  | { messagingInterface: MessagingInterface };
+
+export const INTERFACE_TYPE_VALUES = [
+  "modbusInterface",
+  "restApiInterface",
+  "contactInterface",
+  "genericInterface",
+  "messagingInterface",
+] as const;
+export type InterfaceType = (typeof INTERFACE_TYPE_VALUES)[number];

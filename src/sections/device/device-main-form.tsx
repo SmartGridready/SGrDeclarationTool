@@ -6,6 +6,7 @@ import { DeviceInformationForm } from "@/sections/device/device-information/devi
 import { useDeviceFormContext } from "@/context/device-form-context";
 import { ConfigurationListForm } from "@/sections/device/configuration-list/configuration-list-form";
 import { GenericAttributeListForm } from "@/sections/device/generic-attribute-list/generic-attribute-list-form";
+import { InterfaceListForm } from "@/sections/device/interface-list/interface-list-form";
 
 /**
  * Shared Device Form
@@ -28,6 +29,7 @@ export function DeviceForm() {
       <DeviceInformationForm />
       <ConfigurationListForm />
       <GenericAttributeListForm />
+      <InterfaceListForm />
     </div>
   );
 }

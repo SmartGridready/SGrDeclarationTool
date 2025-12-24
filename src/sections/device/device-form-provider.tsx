@@ -228,6 +228,11 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         addEmptyGenericAttributeListNestedBitmapEntry:
           store.addEmptyGenericAttributeListNestedBitmapEntry,
       },
+
+      // Interface list actions
+      interfaceListActions: {
+        setInterfaceType: store.setInterfaceType,
+      },
     };
   }, [store]);
 

@@ -9,12 +9,14 @@ export type { DeviceInformationSlice } from "@/sections/device/device-informatio
 export type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 export type { ConfigurationListSlice } from "@/sections/device/configuration-list/configuration-list-slice";
 export type { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
+export type { InterfaceListSlice } from "@/sections/device/interface-list/interface-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
 import type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 import type { ConfigurationListSlice } from "@/sections/device/configuration-list/configuration-list-slice";
 import type { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
+import type { InterfaceListSlice } from "@/sections/device/interface-list/interface-list-slice";
 
 /**
  * Context value for device forms.
@@ -63,6 +65,11 @@ export interface DeviceFormContextValue {
    * Generic attribute list actions, already bound to the correct path.
    */
   genericAttributeListActions: GenericAttributeListProductSlice;
+
+  /**
+   * Interface list actions, already bound to the correct path.
+   */
+  interfaceListActions: InterfaceListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

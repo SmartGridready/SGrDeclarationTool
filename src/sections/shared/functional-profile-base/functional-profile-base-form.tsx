@@ -1,0 +1,193 @@
+"use client";
+
+import { FormSection } from "@/components/forms/form-section";
+import { InputField } from "@/components/forms/input-field";
+import { useFormSection } from "@/hooks/use-form-section";
+import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
+import { ProfileIdentificationForm } from "@/sections/shared/profile-identification/profile-identification-form";
+import { AlternativeNamesForm } from "@/sections/shared/alternative-names/alternative-names-form";
+import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
+import { GenericAttributeListProductForm } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-form";
+import { FunctionalProfileBase, FunctionalProfileDescription } from "@/models";
+
+interface FunctionalProfileBaseFormProps<TStoreState extends FunctionalProfileBaseSlice> {
+  /**
+   * Store hook function (e.g., useProfileStore, useDeviceStore)
+   */
+  useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
+  /**
+   * Validation hook function that returns an object with getError method
+   */
+  useValidation: () => { getError: (fieldPath: string) => string | undefined };
+  /**
+   * Selector to get functionalProfileBase state from the store
+   */
+  stateSelector: (store: TStoreState) => {
+    functionalProfile?: FunctionalProfileDescription;
+    genericAttributeList?: FunctionalProfileBase["genericAttributeList"];
+  };
+  /**
+   * Field path prefix for validation errors (e.g., "functionalProfile" or "device.interfaceList.modbusInterface.functionalProfileList.functionalProfileListElement[0]")
+   */
+  fieldPathPrefix?: string;
+  /**
+   * Title for the form section
+   */
+  title?: string;
+  /**
+   * Description for the form section
+   */
+  description?: string;
+  /**
+   * Whether this is a nested section (affects styling)
+   */
+  nested?: boolean;
+}
+
+export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileBaseSlice>({
+  useStore,
+  useValidation,
+  stateSelector,
+  fieldPathPrefix = "functionalProfile",
+  title = "Functional Profile",
+  description = "Functional profile information",
+  nested = false,
+}: FunctionalProfileBaseFormProps<TStoreState>) {
+  const { state, actions, getError } = useFormSection<
+    TStoreState,
+    {
+      functionalProfile?: FunctionalProfileDescription;
+      genericAttributeList?: FunctionalProfileBase["genericAttributeList"];
+    },
+    FunctionalProfileBaseSlice & Record<string, unknown>
+  >({
+    useStore,
+    useValidation,
+    stateSelector,
+    actionsSelector: (store) => store as FunctionalProfileBaseSlice & Record<string, unknown>,
+  });
+
+  const functionalProfile = state.functionalProfile;
+
+  if (!functionalProfile) {
+    return null;
+  }
+
+  const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
+
+  return (
+    <FormSection title={title} description={description} nested={nested}>
+      <div className="space-y-6">
+        {/* Functional Profile Name */}
+        <FormSection title="Functional Profile Name" nested={true}>
+          <InputField
+            label="Functional Profile Name"
+            name="functionalProfileName"
+            required={true}
+            type="text"
+            value={functionalProfile.functionalProfileName}
+            onChange={(value) => actions.updateFunctionalProfileName(value)}
+            error={getFieldError("functionalProfileName")}
+          />
+        </FormSection>
+
+        {/* Profile Identification */}
+        <ProfileIdentificationForm
+          useStore={useStore}
+          useValidation={useValidation}
+          stateSelector={(store) => ({
+            specificationOwnerIdentification:
+              functionalProfile.functionalProfileIdentification?.specificationOwnerIdentification,
+            functionalProfileCategory:
+              functionalProfile.functionalProfileIdentification?.functionalProfileCategory,
+            functionalProfileType:
+              functionalProfile.functionalProfileIdentification?.functionalProfileType,
+            levelOfOperation: functionalProfile.functionalProfileIdentification?.levelOfOperation,
+            primaryVersionNumber:
+              functionalProfile.functionalProfileIdentification?.versionNumber
+                ?.primaryVersionNumber,
+            secondaryVersionNumber:
+              functionalProfile.functionalProfileIdentification?.versionNumber
+                ?.secondaryVersionNumber,
+            subReleaseVersionNumber:
+              functionalProfile.functionalProfileIdentification?.versionNumber
+                ?.subReleaseVersionNumber,
+          })}
+          fieldPathPrefix={`${fieldPathPrefix}.functionalProfileIdentification`}
+          required={true}
+          nested={true}
+        />
+
+        {/* Alternative Names */}
+        <AlternativeNamesForm
+          useStore={useStore}
+          useValidation={useValidation}
+          stateSelector={(store) => ({
+            alternativeNames: functionalProfile.alternativeNames,
+          })}
+          isAddedSelector={(store) => !!functionalProfile.alternativeNames}
+          fieldPathPrefix={`${fieldPathPrefix}.alternativeNames`}
+          required={false}
+          nested={true}
+        />
+
+        {/* Legible Description */}
+        <LegibleDescriptionForm
+          useStore={useStore}
+          useValidation={useValidation}
+          stateSelector={(store) => ({
+            legibleDescriptions: functionalProfile.legibleDescription,
+          })}
+          isAddedSelector={(store) => !!functionalProfile.legibleDescription}
+          fieldPathPrefix={`${fieldPathPrefix}.legibleDescription`}
+          required={false}
+          nested={true}
+          maxItems={4}
+        />
+
+        {/* Programmer Hints */}
+        <LegibleDescriptionForm
+          useStore={(selector) => {
+            // Create an adapter that maps programmer hints actions to LegibleDescriptionSlice interface
+            const adaptedStore = {
+              ...actions,
+              addLegibleDescription: actions.addProgrammerHint,
+              removeLegibleDescription: actions.removeProgrammerHint,
+              removeAllLegibleDescriptions: actions.removeAllProgrammerHints,
+              updateTextElement: actions.updateProgrammerHintTextElement,
+              updateLanguage: (index: number, language: string) =>
+                actions.updateProgrammerHintLanguage(index, language as "de" | "en" | "fr" | "it"),
+              updateUri: actions.updateProgrammerHintUri,
+              addEmptyLegibleDescription: actions.addProgrammerHint,
+            };
+            return selector(adaptedStore as unknown as TStoreState);
+          }}
+          useValidation={useValidation}
+          stateSelector={(store) => ({
+            legibleDescriptions: functionalProfile.programmerHints,
+          })}
+          isAddedSelector={(store) => !!functionalProfile.programmerHints}
+          fieldPathPrefix={`${fieldPathPrefix}.programmerHints`}
+          required={false}
+          title="Programmer Hints"
+          description="Programmer hints for the functional profile (max 4)"
+          nested={true}
+          maxItems={4}
+        />
+
+        {/* Generic Attribute List */}
+        <GenericAttributeListProductForm
+          useStore={useStore}
+          useValidation={useValidation}
+          stateSelector={(store) => ({
+            genericAttributeList: state.genericAttributeList,
+          })}
+          isAddedSelector={(store) => !!state.genericAttributeList}
+          fieldPathPrefix={`${fieldPathPrefix}.genericAttributeList`}
+          required={false}
+          nested={true}
+        />
+      </div>
+    </FormSection>
+  );
+}

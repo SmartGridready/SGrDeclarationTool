@@ -10,6 +10,10 @@ export type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-
 export type { ConfigurationListSlice } from "@/sections/device/configuration-list/configuration-list-slice";
 export type { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
 export type { InterfaceListSlice } from "@/sections/device/interface-list/interface-list-slice";
+export type { ModbusInterfaceDescriptionSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/interface-description-slice";
+export type { ModbusTcpSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-tcp/modbus-tcp-slice";
+export type { ModbusRtuSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-rtu/modbus-rtu-slice";
+export type { MasterFunctionsSupportedListSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/master-functions-supported-list/master-functions-supported-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -17,6 +21,10 @@ import type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-
 import type { ConfigurationListSlice } from "@/sections/device/configuration-list/configuration-list-slice";
 import type { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
 import type { InterfaceListSlice } from "@/sections/device/interface-list/interface-list-slice";
+import type { ModbusInterfaceDescriptionSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/interface-description-slice";
+import type { ModbusTcpSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-tcp/modbus-tcp-slice";
+import type { ModbusRtuSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-rtu/modbus-rtu-slice";
+import type { MasterFunctionsSupportedListSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/master-functions-supported-list/master-functions-supported-list-slice";
 
 /**
  * Context value for device forms.
@@ -70,6 +78,26 @@ export interface DeviceFormContextValue {
    * Interface list actions, already bound to the correct path.
    */
   interfaceListActions: InterfaceListSlice;
+
+  /**
+   * Modbus interface description actions, already bound to the correct path.
+   */
+  modbusInterfaceDescriptionActions: ModbusInterfaceDescriptionSlice;
+
+  /**
+   * Modbus TCP actions, already bound to the correct path.
+   */
+  modbusTcpActions: ModbusTcpSlice;
+
+  /**
+   * Modbus RTU actions, already bound to the correct path.
+   */
+  modbusRtuActions: ModbusRtuSlice;
+
+  /**
+   * Master functions supported list actions, already bound to the correct path.
+   */
+  masterFunctionsSupportedListActions: MasterFunctionsSupportedListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

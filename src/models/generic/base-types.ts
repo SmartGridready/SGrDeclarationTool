@@ -450,3 +450,12 @@ export interface SerialInterfaceCapability {
   paritySupported: Parity[]; // maxOccurs="unbounded"
   stopBitLenSupported: StopBitLength[]; // maxOccurs="unbounded"
 }
+
+// ============================================================================
+// Form Options
+// ============================================================================
+
+export const BOOLEAN_OPTIONS = [
+  { value: "true", label: "Yes" },
+  { value: "false", label: "No" },
+] as const;

@@ -1,9 +1,12 @@
 import { DeviceFrame, ModbusInterface } from "@/models";
+import {
+  createModbusInterfaceDescriptionSlice,
+  ModbusInterfaceDescriptionSlice,
+} from "./interface-description/interface-description-slice";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ModbusInterfaceSlice {
-  // Actions will be added here as needed
-  // For now, this is an empty slice to establish the structure
+export interface ModbusInterfaceSlice extends ModbusInterfaceDescriptionSlice {
+  // Additional modbus interface actions will be added here as needed
 }
 
 /**
@@ -12,11 +15,12 @@ export interface ModbusInterfaceSlice {
 export function createModbusInterfaceSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): ModbusInterfaceSlice {
-  const getModbusInterface = (state: TState): ModbusInterface | undefined => {
-    return state.device?.interfaceList?.modbusInterface;
-  };
+  // Create interface description slice
+  const interfaceDescriptionSlice = createModbusInterfaceDescriptionSlice(set);
 
   return {
-    // Actions will be added here as needed
+    // Spread interface description actions
+    ...interfaceDescriptionSlice,
+    // Additional modbus interface actions will be added here as needed
   };
 }

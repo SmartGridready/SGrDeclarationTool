@@ -15,6 +15,9 @@ export type { ModbusTcpSlice } from "@/sections/device/interface-list/modbus-int
 export type { ModbusRtuSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-rtu/modbus-rtu-slice";
 export type { MasterFunctionsSupportedListSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/master-functions-supported-list/master-functions-supported-list-slice";
 export type { SerialInterfaceCapabilitySlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-rtu/serial-interface-capability/serial-interface-capability-slice";
+export type { ModbusAttributesSlice } from "@/sections/device/interface-list/modbus-interface/modbus-attributes/modbus-attributes-slice";
+export type { ScalingFactorSlice } from "@/sections/device/interface-list/modbus-interface/modbus-attributes/scaling-factor/scaling-factor-slice";
+export type { AccessProtectionSlice } from "@/sections/device/interface-list/modbus-interface/modbus-attributes/access-protection/access-protection-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -27,6 +30,9 @@ import type { ModbusTcpSlice } from "@/sections/device/interface-list/modbus-int
 import type { ModbusRtuSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-rtu/modbus-rtu-slice";
 import type { MasterFunctionsSupportedListSlice } from "@/sections/device/interface-list/modbus-interface/interface-description/master-functions-supported-list/master-functions-supported-list-slice";
 import type { SerialInterfaceCapabilitySlice } from "@/sections/device/interface-list/modbus-interface/interface-description/modbus-rtu/serial-interface-capability/serial-interface-capability-slice";
+import type { ModbusAttributesSlice } from "@/sections/device/interface-list/modbus-interface/modbus-attributes/modbus-attributes-slice";
+import type { ScalingFactorSlice } from "@/sections/device/interface-list/modbus-interface/modbus-attributes/scaling-factor/scaling-factor-slice";
+import type { AccessProtectionSlice } from "@/sections/device/interface-list/modbus-interface/modbus-attributes/access-protection/access-protection-slice";
 
 /**
  * Context value for device forms.
@@ -105,6 +111,21 @@ export interface DeviceFormContextValue {
    * Serial interface capability actions, already bound to the correct path.
    */
   serialInterfaceCapabilityActions: SerialInterfaceCapabilitySlice;
+
+  /**
+   * Modbus attributes actions, already bound to the correct path.
+   */
+  modbusAttributesActions: ModbusAttributesSlice;
+
+  /**
+   * Scaling factor actions, already bound to the correct path.
+   */
+  scalingFactorActions: ScalingFactorSlice;
+
+  /**
+   * Access protection actions, already bound to the correct path.
+   */
+  accessProtectionActions: AccessProtectionSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

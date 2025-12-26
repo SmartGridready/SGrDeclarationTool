@@ -90,7 +90,8 @@ export interface AccessProtectionEnabled {
   isEnabled: boolean;
 }
 
-export type ModbusLayer6Deviation = "2RegBase1000_L2H" | "2RegBase1000_H2L";
+export const MODBUS_LAYER6_DEVIATION_VALUES = ["2RegBase1000_L2H", "2RegBase1000_H2L"] as const;
+export type ModbusLayer6Deviation = (typeof MODBUS_LAYER6_DEVIATION_VALUES)[number];
 
 export interface ModbusTcp {
   port: UnsignedIntParameter;

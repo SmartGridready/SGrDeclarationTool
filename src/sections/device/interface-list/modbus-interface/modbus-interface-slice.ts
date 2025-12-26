@@ -3,9 +3,14 @@ import {
   createModbusInterfaceDescriptionSlice,
   ModbusInterfaceDescriptionSlice,
 } from "./interface-description/interface-description-slice";
+import {
+  createModbusAttributesSlice,
+  ModbusAttributesSlice,
+} from "./modbus-attributes/modbus-attributes-slice";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ModbusInterfaceSlice extends ModbusInterfaceDescriptionSlice {
+export interface ModbusInterfaceSlice
+  extends ModbusInterfaceDescriptionSlice,
+    ModbusAttributesSlice {
   // Additional modbus interface actions will be added here as needed
 }
 
@@ -17,10 +22,14 @@ export function createModbusInterfaceSlice<TState extends { device?: DeviceFrame
 ): ModbusInterfaceSlice {
   // Create interface description slice
   const interfaceDescriptionSlice = createModbusInterfaceDescriptionSlice(set);
+  // Create modbus attributes slice
+  const modbusAttributesSlice = createModbusAttributesSlice(set);
 
   return {
     // Spread interface description actions
     ...interfaceDescriptionSlice,
+    // Spread modbus attributes actions
+    ...modbusAttributesSlice,
     // Additional modbus interface actions will be added here as needed
   };
 }

@@ -261,6 +261,25 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         removeParitySupported: store.removeParitySupported,
         addStopBitLenSupported: store.addStopBitLenSupported,
         removeStopBitLenSupported: store.removeStopBitLenSupported,
+        // Modbus attributes actions
+        addModbusAttributes: store.addModbusAttributes,
+        removeModbusAttributes: store.removeModbusAttributes,
+        updateStepByIncrement: store.updateStepByIncrement,
+        updateSunssf: store.updateSunssf,
+        updatePollingLatencyMs: store.updatePollingLatencyMs,
+        updateLayer6Deviation: store.updateLayer6Deviation,
+        // Scaling factor actions
+        addScalingFactor: store.addScalingFactor,
+        removeScalingFactor: store.removeScalingFactor,
+        updateMultiplicator: store.updateMultiplicator,
+        updatePowerOf10: store.updatePowerOf10,
+        // Access protection actions
+        addAccessProtection: store.addAccessProtection,
+        removeAccessProtection: store.removeAccessProtection,
+        updateIsEnabled: store.updateIsEnabled,
+        addModbusExceptionCode: store.addModbusExceptionCode,
+        removeModbusExceptionCode: store.removeModbusExceptionCode,
+        updateModbusExceptionCode: store.updateModbusExceptionCode,
         // Master functions supported list actions
         addMasterFunctionsSupportedList: store.addMasterFunctionsSupportedList,
         removeMasterFunctionsSupportedList: store.removeMasterFunctionsSupportedList,
@@ -305,6 +324,25 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         addMasterFunctionSupported: store.addMasterFunctionSupported,
         removeMasterFunctionSupported: store.removeMasterFunctionSupported,
         updateMasterFunctionSupported: store.updateMasterFunctionSupported,
+        // Modbus attributes actions
+        addModbusAttributes: store.addModbusAttributes,
+        removeModbusAttributes: store.removeModbusAttributes,
+        updateStepByIncrement: store.updateStepByIncrement,
+        updateSunssf: store.updateSunssf,
+        updatePollingLatencyMs: store.updatePollingLatencyMs,
+        updateLayer6Deviation: store.updateLayer6Deviation,
+        // Scaling factor actions
+        addScalingFactor: store.addScalingFactor,
+        removeScalingFactor: store.removeScalingFactor,
+        updateMultiplicator: store.updateMultiplicator,
+        updatePowerOf10: store.updatePowerOf10,
+        // Access protection actions
+        addAccessProtection: store.addAccessProtection,
+        removeAccessProtection: store.removeAccessProtection,
+        updateIsEnabled: store.updateIsEnabled,
+        addModbusExceptionCode: store.addModbusExceptionCode,
+        removeModbusExceptionCode: store.removeModbusExceptionCode,
+        updateModbusExceptionCode: store.updateModbusExceptionCode,
       },
 
       // Modbus TCP actions (exposed separately for convenience)
@@ -357,6 +395,46 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         addMasterFunctionSupported: store.addMasterFunctionSupported,
         removeMasterFunctionSupported: store.removeMasterFunctionSupported,
         updateMasterFunctionSupported: store.updateMasterFunctionSupported,
+      },
+
+      // Modbus attributes actions (exposed separately for convenience)
+      modbusAttributesActions: {
+        addModbusAttributes: store.addModbusAttributes,
+        removeModbusAttributes: store.removeModbusAttributes,
+        updateStepByIncrement: store.updateStepByIncrement,
+        updateSunssf: store.updateSunssf,
+        updatePollingLatencyMs: store.updatePollingLatencyMs,
+        updateLayer6Deviation: store.updateLayer6Deviation,
+        // Scaling factor actions
+        addScalingFactor: store.addScalingFactor,
+        removeScalingFactor: store.removeScalingFactor,
+        updateMultiplicator: store.updateMultiplicator,
+        updatePowerOf10: store.updatePowerOf10,
+        // Access protection actions
+        addAccessProtection: store.addAccessProtection,
+        removeAccessProtection: store.removeAccessProtection,
+        updateIsEnabled: store.updateIsEnabled,
+        addModbusExceptionCode: store.addModbusExceptionCode,
+        removeModbusExceptionCode: store.removeModbusExceptionCode,
+        updateModbusExceptionCode: store.updateModbusExceptionCode,
+      },
+
+      // Scaling factor actions (exposed separately for convenience)
+      scalingFactorActions: {
+        addScalingFactor: store.addScalingFactor,
+        removeScalingFactor: store.removeScalingFactor,
+        updateMultiplicator: store.updateMultiplicator,
+        updatePowerOf10: store.updatePowerOf10,
+      },
+
+      // Access protection actions (exposed separately for convenience)
+      accessProtectionActions: {
+        addAccessProtection: store.addAccessProtection,
+        removeAccessProtection: store.removeAccessProtection,
+        updateIsEnabled: store.updateIsEnabled,
+        addModbusExceptionCode: store.addModbusExceptionCode,
+        removeModbusExceptionCode: store.removeModbusExceptionCode,
+        updateModbusExceptionCode: store.updateModbusExceptionCode,
       },
     };
   }, [store]);

@@ -19,14 +19,12 @@ import {
 import { TestState, TEST_STATE_VALUES } from "@/models/product/product";
 import { createFormOptions } from "@/models/form-options-helper";
 
+import { BOOLEAN_OPTIONS } from "@/models/generic";
+
 const DEVICE_CATEGORY_OPTIONS = createFormOptions(DEVICE_CATEGORY_VALUES);
 const POWER_SOURCE_OPTIONS = createFormOptions(POWER_SOURCE_VALUES);
 const TEST_STATE_OPTIONS = createFormOptions(TEST_STATE_VALUES);
 const LEVEL_OF_OPERATION_OPTIONS = createFormOptions(LEVEL_OF_OPERATION_VALUES);
-const BOOLEAN_OPTIONS = [
-  { value: "true", label: "Yes" },
-  { value: "false", label: "No" },
-] as const;
 
 export function DeviceInformationForm() {
   const { useDeviceState, useValidation, pathPrefix, deviceInformationActions } =

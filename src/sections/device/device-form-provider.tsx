@@ -232,6 +232,131 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
       // Interface list actions
       interfaceListActions: {
         setInterfaceType: store.setInterfaceType,
+        // Modbus interface description actions are included through slice composition
+        updateModbusInterfaceSelection: store.updateModbusInterfaceSelection,
+        updateFirstRegisterAddressIsOne: store.updateFirstRegisterAddressIsOne,
+        updateBitOrder: store.updateBitOrder,
+        // Modbus TCP actions
+        addModbusTcp: store.addModbusTcp,
+        removeModbusTcp: store.removeModbusTcp,
+        updatePort: store.updatePort,
+        updateAddress: store.updateAddress,
+        updateSlaveId: store.updateSlaveId,
+        // Modbus RTU actions
+        addModbusRtu: store.addModbusRtu,
+        removeModbusRtu: store.removeModbusRtu,
+        updateSlaveAddr: store.updateSlaveAddr,
+        updatePortName: store.updatePortName,
+        updateBaudRateSelected: store.updateBaudRateSelected,
+        updateByteLenSelected: store.updateByteLenSelected,
+        updateParitySelected: store.updateParitySelected,
+        updateStopBitLenSelected: store.updateStopBitLenSelected,
+        updateSerialInterfaceCapability: store.updateSerialInterfaceCapability,
+        // Serial interface capability actions
+        addBaudRateSupported: store.addBaudRateSupported,
+        removeBaudRateSupported: store.removeBaudRateSupported,
+        addByteLenSupported: store.addByteLenSupported,
+        removeByteLenSupported: store.removeByteLenSupported,
+        addParitySupported: store.addParitySupported,
+        removeParitySupported: store.removeParitySupported,
+        addStopBitLenSupported: store.addStopBitLenSupported,
+        removeStopBitLenSupported: store.removeStopBitLenSupported,
+        // Master functions supported list actions
+        addMasterFunctionsSupportedList: store.addMasterFunctionsSupportedList,
+        removeMasterFunctionsSupportedList: store.removeMasterFunctionsSupportedList,
+        addMasterFunctionSupported: store.addMasterFunctionSupported,
+        removeMasterFunctionSupported: store.removeMasterFunctionSupported,
+        updateMasterFunctionSupported: store.updateMasterFunctionSupported,
+      },
+
+      // Modbus interface description actions (exposed separately for convenience)
+      modbusInterfaceDescriptionActions: {
+        updateModbusInterfaceSelection: store.updateModbusInterfaceSelection,
+        updateFirstRegisterAddressIsOne: store.updateFirstRegisterAddressIsOne,
+        updateBitOrder: store.updateBitOrder,
+        // Modbus TCP actions
+        addModbusTcp: store.addModbusTcp,
+        removeModbusTcp: store.removeModbusTcp,
+        updatePort: store.updatePort,
+        updateAddress: store.updateAddress,
+        updateSlaveId: store.updateSlaveId,
+        // Modbus RTU actions
+        addModbusRtu: store.addModbusRtu,
+        removeModbusRtu: store.removeModbusRtu,
+        updateSlaveAddr: store.updateSlaveAddr,
+        updatePortName: store.updatePortName,
+        updateBaudRateSelected: store.updateBaudRateSelected,
+        updateByteLenSelected: store.updateByteLenSelected,
+        updateParitySelected: store.updateParitySelected,
+        updateStopBitLenSelected: store.updateStopBitLenSelected,
+        updateSerialInterfaceCapability: store.updateSerialInterfaceCapability,
+        // Serial interface capability actions
+        addBaudRateSupported: store.addBaudRateSupported,
+        removeBaudRateSupported: store.removeBaudRateSupported,
+        addByteLenSupported: store.addByteLenSupported,
+        removeByteLenSupported: store.removeByteLenSupported,
+        addParitySupported: store.addParitySupported,
+        removeParitySupported: store.removeParitySupported,
+        addStopBitLenSupported: store.addStopBitLenSupported,
+        removeStopBitLenSupported: store.removeStopBitLenSupported,
+        // Master functions supported list actions
+        addMasterFunctionsSupportedList: store.addMasterFunctionsSupportedList,
+        removeMasterFunctionsSupportedList: store.removeMasterFunctionsSupportedList,
+        addMasterFunctionSupported: store.addMasterFunctionSupported,
+        removeMasterFunctionSupported: store.removeMasterFunctionSupported,
+        updateMasterFunctionSupported: store.updateMasterFunctionSupported,
+      },
+
+      // Modbus TCP actions (exposed separately for convenience)
+      modbusTcpActions: {
+        addModbusTcp: store.addModbusTcp,
+        removeModbusTcp: store.removeModbusTcp,
+        updatePort: store.updatePort,
+        updateAddress: store.updateAddress,
+        updateSlaveId: store.updateSlaveId,
+      },
+
+      // Modbus RTU actions (exposed separately for convenience)
+      modbusRtuActions: {
+        addModbusRtu: store.addModbusRtu,
+        removeModbusRtu: store.removeModbusRtu,
+        updateSlaveAddr: store.updateSlaveAddr,
+        updatePortName: store.updatePortName,
+        updateBaudRateSelected: store.updateBaudRateSelected,
+        updateByteLenSelected: store.updateByteLenSelected,
+        updateParitySelected: store.updateParitySelected,
+        updateStopBitLenSelected: store.updateStopBitLenSelected,
+        updateSerialInterfaceCapability: store.updateSerialInterfaceCapability,
+        // Serial interface capability actions
+        addBaudRateSupported: store.addBaudRateSupported,
+        removeBaudRateSupported: store.removeBaudRateSupported,
+        addByteLenSupported: store.addByteLenSupported,
+        removeByteLenSupported: store.removeByteLenSupported,
+        addParitySupported: store.addParitySupported,
+        removeParitySupported: store.removeParitySupported,
+        addStopBitLenSupported: store.addStopBitLenSupported,
+        removeStopBitLenSupported: store.removeStopBitLenSupported,
+      },
+
+      // Serial interface capability actions (exposed separately for convenience)
+      serialInterfaceCapabilityActions: {
+        addBaudRateSupported: store.addBaudRateSupported,
+        removeBaudRateSupported: store.removeBaudRateSupported,
+        addByteLenSupported: store.addByteLenSupported,
+        removeByteLenSupported: store.removeByteLenSupported,
+        addParitySupported: store.addParitySupported,
+        removeParitySupported: store.removeParitySupported,
+        addStopBitLenSupported: store.addStopBitLenSupported,
+        removeStopBitLenSupported: store.removeStopBitLenSupported,
+      },
+
+      // Master functions supported list actions (exposed separately for convenience)
+      masterFunctionsSupportedListActions: {
+        addMasterFunctionsSupportedList: store.addMasterFunctionsSupportedList,
+        removeMasterFunctionsSupportedList: store.removeMasterFunctionsSupportedList,
+        addMasterFunctionSupported: store.addMasterFunctionSupported,
+        removeMasterFunctionSupported: store.removeMasterFunctionSupported,
+        updateMasterFunctionSupported: store.updateMasterFunctionSupported,
       },
     };
   }, [store]);

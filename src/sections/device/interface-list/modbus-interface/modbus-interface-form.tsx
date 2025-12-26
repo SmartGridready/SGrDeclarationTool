@@ -2,6 +2,7 @@
 
 import { FormSection } from "@/components/forms/form-section";
 import { useDeviceFormContext } from "@/context/device-form-context";
+import { ModbusInterfaceDescriptionForm } from "./interface-description/interface-description-form";
 
 export function ModbusInterfaceForm() {
   const { useDeviceState } = useDeviceFormContext();
@@ -20,7 +21,7 @@ export function ModbusInterfaceForm() {
       required={true}
       nested={true}
     >
-      <div>{/* Form Sections will be added here */}</div>
+      <ModbusInterfaceDescriptionForm />
     </FormSection>
   );
 }

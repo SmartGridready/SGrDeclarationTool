@@ -1,7 +1,11 @@
 import { DeviceFrame, InterfaceType } from "@/models";
 import { createEmptyModbusInterface } from "@/utils/factory-utils";
+import {
+  createModbusInterfaceSlice,
+  ModbusInterfaceSlice,
+} from "./modbus-interface/modbus-interface-slice";
 
-export interface InterfaceListSlice {
+export interface InterfaceListSlice extends ModbusInterfaceSlice {
   /**
    * Set the interface type, creating an empty interface if needed
    */
@@ -14,7 +18,13 @@ export interface InterfaceListSlice {
 export function createInterfaceListSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): InterfaceListSlice {
+  // Create modbus interface slice
+  const modbusInterfaceSlice = createModbusInterfaceSlice(set);
+
   return {
+    // Spread modbus interface actions
+    ...modbusInterfaceSlice,
+
     setInterfaceType: (interfaceType) =>
       set((state) => {
         if (!state.device) return;

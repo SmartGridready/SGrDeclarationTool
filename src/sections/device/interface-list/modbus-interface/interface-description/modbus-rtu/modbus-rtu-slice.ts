@@ -1,8 +1,12 @@
 import { DeviceFrame } from "@/models";
 import { ModbusRtu } from "@/models/product/modbus-types";
 import { UnsignedIntParameter, SerialInterfaceCapability } from "@/models/generic";
+import {
+  createSerialInterfaceCapabilitySlice,
+  SerialInterfaceCapabilitySlice,
+} from "./serial-interface-capability/serial-interface-capability-slice";
 
-export interface ModbusRtuSlice {
+export interface ModbusRtuSlice extends SerialInterfaceCapabilitySlice {
   addModbusRtu: () => void;
   removeModbusRtu: () => void;
   updateSlaveAddr: (slaveAddr: UnsignedIntParameter) => void;
@@ -24,7 +28,12 @@ export function createModbusRtuSlice<TState extends { device?: DeviceFrame }>(
     return state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu;
   };
 
+  // Create serial interface capability slice
+  const serialInterfaceCapabilitySlice = createSerialInterfaceCapabilitySlice(set);
+
   return {
+    // Spread serial interface capability actions
+    ...serialInterfaceCapabilitySlice,
     addModbusRtu: () =>
       set((state) => {
         const description =

@@ -1,88 +1,32 @@
 import { DeviceFrame } from "@/models";
-import { ModbusAttributes, ModbusLayer6Deviation } from "@/models/product/modbus-types";
 import {
-  createScalingFactorSlice,
-  ScalingFactorSlice,
-} from "./scaling-factor/scaling-factor-slice";
-import {
-  createAccessProtectionSlice,
-  AccessProtectionSlice,
-} from "./access-protection/access-protection-slice";
+  createModbusAttributesSlice as createSharedModbusAttributesSlice,
+  ModbusAttributesSlice as SharedModbusAttributesSlice,
+} from "@/sections/shared/modbus-attributes/modbus-attributes-slice";
 
-export interface ModbusAttributesSlice extends ScalingFactorSlice, AccessProtectionSlice {
-  addModbusAttributes: () => void;
-  removeModbusAttributes: () => void;
-  updateStepByIncrement: (stepByIncrement: number | undefined) => void;
-  updateSunssf: (sunssf: number | undefined) => void;
-  updatePollingLatencyMs: (pollingLatencyMs: number | undefined) => void;
-  updateLayer6Deviation: (layer6Deviation: ModbusLayer6Deviation | undefined) => void;
-}
+// Re-export the shared interface for use in device-specific code
+export type ModbusAttributesSlice = SharedModbusAttributesSlice;
 
 /**
  * Creates a modbus attributes slice for Device stores.
+ * This is a wrapper around the shared slice that provides device-specific getters/setters.
  */
 export function createModbusAttributesSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): ModbusAttributesSlice {
   const getModbusAttributes = (state: TState) => {
-    return state.device?.interfaceList?.modbusInterface;
+    return state.device?.interfaceList?.modbusInterface?.modbusAttributes;
   };
 
-  // Create nested slices
-  const scalingFactorSlice = createScalingFactorSlice(set, getModbusAttributes);
-  const accessProtectionSlice = createAccessProtectionSlice(set, getModbusAttributes);
-
-  return {
-    // Spread nested slice actions
-    ...scalingFactorSlice,
-    ...accessProtectionSlice,
-
-    addModbusAttributes: () =>
-      set((state) => {
-        const modbusInterface = getModbusAttributes(state);
-        if (modbusInterface && !modbusInterface.modbusAttributes) {
-          modbusInterface.modbusAttributes = {};
-        }
-      }),
-
-    removeModbusAttributes: () =>
-      set((state) => {
-        const modbusInterface = getModbusAttributes(state);
-        if (modbusInterface) {
-          modbusInterface.modbusAttributes = undefined;
-        }
-      }),
-
-    updateStepByIncrement: (stepByIncrement) =>
-      set((state) => {
-        const modbusInterface = getModbusAttributes(state);
-        if (modbusInterface?.modbusAttributes) {
-          modbusInterface.modbusAttributes.stepByIncrement = stepByIncrement;
-        }
-      }),
-
-    updateSunssf: (sunssf) =>
-      set((state) => {
-        const modbusInterface = getModbusAttributes(state);
-        if (modbusInterface?.modbusAttributes) {
-          modbusInterface.modbusAttributes.sunssf = sunssf;
-        }
-      }),
-
-    updatePollingLatencyMs: (pollingLatencyMs) =>
-      set((state) => {
-        const modbusInterface = getModbusAttributes(state);
-        if (modbusInterface?.modbusAttributes) {
-          modbusInterface.modbusAttributes.pollingLatencyMs = pollingLatencyMs;
-        }
-      }),
-
-    updateLayer6Deviation: (layer6Deviation) =>
-      set((state) => {
-        const modbusInterface = getModbusAttributes(state);
-        if (modbusInterface?.modbusAttributes) {
-          modbusInterface.modbusAttributes.layer6Deviation = layer6Deviation;
-        }
-      }),
+  const setModbusAttributes = (
+    state: TState,
+    modbusAttributes: import("@/models/product/modbus-types").ModbusAttributes | undefined
+  ) => {
+    const modbusInterface = state.device?.interfaceList?.modbusInterface;
+    if (modbusInterface) {
+      modbusInterface.modbusAttributes = modbusAttributes;
+    }
   };
+
+  return createSharedModbusAttributesSlice(set, getModbusAttributes, setModbusAttributes, true);
 }

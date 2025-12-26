@@ -6,6 +6,7 @@ import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
 import { InterfaceType, INTERFACE_TYPE_VALUES, InterfaceList } from "@/models/product/product";
 import { createFormOptions } from "@/models/form-options-helper";
+import { ModbusInterfaceForm } from "./modbus-interface/modbus-interface-form";
 
 const INTERFACE_TYPE_OPTIONS = createFormOptions(INTERFACE_TYPE_VALUES);
 
@@ -53,6 +54,9 @@ export function InterfaceListForm() {
           error={getError(fieldPath("interfaceType"))}
         />
       </FormGroup>
+
+      {/* Conditionally render interface-specific forms */}
+      {selectedInterfaceType === "modbusInterface" && <ModbusInterfaceForm />}
     </FormSection>
   );
 }

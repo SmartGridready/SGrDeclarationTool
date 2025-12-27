@@ -10,6 +10,8 @@ import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
 import { ModbusDataPointListForm } from "./data-point-list/modbus-data-point-list-form";
 import { ModbusDataPointListSlice } from "./data-point-list/modbus-data-point-list-slice";
+import { FunctionalProfileModbusAttributesForm } from "./modbus-attributes/modbus-attributes-form";
+import { ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 
 export function ModbusFunctionalProfileListForm() {
   const { useDeviceState, pathPrefix } = useDeviceFormContext();
@@ -55,6 +57,7 @@ export function ModbusFunctionalProfileListForm() {
             functionalProfileIndex={index}
             functionalProfileSlice={functionalProfileListActions.getFunctionalProfileSlice(index)}
             dataPointListSlice={functionalProfileListActions.getDataPointListSlice(index)}
+            modbusAttributesSlice={functionalProfileListActions.getModbusAttributesSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -67,6 +70,7 @@ interface ModbusFunctionalProfileItemFormProps {
   functionalProfileIndex: number;
   functionalProfileSlice: FunctionalProfileBaseSlice;
   dataPointListSlice: ModbusDataPointListSlice;
+  modbusAttributesSlice: ModbusAttributesSlice;
   fieldPathPrefix: string;
 }
 
@@ -74,6 +78,7 @@ function ModbusFunctionalProfileItemForm({
   functionalProfileIndex,
   functionalProfileSlice,
   dataPointListSlice,
+  modbusAttributesSlice,
   fieldPathPrefix,
 }: ModbusFunctionalProfileItemFormProps) {
   const { useDeviceState, useValidation } = useDeviceFormContext();
@@ -95,6 +100,13 @@ function ModbusFunctionalProfileItemForm({
         title={`Functional Profile ${functionalProfileIndex + 1}`}
         description="Configure the functional profile settings"
         nested={true}
+      />
+
+      <FunctionalProfileModbusAttributesForm
+        functionalProfileIndex={functionalProfileIndex}
+        modbusAttributesSlice={modbusAttributesSlice}
+        fieldPathPrefix={fieldPathPrefix}
+        getFunctionalProfile={() => functionalProfileData}
       />
 
       <ModbusDataPointListForm

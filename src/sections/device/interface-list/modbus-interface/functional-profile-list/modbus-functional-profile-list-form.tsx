@@ -45,6 +45,7 @@ export function ModbusFunctionalProfileListForm() {
         onAdd={functionalProfileListActions.addEmptyFunctionalProfile}
         onRemove={functionalProfileListActions.removeFunctionalProfile}
         emptyMessage="No functional profiles added"
+        noWrapper={true}
         renderItem={(item, index) => (
           <ModbusFunctionalProfileItemForm
             key={index}
@@ -75,7 +76,7 @@ function ModbusFunctionalProfileItemForm({
   modbusAttributesSlice,
   fieldPathPrefix,
 }: ModbusFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
+  const { useDeviceState, useValidation, functionalProfileListActions } = useDeviceFormContext();
 
   const functionalProfileData = useDeviceState(
     (d) =>
@@ -84,30 +85,47 @@ function ModbusFunctionalProfileItemForm({
       ]
   );
 
+  const functionalProfileName =
+    functionalProfileData?.functionalProfile?.functionalProfileName ||
+    `Functional Profile ${functionalProfileIndex + 1}`;
+
+  const handleRemove = () => {
+    functionalProfileListActions.removeFunctionalProfile(functionalProfileIndex);
+  };
+
   return (
-    <div className="space-y-6">
-      <FunctionalProfileBaseForm
-        useStore={createSliceAdapter(functionalProfileSlice)}
-        useValidation={useValidation}
-        stateSelector={() => functionalProfileData ?? {}}
-        fieldPathPrefix={fieldPathPrefix}
-        title={`Functional Profile ${functionalProfileIndex + 1}`}
-        description="Configure the functional profile settings"
-        nested={true}
-      />
+    <FormSection
+      title={functionalProfileName}
+      description="Configure the functional profile, Modbus attributes, and data points"
+      required={false}
+      isAdded={true}
+      onRemove={handleRemove}
+      nested={true}
+    >
+      <div className="space-y-6">
+        <FunctionalProfileBaseForm
+          useStore={createSliceAdapter(functionalProfileSlice)}
+          useValidation={useValidation}
+          stateSelector={() => functionalProfileData ?? {}}
+          fieldPathPrefix={fieldPathPrefix}
+          title={`Functional Profile ${functionalProfileIndex + 1}`}
+          description="Configure the functional profile settings"
+          nested={true}
+        />
 
-      <FunctionalProfileModbusAttributesForm
-        functionalProfileIndex={functionalProfileIndex}
-        modbusAttributesSlice={modbusAttributesSlice}
-        fieldPathPrefix={fieldPathPrefix}
-        getFunctionalProfile={() => functionalProfileData}
-      />
+        <FunctionalProfileModbusAttributesForm
+          functionalProfileIndex={functionalProfileIndex}
+          modbusAttributesSlice={modbusAttributesSlice}
+          fieldPathPrefix={fieldPathPrefix}
+          getFunctionalProfile={() => functionalProfileData}
+        />
 
-      <ModbusDataPointListForm
-        functionalProfileIndex={functionalProfileIndex}
-        dataPointListSlice={dataPointListSlice}
-        fieldPathPrefix={`${fieldPathPrefix}.dataPointList`}
-      />
-    </div>
+        <ModbusDataPointListForm
+          functionalProfileIndex={functionalProfileIndex}
+          dataPointListSlice={dataPointListSlice}
+          fieldPathPrefix={`${fieldPathPrefix}.dataPointList`}
+        />
+      </div>
+    </FormSection>
   );
 }

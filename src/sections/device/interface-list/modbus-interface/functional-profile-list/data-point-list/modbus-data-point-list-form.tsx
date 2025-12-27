@@ -70,6 +70,7 @@ export function ModbusDataPointListForm({
         onAdd={dataPointListSlice.addEmptyDataPoint}
         onRemove={dataPointListSlice.removeDataPoint}
         emptyMessage="No data points added"
+        noWrapper={true}
         renderItem={(item, index) => (
           <ModbusDataPointItemForm
             key={index}
@@ -119,60 +120,79 @@ function ModbusDataPointItemForm({
     dataPointIndex
   );
 
+  const dataPointName =
+    dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
+
+  const handleRemove = () => {
+    dataPointListSlice.removeDataPoint(dataPointIndex);
+  };
+
   return (
-    <div className="space-y-6">
-      <DataPointBaseForm
-        useStore={createSliceAdapter(dataPointSlice)}
-        useValidation={useValidation}
-        stateSelector={() => dataPointData ?? {}}
-        fieldPathPrefix={fieldPathPrefix}
-        title={`Data Point ${dataPointIndex + 1}`}
-        description="Configure the data point settings"
-        nested={true}
-      />
+    <FormSection
+      title={dataPointName}
+      description="Configure the data point, Modbus configuration, and attributes"
+      required={false}
+      isAdded={true}
+      onRemove={handleRemove}
+      nested={true}
+    >
+      <div className="space-y-6">
+        <DataPointBaseForm
+          useStore={createSliceAdapter(dataPointSlice)}
+          useValidation={useValidation}
+          stateSelector={() => dataPointData ?? {}}
+          fieldPathPrefix={fieldPathPrefix}
+          title={`Data Point ${dataPointIndex + 1}`}
+          description="Configure the data point settings"
+          nested={true}
+        />
 
-      <ModbusDataPointConfigurationForm
-        functionalProfileIndex={functionalProfileIndex}
-        dataPointIndex={dataPointIndex}
-        configuration={dataPointData?.modbusDataPointConfiguration}
-        actions={configurationSlice}
-        fieldPathPrefix={`${fieldPathPrefix}.modbusDataPointConfiguration`}
-        getDataPoint={() => dataPointData}
-      />
+        <ModbusDataPointConfigurationForm
+          functionalProfileIndex={functionalProfileIndex}
+          dataPointIndex={dataPointIndex}
+          configuration={dataPointData?.modbusDataPointConfiguration}
+          actions={configurationSlice}
+          fieldPathPrefix={`${fieldPathPrefix}.modbusDataPointConfiguration`}
+          getDataPoint={() => dataPointData}
+        />
 
-      <FormSection
-        title="Block Cache Identification"
-        description="Reference to TimeSyncBlockNotification.blockCacheIdentification"
-        required={false}
-        nested={true}
-        isAdded={dataPointData?.blockCacheIdentification !== undefined}
-        onAdd={() => dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, "")}
-        onRemove={() =>
-          dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, undefined)
-        }
-      >
-        <FormGroup>
-          <InputField
-            label="Block Cache Identification"
-            name={`${fieldPathPrefix}-blockCacheIdentification`}
-            required={false}
-            type="text"
-            value={dataPointData?.blockCacheIdentification || ""}
-            onChange={(value) =>
-              dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, value || undefined)
-            }
-            placeholder="Enter block cache identification"
-            error={getError(`${fieldPathPrefix}.blockCacheIdentification`)}
-          />
-        </FormGroup>
-      </FormSection>
+        <FormSection
+          title="Block Cache Identification"
+          description="Reference to TimeSyncBlockNotification.blockCacheIdentification"
+          required={false}
+          nested={true}
+          isAdded={dataPointData?.blockCacheIdentification !== undefined}
+          onAdd={() => dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, "")}
+          onRemove={() =>
+            dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, undefined)
+          }
+        >
+          <FormGroup>
+            <InputField
+              label="Block Cache Identification"
+              name={`${fieldPathPrefix}-blockCacheIdentification`}
+              required={false}
+              type="text"
+              value={dataPointData?.blockCacheIdentification || ""}
+              onChange={(value) =>
+                dataPointListSlice.updateBlockCacheIdentification(
+                  dataPointIndex,
+                  value || undefined
+                )
+              }
+              placeholder="Enter block cache identification"
+              error={getError(`${fieldPathPrefix}.blockCacheIdentification`)}
+            />
+          </FormGroup>
+        </FormSection>
 
-      <DataPointModbusAttributesForm
-        dataPointIndex={dataPointIndex}
-        modbusAttributesSlice={modbusAttributesSlice}
-        fieldPathPrefix={fieldPathPrefix}
-        getDataPoint={() => dataPointData}
-      />
-    </div>
+        <DataPointModbusAttributesForm
+          dataPointIndex={dataPointIndex}
+          modbusAttributesSlice={modbusAttributesSlice}
+          fieldPathPrefix={fieldPathPrefix}
+          getDataPoint={() => dataPointData}
+        />
+      </div>
+    </FormSection>
   );
 }

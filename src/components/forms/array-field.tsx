@@ -10,6 +10,7 @@ interface ArrayFieldProps<T> {
   emptyMessage?: string;
   className?: string;
   maxItems?: number;
+  noWrapper?: boolean;
 }
 
 export function ArrayField<T>({
@@ -21,6 +22,7 @@ export function ArrayField<T>({
   emptyMessage = "No items",
   className = "",
   maxItems,
+  noWrapper = false,
 }: ArrayFieldProps<T>) {
   const currentCount = items?.length || 0;
   const isMaxReached = maxItems !== undefined && currentCount >= maxItems;
@@ -47,21 +49,25 @@ export function ArrayField<T>({
         <p className="text-sm text-muted-foreground italic">{emptyMessage}</p>
       ) : (
         <div className="space-y-4">
-          {items.map((item, index) => (
-            <div key={index} className="flex items-start gap-4 p-4 border rounded-md bg-card">
-              <div className="flex-1 space-y-3">{renderItem(item, index)}</div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => onRemove(index)}
-                className="shrink-0 mt-1"
-                title={`Remove ${label}`}
-              >
-                <Trash2 className="h-4 w-4 text-destructive" />
-              </Button>
-            </div>
-          ))}
+          {items.map((item, index) =>
+            noWrapper ? (
+              <div key={index}>{renderItem(item, index)}</div>
+            ) : (
+              <div key={index} className="flex items-start gap-4 p-4 border rounded-md bg-card">
+                <div className="flex-1 space-y-3">{renderItem(item, index)}</div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onRemove(index)}
+                  className="shrink-0 mt-1"
+                  title={`Remove ${label}`}
+                >
+                  <Trash2 className="h-4 w-4 text-destructive" />
+                </Button>
+              </div>
+            )
+          )}
         </div>
       )}
     </div>

@@ -52,14 +52,14 @@ export function FormSection({
         <Card
           className={cn("w-full cursor-pointer hover:opacity-70 transition-opacity", className)}
         >
-          <CardHeader className="py-3 px-4" onClick={onAdd}>
+          <CardHeader className="py-1 px-3" onClick={onAdd}>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col items-start text-left">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Plus className="h-4 w-4" />
                   {title}
                 </CardTitle>
-                {description && <CardDescription className="mt-1">{description}</CardDescription>}
+                {description && <CardDescription className="mt-0.5">{description}</CardDescription>}
               </div>
             </div>
           </CardHeader>
@@ -70,7 +70,7 @@ export function FormSection({
     return (
       <Card className={cn("w-full", className)}>
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CardHeader className="py-3 px-4">
+          <CardHeader className="py-1 px-3">
             <div className="flex items-center justify-between w-full">
               <CollapsibleTrigger className="flex items-center justify-between flex-1 hover:opacity-70 transition-opacity">
                 <div className="flex flex-col items-start text-left">
@@ -78,7 +78,9 @@ export function FormSection({
                     {title}
                     {required && <span className="text-destructive ml-1">*</span>}
                   </CardTitle>
-                  {description && <CardDescription className="mt-1">{description}</CardDescription>}
+                  {description && (
+                    <CardDescription className="mt-0.5">{description}</CardDescription>
+                  )}
                 </div>
                 <div className="ml-4 shrink-0">
                   {isOpen ? (
@@ -102,7 +104,7 @@ export function FormSection({
             </div>
           </CardHeader>
           <CollapsibleContent>
-            <CardContent className="pt-0 px-4 pb-4 space-y-4">{children}</CardContent>
+            <CardContent className="pt-0 px-3 pb-1.5 space-y-3">{children}</CardContent>
           </CollapsibleContent>
         </Collapsible>
       </Card>
@@ -113,14 +115,14 @@ export function FormSection({
   if (!required && !isAdded) {
     return (
       <Card className={cn("w-full cursor-pointer hover:opacity-70 transition-opacity", className)}>
-        <CardHeader className="pb-3" onClick={onAdd}>
+        <CardHeader className="py-1 px-3" onClick={onAdd}>
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col items-start text-left">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Plus className="h-5 w-5" />
+              <CardTitle className="text-base flex items-center gap-2">
+                <Plus className="h-4 w-4" />
                 {title}
               </CardTitle>
-              {description && <CardDescription className="mt-1.5">{description}</CardDescription>}
+              {description && <CardDescription className="mt-0.5">{description}</CardDescription>}
             </div>
           </div>
         </CardHeader>
@@ -131,21 +133,21 @@ export function FormSection({
   return (
     <Card className={cn("w-full", className)}>
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CardHeader className="pb-3">
+        <CardHeader className="py-1 px-3">
           <div className="flex items-center justify-between w-full">
             <CollapsibleTrigger className="flex items-center justify-between flex-1 hover:opacity-70 transition-opacity">
               <div className="flex flex-col items-start text-left">
-                <CardTitle className="text-lg flex items-center gap-2">
+                <CardTitle className="text-base flex items-center gap-2">
                   {title}
                   {required && <span className="text-destructive ml-1">*</span>}
                 </CardTitle>
-                {description && <CardDescription className="mt-1.5">{description}</CardDescription>}
+                {description && <CardDescription className="mt-0.5">{description}</CardDescription>}
               </div>
               <div className="ml-4 shrink-0">
                 {isOpen ? (
-                  <ChevronDown className="h-5 w-5 transition-transform" />
+                  <ChevronDown className="h-4 w-4 transition-transform" />
                 ) : (
-                  <ChevronRight className="h-5 w-5 transition-transform" />
+                  <ChevronRight className="h-4 w-4 transition-transform" />
                 )}
               </div>
             </CollapsibleTrigger>
@@ -155,15 +157,15 @@ export function FormSection({
                 variant="ghost"
                 size="icon"
                 onClick={onRemove}
-                className="ml-2 shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                className="ml-2 shrink-0 h-7 w-7 text-destructive hover:text-destructive hover:bg-destructive/10"
               >
-                <Trash2 className="h-5 w-5" />
+                <Trash2 className="h-4 w-4" />
               </Button>
             )}
           </div>
         </CardHeader>
         <CollapsibleContent>
-          <CardContent className="space-y-4">{children}</CardContent>
+          <CardContent className="pt-0 px-3 pb-1.5 space-y-3">{children}</CardContent>
         </CollapsibleContent>
       </Collapsible>
     </Card>

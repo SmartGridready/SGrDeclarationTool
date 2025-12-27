@@ -10,6 +10,7 @@ import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point
 import { ModbusDataPointListSlice } from "./modbus-data-point-list-slice";
 import { DataPointModbusAttributesForm } from "./modbus-attributes/modbus-attributes-form";
 import { ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
+import { ModbusDataPointConfigurationForm } from "./modbus-data-point-configuration/modbus-data-point-configuration-form";
 
 interface ModbusDataPointListFormProps {
   /**
@@ -74,6 +75,7 @@ export function ModbusDataPointListForm({
             functionalProfileIndex={functionalProfileIndex}
             dataPointSlice={dataPointListSlice.getDataPointSlice(index)}
             modbusAttributesSlice={dataPointListSlice.getModbusAttributesSlice(index)}
+            dataPointListSlice={dataPointListSlice}
             fieldPathPrefix={`${fieldPathPrefix}.dataPointListElement[${index}]`}
           />
         )}
@@ -87,6 +89,7 @@ interface ModbusDataPointItemFormProps {
   functionalProfileIndex: number;
   dataPointSlice: DataPointBaseSlice;
   modbusAttributesSlice: ModbusAttributesSlice;
+  dataPointListSlice: ModbusDataPointListSlice;
   fieldPathPrefix: string;
 }
 
@@ -95,6 +98,7 @@ function ModbusDataPointItemForm({
   functionalProfileIndex,
   dataPointSlice,
   modbusAttributesSlice,
+  dataPointListSlice,
   fieldPathPrefix,
 }: ModbusDataPointItemFormProps) {
   const { useDeviceState, useValidation } = useDeviceFormContext();
@@ -104,6 +108,11 @@ function ModbusDataPointItemForm({
       d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
         functionalProfileIndex
       ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+  );
+
+  const configurationSlice = dataPointListSlice.getModbusDataPointConfigurationSlice(
+    functionalProfileIndex,
+    dataPointIndex
   );
 
   return (
@@ -116,6 +125,15 @@ function ModbusDataPointItemForm({
         title={`Data Point ${dataPointIndex + 1}`}
         description="Configure the data point settings"
         nested={true}
+      />
+
+      <ModbusDataPointConfigurationForm
+        functionalProfileIndex={functionalProfileIndex}
+        dataPointIndex={dataPointIndex}
+        configuration={dataPointData?.modbusDataPointConfiguration}
+        actions={configurationSlice}
+        fieldPathPrefix={`${fieldPathPrefix}.modbusDataPointConfiguration`}
+        getDataPoint={() => dataPointData}
       />
 
       <DataPointModbusAttributesForm

@@ -32,7 +32,7 @@ export function TimeSyncBlockNotificationForm() {
   );
 
   const isAdded = useDeviceState(
-    (d) => !!d?.interfaceList?.modbusInterface?.timeSyncBlockNotification
+    (d) => (d?.interfaceList?.modbusInterface?.timeSyncBlockNotification?.length ?? 0) > 0
   );
 
   const handleAdd = () => timeSyncBlockNotificationActions.addEmptyTimeSyncBlockNotification();

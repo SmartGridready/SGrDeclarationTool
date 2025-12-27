@@ -60,6 +60,13 @@ export function createTimeSyncBlockNotificationSlice<TState extends { device?: D
         const list = getTimeSyncBlockNotificationList(state);
         if (list && list.length > index) {
           list.splice(index, 1);
+          // If array is now empty, delete it to allow the section to be removed
+          if (list.length === 0) {
+            const modbusInterface = state.device?.interfaceList?.modbusInterface;
+            if (modbusInterface) {
+              delete modbusInterface.timeSyncBlockNotification;
+            }
+          }
         }
       }),
 
@@ -67,7 +74,7 @@ export function createTimeSyncBlockNotificationSlice<TState extends { device?: D
       set((state) => {
         const modbusInterface = state.device?.interfaceList?.modbusInterface;
         if (modbusInterface) {
-          modbusInterface.timeSyncBlockNotification = [];
+          delete modbusInterface.timeSyncBlockNotification;
         }
       }),
 

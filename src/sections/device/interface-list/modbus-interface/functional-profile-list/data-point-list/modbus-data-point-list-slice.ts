@@ -1,5 +1,6 @@
 import { DeviceFrame } from "@/models";
 import { ModbusDataPoint, ModbusFunctionalProfile } from "@/models/product/modbus-interface";
+import { createEmptyModbusDataPoint } from "@/utils/factory-utils";
 import {
   createDataPointBaseSlice,
   DataPointBaseSlice,
@@ -13,20 +14,6 @@ export interface ModbusDataPointListSlice {
 
   // Get slice for a specific data point
   getDataPointSlice: (index: number) => DataPointBaseSlice;
-}
-
-/**
- * Creates a new empty ModbusDataPoint
- */
-function createEmptyModbusDataPoint(): ModbusDataPoint {
-  return {
-    dataPoint: {
-      dataPointName: "",
-      dataDirection: "R",
-      dataType: { float64: {} },
-      unit: "NONE",
-    },
-  };
 }
 
 /**

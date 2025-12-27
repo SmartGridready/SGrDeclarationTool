@@ -2,10 +2,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { FunctionalProfileFrame } from "@/models";
-import {
-  createSampleFunctionalProfile,
-  createEmpty as createEmptyProfile,
-} from "@/utils/factory-utils";
+import { createSampleFunctionalProfile, createEmptyFunctionalProfile } from "@/utils/factory-utils";
 import {
   createReleaseNotesSliceForProfile,
   ReleaseNotesSlice,
@@ -64,7 +61,7 @@ export const useProfileStore = create<ProfileStoreState>()(
 
       createEmpty: () =>
         set((state) => {
-          state.profile = createEmptyProfile();
+          state.profile = createEmptyFunctionalProfile();
         }),
 
       clear: () =>

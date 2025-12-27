@@ -1,5 +1,9 @@
 import { FunctionalProfileFrame, DeviceFrame } from "@/models";
-import { ModbusInterface } from "@/models/product/modbus-interface";
+import {
+  ModbusInterface,
+  ModbusFunctionalProfile,
+  ModbusDataPoint,
+} from "@/models/product/modbus-interface";
 
 /**
  * Creates an empty ModbusInterface with minimal required values
@@ -134,7 +138,7 @@ export function createSampleFunctionalProfile(): FunctionalProfileFrame {
 /**
  * Creates a new empty FunctionalProfileFrame with minimal required values
  */
-export function createEmpty(): FunctionalProfileFrame {
+export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
   return {
     functionalProfile: {
       functionalProfileIdentification: {
@@ -148,6 +152,45 @@ export function createEmpty(): FunctionalProfileFrame {
           subReleaseVersionNumber: 0,
         },
       },
+    },
+  };
+}
+
+/**
+ * Creates a new empty ModbusFunctionalProfile with minimal required values
+ */
+export function createEmptyModbusFunctionalProfile(): ModbusFunctionalProfile {
+  return {
+    functionalProfile: {
+      functionalProfileName: "",
+      functionalProfileIdentification: {
+        specificationOwnerIdentification: "",
+        functionalProfileCategory: "Battery",
+        functionalProfileType: "",
+        levelOfOperation: "1",
+        versionNumber: {
+          primaryVersionNumber: 0,
+          secondaryVersionNumber: 0,
+          subReleaseVersionNumber: 0,
+        },
+      },
+    },
+    dataPointList: {
+      dataPointListElement: [],
+    },
+  };
+}
+
+/**
+ * Creates a new empty ModbusDataPoint with minimal required values
+ */
+export function createEmptyModbusDataPoint(): ModbusDataPoint {
+  return {
+    dataPoint: {
+      dataPointName: "",
+      dataDirection: "R",
+      dataType: { float64: {} },
+      unit: "NONE",
     },
   };
 }

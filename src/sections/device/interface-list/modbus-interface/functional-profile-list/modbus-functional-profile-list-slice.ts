@@ -3,6 +3,7 @@ import {
   ModbusFunctionalProfile,
   ModbusFunctionalProfileList,
 } from "@/models/product/modbus-interface";
+import { createEmptyModbusFunctionalProfile } from "@/utils/factory-utils";
 import {
   createFunctionalProfileBaseSlice,
   FunctionalProfileBaseSlice,
@@ -11,6 +12,10 @@ import {
   createModbusDataPointListSlice,
   ModbusDataPointListSlice,
 } from "./data-point-list/modbus-data-point-list-slice";
+import {
+  createModbusAttributesSlice,
+  ModbusAttributesSlice,
+} from "./modbus-attributes/modbus-attributes-slice";
 
 export interface ModbusFunctionalProfileListSlice {
   // Functional profile list management
@@ -23,31 +28,9 @@ export interface ModbusFunctionalProfileListSlice {
 
   // Get data point list slice for a specific functional profile
   getDataPointListSlice: (index: number) => ModbusDataPointListSlice;
-}
 
-/**
- * Creates a new empty ModbusFunctionalProfile
- */
-function createEmptyModbusFunctionalProfile(): ModbusFunctionalProfile {
-  return {
-    functionalProfile: {
-      functionalProfileName: "",
-      functionalProfileIdentification: {
-        specificationOwnerIdentification: "",
-        functionalProfileCategory: "Battery",
-        functionalProfileType: "",
-        levelOfOperation: "1",
-        versionNumber: {
-          primaryVersionNumber: 0,
-          secondaryVersionNumber: 0,
-          subReleaseVersionNumber: 0,
-        },
-      },
-    },
-    dataPointList: {
-      dataPointListElement: [],
-    },
-  };
+  // Get modbus attributes slice for a specific functional profile
+  getModbusAttributesSlice: (index: number) => ModbusAttributesSlice;
 }
 
 /**
@@ -72,6 +55,9 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
 
   // Cache for data point list slices
   const dataPointListSliceCache = new Map<number, ModbusDataPointListSlice>();
+
+  // Cache for modbus attributes slices
+  const modbusAttributesSliceCache = new Map<number, ModbusAttributesSlice>();
 
   return {
     addEmptyFunctionalProfile: () =>
@@ -98,6 +84,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
           // Clear cache for removed and subsequent indices
           functionalProfileSliceCache.delete(index);
           dataPointListSliceCache.delete(index);
+          modbusAttributesSliceCache.delete(index);
         }
       }),
 
@@ -108,6 +95,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
           list.functionalProfileListElement = [];
           functionalProfileSliceCache.clear();
           dataPointListSliceCache.clear();
+          modbusAttributesSliceCache.clear();
         }
       }),
 
@@ -133,6 +121,17 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
         dataPointListSliceCache.set(index, slice);
       }
       return dataPointListSliceCache.get(index)!;
+    },
+
+    getModbusAttributesSlice: (index: number): ModbusAttributesSlice => {
+      // Create slice on demand and cache it
+      if (!modbusAttributesSliceCache.has(index)) {
+        const slice = createModbusAttributesSlice(set, (state) =>
+          getFunctionalProfile(state, index)
+        );
+        modbusAttributesSliceCache.set(index, slice);
+      }
+      return modbusAttributesSliceCache.get(index)!;
     },
   };
 }

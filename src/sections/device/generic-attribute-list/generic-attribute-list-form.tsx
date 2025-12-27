@@ -2,7 +2,7 @@
 
 import { GenericAttributeListProductForm } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-form";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { DeviceStoreState } from "@/sections/device/device-store";
+import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
 
 /**
  * Device specific generic attribute list form.
@@ -12,19 +12,10 @@ export function GenericAttributeListForm() {
   const { useDeviceState, useValidation, genericAttributeListActions, pathPrefix } =
     useDeviceFormContext();
 
-  // Create a store hook adapter
-  const useStore = <TSelected,>(selector: (store: DeviceStoreState) => TSelected): TSelected => {
-    const device = useDeviceState((d) => d);
-    const adaptedStore = {
-      device,
-      ...genericAttributeListActions,
-    } as DeviceStoreState;
-    return selector(adaptedStore);
-  };
+  const device = useDeviceState((d) => d);
+  const useStore = createDeviceStoreAdapter(device, genericAttributeListActions);
 
-  const fullPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "genericAttributeList")
-    : "genericAttributeList";
+  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "genericAttributeList");
 
   return (
     <GenericAttributeListProductForm
@@ -34,7 +25,7 @@ export function GenericAttributeListForm() {
         genericAttributeList: store.device?.genericAttributeList,
       })}
       isAddedSelector={(store) => !!store.device?.genericAttributeList}
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       title="Generic Attribute List"
       description="Generic attributes for the device"
       nested={true}

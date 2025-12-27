@@ -1,25 +1,24 @@
 "use client";
 
 import { ReleaseNotesForm as SharedReleaseNotesForm } from "@/sections/shared/release-notes/release-notes-form";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
-import { StoreState } from "@/sections/functional-profile/functional-profile-store";
+import {
+  useFunctionalProfileFormContext,
+  buildProfileFieldPath,
+} from "@/context/functional-profile-form-context";
+import { createProfileStoreAdapter } from "@/hooks/use-form-section";
 
 /**
  * Functional Profile specific release notes form.
  * Uses the FunctionalProfileFormContext to connect to the store.
  */
 export function ReleaseNotesForm() {
-  const { useProfileState, useValidation, releaseNotesActions } = useFunctionalProfileFormContext();
+  const { useProfileState, useValidation, releaseNotesActions, pathPrefix } =
+    useFunctionalProfileFormContext();
 
-  // Create a store hook adapter
-  const useStore = <TSelected,>(selector: (store: StoreState) => TSelected): TSelected => {
-    const profile = useProfileState((p) => p);
-    const adaptedStore = {
-      profile,
-      ...releaseNotesActions,
-    } as StoreState;
-    return selector(adaptedStore);
-  };
+  const profile = useProfileState((p) => p);
+  const useStore = createProfileStoreAdapter(profile, releaseNotesActions);
+
+  const fieldPathPrefix = buildProfileFieldPath(pathPrefix, "releaseNotes");
 
   return (
     <SharedReleaseNotesForm
@@ -31,7 +30,7 @@ export function ReleaseNotesForm() {
         changeLogs: store.profile?.releaseNotes?.changeLog,
       })}
       isAddedSelector={(store) => !!store.profile?.releaseNotes}
-      fieldPathPrefix="releaseNotes"
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
     />
   );

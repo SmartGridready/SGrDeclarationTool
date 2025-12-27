@@ -36,9 +36,7 @@ export function ProgrammerHintsForm() {
     return selector(adaptedStore);
   };
 
-  const fullPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "deviceInformation.programmerHints")
-    : "deviceInformation.programmerHints";
+  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "deviceInformation.programmerHints");
 
   return (
     <SharedLegibleDescriptionForm
@@ -48,7 +46,7 @@ export function ProgrammerHintsForm() {
         legibleDescriptions: store.device?.deviceInformation?.programmerHints,
       })}
       isAddedSelector={(store) => !!store.device?.deviceInformation?.programmerHints}
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Programmer Hints"
       description="Technical hints for programmers implementing this device (max 4)"

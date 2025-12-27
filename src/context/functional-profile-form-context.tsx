@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-import { FunctionalProfileFrame, FunctionalProfileDataPoint } from "@/models";
+import { FunctionalProfileFrame } from "@/models";
 
 // Re-export slice types for consumers (all from shared)
 export type { DataPointListSlice } from "@/sections/functional-profile/data-point-list/data-point-list-slice";
@@ -121,14 +121,4 @@ export function buildProfileFieldPath(prefix: string, fieldPath: string): string
   if (!prefix) return fieldPath;
   if (!fieldPath) return prefix;
   return `${prefix}.${fieldPath}`;
-}
-
-/**
- * Helper to get a data point from the profile.
- */
-export function getDataPointFromProfile(
-  profile: FunctionalProfileFrame | undefined,
-  index: number
-): FunctionalProfileDataPoint | undefined {
-  return profile?.dataPointList?.dataPointListElement?.[index];
 }

@@ -39,7 +39,7 @@ interface ProfileStore {
   clear: () => void;
 }
 
-export type StoreState = ProfileStore &
+export type ProfileStoreState = ProfileStore &
   ReleaseNotesSlice &
   FunctionalProfileIdentificationSlice &
   AlternativeNamesSlice &
@@ -47,7 +47,7 @@ export type StoreState = ProfileStore &
   GenericAttributeListSlice &
   DataPointListSlice;
 
-export const useProfileStore = create<StoreState>()(
+export const useProfileStore = create<ProfileStoreState>()(
   persist(
     immer((set) => ({
       profile: undefined,
@@ -82,6 +82,8 @@ export const useProfileStore = create<StoreState>()(
     {
       name: "sgr-profile-storage",
       storage: createJSONStorage(() => localStorage),
+      // Only persist the profile state, not the action objects with functions
+      partialize: (state) => ({ profile: state.profile }),
     }
   )
 );

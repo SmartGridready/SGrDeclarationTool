@@ -1,26 +1,24 @@
 "use client";
 
 import { LegibleDescriptionForm as SharedLegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
-import { StoreState } from "@/sections/functional-profile/functional-profile-store";
+import {
+  useFunctionalProfileFormContext,
+  buildProfileFieldPath,
+} from "@/context/functional-profile-form-context";
+import { createProfileStoreAdapter } from "@/hooks/use-form-section";
 
 /**
  * Functional Profile specific legible description form.
  * Uses the FunctionalProfileFormContext to connect to the store.
  */
 export function LegibleDescriptionForm() {
-  const { useProfileState, useValidation, legibleDescriptionActions } =
+  const { useProfileState, useValidation, legibleDescriptionActions, pathPrefix } =
     useFunctionalProfileFormContext();
 
-  // Create a store hook adapter
-  const useStore = <TSelected,>(selector: (store: StoreState) => TSelected): TSelected => {
-    const profile = useProfileState((p) => p);
-    const adaptedStore = {
-      profile,
-      ...legibleDescriptionActions,
-    } as StoreState;
-    return selector(adaptedStore);
-  };
+  const profile = useProfileState((p) => p);
+  const useStore = createProfileStoreAdapter(profile, legibleDescriptionActions);
+
+  const fieldPathPrefix = buildProfileFieldPath(pathPrefix, "functionalProfile.legibleDescription");
 
   return (
     <SharedLegibleDescriptionForm
@@ -30,7 +28,7 @@ export function LegibleDescriptionForm() {
         legibleDescriptions: store.profile?.functionalProfile?.legibleDescription,
       })}
       isAddedSelector={(store) => !!store.profile?.functionalProfile?.legibleDescription}
-      fieldPathPrefix="functionalProfile.legibleDescription"
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Legible Description"
       description="Human-readable descriptions for the functional profile (max 4)"

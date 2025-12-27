@@ -1,26 +1,27 @@
 "use client";
 
 import { ProfileIdentificationForm as SharedProfileIdentificationForm } from "@/sections/shared/profile-identification/profile-identification-form";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
-import { StoreState } from "@/sections/functional-profile/functional-profile-store";
+import {
+  useFunctionalProfileFormContext,
+  buildProfileFieldPath,
+} from "@/context/functional-profile-form-context";
+import { createProfileStoreAdapter } from "@/hooks/use-form-section";
 
 /**
  * Functional Profile specific profile identification form.
  * Uses the FunctionalProfileFormContext to connect to the store.
  */
 export function ProfileIdentificationForm() {
-  const { useProfileState, useValidation, profileIdentificationActions } =
+  const { useProfileState, useValidation, profileIdentificationActions, pathPrefix } =
     useFunctionalProfileFormContext();
 
-  // Create a store hook adapter
-  const useStore = <TSelected,>(selector: (store: StoreState) => TSelected): TSelected => {
-    const profile = useProfileState((p) => p);
-    const adaptedStore = {
-      profile,
-      ...profileIdentificationActions,
-    } as StoreState;
-    return selector(adaptedStore);
-  };
+  const profile = useProfileState((p) => p);
+  const useStore = createProfileStoreAdapter(profile, profileIdentificationActions);
+
+  const fieldPathPrefix = buildProfileFieldPath(
+    pathPrefix,
+    "functionalProfile.functionalProfileIdentification"
+  );
 
   return (
     <SharedProfileIdentificationForm
@@ -30,7 +31,7 @@ export function ProfileIdentificationForm() {
         functionalProfileIdentification:
           store.profile?.functionalProfile?.functionalProfileIdentification,
       })}
-      fieldPathPrefix="functionalProfile.functionalProfileIdentification"
+      fieldPathPrefix={fieldPathPrefix}
     />
   );
 }

@@ -1,7 +1,10 @@
 "use client";
 
 import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import {
+  useFunctionalProfileFormContext,
+  buildProfileFieldPath,
+} from "@/context/functional-profile-form-context";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { FunctionalProfileFrame } from "@/models";
 
@@ -55,9 +58,10 @@ export function DataPointLegibleDescriptionForm({
   const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
   const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
 
-  const fullPathPrefix = pathPrefix
-    ? `${pathPrefix}.dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`
-    : `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`;
+  const fieldPathPrefix = buildProfileFieldPath(
+    pathPrefix,
+    `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`
+  );
 
   return (
     <LegibleDescriptionForm
@@ -72,7 +76,7 @@ export function DataPointLegibleDescriptionForm({
         !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
           ?.legibleDescription
       }
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Legible Description"
       description="Human-readable descriptions for this data point (max 4)"

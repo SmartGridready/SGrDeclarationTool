@@ -1,7 +1,10 @@
 "use client";
 
 import { AlternativeNamesForm } from "@/sections/shared/alternative-names/alternative-names-form";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import {
+  useFunctionalProfileFormContext,
+  buildProfileFieldPath,
+} from "@/context/functional-profile-form-context";
 import { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
 import { FunctionalProfileFrame } from "@/models";
 
@@ -53,9 +56,10 @@ export function DataPointAlternativeNamesForm({
   const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
   const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
 
-  const fullPathPrefix = pathPrefix
-    ? `${pathPrefix}.dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`
-    : `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`;
+  const fieldPathPrefix = buildProfileFieldPath(
+    pathPrefix,
+    `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`
+  );
 
   return (
     <AlternativeNamesForm
@@ -70,7 +74,7 @@ export function DataPointAlternativeNamesForm({
         !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
           ?.alternativeNames
       }
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Alternative Names"
       description="Alternative naming conventions for this data point"

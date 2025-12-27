@@ -2,7 +2,7 @@
 
 import { LegibleDescriptionForm as SharedLegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { DeviceStoreState } from "@/sections/device/device-store";
+import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
 
 /**
  * Device specific legible description form.
@@ -12,19 +12,10 @@ export function LegibleDescriptionForm() {
   const { useDeviceState, useValidation, deviceInformationActions, pathPrefix } =
     useDeviceFormContext();
 
-  // Create a store hook adapter
-  const useStore = <TSelected,>(selector: (store: DeviceStoreState) => TSelected): TSelected => {
-    const device = useDeviceState((d) => d);
-    const adaptedStore = {
-      device,
-      ...deviceInformationActions,
-    } as DeviceStoreState;
-    return selector(adaptedStore);
-  };
+  const device = useDeviceState((d) => d);
+  const useStore = createDeviceStoreAdapter(device, deviceInformationActions);
 
-  const fullPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "deviceInformation.legibleDescription")
-    : "deviceInformation.legibleDescription";
+  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "deviceInformation.legibleDescription");
 
   return (
     <SharedLegibleDescriptionForm
@@ -34,7 +25,7 @@ export function LegibleDescriptionForm() {
         legibleDescriptions: store.device?.deviceInformation?.legibleDescription,
       })}
       isAddedSelector={(store) => !!store.device?.deviceInformation?.legibleDescription}
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Legible Description"
       description="Human-readable descriptions for the device (max 4)"

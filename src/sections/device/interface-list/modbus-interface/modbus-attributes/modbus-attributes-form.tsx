@@ -2,7 +2,7 @@
 
 import { ModbusAttributesForm as SharedModbusAttributesForm } from "@/sections/shared/modbus-attributes/modbus-attributes-form";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { DeviceStoreState } from "@/sections/device/device-store";
+import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
 
 /**
  * Device specific modbus attributes form.
@@ -12,19 +12,13 @@ export function ModbusAttributesForm() {
   const { useDeviceState, useValidation, modbusAttributesActions, pathPrefix } =
     useDeviceFormContext();
 
-  // Create a store hook adapter
-  const useStore = <TSelected,>(selector: (store: DeviceStoreState) => TSelected): TSelected => {
-    const device = useDeviceState((d) => d);
-    const adaptedStore = {
-      device,
-      ...modbusAttributesActions,
-    } as DeviceStoreState;
-    return selector(adaptedStore);
-  };
+  const device = useDeviceState((d) => d);
+  const useStore = createDeviceStoreAdapter(device, modbusAttributesActions);
 
-  const fullPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.modbusAttributes")
-    : "interfaceList.modbusInterface.modbusAttributes";
+  const fieldPathPrefix = buildDeviceFieldPath(
+    pathPrefix,
+    "interfaceList.modbusInterface.modbusAttributes"
+  );
 
   return (
     <SharedModbusAttributesForm
@@ -34,7 +28,7 @@ export function ModbusAttributesForm() {
         modbusAttributes: store.device?.interfaceList?.modbusInterface?.modbusAttributes,
       })}
       isAddedSelector={(store) => !!store.device?.interfaceList?.modbusInterface?.modbusAttributes}
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Modbus Attributes"
       description="Configure Modbus-specific attributes"

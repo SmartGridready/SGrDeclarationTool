@@ -84,12 +84,10 @@ export function ConfigurationDescriptionsForm({
     };
   };
 
-  const fullPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(
-        pathPrefix,
-        `configurationList.configurationListElement.${configIndex}.configurationDescription`
-      )
-    : `configurationList.configurationListElement.${configIndex}.configurationDescription`;
+  const fieldPathPrefix = buildDeviceFieldPath(
+    pathPrefix,
+    `configurationList.configurationListElement.${configIndex}.configurationDescription`
+  );
 
   return (
     <LegibleDescriptionForm
@@ -99,7 +97,7 @@ export function ConfigurationDescriptionsForm({
         legibleDescriptions: store.legibleDescriptions,
       })}
       isAddedSelector={(store) => !!store.legibleDescriptions}
-      fieldPathPrefix={fullPathPrefix}
+      fieldPathPrefix={fieldPathPrefix}
       required={false}
       title="Configuration Descriptions"
       description="Human-readable descriptions for the configuration (max 4)"

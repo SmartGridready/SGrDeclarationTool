@@ -16,6 +16,53 @@ export function createSliceAdapter<TSlice>(slice: TSlice) {
 }
 
 /**
+ * Creates a useStore adapter for Device forms that combines device state and actions.
+ * This is the standard pattern for connecting Device-specific forms to shared form components.
+ *
+ * @example
+ * const useStore = createDeviceStoreAdapter(device, deviceInformationActions);
+ * <SharedAlternativeNamesForm useStore={useStore} ... />
+ */
+export function createDeviceStoreAdapter<TActions>(
+  device: import("@/models").DeviceFrame | undefined,
+  actions: TActions
+) {
+  return <TSelected>(
+    selector: (store: { device?: import("@/models").DeviceFrame } & TActions) => TSelected
+  ): TSelected => {
+    const adaptedStore = { device, ...actions } as {
+      device?: import("@/models").DeviceFrame;
+    } & TActions;
+    return selector(adaptedStore);
+  };
+}
+
+/**
+ * Creates a useStore adapter for FunctionalProfile forms that combines profile state and actions.
+ * This is the standard pattern for connecting FunctionalProfile-specific forms to shared form components.
+ *
+ * @example
+ * const useStore = createProfileStoreAdapter(profile, alternativeNamesActions);
+ * <SharedAlternativeNamesForm useStore={useStore} ... />
+ */
+export function createProfileStoreAdapter<TActions>(
+  profile: import("@/models").FunctionalProfileFrame | undefined,
+  actions: TActions
+) {
+  return <TSelected>(
+    selector: (
+      store: { profile?: import("@/models").FunctionalProfileFrame } & TActions
+    ) => TSelected
+  ): TSelected => {
+    const adaptedStore = {
+      profile,
+      ...actions,
+    } as { profile?: import("@/models").FunctionalProfileFrame } & TActions;
+    return selector(adaptedStore);
+  };
+}
+
+/**
  * Shallow comparison for objects (one level deep)
  */
 function shallowEqual<T extends Record<string, unknown>>(objA: T, objB: T): boolean {

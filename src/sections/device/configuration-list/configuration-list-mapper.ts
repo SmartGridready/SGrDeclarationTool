@@ -11,16 +11,24 @@ import { mapLegibleDescription } from "@/sections/shared/legible-description/leg
 
 /**
  * Maps XML configurationList to ConfigurationList model
+ * Note: minOccurs=1 means at least one configurationListElement is required
  */
 export function mapConfigurationList(
   configurationListXml: Xml2JsObject | undefined
 ): ConfigurationList {
+  const configurationListElement = mapArray(
+    configurationListXml,
+    "configurationListElement",
+    mapConfigurationListElement
+  );
+
+  // Validate minOccurs=1 constraint
+  if (configurationListElement.length === 0) {
+    throw new Error("configurationListElement must have at least one element (minOccurs=1)");
+  }
+
   return {
-    configurationListElement: mapArray(
-      configurationListXml,
-      "configurationListElement",
-      mapConfigurationListElement
-    ),
+    configurationListElement,
   };
 }
 

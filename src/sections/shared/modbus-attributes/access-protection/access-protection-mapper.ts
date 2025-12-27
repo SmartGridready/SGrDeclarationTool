@@ -12,6 +12,7 @@ export function mapAccessProtection(
   }
 
   // Handle array of string values (xml2js converts repeated elements to arrays)
+  // Note: minOccurs="1" means at least one element is required
   const modbusExceptionCodeArray = accessProtectionXml.modbusExceptionCode;
   const modbusExceptionCode: ModbusExceptionCode[] = [];
   if (Array.isArray(modbusExceptionCodeArray)) {
@@ -20,6 +21,11 @@ export function mapAccessProtection(
         modbusExceptionCode.push(item as ModbusExceptionCode);
       }
     }
+  }
+
+  // Validate minOccurs="1" constraint
+  if (modbusExceptionCode.length === 0) {
+    throw new Error("modbusExceptionCode must have at least one element (minOccurs='1')");
   }
 
   return {

@@ -5,6 +5,7 @@ import { deviceIdentificationSchema } from "@/sections/device/device-identificat
 import { deviceInformationSchema } from "@/sections/device/device-information/device-information-schema";
 import { configurationListSchema } from "@/sections/device/configuration-list/configuration-list-schema";
 import { genericAttributeListProductSchema } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-schema";
+import { interfaceListSchema } from "@/sections/device/interface-list/interface-list-schema";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -26,6 +27,7 @@ export const deviceFrameSchema = z.object({
   deviceInformation: deviceInformationSchema,
   configurationList: configurationListSchema.optional(),
   genericAttributeList: genericAttributeListProductSchema.optional(),
+  interfaceList: interfaceListSchema,
 });
 
 // Re-export schemas for convenience
@@ -35,6 +37,7 @@ export {
   deviceInformationSchema,
   configurationListSchema,
   genericAttributeListProductSchema,
+  interfaceListSchema,
 };
 
 // Re-export types for TypeScript inference
@@ -43,6 +46,7 @@ export type { DeviceIdentificationInput } from "@/sections/device/device-identif
 export type { DeviceInformationInput } from "@/sections/device/device-information/device-information-schema";
 export type { ConfigurationListInput } from "@/sections/device/configuration-list/configuration-list-schema";
 export type { GenericAttributeListProductInput } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-schema";
+export type { InterfaceListInput } from "@/sections/device/interface-list/interface-list-schema";
 export type DeviceFrameInput = z.input<typeof deviceFrameSchema>;
 
 // Validators

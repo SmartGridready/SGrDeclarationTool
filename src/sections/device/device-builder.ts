@@ -5,9 +5,10 @@ import { buildDeviceIdentification } from "@/sections/device/device-identificati
 import { buildDeviceInformation } from "@/sections/device/device-information/device-information-builder";
 import { buildConfigurationList } from "@/sections/device/configuration-list/configuration-list-builder";
 import { buildGenericAttributeListProduct } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-builder";
+import { buildInterfaceList } from "@/sections/device/interface-list/interface-list-builder";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { validateDeviceFrame } from "@/sections/device/device-schema";
-import { wrapInArray } from "@/utils/builder-utils";
+import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
 
 /**
  * Converts DeviceFrame model to XML string
@@ -95,6 +96,14 @@ function buildDevice(device: DeviceFrame): Record<string, unknown> {
     deviceFrame.genericAttributeList = wrapInArray(
       buildGenericAttributeListProduct(device.genericAttributeList)
     );
+  }
+
+  // Build optional interfaceList
+  if (device.interfaceList) {
+    const interfaceListXml = buildInterfaceList(device.interfaceList);
+    if (interfaceListXml) {
+      deviceFrame.interfaceList = wrapInArray(interfaceListXml);
+    }
   }
 
   return {

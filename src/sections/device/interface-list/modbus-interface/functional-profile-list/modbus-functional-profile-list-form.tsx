@@ -4,7 +4,6 @@ import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { useDeviceStore } from "@/sections/device/device-store";
 import { ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
@@ -14,12 +13,7 @@ import { FunctionalProfileModbusAttributesForm } from "./modbus-attributes/modbu
 import { ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 
 export function ModbusFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix } = useDeviceFormContext();
-
-  // Get actions directly from the store to ensure we have the actual slice with methods
-  const functionalProfileListActions = useDeviceStore(
-    (state) => state.functionalProfileListActions
-  );
+  const { useDeviceState, pathPrefix, functionalProfileListActions } = useDeviceFormContext();
 
   const fieldPathPrefix = pathPrefix
     ? buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.functionalProfileList")

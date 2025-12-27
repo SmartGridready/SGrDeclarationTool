@@ -20,6 +20,7 @@ export type { ScalingFactorSlice } from "@/sections/shared/modbus-attributes/sca
 export type { AccessProtectionSlice } from "@/sections/shared/modbus-attributes/access-protection/access-protection-slice";
 export type { ModbusInterfaceSlice } from "@/sections/device/interface-list/modbus-interface/modbus-interface-slice";
 export type { ModbusFunctionalProfileListSlice } from "@/sections/device/interface-list/modbus-interface/functional-profile-list/modbus-functional-profile-list-slice";
+export type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface-list/modbus-interface/time-sync-block-notification/time-sync-block-notification-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -37,6 +38,7 @@ import type { ScalingFactorSlice } from "@/sections/shared/modbus-attributes/sca
 import type { AccessProtectionSlice } from "@/sections/shared/modbus-attributes/access-protection/access-protection-slice";
 import type { ModbusInterfaceSlice } from "@/sections/device/interface-list/modbus-interface/modbus-interface-slice";
 import type { ModbusFunctionalProfileListSlice } from "@/sections/device/interface-list/modbus-interface/functional-profile-list/modbus-functional-profile-list-slice";
+import type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface-list/modbus-interface/time-sync-block-notification/time-sync-block-notification-slice";
 
 /**
  * Context value for device forms.
@@ -140,6 +142,11 @@ export interface DeviceFormContextValue {
    * Functional profile list actions for modbus interface.
    */
   functionalProfileListActions: ModbusFunctionalProfileListSlice;
+
+  /**
+   * Time sync block notification actions for modbus interface.
+   */
+  timeSyncBlockNotificationActions: TimeSyncBlockNotificationSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

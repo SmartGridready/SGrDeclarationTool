@@ -6,7 +6,6 @@ import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { useDeviceStore } from "@/sections/device/device-store";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/models/form-options-helper";
@@ -15,12 +14,7 @@ import type { TimeSyncBlockNotificationSlice } from "./time-sync-block-notificat
 const REGISTER_TYPE_OPTIONS = createFormOptions(REGISTER_TYPE_VALUES);
 
 export function TimeSyncBlockNotificationForm() {
-  const { useDeviceState, pathPrefix } = useDeviceFormContext();
-
-  // Get actions directly from the store to ensure we have the actual slice with methods
-  const timeSyncBlockNotificationActions = useDeviceStore(
-    (state) => state.timeSyncBlockNotificationActions
-  );
+  const { useDeviceState, pathPrefix, timeSyncBlockNotificationActions } = useDeviceFormContext();
 
   const fieldPathPrefix = pathPrefix
     ? buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.timeSyncBlockNotification")

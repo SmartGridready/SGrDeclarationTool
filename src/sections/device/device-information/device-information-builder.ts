@@ -20,19 +20,16 @@ export function buildDeviceInformation(
     throw new Error(errorMessage);
   }
 
-  const deviceInformationXml: Record<string, unknown> = {
-    deviceCategory: wrapInArray(deviceInformation.deviceCategory),
-    isLocalControl: wrapInArray(String(deviceInformation.isLocalControl)),
-  };
+  const deviceInformationXml: Record<string, unknown> = {};
 
-  // Build optional alternativeNames
+  // Build optional alternativeNames (must come first according to model)
   if (deviceInformation.alternativeNames) {
     deviceInformationXml.alternativeNames = wrapInArray(
       buildAlternativeNames(deviceInformation.alternativeNames)
     );
   }
 
-  // Build optional legibleDescription
+  // Build optional legibleDescription (must come after alternativeNames, before deviceCategory)
   setOptionalXmlArray(
     deviceInformationXml,
     "legibleDescription",
@@ -40,6 +37,10 @@ export function buildDeviceInformation(
       ? buildLegibleDescription(deviceInformation.legibleDescription)
       : undefined
   );
+
+  // Required fields (must come after optional alternativeNames and legibleDescription)
+  deviceInformationXml.deviceCategory = wrapInArray(deviceInformation.deviceCategory);
+  deviceInformationXml.isLocalControl = wrapInArray(String(deviceInformation.isLocalControl));
 
   // Add optional string fields
   setOptionalXmlField(deviceInformationXml, "softwareRevision", deviceInformation.softwareRevision);

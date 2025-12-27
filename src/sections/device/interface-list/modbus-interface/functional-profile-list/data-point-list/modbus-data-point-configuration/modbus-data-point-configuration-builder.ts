@@ -21,12 +21,16 @@ export function buildModbusDataPointConfiguration(
   const configurationXml: Record<string, unknown> = {
     modbusDataType: wrapInArray(buildModbusDataType(configuration.modbusDataType)),
     address: wrapInArray(configuration.address),
-    registerType: wrapInArray(configuration.registerType),
-    numberOfRegisters: wrapInArray(configuration.numberOfRegisters),
   };
 
-  // Include optional bitRank
-  setOptionalXmlField(configurationXml, "bitRank", configuration.bitRank);
+  // Include optional bitRank (must come after address, before registerType)
+  if (configuration.bitRank !== undefined) {
+    configurationXml.bitRank = wrapInArray(configuration.bitRank);
+  }
+
+  // Required fields (must come after bitRank)
+  configurationXml.registerType = wrapInArray(configuration.registerType);
+  configurationXml.numberOfRegisters = wrapInArray(configuration.numberOfRegisters);
 
   return configurationXml;
 }

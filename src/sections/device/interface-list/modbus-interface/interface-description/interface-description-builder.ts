@@ -22,21 +22,25 @@ export function buildModbusInterfaceDescription(
   }
   const descriptionXml: Record<string, unknown> = {
     modbusInterfaceSelection: wrapInArray(description.modbusInterfaceSelection),
-    firstRegisterAddressIsOne: wrapInArray(description.firstRegisterAddressIsOne.toString()),
-    bitOrder: wrapInArray(description.bitOrder),
   };
 
-  // Include optional modbusTcp
+  // Include optional modbusTcp (must come before firstRegisterAddressIsOne)
   if (description.modbusTcp) {
     descriptionXml.modbusTcp = wrapInArray(buildModbusTcp(description.modbusTcp));
   }
 
-  // Include optional modbusRtu
+  // Include optional modbusRtu (must come before firstRegisterAddressIsOne)
   if (description.modbusRtu) {
     descriptionXml.modbusRtu = wrapInArray(buildModbusRtu(description.modbusRtu));
   }
 
-  // Include optional masterFunctionsSupportedList
+  // Required fields (must come after modbusTcp/modbusRtu)
+  descriptionXml.firstRegisterAddressIsOne = wrapInArray(
+    description.firstRegisterAddressIsOne.toString()
+  );
+  descriptionXml.bitOrder = wrapInArray(description.bitOrder);
+
+  // Include optional masterFunctionsSupportedList (must come last)
   if (description.masterFunctionsSupportedList) {
     descriptionXml.masterFunctionsSupportedList = wrapInArray(
       buildMasterFunctionsSupportedList(description.masterFunctionsSupportedList)

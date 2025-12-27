@@ -8,6 +8,8 @@ import { ModbusDataPoint } from "@/models/product/modbus-interface";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import { ModbusDataPointListSlice } from "./modbus-data-point-list-slice";
+import { DataPointModbusAttributesForm } from "./modbus-attributes/modbus-attributes-form";
+import { ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 
 interface ModbusDataPointListFormProps {
   /**
@@ -71,6 +73,7 @@ export function ModbusDataPointListForm({
             dataPointIndex={index}
             functionalProfileIndex={functionalProfileIndex}
             dataPointSlice={dataPointListSlice.getDataPointSlice(index)}
+            modbusAttributesSlice={dataPointListSlice.getModbusAttributesSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.dataPointListElement[${index}]`}
           />
         )}
@@ -83,6 +86,7 @@ interface ModbusDataPointItemFormProps {
   dataPointIndex: number;
   functionalProfileIndex: number;
   dataPointSlice: DataPointBaseSlice;
+  modbusAttributesSlice: ModbusAttributesSlice;
   fieldPathPrefix: string;
 }
 
@@ -90,6 +94,7 @@ function ModbusDataPointItemForm({
   dataPointIndex,
   functionalProfileIndex,
   dataPointSlice,
+  modbusAttributesSlice,
   fieldPathPrefix,
 }: ModbusDataPointItemFormProps) {
   const { useDeviceState, useValidation } = useDeviceFormContext();
@@ -102,14 +107,23 @@ function ModbusDataPointItemForm({
   );
 
   return (
-    <DataPointBaseForm
-      useStore={createSliceAdapter(dataPointSlice)}
-      useValidation={useValidation}
-      stateSelector={() => dataPointData ?? {}}
-      fieldPathPrefix={fieldPathPrefix}
-      title={`Data Point ${dataPointIndex + 1}`}
-      description="Configure the data point settings"
-      nested={true}
-    />
+    <div className="space-y-6">
+      <DataPointBaseForm
+        useStore={createSliceAdapter(dataPointSlice)}
+        useValidation={useValidation}
+        stateSelector={() => dataPointData ?? {}}
+        fieldPathPrefix={fieldPathPrefix}
+        title={`Data Point ${dataPointIndex + 1}`}
+        description="Configure the data point settings"
+        nested={true}
+      />
+
+      <DataPointModbusAttributesForm
+        dataPointIndex={dataPointIndex}
+        modbusAttributesSlice={modbusAttributesSlice}
+        fieldPathPrefix={fieldPathPrefix}
+        getDataPoint={() => dataPointData}
+      />
+    </div>
   );
 }

@@ -1,15 +1,17 @@
+"use client";
+
 import { FormSection } from "@/components/forms/form-section";
-import { SelectField } from "@/components/forms/select-field";
+import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
+import { SelectField } from "@/components/forms/select-field";
 import { DateField } from "@/components/forms/date-field";
 import { ArrayField } from "@/components/forms/array-field";
-import { FormGroup } from "@/components/forms/form-group";
 import { useFormSection } from "@/hooks/use-form-section";
+import { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 import { ReleaseState, ChangeLog, RELEASE_STATE_VALUES } from "@/models";
 import { createFormOptions } from "@/models/form-options-helper";
 
 const RELEASE_STATE_OPTIONS = createFormOptions(RELEASE_STATE_VALUES);
-import { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 
 interface ReleaseNotesFormProps<TStoreState extends ReleaseNotesSlice> {
   /**
@@ -67,34 +69,13 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
 }: ReleaseNotesFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
-    {
-      releaseState?: ReleaseState;
-      remarks?: string;
-      changeLogs?: ChangeLog[];
-    },
-    {
-      updateReleaseState: (state: ReleaseState) => void;
-      updateRemarks: (remarks: string | undefined) => void;
-      addEmptyChangeLog: () => void;
-      removeChangeLog: (index: number) => void;
-      updateChangeLogField: (index: number, field: keyof ChangeLog, value: string) => void;
-      addReleaseNotes: () => void;
-      removeReleaseNotes: () => void;
-    }
+    { releaseState?: ReleaseState; remarks?: string; changeLogs?: ChangeLog[] },
+    ReleaseNotesSlice & Record<string, unknown>
   >({
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) => ({
-      updateReleaseState: store.updateReleaseState,
-      updateRemarks: store.updateRemarks,
-      addEmptyChangeLog: store.addEmptyChangeLog,
-      removeChangeLog: store.removeChangeLog,
-      updateChangeLogField: store.updateChangeLogField,
-      addReleaseNotes: store.addReleaseNotes,
-      removeReleaseNotes: store.removeReleaseNotes,
-    }),
-    // Only include add/remove functionality if not required
+    actionsSelector: (store) => store as ReleaseNotesSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
     onAdd: required ? undefined : (actions) => actions.addReleaseNotes(),
     onRemove: required ? undefined : (actions) => actions.removeReleaseNotes(),

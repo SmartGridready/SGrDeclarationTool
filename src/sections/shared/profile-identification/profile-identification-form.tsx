@@ -75,25 +75,14 @@ export function ProfileIdentificationForm<
 }: ProfileIdentificationFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
-    {
-      functionalProfileIdentification?: FunctionalProfileIdentification;
-    },
+    { functionalProfileIdentification?: FunctionalProfileIdentification },
     FunctionalProfileIdentificationSlice & Record<string, unknown>
   >({
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) => ({
-      updateSpecificationOwnerIdentification: store.updateSpecificationOwnerIdentification,
-      updateFunctionalProfileCategory: store.updateFunctionalProfileCategory,
-      updateFunctionalProfileType: store.updateFunctionalProfileType,
-      updateLevelOfOperation: store.updateLevelOfOperation,
-      updatePrimaryVersionNumber: store.updatePrimaryVersionNumber,
-      updateSecondaryVersionNumber: store.updateSecondaryVersionNumber,
-      updateSubReleaseVersionNumber: store.updateSubReleaseVersionNumber,
-    }),
-    // Only include add/remove functionality if not required
-    // Note: ProfileIdentificationSlice doesn't have add/remove actions since it's always required
+    actionsSelector: (store) =>
+      store as FunctionalProfileIdentificationSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
   });
 

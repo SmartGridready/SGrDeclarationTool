@@ -1,3 +1,5 @@
+"use client";
+
 import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
@@ -59,40 +61,13 @@ export function AlternativeNamesForm<TStoreState extends AlternativeNamesSlice>(
 }: AlternativeNamesFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
-    {
-      alternativeNames?: AlternativeNames;
-    },
-    {
-      updateSLV1Name: (value: string | undefined) => void;
-      updateWorkName: (value: string | undefined) => void;
-      updateManufName: (value: string | undefined) => void;
-      updateIec61850Name: (value: string | undefined) => void;
-      updateSarefName: (value: string | undefined) => void;
-      updateEebusName: (value: string | undefined) => void;
-      updateSunSpecName: (value: string | undefined) => void;
-      updateHpBwpName: (value: string | undefined) => void;
-      updateEn17609Name: (value: string | undefined) => void;
-      addAlternativeNames: () => void;
-      removeAlternativeNames: () => void;
-    }
+    { alternativeNames?: AlternativeNames },
+    AlternativeNamesSlice & Record<string, unknown>
   >({
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) => ({
-      updateSLV1Name: store.updateSLV1Name,
-      updateWorkName: store.updateWorkName,
-      updateManufName: store.updateManufName,
-      updateIec61850Name: store.updateIec61850Name,
-      updateSarefName: store.updateSarefName,
-      updateEebusName: store.updateEebusName,
-      updateSunSpecName: store.updateSunSpecName,
-      updateHpBwpName: store.updateHpBwpName,
-      updateEn17609Name: store.updateEn17609Name,
-      addAlternativeNames: store.addAlternativeNames,
-      removeAlternativeNames: store.removeAlternativeNames,
-    }),
-    // Only include add/remove functionality if not required
+    actionsSelector: (store) => store as AlternativeNamesSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
     onAdd: required ? undefined : (actions) => actions.addAlternativeNames(),
     onRemove: required ? undefined : (actions) => actions.removeAlternativeNames(),

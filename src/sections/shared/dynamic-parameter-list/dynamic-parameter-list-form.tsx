@@ -1,25 +1,25 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
+import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
-import { FormGroup } from "@/components/forms/form-group";
-import { DynamicParameterDescriptionList, DATA_TYPE_PRODUCT_EXTENDED_VALUES } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
-
-const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
+import { useFormSection } from "@/hooks/use-form-section";
+import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-slice";
+import { DynamicParameterDescriptionsForm } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-descriptions/parameter-descriptions-form";
+import { DynamicParameterListEnumForm } from "@/sections/shared/dynamic-parameter-list/data-types/enum/enum-form";
+import { DynamicParameterListBitmapForm } from "@/sections/shared/dynamic-parameter-list/data-types/bitmap/bitmap-form";
 import {
   getDataTypeProductStringValue,
   createDataTypeProductFromString,
   isEnumDataTypeProduct,
   isBitmapDataTypeProduct,
 } from "@/sections/shared/data-type-product/data-type-product-utils";
-import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-slice";
-import { DynamicParameterDescriptionsForm } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-descriptions/parameter-descriptions-form";
-import { DynamicParameterListEnumForm } from "@/sections/shared/dynamic-parameter-list/data-types/enum/enum-form";
-import { DynamicParameterListBitmapForm } from "@/sections/shared/dynamic-parameter-list/data-types/bitmap/bitmap-form";
-import { useFormSection } from "@/hooks/use-form-section";
+import { DynamicParameterDescriptionList, DATA_TYPE_PRODUCT_EXTENDED_VALUES } from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
+
+const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 
 interface DynamicParameterListFormProps<TStoreState extends DynamicParameterListSlice> {
   /**
@@ -80,50 +80,13 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
 }: DynamicParameterListFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
-    {
-      parameterList?: DynamicParameterDescriptionList;
-    },
+    { parameterList?: DynamicParameterDescriptionList },
     DynamicParameterListSlice & Record<string, unknown>
   >({
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) => ({
-      // Main list actions
-      addParameterList: store.addParameterList,
-      removeParameterList: store.removeParameterList,
-      addParameterListElement: store.addParameterListElement,
-      removeParameterListElement: store.removeParameterListElement,
-      updateParameterListElementName: store.updateParameterListElementName,
-      updateParameterListElementDataType: store.updateParameterListElementDataType,
-      updateParameterListElementDefaultValue: store.updateParameterListElementDefaultValue,
-      // Enum actions
-      setParameterListEnumDataType: store.setParameterListEnumDataType,
-      addParameterListEnumEntry: store.addParameterListEnumEntry,
-      removeParameterListEnumEntry: store.removeParameterListEnumEntry,
-      updateParameterListEnumEntryLiteral: store.updateParameterListEnumEntryLiteral,
-      updateParameterListEnumEntryOrdinal: store.updateParameterListEnumEntryOrdinal,
-      updateParameterListEnumEntryDescription: store.updateParameterListEnumEntryDescription,
-      updateParameterListEnumHexMask: store.updateParameterListEnumHexMask,
-      addEmptyParameterListEnumEntry: store.addEmptyParameterListEnumEntry,
-      // Bitmap actions
-      setParameterListBitmapDataType: store.setParameterListBitmapDataType,
-      addParameterListBitmapEntry: store.addParameterListBitmapEntry,
-      removeParameterListBitmapEntry: store.removeParameterListBitmapEntry,
-      updateParameterListBitmapEntryLiteral: store.updateParameterListBitmapEntryLiteral,
-      updateParameterListBitmapEntryHexMask: store.updateParameterListBitmapEntryHexMask,
-      updateParameterListBitmapEntryDescription: store.updateParameterListBitmapEntryDescription,
-      addEmptyParameterListBitmapEntry: store.addEmptyParameterListBitmapEntry,
-      // Description actions
-      addParameterDescription: store.addParameterDescription,
-      removeParameterDescription: store.removeParameterDescription,
-      updateParameterDescriptionText: store.updateParameterDescriptionText,
-      updateParameterDescriptionLanguage: store.updateParameterDescriptionLanguage,
-      updateParameterDescriptionUri: store.updateParameterDescriptionUri,
-      updateParameterDescriptionLabel: store.updateParameterDescriptionLabel,
-      addEmptyParameterDescription: store.addEmptyParameterDescription,
-    }),
-    // Only include add/remove functionality if not required
+    actionsSelector: (store) => store as DynamicParameterListSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
     onAdd: required ? undefined : (actions) => actions.addParameterList(listIndex),
     onRemove: required ? undefined : (actions) => actions.removeParameterList(listIndex),

@@ -1,21 +1,11 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
+import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
-import { FormGroup } from "@/components/forms/form-group";
-import { DATA_TYPE_PRODUCT_EXTENDED_VALUES, UNITS_VALUES } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
-
-const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
-const UNIT_OPTIONS = createFormOptions(UNITS_VALUES);
-import {
-  getDataTypeProductStringValue,
-  createDataTypeProductFromString,
-  isEnumDataTypeProduct,
-  isBitmapDataTypeProduct,
-} from "@/sections/shared/data-type-product/data-type-product-utils";
+import { useFormSection } from "@/hooks/use-form-section";
 import {
   GenericAttributeListProductSlice,
   isSimpleGenericAttribute,
@@ -25,8 +15,23 @@ import { GenericAttributeListProductSimpleEnumForm } from "@/sections/shared/gen
 import { GenericAttributeListProductSimpleBitmapForm } from "@/sections/shared/generic-attribute-list-product/data-types/simple/bitmap/bitmap-form";
 import { GenericAttributeListProductNestedEnumForm } from "@/sections/shared/generic-attribute-list-product/data-types/nested/enum/enum-form";
 import { GenericAttributeListProductNestedBitmapForm } from "@/sections/shared/generic-attribute-list-product/data-types/nested/bitmap/bitmap-form";
-import { GenericAttributeListProduct, GenericAttributeProductEnd, Units } from "@/models";
-import { useFormSection } from "@/hooks/use-form-section";
+import {
+  getDataTypeProductStringValue,
+  createDataTypeProductFromString,
+  isEnumDataTypeProduct,
+  isBitmapDataTypeProduct,
+} from "@/sections/shared/data-type-product/data-type-product-utils";
+import {
+  GenericAttributeListProduct,
+  GenericAttributeProductEnd,
+  Units,
+  DATA_TYPE_PRODUCT_EXTENDED_VALUES,
+  UNITS_VALUES,
+} from "@/models";
+import { createFormOptions } from "@/models/form-options-helper";
+
+const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
+const UNIT_OPTIONS = createFormOptions(UNITS_VALUES);
 
 interface GenericAttributeListProductFormProps<
   TStoreState extends GenericAttributeListProductSlice,
@@ -86,96 +91,13 @@ export function GenericAttributeListProductForm<
 }: GenericAttributeListProductFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
-    {
-      genericAttributeList?: GenericAttributeListProduct;
-    },
+    { genericAttributeList?: GenericAttributeListProduct },
     GenericAttributeListProductSlice & Record<string, unknown>
   >({
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) => ({
-      // Main list actions
-      addGenericAttributeList: store.addGenericAttributeList,
-      removeGenericAttributeList: store.removeGenericAttributeList,
-      addGenericAttributeListElement: store.addGenericAttributeListElement,
-      removeGenericAttributeListElement: store.removeGenericAttributeListElement,
-      updateGenericAttributeListElementName: store.updateGenericAttributeListElementName,
-      // Simple attribute actions
-      setGenericAttributeListElementAsSimple: store.setGenericAttributeListElementAsSimple,
-      updateGenericAttributeListElementDataType: store.updateGenericAttributeListElementDataType,
-      updateGenericAttributeListElementValue: store.updateGenericAttributeListElementValue,
-      updateGenericAttributeListElementUnit: store.updateGenericAttributeListElementUnit,
-      // Nested attribute actions
-      setGenericAttributeListElementAsNested: store.setGenericAttributeListElementAsNested,
-      addNestedGenericAttributeListElement: store.addNestedGenericAttributeListElement,
-      removeNestedGenericAttributeListElement: store.removeNestedGenericAttributeListElement,
-      updateNestedGenericAttributeListElementName:
-        store.updateNestedGenericAttributeListElementName,
-      updateNestedGenericAttributeListElementDataType:
-        store.updateNestedGenericAttributeListElementDataType,
-      updateNestedGenericAttributeListElementValue:
-        store.updateNestedGenericAttributeListElementValue,
-      updateNestedGenericAttributeListElementUnit:
-        store.updateNestedGenericAttributeListElementUnit,
-      // Simple enum actions
-      setGenericAttributeListSimpleEnumDataType: store.setGenericAttributeListSimpleEnumDataType,
-      addGenericAttributeListSimpleEnumEntry: store.addGenericAttributeListSimpleEnumEntry,
-      removeGenericAttributeListSimpleEnumEntry: store.removeGenericAttributeListSimpleEnumEntry,
-      updateGenericAttributeListSimpleEnumEntryLiteral:
-        store.updateGenericAttributeListSimpleEnumEntryLiteral,
-      updateGenericAttributeListSimpleEnumEntryOrdinal:
-        store.updateGenericAttributeListSimpleEnumEntryOrdinal,
-      updateGenericAttributeListSimpleEnumEntryDescription:
-        store.updateGenericAttributeListSimpleEnumEntryDescription,
-      updateGenericAttributeListSimpleEnumHexMask:
-        store.updateGenericAttributeListSimpleEnumHexMask,
-      addEmptyGenericAttributeListSimpleEnumEntry:
-        store.addEmptyGenericAttributeListSimpleEnumEntry,
-      // Simple bitmap actions
-      setGenericAttributeListSimpleBitmapDataType:
-        store.setGenericAttributeListSimpleBitmapDataType,
-      addGenericAttributeListSimpleBitmapEntry: store.addGenericAttributeListSimpleBitmapEntry,
-      removeGenericAttributeListSimpleBitmapEntry:
-        store.removeGenericAttributeListSimpleBitmapEntry,
-      updateGenericAttributeListSimpleBitmapEntryLiteral:
-        store.updateGenericAttributeListSimpleBitmapEntryLiteral,
-      updateGenericAttributeListSimpleBitmapEntryHexMask:
-        store.updateGenericAttributeListSimpleBitmapEntryHexMask,
-      updateGenericAttributeListSimpleBitmapEntryDescription:
-        store.updateGenericAttributeListSimpleBitmapEntryDescription,
-      addEmptyGenericAttributeListSimpleBitmapEntry:
-        store.addEmptyGenericAttributeListSimpleBitmapEntry,
-      // Nested enum actions
-      setGenericAttributeListNestedEnumDataType: store.setGenericAttributeListNestedEnumDataType,
-      addGenericAttributeListNestedEnumEntry: store.addGenericAttributeListNestedEnumEntry,
-      removeGenericAttributeListNestedEnumEntry: store.removeGenericAttributeListNestedEnumEntry,
-      updateGenericAttributeListNestedEnumEntryLiteral:
-        store.updateGenericAttributeListNestedEnumEntryLiteral,
-      updateGenericAttributeListNestedEnumEntryOrdinal:
-        store.updateGenericAttributeListNestedEnumEntryOrdinal,
-      updateGenericAttributeListNestedEnumEntryDescription:
-        store.updateGenericAttributeListNestedEnumEntryDescription,
-      updateGenericAttributeListNestedEnumHexMask:
-        store.updateGenericAttributeListNestedEnumHexMask,
-      addEmptyGenericAttributeListNestedEnumEntry:
-        store.addEmptyGenericAttributeListNestedEnumEntry,
-      // Nested bitmap actions
-      setGenericAttributeListNestedBitmapDataType:
-        store.setGenericAttributeListNestedBitmapDataType,
-      addGenericAttributeListNestedBitmapEntry: store.addGenericAttributeListNestedBitmapEntry,
-      removeGenericAttributeListNestedBitmapEntry:
-        store.removeGenericAttributeListNestedBitmapEntry,
-      updateGenericAttributeListNestedBitmapEntryLiteral:
-        store.updateGenericAttributeListNestedBitmapEntryLiteral,
-      updateGenericAttributeListNestedBitmapEntryHexMask:
-        store.updateGenericAttributeListNestedBitmapEntryHexMask,
-      updateGenericAttributeListNestedBitmapEntryDescription:
-        store.updateGenericAttributeListNestedBitmapEntryDescription,
-      addEmptyGenericAttributeListNestedBitmapEntry:
-        store.addEmptyGenericAttributeListNestedBitmapEntry,
-    }),
-    // Only include add/remove functionality if not required
+    actionsSelector: (store) => store as GenericAttributeListProductSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
     onAdd: required ? undefined : (actions) => actions.addGenericAttributeList(),
     onRemove: required ? undefined : (actions) => actions.removeGenericAttributeList(),

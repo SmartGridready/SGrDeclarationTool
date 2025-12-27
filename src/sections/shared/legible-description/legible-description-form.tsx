@@ -1,16 +1,17 @@
-import { LANGUAGE_VALUES } from "@/models";
+"use client";
+
+import { FormSection } from "@/components/forms/form-section";
+import { FormGroup } from "@/components/forms/form-group";
+import { InputField } from "@/components/forms/input-field";
+import { SelectField } from "@/components/forms/select-field";
+import { TextareaField } from "@/components/forms/textarea-field";
+import { ArrayField } from "@/components/forms/array-field";
+import { useFormSection } from "@/hooks/use-form-section";
+import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
+import { LegibleDescription, Language, LANGUAGE_VALUES } from "@/models";
 import { createFormOptions } from "@/models/form-options-helper";
 
 const LANGUAGE_OPTIONS = createFormOptions(LANGUAGE_VALUES);
-import { useFormSection } from "@/hooks/use-form-section";
-import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
-import { LegibleDescription, Language } from "@/models";
-import { TextareaField } from "@/components/forms/textarea-field";
-import { ArrayField } from "@/components/forms/array-field";
-import { FormSection } from "@/components/forms/form-section";
-import { FormGroup } from "@/components/forms/form-group";
-import { SelectField } from "@/components/forms/select-field";
-import { InputField } from "@/components/forms/input-field";
 
 interface LegibleDescriptionFormProps<TStoreState extends LegibleDescriptionSlice> {
   /**
@@ -76,32 +77,13 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
 }: LegibleDescriptionFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
-    {
-      legibleDescriptions?: LegibleDescription[];
-    },
-    {
-      addEmptyLegibleDescription: () => void;
-      removeLegibleDescription: (index: number) => void;
-      removeAllLegibleDescriptions: () => void;
-      updateTextElement: (index: number, textElement: string) => void;
-      updateLanguage: (index: number, language: Language) => void;
-      updateUri: (index: number, uri: string | undefined) => void;
-      updateLabel?: (index: number, label: string | undefined) => void;
-    }
+    { legibleDescriptions?: LegibleDescription[] },
+    LegibleDescriptionSlice & Record<string, unknown>
   >({
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) => ({
-      addEmptyLegibleDescription: store.addEmptyLegibleDescription,
-      removeLegibleDescription: store.removeLegibleDescription,
-      removeAllLegibleDescriptions: store.removeAllLegibleDescriptions,
-      updateTextElement: store.updateTextElement,
-      updateLanguage: store.updateLanguage,
-      updateUri: store.updateUri,
-      updateLabel: store.updateLabel,
-    }),
-    // Only include add/remove functionality if not required
+    actionsSelector: (store) => store as LegibleDescriptionSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
     onAdd: required ? undefined : (actions) => actions.addEmptyLegibleDescription(),
     onRemove: required ? undefined : (actions) => actions.removeAllLegibleDescriptions(),

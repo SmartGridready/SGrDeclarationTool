@@ -7,11 +7,16 @@ import {
   createModbusAttributesSlice,
   ModbusAttributesSlice,
 } from "./modbus-attributes/modbus-attributes-slice";
+import {
+  createModbusFunctionalProfileListSlice,
+  ModbusFunctionalProfileListSlice,
+} from "./functional-profile-list/modbus-functional-profile-list-slice";
 
 export interface ModbusInterfaceSlice
   extends ModbusInterfaceDescriptionSlice,
     ModbusAttributesSlice {
-  // Additional modbus interface actions will be added here as needed
+  // Functional profile list actions
+  functionalProfileListActions: ModbusFunctionalProfileListSlice;
 }
 
 /**
@@ -24,12 +29,15 @@ export function createModbusInterfaceSlice<TState extends { device?: DeviceFrame
   const interfaceDescriptionSlice = createModbusInterfaceDescriptionSlice(set);
   // Create modbus attributes slice
   const modbusAttributesSlice = createModbusAttributesSlice(set);
+  // Create functional profile list slice
+  const functionalProfileListSlice = createModbusFunctionalProfileListSlice(set);
 
   return {
     // Spread interface description actions
     ...interfaceDescriptionSlice,
     // Spread modbus attributes actions
     ...modbusAttributesSlice,
-    // Additional modbus interface actions will be added here as needed
+    // Functional profile list actions (not spread, kept as object for clarity)
+    functionalProfileListActions: functionalProfileListSlice,
   };
 }

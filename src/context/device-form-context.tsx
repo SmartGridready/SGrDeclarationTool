@@ -18,6 +18,8 @@ export type { SerialInterfaceCapabilitySlice } from "@/sections/device/interface
 export type { ModbusAttributesSlice } from "@/sections/shared/modbus-attributes/modbus-attributes-slice";
 export type { ScalingFactorSlice } from "@/sections/shared/modbus-attributes/scaling-factor/scaling-factor-slice";
 export type { AccessProtectionSlice } from "@/sections/shared/modbus-attributes/access-protection/access-protection-slice";
+export type { ModbusInterfaceSlice } from "@/sections/device/interface-list/modbus-interface/modbus-interface-slice";
+export type { ModbusFunctionalProfileListSlice } from "@/sections/device/interface-list/modbus-interface/functional-profile-list/modbus-functional-profile-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -33,6 +35,8 @@ import type { SerialInterfaceCapabilitySlice } from "@/sections/device/interface
 import type { ModbusAttributesSlice } from "@/sections/shared/modbus-attributes/modbus-attributes-slice";
 import type { ScalingFactorSlice } from "@/sections/shared/modbus-attributes/scaling-factor/scaling-factor-slice";
 import type { AccessProtectionSlice } from "@/sections/shared/modbus-attributes/access-protection/access-protection-slice";
+import type { ModbusInterfaceSlice } from "@/sections/device/interface-list/modbus-interface/modbus-interface-slice";
+import type { ModbusFunctionalProfileListSlice } from "@/sections/device/interface-list/modbus-interface/functional-profile-list/modbus-functional-profile-list-slice";
 
 /**
  * Context value for device forms.
@@ -126,6 +130,16 @@ export interface DeviceFormContextValue {
    * Access protection actions, already bound to the correct path.
    */
   accessProtectionActions: AccessProtectionSlice;
+
+  /**
+   * Modbus interface actions (includes functional profile list and data point list).
+   */
+  modbusInterfaceActions: ModbusInterfaceSlice;
+
+  /**
+   * Functional profile list actions for modbus interface.
+   */
+  functionalProfileListActions: ModbusFunctionalProfileListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

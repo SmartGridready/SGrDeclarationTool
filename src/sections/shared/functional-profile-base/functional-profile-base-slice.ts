@@ -15,13 +15,8 @@ export interface FunctionalProfileBaseSlice
     GenericAttributeListProductSlice {
   // Functional Profile Description fields
   updateFunctionalProfileName: (functionalProfileName: string) => void;
-  // Programmer hints (also uses LegibleDescriptionSlice but needs separate slice instance)
-  addProgrammerHint: () => void;
-  removeProgrammerHint: (index: number) => void;
-  removeAllProgrammerHints: () => void;
-  updateProgrammerHintTextElement: (index: number, textElement: string) => void;
-  updateProgrammerHintLanguage: (index: number, language: string) => void;
-  updateProgrammerHintUri: (index: number, uri: string | undefined) => void;
+  // Programmer hints - returns a LegibleDescriptionSlice for use with LegibleDescriptionForm
+  getProgrammerHintsLegibleDescriptionSlice: () => LegibleDescriptionSlice;
 }
 
 /**
@@ -121,14 +116,7 @@ export function createFunctionalProfileBaseSlice<TState>(
         }
       }),
 
-    // Programmer hints (delegate to programmerHintsSlice)
-    addProgrammerHint: () => programmerHintsSlice.addEmptyLegibleDescription(),
-    removeProgrammerHint: (index) => programmerHintsSlice.removeLegibleDescription(index),
-    removeAllProgrammerHints: () => programmerHintsSlice.removeAllLegibleDescriptions(),
-    updateProgrammerHintTextElement: (index, textElement) =>
-      programmerHintsSlice.updateTextElement(index, textElement),
-    updateProgrammerHintLanguage: (index, language) =>
-      programmerHintsSlice.updateLanguage(index, language as "de" | "en" | "fr" | "it"),
-    updateProgrammerHintUri: (index, uri) => programmerHintsSlice.updateUri(index, uri),
+    // Programmer hints - returns the slice for direct use with LegibleDescriptionForm
+    getProgrammerHintsLegibleDescriptionSlice: () => programmerHintsSlice,
   };
 }

@@ -2,7 +2,7 @@
 
 import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
-import { SelectField } from "@/components/forms/select-field";
+import { ComboboxField } from "@/components/forms/combobox-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
 import {
@@ -69,43 +69,47 @@ export function ModbusRtuForm() {
           </FormGroup>
 
           <FormGroup>
-            <SelectField
+            <ComboboxField
               label="Baud Rate Selected"
               name="modbusRtuBaudRateSelected"
               required={true}
               options={BAUD_RATE_OPTIONS}
               value={modbusRtu.baudRateSelected}
               onChange={(value) => modbusRtuActions.updateBaudRateSelected(value)}
+              placeholder="Select baud rate or enter template (e.g., {{serial_baudrate}})"
               error={getError(fieldPath("baudRateSelected"))}
             />
-            <SelectField
+            <ComboboxField
               label="Byte Length Selected"
               name="modbusRtuByteLenSelected"
               required={true}
               options={BYTE_LENGTH_OPTIONS}
               value={modbusRtu.byteLenSelected}
               onChange={(value) => modbusRtuActions.updateByteLenSelected(value)}
+              placeholder="Select byte length or enter template (e.g., {{serial_databits}})"
               error={getError(fieldPath("byteLenSelected"))}
             />
           </FormGroup>
 
           <FormGroup>
-            <SelectField
+            <ComboboxField
               label="Parity Selected"
               name="modbusRtuParitySelected"
               required={true}
               options={PARITY_OPTIONS}
               value={modbusRtu.paritySelected}
               onChange={(value) => modbusRtuActions.updateParitySelected(value)}
+              placeholder="Select parity or enter template (e.g., {{serial_parity}})"
               error={getError(fieldPath("paritySelected"))}
             />
-            <SelectField
+            <ComboboxField
               label="Stop Bit Length Selected"
               name="modbusRtuStopBitLenSelected"
               required={true}
               options={STOP_BIT_LENGTH_OPTIONS}
               value={modbusRtu.stopBitLenSelected}
               onChange={(value) => modbusRtuActions.updateStopBitLenSelected(value)}
+              placeholder="Select stop bit length or enter template (e.g., {{serial_stopbits}})"
               error={getError(fieldPath("stopBitLenSelected"))}
             />
           </FormGroup>

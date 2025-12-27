@@ -5,6 +5,10 @@ import {
   createDataPointBaseSlice,
   DataPointBaseSlice,
 } from "@/sections/shared/data-point-base/data-point-base-slice";
+import {
+  createModbusAttributesSlice,
+  ModbusAttributesSlice,
+} from "./modbus-attributes/modbus-attributes-slice";
 
 export interface ModbusDataPointListSlice {
   // Data point list management
@@ -14,6 +18,9 @@ export interface ModbusDataPointListSlice {
 
   // Get slice for a specific data point
   getDataPointSlice: (index: number) => DataPointBaseSlice;
+
+  // Get modbus attributes slice for a specific data point
+  getModbusAttributesSlice: (index: number) => ModbusAttributesSlice;
 }
 
 /**
@@ -34,6 +41,9 @@ export function createModbusDataPointListSlice<TState extends { device?: DeviceF
 
   // Cache for data point slices
   const dataPointSliceCache = new Map<number, DataPointBaseSlice>();
+
+  // Cache for modbus attributes slices
+  const modbusAttributesSliceCache = new Map<number, ModbusAttributesSlice>();
 
   return {
     addEmptyDataPoint: () =>
@@ -57,6 +67,7 @@ export function createModbusDataPointListSlice<TState extends { device?: DeviceF
           list.dataPointListElement.splice(index, 1);
           // Clear cache for removed index
           dataPointSliceCache.delete(index);
+          modbusAttributesSliceCache.delete(index);
         }
       }),
 
@@ -66,6 +77,7 @@ export function createModbusDataPointListSlice<TState extends { device?: DeviceF
         if (list) {
           list.dataPointListElement = [];
           dataPointSliceCache.clear();
+          modbusAttributesSliceCache.clear();
         }
       }),
 
@@ -80,6 +92,15 @@ export function createModbusDataPointListSlice<TState extends { device?: DeviceF
         dataPointSliceCache.set(index, slice);
       }
       return dataPointSliceCache.get(index)!;
+    },
+
+    getModbusAttributesSlice: (index: number): ModbusAttributesSlice => {
+      // Create slice on demand and cache it
+      if (!modbusAttributesSliceCache.has(index)) {
+        const slice = createModbusAttributesSlice(set, (state) => getDataPoint(state, index));
+        modbusAttributesSliceCache.set(index, slice);
+      }
+      return modbusAttributesSliceCache.get(index)!;
     },
   };
 }

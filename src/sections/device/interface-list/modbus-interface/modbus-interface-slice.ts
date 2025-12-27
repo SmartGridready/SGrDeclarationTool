@@ -11,12 +11,18 @@ import {
   createModbusFunctionalProfileListSlice,
   ModbusFunctionalProfileListSlice,
 } from "./functional-profile-list/modbus-functional-profile-list-slice";
+import {
+  createTimeSyncBlockNotificationSlice,
+  TimeSyncBlockNotificationSlice,
+} from "./time-sync-block-notification/time-sync-block-notification-slice";
 
 export interface ModbusInterfaceSlice
   extends ModbusInterfaceDescriptionSlice,
     ModbusAttributesSlice {
   // Functional profile list actions
   functionalProfileListActions: ModbusFunctionalProfileListSlice;
+  // Time sync block notification actions
+  timeSyncBlockNotificationActions: TimeSyncBlockNotificationSlice;
 }
 
 /**
@@ -31,6 +37,8 @@ export function createModbusInterfaceSlice<TState extends { device?: DeviceFrame
   const modbusAttributesSlice = createModbusAttributesSlice(set);
   // Create functional profile list slice
   const functionalProfileListSlice = createModbusFunctionalProfileListSlice(set);
+  // Create time sync block notification slice
+  const timeSyncBlockNotificationSlice = createTimeSyncBlockNotificationSlice(set);
 
   return {
     // Spread interface description actions
@@ -39,5 +47,7 @@ export function createModbusInterfaceSlice<TState extends { device?: DeviceFrame
     ...modbusAttributesSlice,
     // Functional profile list actions (not spread, kept as object for clarity)
     functionalProfileListActions: functionalProfileListSlice,
+    // Time sync block notification actions
+    timeSyncBlockNotificationActions: timeSyncBlockNotificationSlice,
   };
 }

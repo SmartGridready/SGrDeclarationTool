@@ -31,6 +31,12 @@ export interface ModbusDataPointListSlice {
     functionalProfileIndex: number,
     dataPointIndex: number
   ) => ModbusDataPointConfigurationSlice;
+
+  // Update blockCacheIdentification for a specific data point
+  updateBlockCacheIdentification: (
+    index: number,
+    blockCacheIdentification: string | undefined
+  ) => void;
 }
 
 /**
@@ -103,5 +109,17 @@ export function createModbusDataPointListSlice<TState extends { device?: DeviceF
     ): ModbusDataPointConfigurationSlice => {
       return configurationSlice;
     },
+
+    updateBlockCacheIdentification: (index, blockCacheIdentification) =>
+      set((state) => {
+        const dataPoint = getDataPoint(state, index);
+        if (dataPoint) {
+          if (blockCacheIdentification !== undefined) {
+            dataPoint.blockCacheIdentification = blockCacheIdentification;
+          } else {
+            delete dataPoint.blockCacheIdentification;
+          }
+        }
+      }),
   };
 }

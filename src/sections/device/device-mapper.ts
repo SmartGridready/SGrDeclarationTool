@@ -6,6 +6,7 @@ import { mapDeviceIdentification } from "@/sections/device/device-identification
 import { mapDeviceInformation } from "@/sections/device/device-information/device-information-mapper";
 import { mapConfigurationList } from "@/sections/device/configuration-list/configuration-list-mapper";
 import { mapGenericAttributeListProduct } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-mapper";
+import { mapInterfaceList } from "@/sections/device/interface-list/interface-list-mapper";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 
 /**
@@ -65,10 +66,20 @@ function mapDevice(parsed: any): DeviceFrame {
 
   const identification = mapDeviceIdentification(frameData);
 
+  const interfaceListXml = getFirstElement(frameData, "interfaceList");
+  if (!interfaceListXml) {
+    throw new Error("interfaceList is required in DeviceFrame");
+  }
+  const interfaceList = mapInterfaceList(interfaceListXml);
+  if (!interfaceList) {
+    throw new Error("interfaceList must contain at least one interface type");
+  }
+
   const device: DeviceFrame = {
     ...identification,
     releaseNotes: mapReleaseNotes(releaseNotesXml),
     deviceInformation: mapDeviceInformation(deviceInformationXml),
+    interfaceList,
   };
 
   const configurationListXml = getFirstElement(frameData, "configurationList");

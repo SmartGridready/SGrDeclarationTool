@@ -2,6 +2,75 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.17.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.16.0...v0.17.0) (2025-12-27)
+
+
+### Features
+
+* add datapoint base and functional profile base to model (GL-9) ([20caddc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/20caddcb4e4505c8288ff3cd567485eb1873f88a))
+* add main form for modbus interface (GL-12) ([96e0191](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/96e0191657958e45c5c7fbbafa054ae8c27151a0))
+* add main slice for modbus interface (GL-16) ([be0fec0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/be0fec018a3f4e6c1cac12f583551c98654674c7))
+* add modbus interface to model (GL-9) ([2c14bf0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2c14bf031f4c63120a9cae7ec94fc0d6ffa86e20))
+* implement builders for modbus interface list (GL-8) ([6a06bf5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6a06bf53193df77ebd8315e75b88b69195eaa0fd))
+* implement combobox for parameter vars (GL-12) ([b26e0e0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b26e0e066bd422e0fc143666583629e496eafed8))
+* implement forms for modbus attributes (GL-12) ([ce84a70](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ce84a70858a693fdab62b9e8773b1c852ed34bcb))
+* implement forms for modbus data point configuration (GL-12) ([fb9b811](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fb9b811b655054461ef14ae1e5ffd480cf4fcbe0))
+* implement forms for modbus functional profile list (GL-12) ([f29993d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f29993d929ace2d9c5776ac37759eb37b5fd9c8e))
+* implement forms for modbus interface description (GL-12) ([31b4cc7](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/31b4cc7ae189ee12ce68bacd91c750dbc890300e))
+* implement forms for modbus time sync block (GL-12) ([bece000](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bece0006403f7c20d5cf5215027646d66ac98bfb))
+* implement main form for interface list (GL-16) ([07e7064](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/07e706474d96afa99ed1adcfe5c950a18c6e4d49))
+* implement main slice for interface list (GL-16) ([9886bc9](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9886bc9c7ba6b81b1c51fb0a21a5e948a64c4931))
+* implement mappers for modbus interface list (GL-7) ([99ac7b8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/99ac7b8486a68d34257871be96c9cd39a2d37a8f))
+* implement modbus attribute forms for data point level attributes (GL-12) ([9430c14](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9430c14544e496a3c8f05310fd3061fa3a225e1f))
+* implement modbus attribute forms for profile level attributes (GL-12) ([3b722e8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3b722e812f3245d76531da31b9b6aabd091ffd41))
+* implement modbus attribute slices for data point level attributes (GL-16) ([43d13f1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/43d13f1c35deb47b9827e135eaf3cf5e403b0eb5))
+* implement modbus attribute slices for profile level attributes (GL-16) ([90589b7](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/90589b7010422496b533eb3cb979ad74e8aa1c0c))
+* implement schemas for modbus interface list and use them in builders (GL-18) ([0b7770f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0b7770f45c2dcc1abbb93578d1bd8819a7fbba03))
+* implement shared base builders for interface list reusage (GL-8) ([2183a33](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2183a33afec557bdbe7ec6910637bbb023c7c1ff))
+* implement shared base forms for interface list reusage (GL-12) ([f9f26d8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f9f26d88a13c7b4e16969b8cd06f56693bcf0448))
+* implement shared base mappers for interface list reusage (GL-7) ([2b7cd39](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2b7cd39773ccfeb9544233cb86c78864e93d17df))
+* implement shared base schemas for interface list reusage (GL-18) ([56f756e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/56f756ec6013b1036b023fd6791353e67cfa5844))
+* implement shared base slices for interface list reusage (GL-16) ([83e4fd1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/83e4fd1a7945d1e1ff58400c829fcf3b06b58efa))
+* implement slices for modbus attributes (GL-16) ([170825f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/170825f74c368d769bed2d6d88edacc6cc16eac9))
+* implement slices for modbus data point configuration (GL-16) ([ad66400](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ad66400ce1b8344000687e7ab945c7868fbe8819))
+* implement slices for modbus functional profile list (GL-16) ([ca0effc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ca0effcef22cf24b7bf1d4241617d66b098a2272))
+* implement slices for modbus interface description (GL-16) ([6cd7809](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6cd78098a94e8b606ab928b5691717a54000e41d))
+* implement slices for modbus serial capability (GL-16) ([2dd283f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2dd283f6af8b356b949e7a6a420fe19dc91eff35))
+* implement slices for modbus time sync block (GL-16) ([200a790](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/200a790bacfdcb4c3d65bd3823fb6033c5c5898a))
+
+
+### Bug Fixes
+
+* building order of bitrank and device information (GL-8) ([f04e57d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f04e57de170809ad5770cc0ab6b6f1500d98f054))
+* correctly remove sync block on delete ([73fc23c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/73fc23c3289cde38fa9fba1cfe1fd35068b3d0c1))
+
+
+### Code Refactoring
+
+* correct some inconsistant imports and selector ([e85d8b2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e85d8b230fc6d48e3a72a7bfd02c05e1c303e72b))
+* define form options in model as single source of truth ([a975bd5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a975bd585770ebf46899272850bbd14e1b743f46))
+* dynamic parameter description list to use adapter pattern (GL-13) ([97096a5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/97096a540413748acdd0de9248682427a955c1a3))
+* implement reuseable builders for generic attribute list product (GL-8) ([48c893f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/48c893f5930a348c860b28c5ffde6deb4a915bf2))
+* implement reuseable builders for parameter list (GL-8) ([b070d24](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b070d24c3ede0a2f1cd58a5c573d3064cd63c1f2))
+* implement reuseable forms for generic attribute list product (GL-12) ([c30d88f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c30d88f635cef3d9b375dfd41b02aae64c19a10e))
+* implement reuseable forms for parameter list (GL-13) ([15ba4ab](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/15ba4ab7fe1f0b362c79e8bedb1fcc5605d6c3ef))
+* implement reuseable mapper for generic attribute list product (GL-7) ([2ae3e3f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2ae3e3f272e0f72b4157f5b267c1cc1ab1108cc8))
+* implement reuseable mapper for parameter list (GL-7) ([6fa2816](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6fa2816774c0e119d438c8e6183f90eba37ba8f7))
+* implement reuseable schemas for generic attribute list product (GL-18) ([31e12cc](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/31e12ccc5b8f602c28dcbbeb7972ade22d0cf037))
+* implement reuseable schemas for parameter list (GL-18) ([1b2271c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1b2271c0fdd2517d061a749f49721bc6e68dd042))
+* implement reuseable slices for generic attribute list product (GL-16) ([e7dd831](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e7dd8318547b73d06d475ecc762a1279c0341879))
+* implement reuseable slices for parameter list (GL-16) ([14f2736](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/14f27369e7c83b8832b72dc354a50d7880fdbcc7))
+* implement shared forms for modbus attributes and implement them (GL-12) ([b755df5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b755df5542331e29af31216816b05c79fb11c829))
+* implement shared slices for modbus attributes and implement them (GL-16) ([2373337](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/23733373ad6357a98e5a1962d7de36f2a0017608))
+* make profile identification use useformsection and rename parameter list to dynamic parameter list (GL-13) ([02f9b01](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/02f9b0155f92683e1d1cae86668fbe2339a0881d))
+* remove buggy identifier (GL-14) ([2fe3e78](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2fe3e7880932534610251a4af1e5cd8724bb1e24))
+* rename datapointindex to listindex for reusage ([43ae39f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/43ae39f5734109ec47f413f3d59ea26e928aff8a))
+* shared generic attribute lists to use adapter pattern (GL-12) ([fb05544](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fb055443f7abc0d79dbca7b0f81d01ba1a6f2576))
+* simplify providers, implement helpers for context store adapters and remove unused functions ([ead4ed3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ead4ed3f4c05bc8090efe14a202bb7b0e5b807f5))
+* standardize shared form props and replace type casting with explicit action mapping ([b78251a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b78251a288f555cc320103961e9adede3a449de8))
+* use file naming convention (GL-9) ([44cc117](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/44cc1178491aa82a9722648057745b941269453c))
+* use store context and form provider for sync block (GL-12) ([16e0f9f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/16e0f9fb8504ff72105de415c3995057783c3bbe))
+
 ## [0.16.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.15.0...v0.16.0) (2025-12-21)
 
 

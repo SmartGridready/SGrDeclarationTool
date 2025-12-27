@@ -1,6 +1,21 @@
 import { useRef } from "react";
 
 /**
+ * Creates a useStore adapter that wraps a slice object.
+ * This is useful when you have a slice instance and need to pass it to a component
+ * that expects a useStore hook.
+ *
+ * @example
+ * const useDataPointStore = createSliceAdapter(dataPointSlice);
+ * <DataPointBaseForm useStore={useDataPointStore} ... />
+ */
+export function createSliceAdapter<TSlice>(slice: TSlice) {
+  return <TSelected>(selector: (store: TSlice) => TSelected): TSelected => {
+    return selector(slice);
+  };
+}
+
+/**
  * Shallow comparison for objects (one level deep)
  */
 function shallowEqual<T extends Record<string, unknown>>(objA: T, objB: T): boolean {

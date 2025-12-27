@@ -27,25 +27,8 @@ export function ProfileIdentificationForm() {
       useStore={useStore}
       useValidation={useValidation}
       stateSelector={(store) => ({
-        specificationOwnerIdentification:
-          store.profile?.functionalProfile?.functionalProfileIdentification
-            ?.specificationOwnerIdentification,
-        functionalProfileCategory:
-          store.profile?.functionalProfile?.functionalProfileIdentification
-            ?.functionalProfileCategory,
-        functionalProfileType:
-          store.profile?.functionalProfile?.functionalProfileIdentification?.functionalProfileType,
-        levelOfOperation:
-          store.profile?.functionalProfile?.functionalProfileIdentification?.levelOfOperation,
-        primaryVersionNumber:
-          store.profile?.functionalProfile?.functionalProfileIdentification?.versionNumber
-            ?.primaryVersionNumber,
-        secondaryVersionNumber:
-          store.profile?.functionalProfile?.functionalProfileIdentification?.versionNumber
-            ?.secondaryVersionNumber,
-        subReleaseVersionNumber:
-          store.profile?.functionalProfile?.functionalProfileIdentification?.versionNumber
-            ?.subReleaseVersionNumber,
+        functionalProfileIdentification:
+          store.profile?.functionalProfile?.functionalProfileIdentification,
       })}
       fieldPathPrefix="functionalProfile.functionalProfileIdentification"
     />

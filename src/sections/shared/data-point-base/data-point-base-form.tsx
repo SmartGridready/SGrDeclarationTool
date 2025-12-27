@@ -100,121 +100,113 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
   const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
 
   return (
-    <FormSection title={title} description={description} nested={nested}>
+    <FormSection title={title} description={description} nested={nested} required={true}>
       <div className="space-y-6">
         {/* Basic Data Point Fields */}
-        <FormSection title="Basic Information" nested={true}>
-          <FormGroup columns={2}>
-            <InputField
-              label="Data Point Name"
-              name="dataPointName"
-              required={true}
-              type="text"
-              value={dataPoint.dataPointName}
-              onChange={(value) => actions.updateDataPointName(value)}
-              error={getFieldError("dataPointName")}
-            />
-            <SelectField
-              label="Data Direction"
-              name="dataDirection"
-              options={DATA_DIRECTION_OPTIONS}
-              required={true}
-              value={dataPoint.dataDirection}
-              onChange={(value) => actions.updateDataDirection(value as DataDirectionProduct)}
-              error={getFieldError("dataDirection")}
-            />
-          </FormGroup>
+        <FormGroup columns={2}>
+          <InputField
+            label="Data Point Name"
+            name="dataPointName"
+            required={true}
+            type="text"
+            value={dataPoint.dataPointName}
+            onChange={(value) => actions.updateDataPointName(value)}
+            error={getFieldError("dataPointName")}
+          />
+          <SelectField
+            label="Data Direction"
+            name="dataDirection"
+            options={DATA_DIRECTION_OPTIONS}
+            required={true}
+            value={dataPoint.dataDirection}
+            onChange={(value) => actions.updateDataDirection(value as DataDirectionProduct)}
+            error={getFieldError("dataDirection")}
+          />
+        </FormGroup>
 
-          <FormGroup columns={2}>
-            <SelectField
-              label="Data Type"
-              name="dataType"
-              options={DATA_TYPE_OPTIONS as unknown as { value: string; label: string }[]}
-              required={true}
-              value={getDataTypeProductStringValue(dataPoint.dataType)}
-              onChange={(value) => {
-                const newDataType = createDataTypeProductFromString(value);
-                if (value === "enum" && !isEnumDataTypeProduct(dataPoint.dataType)) {
-                  actions.setEnumDataType({ enumEntry: [] });
-                } else if (value === "bitmap" && !isBitmapDataTypeProduct(dataPoint.dataType)) {
-                  actions.setBitmapDataType({ bitmapEntry: [] });
-                } else {
-                  actions.updateDataType(newDataType);
-                }
-              }}
-              error={getFieldError("dataType")}
-            />
-            <SelectField
-              label="Unit"
-              name="unit"
-              options={UNIT_OPTIONS}
-              required={true}
-              value={dataPoint.unit}
-              onChange={(value) => actions.updateUnit(value as Units)}
-              error={getFieldError("unit")}
-            />
-          </FormGroup>
+        <FormGroup columns={2}>
+          <SelectField
+            label="Data Type"
+            name="dataType"
+            options={DATA_TYPE_OPTIONS as unknown as { value: string; label: string }[]}
+            required={true}
+            value={getDataTypeProductStringValue(dataPoint.dataType)}
+            onChange={(value) => {
+              const newDataType = createDataTypeProductFromString(value);
+              if (value === "enum" && !isEnumDataTypeProduct(dataPoint.dataType)) {
+                actions.setEnumDataType({ enumEntry: [] });
+              } else if (value === "bitmap" && !isBitmapDataTypeProduct(dataPoint.dataType)) {
+                actions.setBitmapDataType({ bitmapEntry: [] });
+              } else {
+                actions.updateDataType(newDataType);
+              }
+            }}
+            error={getFieldError("dataType")}
+          />
+          <SelectField
+            label="Unit"
+            name="unit"
+            options={UNIT_OPTIONS}
+            required={true}
+            value={dataPoint.unit}
+            onChange={(value) => actions.updateUnit(value as Units)}
+            error={getFieldError("unit")}
+          />
+        </FormGroup>
 
-          <FormGroup columns={2}>
-            <InputField
-              label="Value"
-              name="value"
-              required={false}
-              type="text"
-              value={dataPoint.value || ""}
-              onChange={(value) => actions.updateValue(value || undefined)}
-              placeholder="Optional default value"
-              error={getFieldError("value")}
-            />
-            <InputField
-              label="Array Length"
-              name="arrayLength"
-              type="number"
-              value={dataPoint.arrayLength?.toString() || ""}
-              onChange={(value) =>
-                actions.updateArrayLength(value ? parseInt(value, 10) : undefined)
-              }
-              placeholder="Optional array length"
-              error={getFieldError("arrayLength")}
-            />
-          </FormGroup>
+        <FormGroup columns={2}>
+          <InputField
+            label="Value"
+            name="value"
+            required={false}
+            type="text"
+            value={dataPoint.value || ""}
+            onChange={(value) => actions.updateValue(value || undefined)}
+            placeholder="Optional default value"
+            error={getFieldError("value")}
+          />
+          <InputField
+            label="Array Length"
+            name="arrayLength"
+            type="number"
+            value={dataPoint.arrayLength?.toString() || ""}
+            onChange={(value) => actions.updateArrayLength(value ? parseInt(value, 10) : undefined)}
+            placeholder="Optional array length"
+            error={getFieldError("arrayLength")}
+          />
+        </FormGroup>
 
-          <FormGroup columns={3}>
-            <InputField
-              label="Minimum Value"
-              name="minimumValue"
-              type="number"
-              value={dataPoint.minimumValue?.toString() || ""}
-              onChange={(value) =>
-                actions.updateMinimumValue(value ? parseFloat(value) : undefined)
-              }
-              placeholder="Optional minimum"
-              error={getFieldError("minimumValue")}
-            />
-            <InputField
-              label="Maximum Value"
-              name="maximumValue"
-              type="number"
-              value={dataPoint.maximumValue?.toString() || ""}
-              onChange={(value) =>
-                actions.updateMaximumValue(value ? parseFloat(value) : undefined)
-              }
-              placeholder="Optional maximum"
-              error={getFieldError("maximumValue")}
-            />
-            <InputField
-              label="Unit Conversion Multiplicator"
-              name="unitConversionMultiplicator"
-              type="number"
-              value={dataPoint.unitConversionMultiplicator?.toString() || ""}
-              onChange={(value) =>
-                actions.updateUnitConversionMultiplicator(value ? parseFloat(value) : undefined)
-              }
-              placeholder="Optional multiplicator"
-              error={getFieldError("unitConversionMultiplicator")}
-            />
-          </FormGroup>
-        </FormSection>
+        <FormGroup columns={3}>
+          <InputField
+            label="Minimum Value"
+            name="minimumValue"
+            type="number"
+            value={dataPoint.minimumValue?.toString() || ""}
+            onChange={(value) => actions.updateMinimumValue(value ? parseFloat(value) : undefined)}
+            placeholder="Optional minimum"
+            error={getFieldError("minimumValue")}
+          />
+          <InputField
+            label="Maximum Value"
+            name="maximumValue"
+            type="number"
+            value={dataPoint.maximumValue?.toString() || ""}
+            onChange={(value) => actions.updateMaximumValue(value ? parseFloat(value) : undefined)}
+            placeholder="Optional maximum"
+            error={getFieldError("maximumValue")}
+          />
+          <InputField
+            label="Unit Conversion Multiplicator"
+            name="unitConversionMultiplicator"
+            type="number"
+            value={dataPoint.unitConversionMultiplicator?.toString() || ""}
+            onChange={(value) =>
+              actions.updateUnitConversionMultiplicator(value ? parseFloat(value) : undefined)
+            }
+            placeholder="Optional multiplicator"
+            error={getFieldError("unitConversionMultiplicator")}
+          />
+        </FormGroup>
 
         {/* Data Type Specific Forms */}
         {isEnumDataTypeProduct(dataPoint.dataType) && (
@@ -285,19 +277,9 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
         {/* Programmer Hints */}
         <LegibleDescriptionForm
           useStore={(selector) => {
-            // Create an adapter that maps programmer hints actions to LegibleDescriptionSlice interface
-            const adaptedStore = {
-              ...actions,
-              addLegibleDescription: actions.addProgrammerHint,
-              removeLegibleDescription: actions.removeProgrammerHint,
-              removeAllLegibleDescriptions: actions.removeAllProgrammerHints,
-              updateTextElement: actions.updateProgrammerHintTextElement,
-              updateLanguage: (index: number, language: string) =>
-                actions.updateProgrammerHintLanguage(index, language as "de" | "en" | "fr" | "it"),
-              updateUri: actions.updateProgrammerHintUri,
-              addEmptyLegibleDescription: actions.addProgrammerHint,
-            };
-            return selector(adaptedStore as unknown as TStoreState);
+            // Use the adapter from the slice that exposes programmer hints as LegibleDescriptionSlice
+            const programmerHintsSlice = actions.getProgrammerHintsLegibleDescriptionSlice();
+            return selector(programmerHintsSlice as unknown as TStoreState);
           }}
           useValidation={useValidation}
           stateSelector={(store) => ({

@@ -76,43 +76,27 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
   const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
 
   return (
-    <FormSection title={title} description={description} nested={nested}>
+    <FormSection title={title} description={description} nested={nested} required={true}>
       <div className="space-y-6">
         {/* Functional Profile Name */}
-        <FormSection title="Functional Profile Name" nested={true}>
-          <InputField
-            label="Functional Profile Name"
-            name="functionalProfileName"
-            required={true}
-            type="text"
-            value={functionalProfile.functionalProfileName}
-            onChange={(value) => actions.updateFunctionalProfileName(value)}
-            error={getFieldError("functionalProfileName")}
-          />
-        </FormSection>
+        <InputField
+          label="Functional Profile Name"
+          name="functionalProfileName"
+          required={true}
+          type="text"
+          value={functionalProfile.functionalProfileName}
+          onChange={(value) => actions.updateFunctionalProfileName(value)}
+          error={getFieldError("functionalProfileName")}
+        />
 
         {/* Profile Identification */}
         <ProfileIdentificationForm
           useStore={useStore}
           useValidation={useValidation}
           stateSelector={(store) => ({
-            specificationOwnerIdentification:
-              functionalProfile.functionalProfileIdentification?.specificationOwnerIdentification,
-            functionalProfileCategory:
-              functionalProfile.functionalProfileIdentification?.functionalProfileCategory,
-            functionalProfileType:
-              functionalProfile.functionalProfileIdentification?.functionalProfileType,
-            levelOfOperation: functionalProfile.functionalProfileIdentification?.levelOfOperation,
-            primaryVersionNumber:
-              functionalProfile.functionalProfileIdentification?.versionNumber
-                ?.primaryVersionNumber,
-            secondaryVersionNumber:
-              functionalProfile.functionalProfileIdentification?.versionNumber
-                ?.secondaryVersionNumber,
-            subReleaseVersionNumber:
-              functionalProfile.functionalProfileIdentification?.versionNumber
-                ?.subReleaseVersionNumber,
+            functionalProfileIdentification: functionalProfile.functionalProfileIdentification,
           })}
+          isAddedSelector={(store) => !!functionalProfile.functionalProfileIdentification}
           fieldPathPrefix={`${fieldPathPrefix}.functionalProfileIdentification`}
           required={true}
           nested={true}
@@ -148,19 +132,9 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
         {/* Programmer Hints */}
         <LegibleDescriptionForm
           useStore={(selector) => {
-            // Create an adapter that maps programmer hints actions to LegibleDescriptionSlice interface
-            const adaptedStore = {
-              ...actions,
-              addLegibleDescription: actions.addProgrammerHint,
-              removeLegibleDescription: actions.removeProgrammerHint,
-              removeAllLegibleDescriptions: actions.removeAllProgrammerHints,
-              updateTextElement: actions.updateProgrammerHintTextElement,
-              updateLanguage: (index: number, language: string) =>
-                actions.updateProgrammerHintLanguage(index, language as "de" | "en" | "fr" | "it"),
-              updateUri: actions.updateProgrammerHintUri,
-              addEmptyLegibleDescription: actions.addProgrammerHint,
-            };
-            return selector(adaptedStore as unknown as TStoreState);
+            // Use the adapter from the slice that exposes programmer hints as LegibleDescriptionSlice
+            const programmerHintsSlice = actions.getProgrammerHintsLegibleDescriptionSlice();
+            return selector(programmerHintsSlice as unknown as TStoreState);
           }}
           useValidation={useValidation}
           stateSelector={(store) => ({

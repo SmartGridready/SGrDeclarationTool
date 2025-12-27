@@ -71,6 +71,8 @@ export const useDeviceStore = create<DeviceStoreState>()(
     {
       name: "sgr-device-storage",
       storage: createJSONStorage(() => localStorage),
+      // Only persist the device state, not the action objects with functions
+      partialize: (state) => ({ device: state.device }),
     }
   )
 );

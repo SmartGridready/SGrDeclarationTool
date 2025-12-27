@@ -286,6 +286,8 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         addMasterFunctionSupported: store.addMasterFunctionSupported,
         removeMasterFunctionSupported: store.removeMasterFunctionSupported,
         updateMasterFunctionSupported: store.updateMasterFunctionSupported,
+        // Functional profile list actions
+        functionalProfileListActions: store.functionalProfileListActions,
       },
 
       // Modbus interface description actions (exposed separately for convenience)
@@ -436,6 +438,63 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
         removeModbusExceptionCode: store.removeModbusExceptionCode,
         updateModbusExceptionCode: store.updateModbusExceptionCode,
       },
+
+      // Modbus interface actions (includes functional profile list)
+      modbusInterfaceActions: {
+        // Interface description actions
+        updateModbusInterfaceSelection: store.updateModbusInterfaceSelection,
+        updateFirstRegisterAddressIsOne: store.updateFirstRegisterAddressIsOne,
+        updateBitOrder: store.updateBitOrder,
+        addModbusTcp: store.addModbusTcp,
+        removeModbusTcp: store.removeModbusTcp,
+        updatePort: store.updatePort,
+        updateAddress: store.updateAddress,
+        updateSlaveId: store.updateSlaveId,
+        addModbusRtu: store.addModbusRtu,
+        removeModbusRtu: store.removeModbusRtu,
+        updateSlaveAddr: store.updateSlaveAddr,
+        updatePortName: store.updatePortName,
+        updateBaudRateSelected: store.updateBaudRateSelected,
+        updateByteLenSelected: store.updateByteLenSelected,
+        updateParitySelected: store.updateParitySelected,
+        updateStopBitLenSelected: store.updateStopBitLenSelected,
+        updateSerialInterfaceCapability: store.updateSerialInterfaceCapability,
+        addBaudRateSupported: store.addBaudRateSupported,
+        removeBaudRateSupported: store.removeBaudRateSupported,
+        addByteLenSupported: store.addByteLenSupported,
+        removeByteLenSupported: store.removeByteLenSupported,
+        addParitySupported: store.addParitySupported,
+        removeParitySupported: store.removeParitySupported,
+        addStopBitLenSupported: store.addStopBitLenSupported,
+        removeStopBitLenSupported: store.removeStopBitLenSupported,
+        addMasterFunctionsSupportedList: store.addMasterFunctionsSupportedList,
+        removeMasterFunctionsSupportedList: store.removeMasterFunctionsSupportedList,
+        addMasterFunctionSupported: store.addMasterFunctionSupported,
+        removeMasterFunctionSupported: store.removeMasterFunctionSupported,
+        updateMasterFunctionSupported: store.updateMasterFunctionSupported,
+        // Modbus attributes actions
+        addModbusAttributes: store.addModbusAttributes,
+        removeModbusAttributes: store.removeModbusAttributes,
+        updateStepByIncrement: store.updateStepByIncrement,
+        updateSunssf: store.updateSunssf,
+        updatePollingLatencyMs: store.updatePollingLatencyMs,
+        updateLayer6Deviation: store.updateLayer6Deviation,
+        addScalingFactor: store.addScalingFactor,
+        removeScalingFactor: store.removeScalingFactor,
+        updateMultiplicator: store.updateMultiplicator,
+        updatePowerOf10: store.updatePowerOf10,
+        addAccessProtection: store.addAccessProtection,
+        removeAccessProtection: store.removeAccessProtection,
+        updateIsEnabled: store.updateIsEnabled,
+        addModbusExceptionCode: store.addModbusExceptionCode,
+        removeModbusExceptionCode: store.removeModbusExceptionCode,
+        updateModbusExceptionCode: store.updateModbusExceptionCode,
+        // Functional profile list actions
+        functionalProfileListActions: store.functionalProfileListActions,
+      },
+
+      // Functional profile list actions (exposed separately for convenience)
+      functionalProfileListActions: store.functionalProfileListActions,
     };
   }, [store]);
 

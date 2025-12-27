@@ -10,6 +10,7 @@ import {
   FunctionalProfileCategory,
   LevelOfOperation,
   SpecificationOwnerIdentification,
+  FunctionalProfileIdentification,
 } from "@/models";
 import { createFormOptions } from "@/models/form-options-helper";
 import { FunctionalProfileIdentificationSlice } from "@/sections/shared/profile-identification/profile-identification-slice";
@@ -31,13 +32,7 @@ interface ProfileIdentificationFormProps<TStoreState extends FunctionalProfileId
    * Selector to get profile identification state from the store
    */
   stateSelector: (store: TStoreState) => {
-    specificationOwnerIdentification?: SpecificationOwnerIdentification;
-    functionalProfileCategory?: FunctionalProfileCategory;
-    functionalProfileType?: string;
-    levelOfOperation?: LevelOfOperation;
-    primaryVersionNumber?: number;
-    secondaryVersionNumber?: number;
-    subReleaseVersionNumber?: number;
+    functionalProfileIdentification?: FunctionalProfileIdentification;
   };
   /**
    * Selector to check if profile identification exists (for optional profile identification)
@@ -81,13 +76,7 @@ export function ProfileIdentificationForm<
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
     {
-      specificationOwnerIdentification?: SpecificationOwnerIdentification;
-      functionalProfileCategory?: FunctionalProfileCategory;
-      functionalProfileType?: string;
-      levelOfOperation?: LevelOfOperation;
-      primaryVersionNumber?: number;
-      secondaryVersionNumber?: number;
-      subReleaseVersionNumber?: number;
+      functionalProfileIdentification?: FunctionalProfileIdentification;
     },
     FunctionalProfileIdentificationSlice & Record<string, unknown>
   >({
@@ -108,6 +97,7 @@ export function ProfileIdentificationForm<
     isAddedSelector: required ? undefined : isAddedSelector,
   });
 
+  const identification = state.functionalProfileIdentification;
   const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
 
   return (
@@ -126,7 +116,7 @@ export function ProfileIdentificationForm<
           name="specificationOwnerIdentification"
           required={true}
           type="text"
-          value={state.specificationOwnerIdentification}
+          value={identification?.specificationOwnerIdentification}
           onChange={(value) => actions.updateSpecificationOwnerIdentification(value)}
           error={getFieldError("specificationOwnerIdentification")}
         />
@@ -135,7 +125,7 @@ export function ProfileIdentificationForm<
           name="functionalProfileCategory"
           options={PROFILE_IDENTIFICATION_CATEGORY}
           required={true}
-          value={state.functionalProfileCategory}
+          value={identification?.functionalProfileCategory}
           onChange={(value) =>
             actions.updateFunctionalProfileCategory(value as FunctionalProfileCategory)
           }
@@ -149,7 +139,7 @@ export function ProfileIdentificationForm<
           name="functionalProfileType"
           required={true}
           type="text"
-          value={state.functionalProfileType}
+          value={identification?.functionalProfileType}
           onChange={(value) => actions.updateFunctionalProfileType(value)}
           error={getFieldError("functionalProfileType")}
         />
@@ -158,7 +148,7 @@ export function ProfileIdentificationForm<
           name="levelOfOperation"
           options={LEVEL_OF_OPERATION}
           required={true}
-          value={state.levelOfOperation}
+          value={identification?.levelOfOperation}
           onChange={(value) => actions.updateLevelOfOperation(value as LevelOfOperation)}
           error={getFieldError("levelOfOperation")}
         />
@@ -170,7 +160,7 @@ export function ProfileIdentificationForm<
           name="primaryVersionNumber"
           type="number"
           required={true}
-          value={state.primaryVersionNumber?.toString()}
+          value={identification?.versionNumber?.primaryVersionNumber?.toString()}
           onChange={(value) => actions.updatePrimaryVersionNumber(value ? parseInt(value, 10) : 0)}
           error={getFieldError("versionNumber.primaryVersionNumber")}
         />
@@ -179,7 +169,7 @@ export function ProfileIdentificationForm<
           name="secondaryVersionNumber"
           type="number"
           required={true}
-          value={state.secondaryVersionNumber?.toString()}
+          value={identification?.versionNumber?.secondaryVersionNumber?.toString()}
           onChange={(value) =>
             actions.updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)
           }
@@ -190,7 +180,7 @@ export function ProfileIdentificationForm<
           name="subReleaseVersionNumber"
           type="number"
           required={true}
-          value={state.subReleaseVersionNumber?.toString()}
+          value={identification?.versionNumber?.subReleaseVersionNumber?.toString()}
           onChange={(value) =>
             actions.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)
           }

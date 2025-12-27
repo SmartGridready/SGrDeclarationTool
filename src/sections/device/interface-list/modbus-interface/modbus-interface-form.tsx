@@ -5,6 +5,7 @@ import { useDeviceFormContext } from "@/context/device-form-context";
 import { ModbusInterfaceDescriptionForm } from "./interface-description/interface-description-form";
 import { ModbusAttributesForm } from "./modbus-attributes/modbus-attributes-form";
 import { ModbusFunctionalProfileListForm } from "./functional-profile-list/modbus-functional-profile-list-form";
+import { TimeSyncBlockNotificationForm } from "./time-sync-block-notification/time-sync-block-notification-form";
 
 export function ModbusInterfaceForm() {
   const { useDeviceState } = useDeviceFormContext();
@@ -26,6 +27,7 @@ export function ModbusInterfaceForm() {
       <ModbusInterfaceDescriptionForm />
       <ModbusAttributesForm />
       <ModbusFunctionalProfileListForm />
+      <TimeSyncBlockNotificationForm />
     </FormSection>
   );
 }

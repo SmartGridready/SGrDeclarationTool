@@ -2,6 +2,8 @@
 
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
+import { InputField } from "@/components/forms/input-field";
+import { FormGroup } from "@/components/forms/form-group";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { useDeviceFormContext } from "@/context/device-form-context";
 import { ModbusDataPoint } from "@/models/product/modbus-interface";
@@ -110,6 +112,8 @@ function ModbusDataPointItemForm({
       ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
   );
 
+  const { getError } = useValidation();
+
   const configurationSlice = dataPointListSlice.getModbusDataPointConfigurationSlice(
     functionalProfileIndex,
     dataPointIndex
@@ -135,6 +139,33 @@ function ModbusDataPointItemForm({
         fieldPathPrefix={`${fieldPathPrefix}.modbusDataPointConfiguration`}
         getDataPoint={() => dataPointData}
       />
+
+      <FormSection
+        title="Block Cache Identification"
+        description="Reference to TimeSyncBlockNotification.blockCacheIdentification"
+        required={false}
+        nested={true}
+        isAdded={dataPointData?.blockCacheIdentification !== undefined}
+        onAdd={() => dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, "")}
+        onRemove={() =>
+          dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, undefined)
+        }
+      >
+        <FormGroup>
+          <InputField
+            label="Block Cache Identification"
+            name={`${fieldPathPrefix}-blockCacheIdentification`}
+            required={false}
+            type="text"
+            value={dataPointData?.blockCacheIdentification || ""}
+            onChange={(value) =>
+              dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, value || undefined)
+            }
+            placeholder="Enter block cache identification"
+            error={getError(`${fieldPathPrefix}.blockCacheIdentification`)}
+          />
+        </FormGroup>
+      </FormSection>
 
       <DataPointModbusAttributesForm
         dataPointIndex={dataPointIndex}

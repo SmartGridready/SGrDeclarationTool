@@ -5,6 +5,10 @@ import {
   GenericAttributeListProductEnd,
   Units,
 } from "@/models";
+import {
+  createEmptyGenericAttributeProduct,
+  createEmptyGenericAttributeProductEnd,
+} from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 import {
   createGenericAttributeListProductSimpleEnumSlice,
@@ -137,23 +141,11 @@ export function createGenericAttributeListProductSlice<TState>(
         if (current) {
           const list = ensureArray(current.genericAttributeListElement, () => []);
           // Default to simple attribute
-          list.push({
-            name: "",
-            dataType: { float64: {} },
-            value: "",
-            unit: "NO_UNITS",
-          });
+          list.push(createEmptyGenericAttributeProduct());
           current.genericAttributeListElement = list;
         } else {
           setGenericAttributeList(state, {
-            genericAttributeListElement: [
-              {
-                name: "",
-                dataType: { float64: {} },
-                value: "",
-                unit: "NO_UNITS",
-              },
-            ],
+            genericAttributeListElement: [createEmptyGenericAttributeProduct()],
           });
         }
       }),
@@ -238,12 +230,7 @@ export function createGenericAttributeListProductSlice<TState>(
             element.genericAttributeList.genericAttributeListElement,
             () => []
           );
-          list.push({
-            name: "",
-            dataType: { float64: {} },
-            value: "",
-            unit: "NO_UNITS",
-          });
+          list.push(createEmptyGenericAttributeProductEnd());
           element.genericAttributeList.genericAttributeListElement = list;
         }
       }),

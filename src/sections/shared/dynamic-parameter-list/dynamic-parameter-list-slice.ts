@@ -1,4 +1,5 @@
 import { DataTypeProduct, DynamicParameterDescriptionList } from "@/models";
+import { createEmptyDynamicParameterDescriptionListElement } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
 import {
   createDynamicParameterListEnumSlice,
@@ -78,11 +79,11 @@ export function createDynamicParameterListSlice<TState>(
         const paramList = getParameterList(state, listIndex);
         if (paramList) {
           const list = ensureArray(paramList.parameterListElement, () => []);
-          list.push({ name: "", dataType: { float64: {} } });
+          list.push(createEmptyDynamicParameterDescriptionListElement());
           paramList.parameterListElement = list;
         } else {
           setParameterList(state, listIndex, {
-            parameterListElement: [{ name: "", dataType: { float64: {} } }],
+            parameterListElement: [createEmptyDynamicParameterDescriptionListElement()],
           });
         }
       }),

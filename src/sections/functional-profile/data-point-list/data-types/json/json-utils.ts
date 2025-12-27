@@ -3,6 +3,7 @@
  */
 
 import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
+import { createEmptyJsonElement } from "@/utils/factory-utils";
 
 /**
  * Type guard to check if a JSON item is an array
@@ -58,11 +59,10 @@ export function createJsonArray(name: string = ""): JSonArrayOutputFunctionalPro
 }
 
 /**
- * Creates an empty JSON element
+ * Re-exports createEmptyJsonElement from factory-utils for backward compatibility
+ * @deprecated Import directly from @/utils/factory-utils instead
  */
-export function createEmptyJsonElement(): JSonElemFunctionalProfile {
-  return { key: "", string: "" };
-}
+export { createEmptyJsonElement };
 
 /**
  * JSON element type options for select fields

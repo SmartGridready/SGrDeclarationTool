@@ -1,9 +1,27 @@
-import { FunctionalProfileFrame, DeviceFrame } from "@/models";
+import {
+  FunctionalProfileFrame,
+  DeviceFrame,
+  FunctionalProfileDataPoint,
+  ChangeLog,
+  LegibleDescription,
+  GenericAttributeFunctionalProfile,
+  JSonElemFunctionalProfile,
+  ConfigurationListElement,
+  DynamicParameterDescriptionListElement,
+  EnumEntryRecordFunctionalProfile,
+  BitmapEntryFunctionalProfile,
+  EnumEntryProductRecord,
+  BitmapEntryProduct,
+  GenericAttributeProduct,
+  GenericAttributeProductEnd,
+} from "@/models";
 import {
   ModbusInterface,
   ModbusFunctionalProfile,
   ModbusDataPoint,
 } from "@/models/product/modbus-interface";
+import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
+import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
 /**
  * Creates an empty ModbusInterface with minimal required values
@@ -37,100 +55,6 @@ export function createEmptyDevice(): DeviceFrame {
     },
     interfaceList: {
       modbusInterface: createEmptyModbusInterface(),
-    },
-  };
-}
-
-/**
- * Creates a new sample FunctionalProfileFrame with example/default values
- */
-export function createSampleFunctionalProfile(): FunctionalProfileFrame {
-  return {
-    releaseNotes: {
-      state: "Draft",
-      remarks:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      changeLog: [
-        {
-          version: "1.0.0",
-          date: "2024-01-15",
-          author: "example",
-          comment:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        },
-        {
-          version: "0.9.0",
-          date: "2024-01-14",
-          author: "example",
-          comment:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        },
-        {
-          version: "0.8.0",
-          date: "2024-01-08",
-          author: "example",
-          comment:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        },
-      ],
-    },
-    functionalProfile: {
-      functionalProfileIdentification: {
-        specificationOwnerIdentification: "example",
-        functionalProfileCategory: "Battery",
-        functionalProfileType: "example",
-        levelOfOperation: "1",
-        versionNumber: {
-          primaryVersionNumber: 1,
-          secondaryVersionNumber: 0,
-          subReleaseVersionNumber: 0,
-        },
-      },
-      alternativeNames: {
-        sLV1Name: "example",
-        workName: "example",
-        manufName: "example",
-        iec61850Name: "example",
-        sarefName: "example",
-        eebusName: "example",
-        sunSpecName: "example",
-        hpBwpName: "example",
-        en17609Name: "example",
-      },
-      legibleDescription: [
-        {
-          textElement:
-            "This is an example functional profile description in English. It provides a human-readable description of the functional profile's purpose and capabilities.",
-          language: "en",
-        },
-        {
-          textElement:
-            "Dies ist eine Beispielbeschreibung des Funktionsprofils auf Deutsch. Es bietet eine menschenlesbare Beschreibung des Zwecks und der Fähigkeiten des Funktionsprofils.",
-          language: "de",
-        },
-      ],
-    },
-    genericAttributeList: {
-      genericAttributeListElement: [{ name: "exampleAttribute1" }, { name: "exampleAttribute2" }],
-    },
-    dataPointList: {
-      dataPointListElement: [
-        {
-          dataPoint: {
-            dataPointName: "ExampleDataPoint",
-            dataDirection: "R",
-            presenceLevel: "M",
-            dataType: { float64: {} },
-            unit: "KILOWATTS",
-            legibleDescription: [
-              {
-                textElement: "Example data point description",
-                language: "en",
-              },
-            ],
-          },
-        },
-      ],
     },
   };
 }
@@ -192,5 +116,162 @@ export function createEmptyModbusDataPoint(): ModbusDataPoint {
       dataType: { float64: {} },
       unit: "NONE",
     },
+  };
+}
+
+/**
+ * Creates a new empty FunctionalProfileDataPoint with minimal required values
+ */
+export function createEmptyDataPoint(): FunctionalProfileDataPoint {
+  return {
+    dataPoint: {
+      dataPointName: "",
+      dataDirection: "R",
+      presenceLevel: "M",
+      dataType: createSimpleDataType("float64"),
+      unit: "NO_UNITS",
+    },
+  };
+}
+
+/**
+ * Creates a new empty ChangeLog with minimal required values
+ */
+export function createEmptyChangeLog(): ChangeLog {
+  return {
+    version: "",
+    date: new Date().toISOString().split("T")[0],
+    author: "",
+    comment: "",
+  };
+}
+
+/**
+ * Creates a new empty LegibleDescription with minimal required values
+ */
+export function createEmptyLegibleDescription(): LegibleDescription {
+  return {
+    textElement: "",
+    language: "en",
+  };
+}
+
+/**
+ * Creates a new empty GenericAttributeFunctionalProfile with minimal required values
+ */
+export function createEmptyGenericAttribute(): GenericAttributeFunctionalProfile {
+  return {
+    name: "",
+  };
+}
+
+/**
+ * Creates a new empty JSonElemFunctionalProfile with minimal required values
+ */
+export function createEmptyJsonElement(): JSonElemFunctionalProfile {
+  return { key: "", string: "" };
+}
+
+/**
+ * Creates a new empty ConfigurationListElement with minimal required values
+ */
+export function createEmptyConfigurationListElement(): ConfigurationListElement {
+  return {
+    name: "",
+    dataType: { float64: {} },
+  };
+}
+
+/**
+ * Creates a new empty DynamicParameterDescriptionListElement with minimal required values
+ */
+export function createEmptyDynamicParameterDescriptionListElement(): DynamicParameterDescriptionListElement {
+  return {
+    name: "",
+    dataType: { float64: {} },
+  };
+}
+
+/**
+ * Creates a new empty EnumEntryRecordFunctionalProfile with minimal required values
+ */
+export function createEmptyEnumEntryFunctionalProfile(): EnumEntryRecordFunctionalProfile {
+  return {
+    literal: "",
+  };
+}
+
+/**
+ * Creates a new empty BitmapEntryFunctionalProfile with minimal required values
+ */
+export function createEmptyBitmapEntryFunctionalProfile(): BitmapEntryFunctionalProfile {
+  return {
+    literal: "",
+  };
+}
+
+/**
+ * Creates a new empty EnumEntryProductRecord with minimal required values
+ */
+export function createEmptyEnumEntryProduct(): EnumEntryProductRecord {
+  return {
+    literal: "",
+  };
+}
+
+/**
+ * Creates a new empty EnumEntryProductRecord with ordinal (for modbus data point configuration)
+ */
+export function createEmptyEnumEntryProductWithOrdinal(): EnumEntryProductRecord {
+  return {
+    literal: "",
+    ordinal: 0,
+  };
+}
+
+/**
+ * Creates a new empty BitmapEntryProduct with minimal required values
+ */
+export function createEmptyBitmapEntryProduct(): BitmapEntryProduct {
+  return {
+    literal: "",
+    hexMask: "",
+  };
+}
+
+/**
+ * Creates a new empty TimeSyncBlockNotification with minimal required values
+ */
+export function createEmptyTimeSyncBlockNotification(): TimeSyncBlockNotification {
+  return {
+    blockCacheIdentification: "",
+    firstAddress: 0,
+    size: 1,
+    registerType: "HoldRegister",
+    timeToLiveMs: 1000,
+  };
+}
+
+/**
+ * Creates a new empty GenericAttributeProduct (simple) with minimal required values
+ */
+export function createEmptyGenericAttributeProduct(): GenericAttributeProduct {
+  return {
+    name: "",
+    dataType: { float64: {} },
+    value: "",
+    unit: "NO_UNITS",
+  };
+}
+
+/**
+ * Creates a new empty GenericAttributeProductEnd with minimal required values
+ */
+export function createEmptyGenericAttributeProductEnd(): GenericAttributeProductEnd {
+  return {
+    name: "",
+    dataType: { float64: {} },
+    value: "",
+    unit: "NO_UNITS",
   };
 }

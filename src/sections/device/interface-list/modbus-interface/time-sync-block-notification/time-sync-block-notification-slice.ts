@@ -1,5 +1,6 @@
 import { DeviceFrame } from "@/models";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
+import { createEmptyTimeSyncBlockNotification } from "@/utils/factory-utils";
 
 export interface TimeSyncBlockNotificationSlice {
   // Time sync block notification list management
@@ -45,13 +46,7 @@ export function createTimeSyncBlockNotificationSlice<TState extends { device?: D
           if (!modbusInterface.timeSyncBlockNotification) {
             modbusInterface.timeSyncBlockNotification = [];
           }
-          modbusInterface.timeSyncBlockNotification.push({
-            blockCacheIdentification: "",
-            firstAddress: 0,
-            size: 1,
-            registerType: "HoldRegister",
-            timeToLiveMs: 1000,
-          });
+          modbusInterface.timeSyncBlockNotification.push(createEmptyTimeSyncBlockNotification());
         }
       }),
 

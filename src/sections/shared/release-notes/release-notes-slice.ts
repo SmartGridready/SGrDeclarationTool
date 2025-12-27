@@ -1,4 +1,5 @@
 import { ChangeLog, ReleaseNotes, ReleaseState } from "@/models";
+import { createEmptyChangeLog } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
 
 export interface ReleaseNotesSlice {
@@ -18,13 +19,6 @@ export interface ReleaseNotesSlice {
   // Convenience methods
   addEmptyChangeLog: () => void;
 }
-
-const createEmptyChangeLog = (): ChangeLog => ({
-  version: "",
-  date: new Date().toISOString().split("T")[0],
-  author: "",
-  comment: "",
-});
 
 /**
  * Creates a generic release notes slice that works with any store state

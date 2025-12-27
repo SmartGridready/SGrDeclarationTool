@@ -3,6 +3,7 @@ import {
   EnumEntryRecordFunctionalProfile,
   FunctionalProfileDataPoint,
 } from "@/models";
+import { createEmptyEnumEntryFunctionalProfile } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface EnumSlice {
@@ -98,7 +99,7 @@ export function createEnumSlice<TState>(
         if (dp && "enum" in dp.dataPoint.dataType) {
           const enumType = dp.dataPoint.dataType.enum;
           const entries = ensureArray(enumType.enumEntry, () => []);
-          entries.push({ literal: "" });
+          entries.push(createEmptyEnumEntryFunctionalProfile());
           enumType.enumEntry = entries;
         }
       }),

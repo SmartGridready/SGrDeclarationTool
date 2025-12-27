@@ -1,4 +1,5 @@
 import { GenericAttributeFunctionalProfile, FunctionalProfileDataPoint } from "@/models";
+import { createEmptyGenericAttribute } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface DataPointGenericAttributeListSlice {
@@ -12,10 +13,6 @@ export interface DataPointGenericAttributeListSlice {
     name: string
   ) => void;
 }
-
-const createEmptyGenericAttribute = (): GenericAttributeFunctionalProfile => ({
-  name: "",
-});
 
 /**
  * Creates a generic data point generic attribute list slice that works with any store state

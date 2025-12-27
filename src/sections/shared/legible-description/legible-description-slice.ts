@@ -1,4 +1,5 @@
 import { LegibleDescription, Language } from "@/models";
+import { createEmptyLegibleDescription } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
 
 export interface LegibleDescriptionSlice {
@@ -16,11 +17,6 @@ export interface LegibleDescriptionSlice {
   // Convenience methods
   addEmptyLegibleDescription: () => void;
 }
-
-const createEmptyLegibleDescription = (): LegibleDescription => ({
-  textElement: "",
-  language: "en",
-});
 
 /**
  * Creates a generic legible description slice that works with any store state

@@ -1,4 +1,5 @@
 import { EnumMapProduct, EnumEntryProductRecord, DataTypeProduct } from "@/models";
+import { createEmptyEnumEntryProduct } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface DataTypeProductEnumSlice {
@@ -85,7 +86,7 @@ export function createDataTypeProductEnumSlice<TState>(
         const dataType = getDataType(state);
         if (dataType && "enum" in dataType) {
           const entries = ensureArray(dataType.enum.enumEntry, () => []);
-          entries.push({ literal: "" });
+          entries.push(createEmptyEnumEntryProduct());
           dataType.enum.enumEntry = entries;
         }
       }),

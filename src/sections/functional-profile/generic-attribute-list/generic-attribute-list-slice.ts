@@ -3,6 +3,7 @@ import {
   GenericAttributeFunctionalProfile,
   GenericAttributeListFunctionalProfile,
 } from "@/models";
+import { createEmptyGenericAttribute } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface GenericAttributeListSlice {
@@ -17,10 +18,6 @@ export interface GenericAttributeListSlice {
   // Convenience methods
   addEmptyGenericAttribute: () => void;
 }
-
-const createEmptyGenericAttribute = (): GenericAttributeFunctionalProfile => ({
-  name: "",
-});
 
 /**
  * Creates a generic attribute list slice specifically for functional profile stores

@@ -1,4 +1,5 @@
 import { DeviceFrame, ModbusDataPoint, Enum, EnumEntry } from "@/models";
+import { createEmptyEnumEntryProductWithOrdinal } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface ModbusDataPointEnumSlice {
@@ -171,7 +172,7 @@ export function createModbusDataPointEnumSlice<TState extends { device?: DeviceF
         if (modbusDataType && "enum" in modbusDataType) {
           const enumType = modbusDataType.enum;
           const entries = ensureArray(enumType.enumEntry, () => []);
-          entries.push({ literal: "", ordinal: 0 });
+          entries.push(createEmptyEnumEntryProductWithOrdinal());
           enumType.enumEntry = entries;
         }
       });

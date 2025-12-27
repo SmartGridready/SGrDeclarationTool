@@ -28,7 +28,7 @@ import { LibraryImportModal } from "@/components/editor/library-import-modal";
 import { Button } from "@/components/shadcn/button";
 
 export default function FunctionalProfileEditor() {
-  const { profile, createNew, createEmpty, clear, setProfile } = useProfileStore();
+  const { profile, createEmpty, clear, setProfile } = useProfileStore();
   const resetValidation = useValidationStore((state) => state.resetValidation);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [showLoadEmptyDialog, setShowLoadEmptyDialog] = useState(false);
@@ -262,16 +262,7 @@ export default function FunctionalProfileEditor() {
 
       {DEBUG && (
         <div className="fixed bottom-4 right-4 z-50 shadow-lg">
-          <Button
-            onClick={() => {
-              createNew();
-              resetValidation();
-            }}
-            size="sm"
-          >
-            Load Sample Profile
-          </Button>
-          <Button onClick={handleDebugPrint} size="sm" className="ml-2">
+          <Button onClick={handleDebugPrint} size="sm">
             Debug JSON
           </Button>
         </div>

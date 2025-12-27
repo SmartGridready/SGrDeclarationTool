@@ -1,4 +1,5 @@
 import { DataTypeProduct, DeviceFrame } from "@/models";
+import { createEmptyConfigurationListElement } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
 import {
   createConfigurationListEnumSlice,
@@ -65,7 +66,7 @@ export function createConfigurationListSlice<TState extends { device?: DeviceFra
             state.device.configurationList.configurationListElement,
             () => []
           );
-          list.push({ name: "", dataType: { float64: {} } });
+          list.push(createEmptyConfigurationListElement());
           state.device.configurationList.configurationListElement = list;
         }
       }),

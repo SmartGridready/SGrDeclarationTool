@@ -3,6 +3,7 @@ import {
   BitmapEntryFunctionalProfile,
   FunctionalProfileDataPoint,
 } from "@/models";
+import { createEmptyBitmapEntryFunctionalProfile } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface BitmapSlice {
@@ -88,7 +89,7 @@ export function createBitmapSlice<TState>(
         if (dp && "bitmap" in dp.dataPoint.dataType) {
           const bitmapType = dp.dataPoint.dataType.bitmap;
           const entries = ensureArray(bitmapType.bitmapEntry, () => []);
-          entries.push({ literal: "" });
+          entries.push(createEmptyBitmapEntryFunctionalProfile());
           bitmapType.bitmapEntry = entries;
         }
       }),

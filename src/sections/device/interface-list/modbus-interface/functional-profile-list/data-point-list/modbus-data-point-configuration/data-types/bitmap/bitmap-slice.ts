@@ -1,4 +1,5 @@
 import { DeviceFrame, ModbusDataPoint, BitmapProduct, BitmapEntryProduct } from "@/models";
+import { createEmptyBitmapEntryProduct } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface ModbusDataPointBitmapSlice {
@@ -159,7 +160,7 @@ export function createModbusDataPointBitmapSlice<TState extends { device?: Devic
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
         if (modbusDataType && "bitmap" in modbusDataType) {
           const entries = ensureArray(modbusDataType.bitmap.bitmapEntry, () => []);
-          entries.push({ literal: "", hexMask: "" });
+          entries.push(createEmptyBitmapEntryProduct());
           modbusDataType.bitmap.bitmapEntry = entries;
         }
       });

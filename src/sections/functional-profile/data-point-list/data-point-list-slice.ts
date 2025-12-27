@@ -7,7 +7,7 @@ import {
   DataTypeFunctionalProfile,
   Units,
 } from "@/models";
-import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
+import { createEmptyDataPoint } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 import {
   createEnumSlice,
@@ -55,16 +55,6 @@ export interface DataPointListSlice
   updateArrayLength: (index: number, length: number | undefined) => void;
   addEmptyDataPoint: () => void;
 }
-
-const createEmptyDataPoint = (): FunctionalProfileDataPoint => ({
-  dataPoint: {
-    dataPointName: "",
-    dataDirection: "R",
-    presenceLevel: "M",
-    dataType: createSimpleDataType("float64"),
-    unit: "NO_UNITS",
-  },
-});
 
 /**
  * Creates a data point list slice specifically for functional profile stores

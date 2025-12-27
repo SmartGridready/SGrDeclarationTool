@@ -6,13 +6,13 @@ import { JsonArrayField } from "@/components/forms/json-array-field";
 import { FormSection } from "@/components/forms/form-section";
 import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
 import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { createEmptyJsonElement } from "@/utils/factory-utils";
 import {
   isJsonArray,
   isJsonElement,
   getJsonElementType,
   createJsonElement,
   createJsonArray,
-  createEmptyJsonElement,
   JSON_ELEMENT_TYPE_OPTIONS,
 } from "@/sections/functional-profile/data-point-list/data-types/json/json-utils";
 

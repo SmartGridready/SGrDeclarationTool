@@ -1,4 +1,5 @@
 import { BitmapProduct, BitmapEntryProduct, DataTypeProduct } from "@/models";
+import { createEmptyBitmapEntryProduct } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface DataTypeProductBitmapSlice {
@@ -75,7 +76,7 @@ export function createDataTypeProductBitmapSlice<TState>(
         const dataType = getDataType(state);
         if (dataType && "bitmap" in dataType) {
           const entries = ensureArray(dataType.bitmap.bitmapEntry, () => []);
-          entries.push({ literal: "", hexMask: "" });
+          entries.push(createEmptyBitmapEntryProduct());
           dataType.bitmap.bitmapEntry = entries;
         }
       }),

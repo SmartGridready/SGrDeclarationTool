@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { FunctionalProfileFrame } from "@/models";
-import { createSampleFunctionalProfile, createEmptyFunctionalProfile } from "@/utils/factory-utils";
+import { createEmptyFunctionalProfile } from "@/utils/factory-utils";
 import {
   createReleaseNotesSliceForProfile,
   ReleaseNotesSlice,
@@ -31,7 +31,6 @@ import {
 interface ProfileStore {
   profile?: FunctionalProfileFrame;
   setProfile: (profile: FunctionalProfileFrame | undefined) => void;
-  createNew: () => void;
   createEmpty: () => void;
   clear: () => void;
 }
@@ -52,11 +51,6 @@ export const useProfileStore = create<ProfileStoreState>()(
       setProfile: (profile) =>
         set((state) => {
           state.profile = profile;
-        }),
-
-      createNew: () =>
-        set((state) => {
-          state.profile = createSampleFunctionalProfile();
         }),
 
       createEmpty: () =>

@@ -147,6 +147,24 @@ export interface ModbusRtu {
 // ModbusBoolean represents a choice: either trueValue, falseValue, or neither (empty)
 export type ModbusBoolean = EmptyType | { trueValue: number } | { falseValue: number };
 
+export const MODBUS_DATA_TYPE_VALUES = [
+  "boolean",
+  "int8",
+  "int16",
+  "int32",
+  "int64",
+  "int8U",
+  "int16U",
+  "int32U",
+  "int64U",
+  "float32",
+  "float64",
+  "dateTime",
+  "string",
+  "enum",
+  "bitmap",
+] as const;
+
 export type ModbusDataType =
   | { boolean: ModbusBoolean }
   | { int8: EmptyType }

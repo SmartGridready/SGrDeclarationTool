@@ -50,15 +50,6 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
   ): ModbusFunctionalProfile | undefined =>
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
-  // Cache for functional profile slices
-  const functionalProfileSliceCache = new Map<number, FunctionalProfileBaseSlice>();
-
-  // Cache for data point list slices
-  const dataPointListSliceCache = new Map<number, ModbusDataPointListSlice>();
-
-  // Cache for modbus attributes slices
-  const modbusAttributesSliceCache = new Map<number, ModbusAttributesSlice>();
-
   return {
     addEmptyFunctionalProfile: () =>
       set((state) => {
@@ -81,10 +72,6 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
         const list = getFunctionalProfileList(state);
         if (list && list.functionalProfileListElement.length > index) {
           list.functionalProfileListElement.splice(index, 1);
-          // Clear cache for removed and subsequent indices
-          functionalProfileSliceCache.delete(index);
-          dataPointListSliceCache.delete(index);
-          modbusAttributesSliceCache.delete(index);
         }
       }),
 
@@ -93,45 +80,27 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
         const list = getFunctionalProfileList(state);
         if (list) {
           list.functionalProfileListElement = [];
-          functionalProfileSliceCache.clear();
-          dataPointListSliceCache.clear();
-          modbusAttributesSliceCache.clear();
         }
       }),
 
     getFunctionalProfileSlice: (index: number): FunctionalProfileBaseSlice => {
-      // Create slice on demand and cache it
-      if (!functionalProfileSliceCache.has(index)) {
-        const slice = createFunctionalProfileBaseSlice(set, (state) => {
-          // Return the actual ModbusFunctionalProfile object, not a copy
-          // This allows the slice to modify genericAttributeList directly
-          return getFunctionalProfile(state, index);
-        });
-        functionalProfileSliceCache.set(index, slice);
-      }
-      return functionalProfileSliceCache.get(index)!;
+      return createFunctionalProfileBaseSlice(set, (state) => {
+        // Return the actual ModbusFunctionalProfile object, not a copy
+        // This allows the slice to modify genericAttributeList directly
+        return getFunctionalProfile(state, index);
+      });
     },
 
     getDataPointListSlice: (index: number): ModbusDataPointListSlice => {
-      // Create slice on demand and cache it
-      if (!dataPointListSliceCache.has(index)) {
-        const slice = createModbusDataPointListSlice(set, (state) =>
-          getFunctionalProfile(state, index)
-        );
-        dataPointListSliceCache.set(index, slice);
-      }
-      return dataPointListSliceCache.get(index)!;
+      return createModbusDataPointListSlice(
+        set,
+        (state) => getFunctionalProfile(state, index),
+        index
+      );
     },
 
     getModbusAttributesSlice: (index: number): ModbusAttributesSlice => {
-      // Create slice on demand and cache it
-      if (!modbusAttributesSliceCache.has(index)) {
-        const slice = createModbusAttributesSlice(set, (state) =>
-          getFunctionalProfile(state, index)
-        );
-        modbusAttributesSliceCache.set(index, slice);
-      }
-      return modbusAttributesSliceCache.get(index)!;
+      return createModbusAttributesSlice(set, (state) => getFunctionalProfile(state, index));
     },
   };
 }

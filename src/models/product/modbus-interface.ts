@@ -9,7 +9,7 @@ import {
   ModbusDataPointConfiguration,
   TimeSyncBlockNotification,
   ModbusInterfaceDescription,
-} from "./modbus-types";
+} from "@/models/product/modbus-types";
 
 export interface ModbusDataPoint extends DataPointBase {
   modbusDataPointConfiguration?: ModbusDataPointConfiguration;

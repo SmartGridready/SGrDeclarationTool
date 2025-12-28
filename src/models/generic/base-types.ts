@@ -397,6 +397,8 @@ export interface ScalingFactor {
 }
 
 export type UnsignedIntParameter = string; // Pattern: \{\{.+\}\}|\d+
+export type BooleanParameter = string; // Pattern: \{\{.+\}\}|true|false
+export type AnyUri = string; // XML Schema anyURI type - represents a valid URI
 
 // Enum for Product (used in Modbus)
 export interface Enum {
@@ -451,11 +453,45 @@ export interface SerialInterfaceCapability {
   stopBitLenSupported: StopBitLength[]; // maxOccurs="unbounded"
 }
 
-// ============================================================================
-// Form Options
-// ============================================================================
+export interface ValueMapping {
+  genericValue: string;
+  deviceValue: string;
+}
 
 export const BOOLEAN_OPTIONS = [
   { value: "true", label: "Yes" },
   { value: "false", label: "No" },
 ] as const;
+
+// Union type for the two possible optional configurations
+export type ResponseQuery =
+  | ResponseQueryBase
+  | (ResponseQueryBase & {
+      query: string;
+    })
+  | (ResponseQueryBase & {
+      jmesPathMappings: JMESPathMapping;
+    });
+
+// Base interface for ResponseQuery
+interface ResponseQueryBase {
+  queryType: ResponseQueryType;
+}
+
+export type ResponseQueryType =
+  | "JMESPathExpression"
+  | "XPathExpression"
+  | "RegularExpression"
+  | "JMESPathMapping"
+  | "JSONataExpression";
+
+export interface JMESPathMapping {
+  mapping: JMESPathMappingRecord[];
+}
+
+// Message filtering and querying types
+export interface JMESPathMappingRecord {
+  from: string;
+  to: string;
+  name?: string;
+}

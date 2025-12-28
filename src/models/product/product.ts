@@ -10,7 +10,8 @@ import {
   SpecificationOwnerIdentification,
   VersionNumber,
 } from "@/models/generic";
-import { ModbusInterface } from "./modbus-interface";
+import { ModbusInterface } from "@/models/product/modbus-interface";
+import { RestApiInterface } from "@/models/product/rest-api-interface";
 
 export interface DeviceFrame {
   deviceName: string;
@@ -62,8 +63,9 @@ export interface ConfigurationDescription extends LegibleDescription {
 
 // Product core: Interfaces list
 
-export type InterfaceList = { modbusInterface: ModbusInterface };
-//  | { restApiInterface: RestApiInterface }
+export type InterfaceList =
+  | { modbusInterface: ModbusInterface }
+  | { restApiInterface: RestApiInterface };
 //  | { contactInterface: ContactInterface }
 //  | { genericInterface: GenericInterface }
 //  | { messagingInterface: MessagingInterface };

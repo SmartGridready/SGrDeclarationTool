@@ -18,12 +18,9 @@ import {
 
 export interface ModbusInterfaceSlice
   extends ModbusInterfaceDescriptionSlice,
-    ModbusAttributesSlice {
-  // Functional profile list actions
-  functionalProfileListActions: ModbusFunctionalProfileListSlice;
-  // Time sync block notification actions
-  timeSyncBlockNotificationActions: TimeSyncBlockNotificationSlice;
-}
+    ModbusAttributesSlice,
+    ModbusFunctionalProfileListSlice,
+    TimeSyncBlockNotificationSlice {}
 
 /**
  * Creates a modbus interface slice for Device stores.
@@ -31,23 +28,15 @@ export interface ModbusInterfaceSlice
 export function createModbusInterfaceSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): ModbusInterfaceSlice {
-  // Create interface description slice
   const interfaceDescriptionSlice = createModbusInterfaceDescriptionSlice(set);
-  // Create modbus attributes slice
   const modbusAttributesSlice = createModbusAttributesSlice(set);
-  // Create functional profile list slice
   const functionalProfileListSlice = createModbusFunctionalProfileListSlice(set);
-  // Create time sync block notification slice
   const timeSyncBlockNotificationSlice = createTimeSyncBlockNotificationSlice(set);
 
   return {
-    // Spread interface description actions
     ...interfaceDescriptionSlice,
-    // Spread modbus attributes actions
     ...modbusAttributesSlice,
-    // Functional profile list actions (not spread, kept as object for clarity)
-    functionalProfileListActions: functionalProfileListSlice,
-    // Time sync block notification actions
-    timeSyncBlockNotificationActions: timeSyncBlockNotificationSlice,
+    ...functionalProfileListSlice,
+    ...timeSyncBlockNotificationSlice,
   };
 }

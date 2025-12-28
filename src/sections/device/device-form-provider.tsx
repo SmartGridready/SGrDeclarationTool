@@ -56,8 +56,8 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
       scalingFactorActions: store,
       accessProtectionActions: store,
       modbusInterfaceActions: store,
-      functionalProfileListActions: store.functionalProfileListActions,
-      timeSyncBlockNotificationActions: store.timeSyncBlockNotificationActions,
+      functionalProfileListActions: store,
+      timeSyncBlockNotificationActions: store,
     };
   }, [store]);
 

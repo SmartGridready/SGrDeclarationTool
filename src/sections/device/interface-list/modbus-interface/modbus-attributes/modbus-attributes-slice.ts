@@ -8,25 +8,20 @@ import {
 export type ModbusAttributesSlice = SharedModbusAttributesSlice;
 
 /**
- * Creates a modbus attributes slice for Device stores.
- * This is a wrapper around the shared slice that provides device-specific getters/setters.
+ * Creates a modbus attributes slice specifically for device stores
+ * This is a convenience function that sets up the getter/setter for device.interfaceList.modbusInterface.modbusAttributes
  */
 export function createModbusAttributesSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): ModbusAttributesSlice {
-  const getModbusAttributes = (state: TState) => {
-    return state.device?.interfaceList?.modbusInterface?.modbusAttributes;
-  };
-
-  const setModbusAttributes = (
-    state: TState,
-    modbusAttributes: import("@/models/product/modbus-types").ModbusAttributes | undefined
-  ) => {
-    const modbusInterface = state.device?.interfaceList?.modbusInterface;
-    if (modbusInterface) {
-      modbusInterface.modbusAttributes = modbusAttributes;
-    }
-  };
-
-  return createSharedModbusAttributesSlice(set, getModbusAttributes, setModbusAttributes, true);
+  return createSharedModbusAttributesSlice(
+    set,
+    (state) => state.device?.interfaceList?.modbusInterface?.modbusAttributes,
+    (state, modbusAttributes) => {
+      if (state.device?.interfaceList?.modbusInterface) {
+        state.device.interfaceList.modbusInterface.modbusAttributes = modbusAttributes;
+      }
+    },
+    true // isOptional - modbusAttributes is optional in ModbusInterface
+  );
 }

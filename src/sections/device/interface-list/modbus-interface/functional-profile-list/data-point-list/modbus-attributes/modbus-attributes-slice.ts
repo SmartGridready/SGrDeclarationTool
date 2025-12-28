@@ -9,8 +9,8 @@ import {
 export type ModbusAttributesSlice = SharedModbusAttributesSlice;
 
 /**
- * Creates a modbus attributes slice for data point level in Device stores.
- * This is a wrapper around the shared slice that provides data-point-specific getters/setters.
+ * Creates a modbus attributes slice specifically for data point level in device stores
+ * This is a convenience function that sets up the getter/setter for dataPoint.modbusAttributes
  *
  * @param set - The Zustand set function
  * @param getDataPoint - Function to get the parent data point
@@ -19,19 +19,15 @@ export function createModbusAttributesSlice<TState extends { device?: DeviceFram
   set: (fn: (state: TState) => void) => void,
   getDataPoint: (state: TState) => ModbusDataPoint | undefined
 ): ModbusAttributesSlice {
-  const getModbusAttributes = (state: TState) => {
-    return getDataPoint(state)?.modbusAttributes;
-  };
-
-  const setModbusAttributes = (
-    state: TState,
-    modbusAttributes: import("@/models/product/modbus-types").ModbusAttributes | undefined
-  ) => {
-    const dataPoint = getDataPoint(state);
-    if (dataPoint) {
-      dataPoint.modbusAttributes = modbusAttributes;
-    }
-  };
-
-  return createSharedModbusAttributesSlice(set, getModbusAttributes, setModbusAttributes, true);
+  return createSharedModbusAttributesSlice(
+    set,
+    (state) => getDataPoint(state)?.modbusAttributes,
+    (state, modbusAttributes) => {
+      const dataPoint = getDataPoint(state);
+      if (dataPoint) {
+        dataPoint.modbusAttributes = modbusAttributes;
+      }
+    },
+    true // isOptional - modbusAttributes is optional in ModbusDataPoint
+  );
 }

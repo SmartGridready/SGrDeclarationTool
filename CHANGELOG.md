@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.18.0...v0.18.1) (2025-12-29)
+
+
+### Bug Fixes
+
+* change interface list from union to optional prop and updat enum return type ([b15e89d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b15e89d331caeafbf1157ec8842cfbd23b7bc824))
+
 ## [0.18.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.17.0...v0.18.0) (2025-12-29)
 
 

@@ -23,6 +23,8 @@ interface RestApiServiceCallFormProps<TStoreState extends RestApiServiceCallSlic
   title?: string;
   description?: string;
   nested?: boolean;
+  /** If true, renders only the form content without the wrapping FormSection */
+  bare?: boolean;
 }
 
 export function RestApiServiceCallForm<TStoreState extends RestApiServiceCallSlice>({
@@ -35,6 +37,7 @@ export function RestApiServiceCallForm<TStoreState extends RestApiServiceCallSli
   title = "REST API Service Call",
   description = "Configure the REST API service call settings",
   nested = false,
+  bare = false,
 }: RestApiServiceCallFormProps<TStoreState>) {
   const { state, actions, isAdded, getError, handleAdd, handleRemove } = useFormSection<
     TStoreState,
@@ -64,6 +67,57 @@ export function RestApiServiceCallForm<TStoreState extends RestApiServiceCallSli
 
   const serviceCall = state.restApiServiceCall;
 
+  const formContent = serviceCall ? (
+    <div className="space-y-6">
+      <RequestBasicForm
+        serviceCall={serviceCall}
+        actions={actions}
+        fieldPathPrefix={fieldPathPrefix}
+        getError={getError}
+      />
+
+      <RequestHeaderForm
+        serviceCall={serviceCall}
+        actions={actions}
+        fieldPathPrefix={fieldPathPrefix}
+        getError={getError}
+      />
+
+      <RequestQueryForm
+        serviceCall={serviceCall}
+        actions={actions}
+        fieldPathPrefix={fieldPathPrefix}
+        getError={getError}
+      />
+
+      <RequestFormForm
+        serviceCall={serviceCall}
+        actions={actions}
+        fieldPathPrefix={fieldPathPrefix}
+        getError={getError}
+      />
+
+      <ResponseQueryForm
+        responseQuery={serviceCall.responseQuery}
+        actions={actions}
+        fieldPathPrefix={fieldPathPrefix}
+        getError={getError}
+      />
+
+      <ValueMappingForm
+        serviceCall={serviceCall}
+        actions={actions}
+        fieldPathPrefix={fieldPathPrefix}
+        getError={getError}
+      />
+    </div>
+  ) : null;
+
+  // If bare mode, return just the content without FormSection wrapper
+  if (bare) {
+    return formContent;
+  }
+
   return (
     <FormSection
       title={title}
@@ -74,51 +128,7 @@ export function RestApiServiceCallForm<TStoreState extends RestApiServiceCallSli
       onRemove={required ? undefined : handleRemove}
       nested={nested}
     >
-      {serviceCall && (
-        <div className="space-y-6">
-          <RequestBasicForm
-            serviceCall={serviceCall}
-            actions={actions}
-            fieldPathPrefix={fieldPathPrefix}
-            getError={getError}
-          />
-
-          <RequestHeaderForm
-            serviceCall={serviceCall}
-            actions={actions}
-            fieldPathPrefix={fieldPathPrefix}
-            getError={getError}
-          />
-
-          <RequestQueryForm
-            serviceCall={serviceCall}
-            actions={actions}
-            fieldPathPrefix={fieldPathPrefix}
-            getError={getError}
-          />
-
-          <RequestFormForm
-            serviceCall={serviceCall}
-            actions={actions}
-            fieldPathPrefix={fieldPathPrefix}
-            getError={getError}
-          />
-
-          <ResponseQueryForm
-            responseQuery={serviceCall.responseQuery}
-            actions={actions}
-            fieldPathPrefix={fieldPathPrefix}
-            getError={getError}
-          />
-
-          <ValueMappingForm
-            serviceCall={serviceCall}
-            actions={actions}
-            fieldPathPrefix={fieldPathPrefix}
-            getError={getError}
-          />
-        </div>
-      )}
+      {formContent}
     </FormSection>
   );
 }

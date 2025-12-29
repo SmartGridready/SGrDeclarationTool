@@ -4,6 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { useDeviceFormContext } from "@/context/device-form-context";
 import { InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
+import { RestApiInterfaceDescriptionForm } from "./interface-description/interface-description-form";
 import { RestApiFunctionalProfileListForm } from "./functional-profile-list/rest-api-functional-profile-list-form";
 
 /**
@@ -35,7 +36,7 @@ export function RestApiInterfaceForm() {
       required={true}
       nested={true}
     >
-      {/* TODO: Add REST API Interface Description Form when implemented */}
+      <RestApiInterfaceDescriptionForm />
       <RestApiFunctionalProfileListForm />
     </FormSection>
   );

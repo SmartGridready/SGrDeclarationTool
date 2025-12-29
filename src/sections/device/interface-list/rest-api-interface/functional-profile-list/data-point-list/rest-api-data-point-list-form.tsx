@@ -9,6 +9,7 @@ import { RestApiDataPoint, RestApiInterface } from "@/models/product/rest-api-in
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import { RestApiDataPointListSlice } from "./rest-api-data-point-list-slice";
+import { RestApiDataPointConfigurationForm } from "./rest-api-data-point-configuration/rest-api-data-point-configuration-form";
 
 /**
  * Type guard to check if interface list is REST API interface
@@ -148,20 +149,13 @@ function RestApiDataPointItemForm({
           nested={true}
         />
 
-        {/* TODO: Add REST API Data Point Configuration Form when implemented */}
-        {dataPointData?.restApiDataPointConfiguration && (
-          <FormSection
-            title="REST API Data Point Configuration"
-            description="REST API configuration for this data point"
-            required={false}
-            nested={true}
-            isAdded={true}
-          >
-            <p className="text-sm text-muted-foreground">
-              REST API data point configuration form will be implemented here.
-            </p>
-          </FormSection>
-        )}
+        {/* REST API Data Point Configuration Form */}
+        <RestApiDataPointConfigurationForm
+          config={dataPointData?.restApiDataPointConfiguration}
+          actions={dataPointListSlice.getDataPointConfigurationSlice(dataPointIndex)}
+          useValidation={useValidation}
+          fieldPathPrefix={`${fieldPathPrefix}.restApiDataPointConfiguration`}
+        />
       </div>
     </FormSection>
   );

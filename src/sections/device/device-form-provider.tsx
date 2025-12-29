@@ -60,6 +60,7 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
       timeSyncBlockNotificationActions: store,
       restApiInterfaceActions: store,
       restApiFunctionalProfileListActions: store,
+      restApiInterfaceDescriptionActions: store,
     };
   }, [store]);
 

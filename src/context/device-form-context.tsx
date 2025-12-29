@@ -23,6 +23,7 @@ export type { ModbusFunctionalProfileListSlice } from "@/sections/device/interfa
 export type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface-list/modbus-interface/time-sync-block-notification/time-sync-block-notification-slice";
 export type { RestApiInterfaceSlice } from "@/sections/device/interface-list/rest-api-interface/rest-api-interface-slice";
 export type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
+export type { RestApiInterfaceDescriptionSlice } from "@/sections/device/interface-list/rest-api-interface/interface-description/interface-description-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -43,6 +44,7 @@ import type { ModbusFunctionalProfileListSlice } from "@/sections/device/interfa
 import type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface-list/modbus-interface/time-sync-block-notification/time-sync-block-notification-slice";
 import type { RestApiInterfaceSlice } from "@/sections/device/interface-list/rest-api-interface/rest-api-interface-slice";
 import type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
+import type { RestApiInterfaceDescriptionSlice } from "@/sections/device/interface-list/rest-api-interface/interface-description/interface-description-slice";
 
 /**
  * Context value for device forms.
@@ -153,7 +155,7 @@ export interface DeviceFormContextValue {
   timeSyncBlockNotificationActions: TimeSyncBlockNotificationSlice;
 
   /**
-   * REST API interface actions (includes functional profile list).
+   * REST API interface actions (includes functional profile list and interface description).
    */
   restApiInterfaceActions: RestApiInterfaceSlice;
 
@@ -161,6 +163,11 @@ export interface DeviceFormContextValue {
    * Functional profile list actions for REST API interface.
    */
   restApiFunctionalProfileListActions: RestApiFunctionalProfileListSlice;
+
+  /**
+   * REST API interface description actions.
+   */
+  restApiInterfaceDescriptionActions: RestApiInterfaceDescriptionSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

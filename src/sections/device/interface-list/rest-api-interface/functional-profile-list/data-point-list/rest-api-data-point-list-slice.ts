@@ -5,6 +5,10 @@ import {
   createDataPointBaseSlice,
   DataPointBaseSlice,
 } from "@/sections/shared/data-point-base/data-point-base-slice";
+import {
+  createRestApiDataPointConfigurationSlice,
+  RestApiDataPointConfigurationSlice,
+} from "./rest-api-data-point-configuration/rest-api-data-point-configuration-slice";
 
 export interface RestApiDataPointListSlice {
   // Data point list management
@@ -14,6 +18,9 @@ export interface RestApiDataPointListSlice {
 
   // Get slice for a specific data point
   getDataPointSlice: (index: number) => DataPointBaseSlice;
+
+  // Get configuration slice for a specific data point
+  getDataPointConfigurationSlice: (index: number) => RestApiDataPointConfigurationSlice;
 }
 
 /**
@@ -69,6 +76,12 @@ export function createRestApiDataPointListSlice<TState extends { device?: Device
       return createDataPointBaseSlice(set, (state) => {
         // Return the actual RestApiDataPoint object, not a copy
         // This allows the slice to modify genericAttributeList directly
+        return getDataPoint(state, index);
+      });
+    },
+
+    getDataPointConfigurationSlice: (index: number): RestApiDataPointConfigurationSlice => {
+      return createRestApiDataPointConfigurationSlice(set, (state) => {
         return getDataPoint(state, index);
       });
     },

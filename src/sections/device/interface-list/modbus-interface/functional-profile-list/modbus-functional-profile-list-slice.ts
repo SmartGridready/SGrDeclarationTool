@@ -27,7 +27,7 @@ export interface ModbusFunctionalProfileListSlice {
   getFunctionalProfileSlice: (index: number) => FunctionalProfileBaseSlice;
 
   // Get data point list slice for a specific functional profile
-  getDataPointListSlice: (index: number) => ModbusDataPointListSlice;
+  getModbusDataPointListSlice: (index: number) => ModbusDataPointListSlice;
 
   // Get modbus attributes slice for a specific functional profile
   getModbusAttributesSlice: (index: number) => ModbusAttributesSlice;
@@ -91,7 +91,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
       });
     },
 
-    getDataPointListSlice: (index: number): ModbusDataPointListSlice => {
+    getModbusDataPointListSlice: (index: number): ModbusDataPointListSlice => {
       return createModbusDataPointListSlice(
         set,
         (state) => getFunctionalProfile(state, index),

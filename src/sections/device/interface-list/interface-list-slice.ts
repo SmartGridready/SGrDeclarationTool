@@ -1,14 +1,15 @@
 import { DeviceFrame, InterfaceType } from "@/models";
-import { createEmptyModbusInterface } from "@/utils/factory-utils";
+import { createEmptyModbusInterface, createEmptyRestApiInterface } from "@/utils/factory-utils";
 import {
   createModbusInterfaceSlice,
   ModbusInterfaceSlice,
 } from "./modbus-interface/modbus-interface-slice";
+import {
+  createRestApiInterfaceSlice,
+  RestApiInterfaceSlice,
+} from "./rest-api-interface/rest-api-interface-slice";
 
-export interface InterfaceListSlice extends ModbusInterfaceSlice {
-  /**
-   * Set the interface type, creating an empty interface if needed
-   */
+export interface InterfaceListSlice extends ModbusInterfaceSlice, RestApiInterfaceSlice {
   setInterfaceType: (interfaceType: InterfaceType) => void;
 }
 
@@ -18,12 +19,12 @@ export interface InterfaceListSlice extends ModbusInterfaceSlice {
 export function createInterfaceListSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): InterfaceListSlice {
-  // Create modbus interface slice
   const modbusInterfaceSlice = createModbusInterfaceSlice(set);
+  const restApiInterfaceSlice = createRestApiInterfaceSlice(set);
 
   return {
-    // Spread modbus interface actions
     ...modbusInterfaceSlice,
+    ...restApiInterfaceSlice,
 
     setInterfaceType: (interfaceType) =>
       set((state) => {
@@ -36,10 +37,10 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
               modbusInterface: createEmptyModbusInterface(),
             };
             break;
+          case "restApiInterface":
+            state.device.interfaceList = { restApiInterface: createEmptyRestApiInterface() };
+            break;
           // TODO: Add other interface types when implemented
-          // case "restApiInterface":
-          //   state.device.interfaceList = { restApiInterface: createEmptyRestApiInterface() };
-          //   break;
           // case "contactInterface":
           //   state.device.interfaceList = { contactInterface: createEmptyContactInterface() };
           //   break;

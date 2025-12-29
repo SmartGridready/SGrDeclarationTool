@@ -21,6 +21,8 @@ export type { AccessProtectionSlice } from "@/sections/shared/modbus-attributes/
 export type { ModbusInterfaceSlice } from "@/sections/device/interface-list/modbus-interface/modbus-interface-slice";
 export type { ModbusFunctionalProfileListSlice } from "@/sections/device/interface-list/modbus-interface/functional-profile-list/modbus-functional-profile-list-slice";
 export type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface-list/modbus-interface/time-sync-block-notification/time-sync-block-notification-slice";
+export type { RestApiInterfaceSlice } from "@/sections/device/interface-list/rest-api-interface/rest-api-interface-slice";
+export type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -39,6 +41,8 @@ import type { AccessProtectionSlice } from "@/sections/shared/modbus-attributes/
 import type { ModbusInterfaceSlice } from "@/sections/device/interface-list/modbus-interface/modbus-interface-slice";
 import type { ModbusFunctionalProfileListSlice } from "@/sections/device/interface-list/modbus-interface/functional-profile-list/modbus-functional-profile-list-slice";
 import type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface-list/modbus-interface/time-sync-block-notification/time-sync-block-notification-slice";
+import type { RestApiInterfaceSlice } from "@/sections/device/interface-list/rest-api-interface/rest-api-interface-slice";
+import type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
 
 /**
  * Context value for device forms.
@@ -147,6 +151,16 @@ export interface DeviceFormContextValue {
    * Time sync block notification actions for modbus interface.
    */
   timeSyncBlockNotificationActions: TimeSyncBlockNotificationSlice;
+
+  /**
+   * REST API interface actions (includes functional profile list).
+   */
+  restApiInterfaceActions: RestApiInterfaceSlice;
+
+  /**
+   * Functional profile list actions for REST API interface.
+   */
+  restApiFunctionalProfileListActions: RestApiFunctionalProfileListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

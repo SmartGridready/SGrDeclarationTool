@@ -20,6 +20,11 @@ import {
   ModbusFunctionalProfile,
   ModbusDataPoint,
 } from "@/models/product/modbus-interface";
+import {
+  RestApiInterface,
+  RestApiFunctionalProfile,
+  RestApiDataPoint,
+} from "@/models/product/rest-api-interface";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
@@ -32,6 +37,21 @@ export function createEmptyModbusInterface(): ModbusInterface {
       modbusInterfaceSelection: "TCPIP",
       firstRegisterAddressIsOne: false,
       bitOrder: "BigEndian",
+    },
+    functionalProfileList: {
+      functionalProfileListElement: [],
+    },
+  };
+}
+
+/**
+ * Creates an empty RestApiInterface with minimal required values
+ */
+export function createEmptyRestApiInterface(): RestApiInterface {
+  return {
+    restApiInterfaceDescription: {
+      restApiInterfaceSelection: "URI",
+      restApiUri: "",
     },
     functionalProfileList: {
       functionalProfileListElement: [],
@@ -81,17 +101,17 @@ export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
 }
 
 /**
- * Creates a new empty ModbusFunctionalProfile with minimal required values
+ * Creates a new empty functional profile (Modbus or REST API) with minimal required values
  */
-export function createEmptyModbusFunctionalProfile(): ModbusFunctionalProfile {
+function createEmptyFunctionalProfileBase() {
   return {
     functionalProfile: {
       functionalProfileName: "",
       functionalProfileIdentification: {
         specificationOwnerIdentification: "",
-        functionalProfileCategory: "Battery",
+        functionalProfileCategory: "Battery" as const,
         functionalProfileType: "",
-        levelOfOperation: "1",
+        levelOfOperation: "1" as const,
         versionNumber: {
           primaryVersionNumber: 0,
           secondaryVersionNumber: 0,
@@ -106,17 +126,45 @@ export function createEmptyModbusFunctionalProfile(): ModbusFunctionalProfile {
 }
 
 /**
- * Creates a new empty ModbusDataPoint with minimal required values
+ * Creates a new empty ModbusFunctionalProfile with minimal required values
  */
-export function createEmptyModbusDataPoint(): ModbusDataPoint {
+export function createEmptyModbusFunctionalProfile(): ModbusFunctionalProfile {
+  return createEmptyFunctionalProfileBase() as ModbusFunctionalProfile;
+}
+
+/**
+ * Creates a new empty RestApiFunctionalProfile with minimal required values
+ */
+export function createEmptyRestApiFunctionalProfile(): RestApiFunctionalProfile {
+  return createEmptyFunctionalProfileBase() as RestApiFunctionalProfile;
+}
+
+/**
+ * Creates a new empty data point (Modbus or REST API) with minimal required values
+ */
+function createEmptyDataPointBase() {
   return {
     dataPoint: {
       dataPointName: "",
-      dataDirection: "R",
+      dataDirection: "R" as const,
       dataType: { float64: {} },
-      unit: "NONE",
+      unit: "NONE" as const,
     },
   };
+}
+
+/**
+ * Creates a new empty ModbusDataPoint with minimal required values
+ */
+export function createEmptyModbusDataPoint(): ModbusDataPoint {
+  return createEmptyDataPointBase() as ModbusDataPoint;
+}
+
+/**
+ * Creates a new empty RestApiDataPoint with minimal required values
+ */
+export function createEmptyRestApiDataPoint(): RestApiDataPoint {
+  return createEmptyDataPointBase() as RestApiDataPoint;
 }
 
 /**
@@ -193,12 +241,19 @@ export function createEmptyDynamicParameterDescriptionListElement(): DynamicPara
 }
 
 /**
- * Creates a new empty EnumEntryRecordFunctionalProfile with minimal required values
+ * Creates a new empty enum entry (Functional Profile or Product) with minimal required values
  */
-export function createEmptyEnumEntryFunctionalProfile(): EnumEntryRecordFunctionalProfile {
+function createEmptyEnumEntryBase() {
   return {
     literal: "",
   };
+}
+
+/**
+ * Creates a new empty EnumEntryRecordFunctionalProfile with minimal required values
+ */
+export function createEmptyEnumEntryFunctionalProfile(): EnumEntryRecordFunctionalProfile {
+  return createEmptyEnumEntryBase();
 }
 
 /**
@@ -214,9 +269,7 @@ export function createEmptyBitmapEntryFunctionalProfile(): BitmapEntryFunctional
  * Creates a new empty EnumEntryProductRecord with minimal required values
  */
 export function createEmptyEnumEntryProduct(): EnumEntryProductRecord {
-  return {
-    literal: "",
-  };
+  return createEmptyEnumEntryBase();
 }
 
 /**
@@ -253,25 +306,27 @@ export function createEmptyTimeSyncBlockNotification(): TimeSyncBlockNotificatio
 }
 
 /**
- * Creates a new empty GenericAttributeProduct (simple) with minimal required values
+ * Creates a new empty generic attribute (Product or ProductEnd) with minimal required values
  */
-export function createEmptyGenericAttributeProduct(): GenericAttributeProduct {
+function createEmptyGenericAttributeBase() {
   return {
     name: "",
     dataType: { float64: {} },
     value: "",
-    unit: "NO_UNITS",
+    unit: "NO_UNITS" as const,
   };
+}
+
+/**
+ * Creates a new empty GenericAttributeProduct (simple) with minimal required values
+ */
+export function createEmptyGenericAttributeProduct(): GenericAttributeProduct {
+  return createEmptyGenericAttributeBase() as GenericAttributeProduct;
 }
 
 /**
  * Creates a new empty GenericAttributeProductEnd with minimal required values
  */
 export function createEmptyGenericAttributeProductEnd(): GenericAttributeProductEnd {
-  return {
-    name: "",
-    dataType: { float64: {} },
-    value: "",
-    unit: "NO_UNITS",
-  };
+  return createEmptyGenericAttributeBase();
 }

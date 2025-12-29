@@ -1,6 +1,7 @@
 import { InterfaceList } from "@/models/product/product";
 import { getFirstElement, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapModbusInterface } from "./modbus-interface/modbus-interface-mapper";
+import { mapRestApiInterface } from "./rest-api-interface/rest-api-interface-mapper";
 
 /**
  * Maps XML interfaceList to InterfaceList model
@@ -20,11 +21,14 @@ export function mapInterfaceList(
     };
   }
 
-  // TODO: Add other interface types when implemented
-  // const restApiInterfaceXml = getFirstElement(interfaceListXml, "restApiInterface");
-  // if (restApiInterfaceXml) {
-  //   return { restApiInterface: mapRestApiInterface(restApiInterfaceXml) };
-  // }
+  // Check for restApiInterface
+  const restApiInterfaceXml = getFirstElement(interfaceListXml, "restApiInterface");
+  if (restApiInterfaceXml) {
+    return {
+      restApiInterface: mapRestApiInterface(restApiInterfaceXml),
+    };
+  }
 
+  // TODO: Add other interface types when implemented
   return undefined;
 }

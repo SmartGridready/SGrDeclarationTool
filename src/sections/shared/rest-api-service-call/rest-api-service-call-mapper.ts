@@ -183,7 +183,7 @@ export function mapRestApiServiceCall(
     requestMethod,
   };
 
-  // Map optional requestHeader
+  // Map optional requestHeader (must come before requestMethod in XML)
   const requestHeaderXml = getFirstElement(serviceCallXml, "requestHeader");
   setOptionalField(serviceCall, "requestHeader", mapHeaderList(requestHeaderXml));
 

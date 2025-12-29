@@ -51,7 +51,7 @@ export function ModbusFunctionalProfileListForm() {
             key={index}
             functionalProfileIndex={index}
             functionalProfileSlice={functionalProfileListActions.getFunctionalProfileSlice(index)}
-            dataPointListSlice={functionalProfileListActions.getDataPointListSlice(index)}
+            dataPointListSlice={functionalProfileListActions.getModbusDataPointListSlice(index)}
             modbusAttributesSlice={functionalProfileListActions.getModbusAttributesSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />

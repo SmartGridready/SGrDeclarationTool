@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.18.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.17.0...v0.18.0) (2025-12-29)
+
+
+### Features
+
+* add rest api interface to model (GL-9) ([b09cdeb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b09cdeb1bc431b7422a499c9ed8c84815ae8a384))
+* implement builders for description and data point conf in rest api interfaces (GL-8) ([52b04ba](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/52b04ba69b94e1637540cdb885b2f6232288e357))
+* implement forms for datapointbase and functionalprofilebase in rest api interfaces (GL-12) ([1a917f6](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1a917f662085f2731b6d732e0dde0391c00cf73a))
+* implement forms for description and data point conf in rest api interfaces (GL-12) ([01ed75d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/01ed75d0339405c28b4e9c0f12dad569f6ba98f4))
+* implement mappers for description and data point conf in rest api interfaces (GL-7) ([dfc25a0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/dfc25a0472b9fc202fc9a67fdf6bc5bb65cf18fa))
+* implement schemas for description and data point conf in rest api interfaces (GL-18) ([722a746](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/722a7462fedc47edd291a42e7b1bfa5e8050aff0))
+* implement shared builder for service calls in rest api interfaces (GL-8) ([c52d0bd](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c52d0bdc8a1be0227a55e32e83272466e7153edb))
+* implement shared forms for service calls in rest api interfaces (GL-12) ([43e53cf](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/43e53cf944d0845efa9314aa6938094746fbe6e1))
+* implement shared mapper for service calls in rest api interfaces (GL-7) ([3389631](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3389631c7f843a2f1a494cf0590409ee118a80c7))
+* implement shared schema for service calls in rest api interfaces (GL-18) ([33322a9](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/33322a949f92fc16296e1bb46d5bd769ecf062d6))
+* implement shared slices for service calls in rest api interfaces (GL-16) ([4f0368a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4f0368a341e076f7d4f6b563d4483935ed7a6731))
+* implement slices for datapointbase and functionalprofilebase in rest api interfaces (GL-16) ([33e57c9](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/33e57c944a07b0b205bf09bebd0d8898f9f46726))
+* implement slices for description and data point conf in rest api interfaces (GL-16) ([82cced4](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/82cced42bc62a743d1c74f7434191361fbbd5ade))
+
+
+### Code Refactoring
+
+* make smaller paddings for sections and supprot no wrapper (GL-11) ([faaa190](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/faaa1904580f68dbeab8b2b4659eb89114e71cd4))
+* move all createEmpty functions to factory utils (GL-16) ([36954c2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/36954c27000e3374877c1d4fde19d1775c2a95f9))
+* reduce layering of profiles and datapoints inside interface list for better overview (GL-12) ([57738e8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/57738e8a75d8031a7381746692d2dd02d40c3611))
+* spread actions for fp and timesync and make slice creation of modbus attributes consistant (GL-16) ([40873b5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/40873b509599e3402e41275a81e264090a07bfad))
+
 ## [0.17.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.16.0...v0.17.0) (2025-12-27)
 
 

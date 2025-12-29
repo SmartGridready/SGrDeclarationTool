@@ -478,12 +478,14 @@ interface ResponseQueryBase {
   queryType: ResponseQueryType;
 }
 
-export type ResponseQueryType =
-  | "JMESPathExpression"
-  | "XPathExpression"
-  | "RegularExpression"
-  | "JMESPathMapping"
-  | "JSONataExpression";
+export const RESPONSE_QUERY_TYPE_VALUES = [
+  "JMESPathExpression",
+  "XPathExpression",
+  "RegularExpression",
+  "JMESPathMapping",
+  "JSONataExpression",
+] as const;
+export type ResponseQueryType = (typeof RESPONSE_QUERY_TYPE_VALUES)[number];
 
 export interface JMESPathMapping {
   mapping: JMESPathMappingRecord[];

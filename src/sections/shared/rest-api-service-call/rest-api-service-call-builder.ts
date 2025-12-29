@@ -157,17 +157,18 @@ export function buildRestApiServiceCall(
     throw new Error(errorMessage);
   }
 
-  const serviceCallXml: Record<string, unknown> = {
-    requestMethod: wrapInArray(serviceCall.requestMethod),
-  };
+  const serviceCallXml: Record<string, unknown> = {};
 
-  // Include optional requestHeader
+  // Include optional requestHeader (must come before requestMethod)
   if (serviceCall.requestHeader) {
     const headerListXml = buildHeaderList(serviceCall.requestHeader);
     if (headerListXml) {
       serviceCallXml.requestHeader = wrapInArray(headerListXml);
     }
   }
+
+  // Include required requestMethod
+  serviceCallXml.requestMethod = wrapInArray(serviceCall.requestMethod);
 
   // Include optional requestPath
   setOptionalXmlField(serviceCallXml, "requestPath", serviceCall.requestPath);

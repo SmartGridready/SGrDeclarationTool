@@ -63,12 +63,13 @@ export interface ConfigurationDescription extends LegibleDescription {
 
 // Product core: Interfaces list
 
-export type InterfaceList =
-  | { modbusInterface: ModbusInterface }
-  | { restApiInterface: RestApiInterface };
-//  | { contactInterface: ContactInterface }
-//  | { genericInterface: GenericInterface }
-//  | { messagingInterface: MessagingInterface };
+export interface InterfaceList {
+  modbusInterface?: ModbusInterface;
+  restApiInterface?: RestApiInterface;
+  //  contactInterface?: ContactInterface;
+  //  genericInterface?: GenericInterface;
+  //  messagingInterface?: MessagingInterface;
+}
 
 export const INTERFACE_TYPE_VALUES = [
   "modbusInterface",

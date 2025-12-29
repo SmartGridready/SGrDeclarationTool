@@ -50,7 +50,7 @@ function mapParameterListElement(elementXml: Xml2JsObject): DynamicParameterDesc
 
   // Map optional parameterDescription
   if (elementXml.parameterDescription && Array.isArray(elementXml.parameterDescription)) {
-    element.parameterDescription = elementXml.parameterDescription.map((desc: Xml2JsObject) =>
+    element.parameterDescription = (elementXml.parameterDescription as Xml2JsObject[]).map((desc) =>
       mapParameterDescription(desc)
     );
   }

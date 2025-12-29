@@ -11,6 +11,7 @@ import {
   EnumEntryRecordFunctionalProfile,
   BitmapEntryFunctionalProfile,
   EnumEntryProductRecord,
+  EnumEntry,
   BitmapEntryProduct,
   GenericAttributeProduct,
   GenericAttributeProductEnd,
@@ -273,9 +274,9 @@ export function createEmptyEnumEntryProduct(): EnumEntryProductRecord {
 }
 
 /**
- * Creates a new empty EnumEntryProductRecord with ordinal (for modbus data point configuration)
+ * Creates a new empty EnumEntry with ordinal (for modbus data point configuration)
  */
-export function createEmptyEnumEntryProductWithOrdinal(): EnumEntryProductRecord {
+export function createEmptyEnumEntryProductWithOrdinal(): EnumEntry {
   return {
     literal: "",
     ordinal: 0,

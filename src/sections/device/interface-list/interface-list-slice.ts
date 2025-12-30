@@ -1,5 +1,9 @@
 import { DeviceFrame, InterfaceType } from "@/models";
-import { createEmptyModbusInterface, createEmptyRestApiInterface } from "@/utils/factory-utils";
+import {
+  createEmptyModbusInterface,
+  createEmptyRestApiInterface,
+  createEmptyMessagingInterface,
+} from "@/utils/factory-utils";
 import {
   createModbusInterfaceSlice,
   ModbusInterfaceSlice,
@@ -8,8 +12,15 @@ import {
   createRestApiInterfaceSlice,
   RestApiInterfaceSlice,
 } from "./rest-api-interface/rest-api-interface-slice";
+import {
+  createMessagingInterfaceSlice,
+  MessagingInterfaceSlice,
+} from "./messaging-interface/messaging-interface-slice";
 
-export interface InterfaceListSlice extends ModbusInterfaceSlice, RestApiInterfaceSlice {
+export interface InterfaceListSlice
+  extends ModbusInterfaceSlice,
+    RestApiInterfaceSlice,
+    MessagingInterfaceSlice {
   setInterfaceType: (interfaceType: InterfaceType) => void;
 }
 
@@ -21,10 +32,12 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
 ): InterfaceListSlice {
   const modbusInterfaceSlice = createModbusInterfaceSlice(set);
   const restApiInterfaceSlice = createRestApiInterfaceSlice(set);
+  const messagingInterfaceSlice = createMessagingInterfaceSlice(set);
 
   return {
     ...modbusInterfaceSlice,
     ...restApiInterfaceSlice,
+    ...messagingInterfaceSlice,
 
     setInterfaceType: (interfaceType) =>
       set((state) => {
@@ -47,9 +60,9 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
           // case "genericInterface":
           //   state.device.interfaceList = { genericInterface: createEmptyGenericInterface() };
           //   break;
-          // case "messagingInterface":
-          //   state.device.interfaceList = { messagingInterface: createEmptyMessagingInterface() };
-          //   break;
+          case "messagingInterface":
+            state.device.interfaceList = { messagingInterface: createEmptyMessagingInterface() };
+            break;
         }
       }),
   };

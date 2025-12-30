@@ -24,6 +24,7 @@ export type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface
 export type { RestApiInterfaceSlice } from "@/sections/device/interface-list/rest-api-interface/rest-api-interface-slice";
 export type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
 export type { RestApiInterfaceDescriptionSlice } from "@/sections/device/interface-list/rest-api-interface/interface-description/interface-description-slice";
+export type { MessagingFunctionalProfileListSlice } from "@/sections/device/interface-list/messaging-interface/functional-profile-list/messaging-functional-profile-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -45,6 +46,7 @@ import type { TimeSyncBlockNotificationSlice } from "@/sections/device/interface
 import type { RestApiInterfaceSlice } from "@/sections/device/interface-list/rest-api-interface/rest-api-interface-slice";
 import type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
 import type { RestApiInterfaceDescriptionSlice } from "@/sections/device/interface-list/rest-api-interface/interface-description/interface-description-slice";
+import type { MessagingFunctionalProfileListSlice } from "@/sections/device/interface-list/messaging-interface/functional-profile-list/messaging-functional-profile-list-slice";
 
 /**
  * Context value for device forms.
@@ -168,6 +170,11 @@ export interface DeviceFormContextValue {
    * REST API interface description actions.
    */
   restApiInterfaceDescriptionActions: RestApiInterfaceDescriptionSlice;
+
+  /**
+   * Functional profile list actions for Messaging interface.
+   */
+  messagingFunctionalProfileListActions: MessagingFunctionalProfileListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

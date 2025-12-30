@@ -26,6 +26,11 @@ import {
   RestApiFunctionalProfile,
   RestApiDataPoint,
 } from "@/models/product/rest-api-interface";
+import {
+  MessagingFunctionalProfile,
+  MessagingDataPoint,
+  MessagingInterface,
+} from "@/models/product/messaging-interface";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
@@ -53,6 +58,23 @@ export function createEmptyRestApiInterface(): RestApiInterface {
     restApiInterfaceDescription: {
       restApiInterfaceSelection: "URI",
       restApiUri: "",
+    },
+    functionalProfileList: {
+      functionalProfileListElement: [],
+    },
+  };
+}
+
+/**
+ * Creates an empty MessagingInterface with minimal required values
+ */
+export function createEmptyMessagingInterface(): MessagingInterface {
+  return {
+    messagingInterfaceDescription: {
+      platform: "MQTT5",
+      messageBrokerList: {
+        messageBrokerListElement: [],
+      },
     },
     functionalProfileList: {
       functionalProfileListElement: [],
@@ -141,6 +163,13 @@ export function createEmptyRestApiFunctionalProfile(): RestApiFunctionalProfile 
 }
 
 /**
+ * Creates a new empty MessagingFunctionalProfile with minimal required values
+ */
+export function createEmptyMessagingFunctionalProfile(): MessagingFunctionalProfile {
+  return createEmptyFunctionalProfileBase() as MessagingFunctionalProfile;
+}
+
+/**
  * Creates a new empty data point (Modbus or REST API) with minimal required values
  */
 function createEmptyDataPointBase() {
@@ -166,6 +195,18 @@ export function createEmptyModbusDataPoint(): ModbusDataPoint {
  */
 export function createEmptyRestApiDataPoint(): RestApiDataPoint {
   return createEmptyDataPointBase() as RestApiDataPoint;
+}
+
+/**
+ * Creates a new empty MessagingDataPoint with minimal required values
+ */
+export function createEmptyMessagingDataPoint(): MessagingDataPoint {
+  return {
+    ...createEmptyDataPointBase(),
+    messagingDataPointConfiguration: {
+      messagingDataType: { number: {} },
+    },
+  } as MessagingDataPoint;
 }
 
 /**

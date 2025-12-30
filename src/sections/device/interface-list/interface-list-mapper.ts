@@ -4,6 +4,7 @@ import { mapModbusInterface } from "./modbus-interface/modbus-interface-mapper";
 import { mapRestApiInterface } from "./rest-api-interface/rest-api-interface-mapper";
 import { mapMessagingInterface } from "./messaging-interface/messaging-interface-mapper";
 import { mapContactInterface } from "./contact-interface/contact-interface-mapper";
+import { mapGenericInterface } from "./generic-interface/generic-interface-mapper";
 
 /**
  * Maps XML interfaceList to InterfaceList model
@@ -44,6 +45,14 @@ export function mapInterfaceList(
   if (contactInterfaceXml) {
     return {
       contactInterface: mapContactInterface(contactInterfaceXml),
+    };
+  }
+
+  // Check for genericInterface
+  const genericInterfaceXml = getFirstElement(interfaceListXml, "genericInterface");
+  if (genericInterfaceXml) {
+    return {
+      genericInterface: mapGenericInterface(genericInterfaceXml),
     };
   }
 

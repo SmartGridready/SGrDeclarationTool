@@ -11,14 +11,35 @@ export interface ValidationResult<T> {
 }
 
 /**
+ * Formats a Zod error path array into a string with bracket notation for array indices.
+ * Example: ["field", 0, "subfield"] -> "field[0].subfield"
+ */
+function formatZodPath(pathArray: readonly (string | number)[]): string {
+  return pathArray.reduce<string>((acc, segment, index) => {
+    if (typeof segment === "number") {
+      // Use bracket notation for array indices
+      return `${acc}[${segment}]`;
+    } else if (index === 0) {
+      // First segment, no prefix
+      return String(segment);
+    } else {
+      // String segment, use dot notation
+      return `${acc}.${String(segment)}`;
+    }
+  }, "");
+}
+
+/**
  * Formats Zod errors into a flat object keyed by field path
  * Example: { "functionalProfile.functionalProfileIdentification.specificationOwnerIdentification": ["is required"] }
+ * Array indices use bracket notation: { "items[0].name": ["is required"] }
  */
 export function formatFieldErrors(error: z.ZodError): Record<string, string[]> {
   const fieldErrors: Record<string, string[]> = {};
 
   error.issues.forEach((err) => {
-    const path = err.path.join(".");
+    // Zod path is (string | number)[] but TypeScript sees it as PropertyKey[]
+    const path = formatZodPath(err.path as (string | number)[]);
     if (!fieldErrors[path]) {
       fieldErrors[path] = [];
     }

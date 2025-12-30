@@ -73,7 +73,9 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
     return null;
   }
 
-  const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
+  // Note: Schema nests fields under "functionalProfile", so we need to include it in the path
+  const getFieldError = (field: string) =>
+    getError(`${fieldPathPrefix}.functionalProfile.${field}`);
 
   return (
     <FormSection title={title} description={description} nested={nested} required={true}>
@@ -97,7 +99,7 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
             functionalProfileIdentification: functionalProfile.functionalProfileIdentification,
           })}
           isAddedSelector={() => !!functionalProfile.functionalProfileIdentification}
-          fieldPathPrefix={`${fieldPathPrefix}.functionalProfileIdentification`}
+          fieldPathPrefix={`${fieldPathPrefix}.functionalProfile.functionalProfileIdentification`}
           required={true}
           nested={true}
         />
@@ -110,7 +112,7 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
             alternativeNames: functionalProfile.alternativeNames,
           })}
           isAddedSelector={() => !!functionalProfile.alternativeNames}
-          fieldPathPrefix={`${fieldPathPrefix}.alternativeNames`}
+          fieldPathPrefix={`${fieldPathPrefix}.functionalProfile.alternativeNames`}
           required={false}
           nested={true}
         />
@@ -123,7 +125,7 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
             legibleDescriptions: functionalProfile.legibleDescription,
           })}
           isAddedSelector={() => !!functionalProfile.legibleDescription}
-          fieldPathPrefix={`${fieldPathPrefix}.legibleDescription`}
+          fieldPathPrefix={`${fieldPathPrefix}.functionalProfile.legibleDescription`}
           required={false}
           nested={true}
           maxItems={4}
@@ -141,7 +143,7 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
             legibleDescriptions: functionalProfile.programmerHints,
           })}
           isAddedSelector={() => !!functionalProfile.programmerHints}
-          fieldPathPrefix={`${fieldPathPrefix}.programmerHints`}
+          fieldPathPrefix={`${fieldPathPrefix}.functionalProfile.programmerHints`}
           required={false}
           title="Programmer Hints"
           description="Programmer hints for the functional profile (max 4)"

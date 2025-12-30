@@ -97,7 +97,8 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
     return null;
   }
 
-  const getFieldError = (field: string) => getError(`${fieldPathPrefix}.${field}`);
+  // Note: Schema nests fields under "dataPoint", so we need to include it in the path
+  const getFieldError = (field: string) => getError(`${fieldPathPrefix}.dataPoint.${field}`);
 
   return (
     <FormSection title={title} description={description} nested={nested} required={true}>
@@ -213,7 +214,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
           <DataTypeProductEnumForm
             enumMap={dataPoint.dataType.enum}
             actions={actions}
-            fieldPathPrefix={`${fieldPathPrefix}.dataType.enum`}
+            fieldPathPrefix={`${fieldPathPrefix}.dataPoint.dataType.enum`}
           />
         )}
 
@@ -221,7 +222,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
           <DataTypeProductBitmapForm
             bitmap={dataPoint.dataType.bitmap}
             actions={actions}
-            fieldPathPrefix={`${fieldPathPrefix}.dataType.bitmap`}
+            fieldPathPrefix={`${fieldPathPrefix}.dataPoint.dataType.bitmap`}
           />
         )}
 
@@ -241,7 +242,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             parameterList: dataPoint.parameterList,
           })}
           isAddedSelector={() => !!dataPoint.parameterList}
-          fieldPathPrefix={`${fieldPathPrefix}.parameterList`}
+          fieldPathPrefix={`${fieldPathPrefix}.dataPoint.parameterList`}
           listIndex={0}
           required={false}
           nested={true}
@@ -255,7 +256,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             alternativeNames: dataPoint.alternativeNames,
           })}
           isAddedSelector={() => !!dataPoint.alternativeNames}
-          fieldPathPrefix={`${fieldPathPrefix}.alternativeNames`}
+          fieldPathPrefix={`${fieldPathPrefix}.dataPoint.alternativeNames`}
           required={false}
           nested={true}
         />
@@ -268,7 +269,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             legibleDescriptions: dataPoint.legibleDescription,
           })}
           isAddedSelector={() => !!dataPoint.legibleDescription}
-          fieldPathPrefix={`${fieldPathPrefix}.legibleDescription`}
+          fieldPathPrefix={`${fieldPathPrefix}.dataPoint.legibleDescription`}
           required={false}
           nested={true}
           maxItems={4}
@@ -286,7 +287,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             legibleDescriptions: dataPoint.programmerHints,
           })}
           isAddedSelector={() => !!dataPoint.programmerHints}
-          fieldPathPrefix={`${fieldPathPrefix}.programmerHints`}
+          fieldPathPrefix={`${fieldPathPrefix}.dataPoint.programmerHints`}
           required={false}
           title="Programmer Hints"
           description="Programmer hints for the data point (max 4)"

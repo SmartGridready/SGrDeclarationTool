@@ -4,10 +4,11 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { modbusInterfaceSchema } from "./modbus-interface/modbus-interface-schema";
 import { restApiInterfaceSchema } from "./rest-api-interface/rest-api-interface-schema";
 import { messagingInterfaceSchema } from "./messaging-interface/messaging-interface-schema";
+import { contactInterfaceSchema } from "./contact-interface/contact-interface-schema";
 
 /**
  * Interface List validation schemas and validators
- * Supports modbusInterface OR restApiInterface OR messagingInterface (union type)
+ * Supports modbusInterface OR restApiInterface OR messagingInterface OR contactInterface (union type)
  */
 
 // Modbus Interface variant
@@ -25,11 +26,17 @@ const messagingInterfaceListSchema = z.object({
   messagingInterface: messagingInterfaceSchema,
 });
 
+// Contact Interface variant
+const contactInterfaceListSchema = z.object({
+  contactInterface: contactInterfaceSchema,
+});
+
 // Union of all interface types
 export const interfaceListSchema = z.union([
   modbusInterfaceListSchema,
   restApiInterfaceListSchema,
   messagingInterfaceListSchema,
+  contactInterfaceListSchema,
 ]);
 
 // Type exports for TypeScript inference

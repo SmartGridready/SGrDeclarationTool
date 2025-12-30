@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.19.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.18.1...v0.19.0) (2025-12-30)
+
+
+### Features
+
+* add messaging interface to model (GL-9) ([5eb7451](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5eb7451ed2edfaf4c648c5615df4f46a184fac30))
+* implement builders for messaging interface (GL-8) ([b54e8c8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b54e8c83e4c5bda75c41761d6eb809d8dd19195b))
+* implement forms for data point configuration in messaging interface (GL-12) ([9158c63](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9158c63c6747a947216c7cd2def468182aa196b9))
+* implement forms for functional profile base and data point base for messaging interface (GL-12) ([8a16a93](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8a16a93de2b687cfc59f206a3e7297f82cb4d1d1))
+* implement forms for messaging interface description (GL-12) ([c9600e8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c9600e8719a1873e098dcaf3ef7db0d5adac46b8))
+* implement mappers for messaging interface (GL-7) ([0332c83](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0332c8378a5b5b540251912ca81b81a9f2568733))
+* implement schemas for messaging interface (GL-18) ([da9cc09](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/da9cc09355ce765b0c323874242c64e68ceebcc0))
+* implement slices for data point configuration in messaging interface (GL-16) ([fae718e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fae718e91cc172017513717fb48acd9508ed62eb))
+* implement slices for functional profile base and data point base for messaging interface (GL-16) ([9f795d3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9f795d3c39524c00195ed8e3c1eb21e18807a6e7))
+* implement slices for messaging interface description (GL-16) ([8ac7fb5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8ac7fb5d1340fbb0986aa184af7035d207eb1209))
+
+
+### Bug Fixes
+
+* rename conflicting functional profile methods to be interface-specific (Modbus/REST API/Messaging) ([4551b5b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4551b5b03227727ebbedd1c7c9ab5fe66d196fbc))
+* show all options in ComboboxField when reopening dropdown instead of filtering to selected value (GL-11) ([332076a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/332076a7a56ee16f70f508791a6e09f12024d6d0))
+
 ### [0.18.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.18.0...v0.18.1) (2025-12-29)
 
 

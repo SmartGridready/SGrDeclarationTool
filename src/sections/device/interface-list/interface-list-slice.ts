@@ -3,6 +3,7 @@ import {
   createEmptyModbusInterface,
   createEmptyRestApiInterface,
   createEmptyMessagingInterface,
+  createEmptyContactInterface,
 } from "@/utils/factory-utils";
 import {
   createModbusInterfaceSlice,
@@ -16,11 +17,16 @@ import {
   createMessagingInterfaceSlice,
   MessagingInterfaceSlice,
 } from "./messaging-interface/messaging-interface-slice";
+import {
+  createContactInterfaceSlice,
+  ContactInterfaceSlice,
+} from "./contact-interface/contact-interface-slice";
 
 export interface InterfaceListSlice
   extends ModbusInterfaceSlice,
     RestApiInterfaceSlice,
-    MessagingInterfaceSlice {
+    MessagingInterfaceSlice,
+    ContactInterfaceSlice {
   setInterfaceType: (interfaceType: InterfaceType) => void;
 }
 
@@ -33,11 +39,13 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
   const modbusInterfaceSlice = createModbusInterfaceSlice(set);
   const restApiInterfaceSlice = createRestApiInterfaceSlice(set);
   const messagingInterfaceSlice = createMessagingInterfaceSlice(set);
+  const contactInterfaceSlice = createContactInterfaceSlice(set);
 
   return {
     ...modbusInterfaceSlice,
     ...restApiInterfaceSlice,
     ...messagingInterfaceSlice,
+    ...contactInterfaceSlice,
 
     setInterfaceType: (interfaceType) =>
       set((state) => {
@@ -53,10 +61,10 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
           case "restApiInterface":
             state.device.interfaceList = { restApiInterface: createEmptyRestApiInterface() };
             break;
+          case "contactInterface":
+            state.device.interfaceList = { contactInterface: createEmptyContactInterface() };
+            break;
           // TODO: Add other interface types when implemented
-          // case "contactInterface":
-          //   state.device.interfaceList = { contactInterface: createEmptyContactInterface() };
-          //   break;
           // case "genericInterface":
           //   state.device.interfaceList = { genericInterface: createEmptyGenericInterface() };
           //   break;

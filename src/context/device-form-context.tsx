@@ -28,6 +28,9 @@ export type { MessagingFunctionalProfileListSlice } from "@/sections/device/inte
 export type { MessagingInterfaceDescriptionSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/interface-description-slice";
 export type { MessageBrokerAuthenticationBasicSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/basic/message-broker-authentication-basic-slice";
 export type { MessageBrokerAuthenticationClientCertificateSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/client-certificate/message-broker-authentication-client-certificate-slice";
+export type { ContactInterfaceSlice } from "@/sections/device/interface-list/contact-interface/contact-interface-slice";
+export type { ContactFunctionalProfileListSlice } from "@/sections/device/interface-list/contact-interface/functional-profile-list/contact-functional-profile-list-slice";
+export type { ContactInterfaceDescriptionSlice } from "@/sections/device/interface-list/contact-interface/interface-description/interface-description-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -53,6 +56,9 @@ import type { MessagingFunctionalProfileListSlice } from "@/sections/device/inte
 import type { MessagingInterfaceDescriptionSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/interface-description-slice";
 import type { MessageBrokerAuthenticationBasicSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/basic/message-broker-authentication-basic-slice";
 import type { MessageBrokerAuthenticationClientCertificateSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/client-certificate/message-broker-authentication-client-certificate-slice";
+import type { ContactInterfaceSlice } from "@/sections/device/interface-list/contact-interface/contact-interface-slice";
+import type { ContactFunctionalProfileListSlice } from "@/sections/device/interface-list/contact-interface/functional-profile-list/contact-functional-profile-list-slice";
+import type { ContactInterfaceDescriptionSlice } from "@/sections/device/interface-list/contact-interface/interface-description/interface-description-slice";
 
 /**
  * Context value for device forms.
@@ -196,6 +202,21 @@ export interface DeviceFormContextValue {
    * Message broker authentication client certificate actions for Messaging interface.
    */
   messageBrokerAuthenticationClientCertificateActions: MessageBrokerAuthenticationClientCertificateSlice;
+
+  /**
+   * Contact interface actions (includes functional profile list and interface description).
+   */
+  contactInterfaceActions: ContactInterfaceSlice;
+
+  /**
+   * Functional profile list actions for Contact interface.
+   */
+  contactFunctionalProfileListActions: ContactFunctionalProfileListSlice;
+
+  /**
+   * Contact interface description actions.
+   */
+  contactInterfaceDescriptionActions: ContactInterfaceDescriptionSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

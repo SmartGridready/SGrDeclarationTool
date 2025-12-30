@@ -43,8 +43,9 @@ export function RestApiFunctionalProfileListForm() {
       : false;
   });
 
-  const handleAdd = () => restApiFunctionalProfileListActions.addEmptyFunctionalProfile();
-  const handleRemove = () => restApiFunctionalProfileListActions.removeAllFunctionalProfiles();
+  const handleAdd = () => restApiFunctionalProfileListActions.addEmptyRestApiFunctionalProfile();
+  const handleRemove = () =>
+    restApiFunctionalProfileListActions.removeAllRestApiFunctionalProfiles();
 
   return (
     <FormSection
@@ -59,15 +60,15 @@ export function RestApiFunctionalProfileListForm() {
       <ArrayField<RestApiFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={restApiFunctionalProfileListActions.addEmptyFunctionalProfile}
-        onRemove={restApiFunctionalProfileListActions.removeFunctionalProfile}
+        onAdd={restApiFunctionalProfileListActions.addEmptyRestApiFunctionalProfile}
+        onRemove={restApiFunctionalProfileListActions.removeRestApiFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <RestApiFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={restApiFunctionalProfileListActions.getFunctionalProfileSlice(
+            functionalProfileSlice={restApiFunctionalProfileListActions.getRestApiFunctionalProfileSlice(
               index
             )}
             dataPointListSlice={restApiFunctionalProfileListActions.getRestApiDataPointListSlice(
@@ -111,7 +112,7 @@ function RestApiFunctionalProfileItemForm({
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    restApiFunctionalProfileListActions.removeFunctionalProfile(functionalProfileIndex);
+    restApiFunctionalProfileListActions.removeRestApiFunctionalProfile(functionalProfileIndex);
   };
 
   return (

@@ -26,8 +26,8 @@ export function ModbusFunctionalProfileListForm() {
 
   const isAdded = useDeviceState((d) => !!d?.interfaceList?.modbusInterface?.functionalProfileList);
 
-  const handleAdd = () => functionalProfileListActions.addEmptyFunctionalProfile();
-  const handleRemove = () => functionalProfileListActions.removeAllFunctionalProfiles();
+  const handleAdd = () => functionalProfileListActions.addEmptyModbusFunctionalProfile();
+  const handleRemove = () => functionalProfileListActions.removeAllModbusFunctionalProfiles();
 
   return (
     <FormSection
@@ -42,15 +42,17 @@ export function ModbusFunctionalProfileListForm() {
       <ArrayField<ModbusFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={functionalProfileListActions.addEmptyFunctionalProfile}
-        onRemove={functionalProfileListActions.removeFunctionalProfile}
+        onAdd={functionalProfileListActions.addEmptyModbusFunctionalProfile}
+        onRemove={functionalProfileListActions.removeModbusFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <ModbusFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={functionalProfileListActions.getFunctionalProfileSlice(index)}
+            functionalProfileSlice={functionalProfileListActions.getModbusFunctionalProfileSlice(
+              index
+            )}
             dataPointListSlice={functionalProfileListActions.getModbusDataPointListSlice(index)}
             modbusAttributesSlice={functionalProfileListActions.getModbusAttributesSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
@@ -90,7 +92,7 @@ function ModbusFunctionalProfileItemForm({
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    functionalProfileListActions.removeFunctionalProfile(functionalProfileIndex);
+    functionalProfileListActions.removeModbusFunctionalProfile(functionalProfileIndex);
   };
 
   return (

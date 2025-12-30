@@ -46,8 +46,10 @@ export function MessagingFunctionalProfileListForm() {
       : false;
   });
 
-  const handleAdd = () => messagingFunctionalProfileListActions.addEmptyFunctionalProfile();
-  const handleRemove = () => messagingFunctionalProfileListActions.removeAllFunctionalProfiles();
+  const handleAdd = () =>
+    messagingFunctionalProfileListActions.addEmptyMessagingFunctionalProfile();
+  const handleRemove = () =>
+    messagingFunctionalProfileListActions.removeAllMessagingFunctionalProfiles();
 
   return (
     <FormSection
@@ -62,15 +64,15 @@ export function MessagingFunctionalProfileListForm() {
       <ArrayField<MessagingFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={messagingFunctionalProfileListActions.addEmptyFunctionalProfile}
-        onRemove={messagingFunctionalProfileListActions.removeFunctionalProfile}
+        onAdd={messagingFunctionalProfileListActions.addEmptyMessagingFunctionalProfile}
+        onRemove={messagingFunctionalProfileListActions.removeMessagingFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <MessagingFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={messagingFunctionalProfileListActions.getFunctionalProfileSlice(
+            functionalProfileSlice={messagingFunctionalProfileListActions.getMessagingFunctionalProfileSlice(
               index
             )}
             dataPointListSlice={messagingFunctionalProfileListActions.getMessagingDataPointListSlice(
@@ -114,7 +116,7 @@ function MessagingFunctionalProfileItemForm({
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    messagingFunctionalProfileListActions.removeFunctionalProfile(functionalProfileIndex);
+    messagingFunctionalProfileListActions.removeMessagingFunctionalProfile(functionalProfileIndex);
   };
 
   return (

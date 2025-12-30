@@ -25,12 +25,12 @@ function isMessagingInterface(
 
 export interface MessagingFunctionalProfileListSlice {
   // Functional profile list management
-  addEmptyFunctionalProfile: () => void;
-  removeFunctionalProfile: (index: number) => void;
-  removeAllFunctionalProfiles: () => void;
+  addEmptyMessagingFunctionalProfile: () => void;
+  removeMessagingFunctionalProfile: (index: number) => void;
+  removeAllMessagingFunctionalProfiles: () => void;
 
   // Get slice for a specific functional profile
-  getFunctionalProfileSlice: (index: number) => FunctionalProfileBaseSlice;
+  getMessagingFunctionalProfileSlice: (index: number) => FunctionalProfileBaseSlice;
 
   // Get data point list slice for a specific functional profile
   getMessagingDataPointListSlice: (index: number) => MessagingDataPointListSlice;
@@ -58,7 +58,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
-    addEmptyFunctionalProfile: () =>
+    addEmptyMessagingFunctionalProfile: () =>
       set((state) => {
         const interfaceList = state.device?.interfaceList;
         if (isMessagingInterface(interfaceList)) {
@@ -75,7 +75,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
         }
       }),
 
-    removeFunctionalProfile: (index) =>
+    removeMessagingFunctionalProfile: (index) =>
       set((state) => {
         const list = getFunctionalProfileList(state);
         if (list && list.functionalProfileListElement.length > index) {
@@ -83,7 +83,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
         }
       }),
 
-    removeAllFunctionalProfiles: () =>
+    removeAllMessagingFunctionalProfiles: () =>
       set((state) => {
         const list = getFunctionalProfileList(state);
         if (list) {
@@ -91,7 +91,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
         }
       }),
 
-    getFunctionalProfileSlice: (index: number): FunctionalProfileBaseSlice => {
+    getMessagingFunctionalProfileSlice: (index: number): FunctionalProfileBaseSlice => {
       return createFunctionalProfileBaseSlice(set, (state) => {
         // Return the actual MessagingFunctionalProfile object, not a copy
         // This allows the slice to modify genericAttributeList directly

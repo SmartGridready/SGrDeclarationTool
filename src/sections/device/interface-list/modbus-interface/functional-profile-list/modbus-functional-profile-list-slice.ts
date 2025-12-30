@@ -19,12 +19,12 @@ import {
 
 export interface ModbusFunctionalProfileListSlice {
   // Functional profile list management
-  addEmptyFunctionalProfile: () => void;
-  removeFunctionalProfile: (index: number) => void;
-  removeAllFunctionalProfiles: () => void;
+  addEmptyModbusFunctionalProfile: () => void;
+  removeModbusFunctionalProfile: (index: number) => void;
+  removeAllModbusFunctionalProfiles: () => void;
 
   // Get slice for a specific functional profile
-  getFunctionalProfileSlice: (index: number) => FunctionalProfileBaseSlice;
+  getModbusFunctionalProfileSlice: (index: number) => FunctionalProfileBaseSlice;
 
   // Get data point list slice for a specific functional profile
   getModbusDataPointListSlice: (index: number) => ModbusDataPointListSlice;
@@ -51,7 +51,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
-    addEmptyFunctionalProfile: () =>
+    addEmptyModbusFunctionalProfile: () =>
       set((state) => {
         const modbusInterface = state.device?.interfaceList?.modbusInterface;
         if (modbusInterface) {
@@ -67,7 +67,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
         }
       }),
 
-    removeFunctionalProfile: (index) =>
+    removeModbusFunctionalProfile: (index) =>
       set((state) => {
         const list = getFunctionalProfileList(state);
         if (list && list.functionalProfileListElement.length > index) {
@@ -75,7 +75,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
         }
       }),
 
-    removeAllFunctionalProfiles: () =>
+    removeAllModbusFunctionalProfiles: () =>
       set((state) => {
         const list = getFunctionalProfileList(state);
         if (list) {
@@ -83,7 +83,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
         }
       }),
 
-    getFunctionalProfileSlice: (index: number): FunctionalProfileBaseSlice => {
+    getModbusFunctionalProfileSlice: (index: number): FunctionalProfileBaseSlice => {
       return createFunctionalProfileBaseSlice(set, (state) => {
         // Return the actual ModbusFunctionalProfile object, not a copy
         // This allows the slice to modify genericAttributeList directly

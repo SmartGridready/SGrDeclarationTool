@@ -9,6 +9,7 @@ import { MessagingDataPoint, MessagingInterface } from "@/models/product/messagi
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import { MessagingDataPointListSlice } from "./messaging-data-point-list-slice";
+import { MessagingDataPointConfigurationForm } from "./messaging-data-point-configuration/messaging-data-point-configuration-form";
 
 /**
  * Type guard to check if interface list is Messaging interface
@@ -111,6 +112,7 @@ function MessagingDataPointItemForm({
   fieldPathPrefix,
 }: MessagingDataPointItemFormProps) {
   const { useDeviceState, useValidation } = useDeviceFormContext();
+  const { getError } = useValidation();
 
   const dataPointData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
@@ -148,7 +150,12 @@ function MessagingDataPointItemForm({
           nested={true}
         />
 
-        {/* Messaging Data Point Configuration Form - TODO: Implement later */}
+        <MessagingDataPointConfigurationForm
+          configuration={dataPointData?.messagingDataPointConfiguration}
+          actions={dataPointListSlice.getMessagingDataPointConfigurationSlice(dataPointIndex)}
+          fieldPathPrefix={`${fieldPathPrefix}.messagingDataPointConfiguration`}
+          getError={getError}
+        />
       </div>
     </FormSection>
   );

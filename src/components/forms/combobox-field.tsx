@@ -43,25 +43,26 @@ export function ComboboxField({
   error,
 }: ComboboxFieldProps) {
   const [open, setOpen] = React.useState(false);
-  const hasError = !!error;
+  const [searchTerm, setSearchTerm] = React.useState("");
 
-  // Filter options based on current value
+  // Filter options only when user is actively typing
   const filteredOptions = React.useMemo(() => {
-    if (!value) return options;
-    const lowerValue = value.toLowerCase();
+    if (!searchTerm) return options;
+    const lowerSearch = searchTerm.toLowerCase();
     return options.filter(
       (option) =>
-        option.value.toLowerCase().includes(lowerValue) ||
-        option.label.toLowerCase().includes(lowerValue)
+        option.value.toLowerCase().includes(lowerSearch) ||
+        option.label.toLowerCase().includes(lowerSearch)
     );
-  }, [value, options]);
+  }, [searchTerm, options]);
 
   const handleOptionSelect = (optionValue: string) => {
     onChange?.(optionValue);
+    setSearchTerm("");
     setOpen(false);
   };
 
-  const inputClassName = hasError
+  const inputClassName = error
     ? `${className} border-destructive focus:ring-destructive`
     : className;
 
@@ -72,35 +73,44 @@ export function ComboboxField({
         {required && <span className="text-destructive ml-1">*</span>}
       </Label>
       <Popover open={open} onOpenChange={setOpen}>
-        <div className="relative">
-          <Input
-            id={name}
-            name={name}
-            type="text"
-            value={value ?? ""}
-            onChange={(e) => onChange?.(e.target.value)}
-            onFocus={() => setOpen(true)}
-            className={cn(
-              `w-full pr-8 ${inputClassName}`,
-              "border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
-            )}
-            placeholder={placeholder}
-            disabled={disabled}
-            required={required}
-            aria-invalid={hasError}
-            aria-describedby={hasError ? `${name}-error` : undefined}
-          />
-          <PopoverTrigger asChild>
+        <PopoverTrigger asChild>
+          <div className="relative">
+            <Input
+              id={name}
+              name={name}
+              type="text"
+              value={value ?? ""}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                onChange?.(newValue);
+                setSearchTerm(newValue);
+                if (!open) setOpen(true);
+              }}
+              onFocus={() => {
+                setSearchTerm("");
+                setOpen(true);
+              }}
+              className={cn(
+                `w-full pr-8 ${inputClassName}`,
+                "border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+              )}
+              placeholder={placeholder}
+              disabled={disabled}
+              required={required}
+              aria-invalid={!!error}
+              aria-describedby={error ? `${name}-error` : undefined}
+            />
             <button
               type="button"
-              className="absolute right-0 top-0 h-full px-3 flex items-center justify-center opacity-50 hover:opacity-100 focus:outline-none disabled:pointer-events-none"
+              className="absolute right-0 top-0 h-full px-3 flex items-center justify-center opacity-50 hover:opacity-100 focus:outline-none disabled:pointer-events-none pointer-events-none"
               disabled={disabled}
               aria-label="Open options"
+              tabIndex={-1}
             >
               <ChevronDownIcon className="h-4 w-4" />
             </button>
-          </PopoverTrigger>
-        </div>
+          </div>
+        </PopoverTrigger>
         <PopoverContent
           className="w-[var(--radix-popover-trigger-width)] p-1"
           align="start"

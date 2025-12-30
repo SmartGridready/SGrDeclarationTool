@@ -1,6 +1,7 @@
 import { InterfaceList } from "@/models/product/product";
 import { buildModbusInterface } from "./modbus-interface/modbus-interface-builder";
 import { buildRestApiInterface } from "./rest-api-interface/rest-api-interface-builder";
+import { buildMessagingInterface } from "./messaging-interface/messaging-interface-builder";
 import { wrapInArray } from "@/utils/builder-utils";
 import { validateInterfaceList } from "./interface-list-schema";
 
@@ -39,6 +40,12 @@ export function buildInterfaceList(
     );
   }
 
-  // TODO: Add other interface types when implemented
+  // Check for messagingInterface
+  if ("messagingInterface" in interfaceList && interfaceList.messagingInterface) {
+    interfaceListXml.messagingInterface = wrapInArray(
+      buildMessagingInterface(interfaceList.messagingInterface)
+    );
+  }
+
   return interfaceListXml;
 }

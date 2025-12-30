@@ -68,6 +68,8 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
       contactInterfaceActions: store,
       contactFunctionalProfileListActions: store,
       contactInterfaceDescriptionActions: store,
+      genericInterfaceActions: store,
+      genericFunctionalProfileListActions: store,
     };
   }, [store]);
 

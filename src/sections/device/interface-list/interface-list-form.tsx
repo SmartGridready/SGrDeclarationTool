@@ -10,6 +10,7 @@ import { ModbusInterfaceForm } from "./modbus-interface/modbus-interface-form";
 import { RestApiInterfaceForm } from "./rest-api-interface/rest-api-interface-form";
 import { MessagingInterfaceForm } from "./messaging-interface/messaging-interface-form";
 import { ContactInterfaceForm } from "./contact-interface/contact-interface-form";
+import { GenericInterfaceForm } from "./generic-interface/generic-interface-form";
 
 const INTERFACE_TYPE_OPTIONS = createFormOptions(INTERFACE_TYPE_VALUES);
 
@@ -63,6 +64,7 @@ export function InterfaceListForm() {
       {selectedInterfaceType === "restApiInterface" && <RestApiInterfaceForm />}
       {selectedInterfaceType === "messagingInterface" && <MessagingInterfaceForm />}
       {selectedInterfaceType === "contactInterface" && <ContactInterfaceForm />}
+      {selectedInterfaceType === "genericInterface" && <GenericInterfaceForm />}
     </FormSection>
   );
 }

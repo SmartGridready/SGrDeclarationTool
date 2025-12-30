@@ -497,3 +497,34 @@ export interface JMESPathMappingRecord {
   to: string;
   name?: string;
 }
+
+export type MessageFilter =
+  | { plaintextFilter: PlaintextFilterType }
+  | { jmespathFilter: JMESPathFilterType }
+  | { xpathFilter: XPathFilterType }
+  | { regexFilter: RegexFilterType }
+  | { jsonataFilter: JSONataFilterType };
+
+export interface PlaintextFilterType {
+  matchesRegex: string;
+}
+
+export interface JMESPathFilterType {
+  query: string;
+  matchesRegex: string;
+}
+
+export interface XPathFilterType {
+  query: string;
+  matchesRegex: string;
+}
+
+export interface JSONataFilterType {
+  query: string;
+  matchesRegex: string;
+}
+
+export interface RegexFilterType {
+  query: string;
+  matchesRegex: string;
+}

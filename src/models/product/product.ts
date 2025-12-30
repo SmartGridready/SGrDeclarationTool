@@ -12,6 +12,7 @@ import {
 } from "@/models/generic";
 import { ModbusInterface } from "@/models/product/modbus-interface";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
+import { MessagingInterface } from "@/models/product/messaging-interface";
 
 export interface DeviceFrame {
   deviceName: string;
@@ -68,7 +69,7 @@ export interface InterfaceList {
   restApiInterface?: RestApiInterface;
   //  contactInterface?: ContactInterface;
   //  genericInterface?: GenericInterface;
-  //  messagingInterface?: MessagingInterface;
+  messagingInterface?: MessagingInterface;
 }
 
 export const INTERFACE_TYPE_VALUES = [

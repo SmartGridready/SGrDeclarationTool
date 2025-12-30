@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ModbusTcp, ModbusIpAddress } from "@/models/product/modbus-types";
+import { ModbusTcp } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**

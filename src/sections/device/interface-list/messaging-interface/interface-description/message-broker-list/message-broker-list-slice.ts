@@ -1,6 +1,6 @@
 import { DeviceFrame, InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
-import { MessageBrokerListElement, MessageBrokerList } from "@/models/product/messaging-types";
+import { MessageBrokerList } from "@/models/product/messaging-types";
 import { createEmptyMessageBrokerListElement } from "@/utils/factory-utils";
 
 export interface MessageBrokerListSlice {

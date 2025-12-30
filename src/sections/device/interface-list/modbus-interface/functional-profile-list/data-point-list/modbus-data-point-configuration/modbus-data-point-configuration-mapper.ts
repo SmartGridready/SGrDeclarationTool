@@ -1,9 +1,4 @@
-import {
-  ModbusDataPointConfiguration,
-  ModbusDataType,
-  RegisterType,
-  BitRank,
-} from "@/models/product/modbus-types";
+import { ModbusDataPointConfiguration, RegisterType, BitRank } from "@/models/product/modbus-types";
 import {
   getNumberValue,
   getOptionalNumberValue,

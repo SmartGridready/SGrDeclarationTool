@@ -1,9 +1,6 @@
 import { RestApiDataPointConfiguration, RestApiServiceCall } from "@/models/product/rest-api-types";
 import { ResponseQueryType } from "@/models/generic";
-import {
-  createRestApiServiceCallSlice,
-  RestApiServiceCallSlice,
-} from "@/sections/shared/rest-api-service-call/rest-api-service-call-slice";
+import { createRestApiServiceCallSlice } from "@/sections/shared/rest-api-service-call/rest-api-service-call-slice";
 
 /**
  * Slice interface for read service call operations (required in this config).

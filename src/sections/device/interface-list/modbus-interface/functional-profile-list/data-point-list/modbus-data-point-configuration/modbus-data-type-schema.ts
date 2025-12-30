@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ModbusDataType, ModbusBoolean, Enum, BitmapProduct } from "@/models";
+import { ModbusDataType } from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**

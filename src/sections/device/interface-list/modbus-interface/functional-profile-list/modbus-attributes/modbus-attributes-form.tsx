@@ -8,10 +8,6 @@ import { ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 
 interface FunctionalProfileModbusAttributesFormProps {
   /**
-   * Index of the functional profile in the list
-   */
-  functionalProfileIndex: number;
-  /**
    * Modbus attributes slice for this functional profile
    */
   modbusAttributesSlice: ModbusAttributesSlice;
@@ -30,7 +26,6 @@ interface FunctionalProfileModbusAttributesFormProps {
  * Uses the DeviceFormContext to connect to the store.
  */
 export function FunctionalProfileModbusAttributesForm({
-  functionalProfileIndex,
   modbusAttributesSlice,
   fieldPathPrefix,
   getFunctionalProfile,

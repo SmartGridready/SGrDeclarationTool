@@ -40,7 +40,7 @@ export function MessagingDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: MessagingDataPointListFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
+  const { useDeviceState } = useDeviceFormContext();
 
   // Get state from context
   const dataPoints = useDeviceState((d) => {

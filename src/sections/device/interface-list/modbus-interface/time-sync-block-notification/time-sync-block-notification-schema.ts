@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  TimeSyncBlockNotification,
-  RegisterType,
-  REGISTER_TYPE_VALUES,
-} from "@/models/product/modbus-types";
+import { TimeSyncBlockNotification, REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**

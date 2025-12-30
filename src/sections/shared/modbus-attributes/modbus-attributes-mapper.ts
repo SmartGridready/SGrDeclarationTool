@@ -1,17 +1,9 @@
+import { ModbusAttributes, ModbusLayer6Deviation } from "@/models/product/modbus-types";
 import {
-  ModbusAttributes,
-  AccessProtectionEnabled,
-  ModbusLayer6Deviation,
-} from "@/models/product/modbus-types";
-import { ScalingFactor } from "@/models/generic";
-import {
-  getStringValue,
-  getNumberValue,
   getOptionalNumberValue,
   getOptionalTypedValue,
   getFirstElement,
   setOptionalField,
-  mapArray,
   Xml2JsObject,
 } from "@/utils/mapper-utils";
 import { mapScalingFactor } from "./scaling-factor/scaling-factor-mapper";

@@ -116,7 +116,6 @@ function ModbusFunctionalProfileItemForm({
         />
 
         <FunctionalProfileModbusAttributesForm
-          functionalProfileIndex={functionalProfileIndex}
           modbusAttributesSlice={modbusAttributesSlice}
           fieldPathPrefix={fieldPathPrefix}
           getFunctionalProfile={() => functionalProfileData}

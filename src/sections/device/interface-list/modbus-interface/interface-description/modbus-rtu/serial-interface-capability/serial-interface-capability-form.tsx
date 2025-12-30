@@ -4,7 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceFormContext } from "@/context/device-form-context";
 import {
   BaudRate,
   ByteLength,
@@ -23,21 +23,15 @@ const PARITY_OPTIONS = createFormOptions(PARITY_VALUES);
 const STOP_BIT_LENGTH_OPTIONS = createFormOptions(STOP_BIT_LENGTH_VALUES);
 
 export function SerialInterfaceCapabilityForm() {
-  const { useDeviceState, useValidation, serialInterfaceCapabilityActions, pathPrefix } =
+  const { useDeviceState, useValidation, serialInterfaceCapabilityActions } =
     useDeviceFormContext();
+  const { getError } = useValidation();
 
   const serialInterfaceCapability = useDeviceState(
     (d) =>
       d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu
         ?.serialInterfaceCapability
   );
-  const { getError } = useValidation();
-
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.modbusInterface.modbusInterfaceDescription.modbusRtu.serialInterfaceCapability.${field}`
-    );
 
   if (!serialInterfaceCapability) {
     return null;

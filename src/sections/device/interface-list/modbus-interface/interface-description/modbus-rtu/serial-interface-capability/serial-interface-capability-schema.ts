@@ -1,10 +1,6 @@
 import { z } from "zod";
 import {
   SerialInterfaceCapability,
-  BaudRate,
-  ByteLength,
-  Parity,
-  StopBitLength,
   BAUD_RATE_VALUES,
   BYTE_LENGTH_VALUES,
   PARITY_VALUES,

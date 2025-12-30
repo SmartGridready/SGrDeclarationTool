@@ -1,10 +1,6 @@
 import { z } from "zod";
-import {
-  RestApiServiceCall,
-  HTTP_METHOD_VALUES,
-  RestApiValueMapping,
-} from "@/models/product/rest-api-types";
-import { ResponseQuery, RESPONSE_QUERY_TYPE_VALUES, ValueMapping } from "@/models/generic";
+import { RestApiServiceCall, HTTP_METHOD_VALUES } from "@/models/product/rest-api-types";
+import { RESPONSE_QUERY_TYPE_VALUES } from "@/models/generic";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**

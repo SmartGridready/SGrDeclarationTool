@@ -93,10 +93,10 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
         <ProfileIdentificationForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             functionalProfileIdentification: functionalProfile.functionalProfileIdentification,
           })}
-          isAddedSelector={(store) => !!functionalProfile.functionalProfileIdentification}
+          isAddedSelector={() => !!functionalProfile.functionalProfileIdentification}
           fieldPathPrefix={`${fieldPathPrefix}.functionalProfileIdentification`}
           required={true}
           nested={true}
@@ -106,10 +106,10 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
         <AlternativeNamesForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             alternativeNames: functionalProfile.alternativeNames,
           })}
-          isAddedSelector={(store) => !!functionalProfile.alternativeNames}
+          isAddedSelector={() => !!functionalProfile.alternativeNames}
           fieldPathPrefix={`${fieldPathPrefix}.alternativeNames`}
           required={false}
           nested={true}
@@ -119,10 +119,10 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
         <LegibleDescriptionForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             legibleDescriptions: functionalProfile.legibleDescription,
           })}
-          isAddedSelector={(store) => !!functionalProfile.legibleDescription}
+          isAddedSelector={() => !!functionalProfile.legibleDescription}
           fieldPathPrefix={`${fieldPathPrefix}.legibleDescription`}
           required={false}
           nested={true}
@@ -137,10 +137,10 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
             return selector(programmerHintsSlice as unknown as TStoreState);
           }}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             legibleDescriptions: functionalProfile.programmerHints,
           })}
-          isAddedSelector={(store) => !!functionalProfile.programmerHints}
+          isAddedSelector={() => !!functionalProfile.programmerHints}
           fieldPathPrefix={`${fieldPathPrefix}.programmerHints`}
           required={false}
           title="Programmer Hints"
@@ -153,10 +153,10 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
         <GenericAttributeListProductForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             genericAttributeList: state.genericAttributeList,
           })}
-          isAddedSelector={(store) => !!state.genericAttributeList}
+          isAddedSelector={() => !!state.genericAttributeList}
           fieldPathPrefix={`${fieldPathPrefix}.genericAttributeList`}
           required={false}
           nested={true}

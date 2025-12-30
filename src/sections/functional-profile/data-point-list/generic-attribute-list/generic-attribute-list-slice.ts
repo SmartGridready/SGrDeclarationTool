@@ -1,4 +1,4 @@
-import { GenericAttributeFunctionalProfile, FunctionalProfileDataPoint } from "@/models";
+import { FunctionalProfileDataPoint } from "@/models";
 import { createEmptyGenericAttribute } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 

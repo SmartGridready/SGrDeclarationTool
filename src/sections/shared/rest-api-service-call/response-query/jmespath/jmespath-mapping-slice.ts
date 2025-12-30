@@ -1,4 +1,3 @@
-import { ResponseQuery } from "@/models/generic";
 import { RestApiServiceCall } from "@/models/product/rest-api-types";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 

@@ -1,10 +1,5 @@
 import { DeviceFrame, ModbusDataPoint } from "@/models";
-import {
-  ModbusDataPointConfiguration,
-  ModbusDataType,
-  RegisterType,
-  BitRank,
-} from "@/models/product/modbus-types";
+import { ModbusDataType, RegisterType, BitRank } from "@/models/product/modbus-types";
 import {
   createModbusDataPointEnumSlice,
   ModbusDataPointEnumSlice,

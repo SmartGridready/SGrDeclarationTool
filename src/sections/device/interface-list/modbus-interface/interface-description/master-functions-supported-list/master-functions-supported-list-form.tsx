@@ -4,7 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceFormContext } from "@/context/device-form-context";
 import {
   MasterFunctionsSupported,
   MASTER_FUNCTIONS_SUPPORTED_VALUES,
@@ -14,20 +14,14 @@ import { createFormOptions } from "@/models/form-options-helper";
 const MASTER_FUNCTIONS_SUPPORTED_OPTIONS = createFormOptions(MASTER_FUNCTIONS_SUPPORTED_VALUES);
 
 export function MasterFunctionsSupportedListForm() {
-  const { useDeviceState, useValidation, masterFunctionsSupportedListActions, pathPrefix } =
+  const { useDeviceState, useValidation, masterFunctionsSupportedListActions } =
     useDeviceFormContext();
+  const { getError } = useValidation();
 
   const masterFunctionsSupportedList = useDeviceState(
     (d) =>
       d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
   );
-  const { getError } = useValidation();
-
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.modbusInterface.modbusInterfaceDescription.masterFunctionsSupportedList.${field}`
-    );
 
   return (
     <FormSection

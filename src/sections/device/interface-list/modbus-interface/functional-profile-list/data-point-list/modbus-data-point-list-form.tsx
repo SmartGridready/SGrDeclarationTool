@@ -34,7 +34,7 @@ export function ModbusDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ModbusDataPointListFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
+  const { useDeviceState } = useDeviceFormContext();
 
   // Get state from context
   const dataPoints = useDeviceState(
@@ -153,7 +153,6 @@ function ModbusDataPointItemForm({
           configuration={dataPointData?.modbusDataPointConfiguration}
           actions={configurationSlice}
           fieldPathPrefix={`${fieldPathPrefix}.modbusDataPointConfiguration`}
-          getDataPoint={() => dataPointData}
         />
 
         <FormSection
@@ -187,7 +186,6 @@ function ModbusDataPointItemForm({
         </FormSection>
 
         <DataPointModbusAttributesForm
-          dataPointIndex={dataPointIndex}
           modbusAttributesSlice={modbusAttributesSlice}
           fieldPathPrefix={fieldPathPrefix}
           getDataPoint={() => dataPointData}

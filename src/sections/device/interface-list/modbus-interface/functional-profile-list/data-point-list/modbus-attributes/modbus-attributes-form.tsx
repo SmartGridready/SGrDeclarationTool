@@ -8,10 +8,6 @@ import { ModbusDataPoint } from "@/models/product/modbus-interface";
 
 interface DataPointModbusAttributesFormProps {
   /**
-   * Index of the data point in the list
-   */
-  dataPointIndex: number;
-  /**
    * Modbus attributes slice for this data point
    */
   modbusAttributesSlice: ModbusAttributesSlice;
@@ -30,7 +26,6 @@ interface DataPointModbusAttributesFormProps {
  * Uses the DeviceFormContext to connect to the store.
  */
 export function DataPointModbusAttributesForm({
-  dataPointIndex,
   modbusAttributesSlice,
   fieldPathPrefix,
   getDataPoint,

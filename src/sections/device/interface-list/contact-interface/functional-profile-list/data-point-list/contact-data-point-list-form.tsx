@@ -39,7 +39,7 @@ export function ContactDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ContactDataPointListFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
+  const { useDeviceState } = useDeviceFormContext();
 
   // Get state from context
   const dataPoints = useDeviceState((d) => {

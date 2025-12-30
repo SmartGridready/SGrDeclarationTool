@@ -1,4 +1,4 @@
-import { DeviceFrame, ModbusInterface } from "@/models";
+import { DeviceFrame } from "@/models";
 import {
   createModbusInterfaceDescriptionSlice,
   ModbusInterfaceDescriptionSlice,

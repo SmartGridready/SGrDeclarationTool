@@ -32,7 +32,7 @@ export interface RestApiDataPointListSlice {
 export function createRestApiDataPointListSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void,
   getFunctionalProfile: (state: TState) => RestApiFunctionalProfile | undefined,
-  functionalProfileIndex: number
+  _functionalProfileIndex: number // Kept for API consistency with other slice factories
 ): RestApiDataPointListSlice {
   // Helper to get data point list
   const getDataPointList = (state: TState) => getFunctionalProfile(state)?.dataPointList;

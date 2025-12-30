@@ -3,16 +3,9 @@ import {
   MessagingDataType,
   OutMessage,
   InMessage,
-  MessagingValueMapping,
 } from "@/models/product/messaging-types";
-import { MessageFilter, ResponseQuery } from "@/models/generic";
-import {
-  getStringValue,
-  getOptionalStringValue,
-  getFirstElement,
-  setOptionalField,
-  Xml2JsObject,
-} from "@/utils/mapper-utils";
+import { MessageFilter } from "@/models/generic";
+import { getStringValue, getFirstElement, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapResponseQuery } from "@/sections/shared/response-query/response-query-mapper";
 import { mapMessagingValueMapping } from "@/sections/shared/messaging-value-mapping/messaging-value-mapping-mapper";
 

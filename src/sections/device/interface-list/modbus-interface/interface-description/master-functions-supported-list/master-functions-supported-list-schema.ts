@@ -1,7 +1,6 @@
 import { z } from "zod";
 import {
   MasterFunctionsSupportedList,
-  MasterFunctionsSupported,
   MASTER_FUNCTIONS_SUPPORTED_VALUES,
 } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";

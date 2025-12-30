@@ -5,7 +5,7 @@ import {
   Parity,
   StopBitLength,
 } from "@/models/generic";
-import { getStringValue, mapArray, Xml2JsObject } from "@/utils/mapper-utils";
+import { Xml2JsObject } from "@/utils/mapper-utils";
 
 /**
  * Maps XML serialInterfaceCapability to SerialInterfaceCapability model

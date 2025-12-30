@@ -237,10 +237,10 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
         <DynamicParameterListForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             parameterList: dataPoint.parameterList,
           })}
-          isAddedSelector={(store) => !!dataPoint.parameterList}
+          isAddedSelector={() => !!dataPoint.parameterList}
           fieldPathPrefix={`${fieldPathPrefix}.parameterList`}
           listIndex={0}
           required={false}
@@ -251,10 +251,10 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
         <AlternativeNamesForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             alternativeNames: dataPoint.alternativeNames,
           })}
-          isAddedSelector={(store) => !!dataPoint.alternativeNames}
+          isAddedSelector={() => !!dataPoint.alternativeNames}
           fieldPathPrefix={`${fieldPathPrefix}.alternativeNames`}
           required={false}
           nested={true}
@@ -264,10 +264,10 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
         <LegibleDescriptionForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             legibleDescriptions: dataPoint.legibleDescription,
           })}
-          isAddedSelector={(store) => !!dataPoint.legibleDescription}
+          isAddedSelector={() => !!dataPoint.legibleDescription}
           fieldPathPrefix={`${fieldPathPrefix}.legibleDescription`}
           required={false}
           nested={true}
@@ -282,10 +282,10 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             return selector(programmerHintsSlice as unknown as TStoreState);
           }}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             legibleDescriptions: dataPoint.programmerHints,
           })}
-          isAddedSelector={(store) => !!dataPoint.programmerHints}
+          isAddedSelector={() => !!dataPoint.programmerHints}
           fieldPathPrefix={`${fieldPathPrefix}.programmerHints`}
           required={false}
           title="Programmer Hints"
@@ -298,10 +298,10 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
         <GenericAttributeListProductForm
           useStore={useStore}
           useValidation={useValidation}
-          stateSelector={(store) => ({
+          stateSelector={() => ({
             genericAttributeList: state.genericAttributeList,
           })}
-          isAddedSelector={(store) => !!state.genericAttributeList}
+          isAddedSelector={() => !!state.genericAttributeList}
           fieldPathPrefix={`${fieldPathPrefix}.genericAttributeList`}
           required={false}
           nested={true}

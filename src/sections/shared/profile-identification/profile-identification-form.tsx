@@ -9,7 +9,6 @@ import {
   LEVEL_OF_OPERATION_VALUES,
   FunctionalProfileCategory,
   LevelOfOperation,
-  SpecificationOwnerIdentification,
   FunctionalProfileIdentification,
 } from "@/models";
 import { createFormOptions } from "@/models/form-options-helper";

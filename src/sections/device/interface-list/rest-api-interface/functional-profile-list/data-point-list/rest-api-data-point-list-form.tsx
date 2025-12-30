@@ -40,7 +40,7 @@ export function RestApiDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: RestApiDataPointListFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
+  const { useDeviceState } = useDeviceFormContext();
 
   // Get state from context
   const dataPoints = useDeviceState((d) => {

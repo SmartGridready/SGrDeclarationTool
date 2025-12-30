@@ -2,7 +2,7 @@ import { ModbusInterfaceDescription } from "@/models/product/modbus-types";
 import { buildModbusTcp } from "./modbus-tcp/modbus-tcp-builder";
 import { buildModbusRtu } from "./modbus-rtu/modbus-rtu-builder";
 import { buildMasterFunctionsSupportedList } from "./master-functions-supported-list/master-functions-supported-list-builder";
-import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
+import { wrapInArray } from "@/utils/builder-utils";
 import { validateModbusInterfaceDescription } from "./interface-description-schema";
 
 /**

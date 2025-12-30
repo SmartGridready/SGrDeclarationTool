@@ -1,10 +1,5 @@
 import { z } from "zod";
-import {
-  ModbusDataPointConfiguration,
-  RegisterType,
-  REGISTER_TYPE_VALUES,
-  BitRank,
-} from "@/models/product/modbus-types";
+import { ModbusDataPointConfiguration, REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { modbusDataTypeSchema } from "./modbus-data-type-schema";
 

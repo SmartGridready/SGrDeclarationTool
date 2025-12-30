@@ -4,8 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { ModbusDataPoint } from "@/models/product/modbus-interface";
+import { useDeviceFormContext } from "@/context/device-form-context";
 import {
   ModbusDataPointConfiguration,
   RegisterType,
@@ -31,7 +30,6 @@ interface ModbusDataPointConfigurationFormProps {
   configuration: ModbusDataPointConfiguration | undefined;
   actions: ModbusDataPointConfigurationSlice;
   fieldPathPrefix: string;
-  getDataPoint: () => ModbusDataPoint | undefined;
 }
 
 const REGISTER_TYPE_OPTIONS = createFormOptions(REGISTER_TYPE_VALUES);
@@ -42,7 +40,6 @@ export function ModbusDataPointConfigurationForm({
   configuration,
   actions,
   fieldPathPrefix,
-  getDataPoint,
 }: ModbusDataPointConfigurationFormProps) {
   const { useValidation } = useDeviceFormContext();
   const { getError } = useValidation();

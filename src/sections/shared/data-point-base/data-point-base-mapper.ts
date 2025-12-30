@@ -6,7 +6,6 @@ import { mapDynamicParameterList } from "@/sections/shared/dynamic-parameter-lis
 import { mapDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-mapper";
 import {
   getStringValue,
-  getNumberValue,
   getFirstElement,
   getOptionalStringValue,
   getOptionalNumberValue,

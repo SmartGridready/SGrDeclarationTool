@@ -1,7 +1,6 @@
 import { z } from "zod";
 import {
   AccessProtectionEnabled,
-  ModbusExceptionCode,
   MODBUS_EXCEPTION_CODE_VALUES,
 } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";

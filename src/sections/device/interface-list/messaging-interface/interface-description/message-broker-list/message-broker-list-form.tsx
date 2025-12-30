@@ -21,7 +21,7 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerListForm() {
-  const { useDeviceState, useValidation, messagingInterfaceDescriptionActions, pathPrefix } =
+  const { useDeviceState, messagingInterfaceDescriptionActions, pathPrefix } =
     useDeviceFormContext();
 
   const messageBrokerList = useDeviceState((d) => {
@@ -30,8 +30,6 @@ export function MessageBrokerListForm() {
       ? interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerList
       : undefined;
   });
-
-  const { getError } = useValidation();
 
   const fieldPath = (field: string) =>
     buildDeviceFieldPath(

@@ -8,7 +8,7 @@ import { buildGenericAttributeListProduct } from "@/sections/shared/generic-attr
 import { buildInterfaceList } from "@/sections/device/interface-list/interface-list-builder";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { validateDeviceFrame } from "@/sections/device/device-schema";
-import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
+import { wrapInArray } from "@/utils/builder-utils";
 
 /**
  * Converts DeviceFrame model to XML string

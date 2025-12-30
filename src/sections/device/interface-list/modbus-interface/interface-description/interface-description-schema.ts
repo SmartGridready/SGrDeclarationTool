@@ -1,8 +1,6 @@
 import { z } from "zod";
 import {
   ModbusInterfaceDescription,
-  ModbusInterfaceSelection,
-  BitOrder,
   MODBUS_INTERFACE_SELECTION_VALUES,
   BIT_ORDER_VALUES,
 } from "@/models/product/modbus-types";

@@ -1,6 +1,5 @@
 import { ModbusDataType, ModbusBoolean } from "@/models/product/modbus-types";
-import { Enum, BitmapProduct, EmptyType } from "@/models/generic";
-import { wrapInArray, setOptionalXmlField, buildSimpleDataType } from "@/utils/builder-utils";
+import { wrapInArray, buildSimpleDataType } from "@/utils/builder-utils";
 import {
   buildEnumProductDataType,
   buildBitmapProductDataType,

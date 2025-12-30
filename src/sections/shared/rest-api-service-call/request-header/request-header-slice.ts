@@ -1,4 +1,4 @@
-import { RestApiServiceCall, HeaderList } from "@/models/product/rest-api-types";
+import { RestApiServiceCall } from "@/models/product/rest-api-types";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface RequestHeaderSlice {

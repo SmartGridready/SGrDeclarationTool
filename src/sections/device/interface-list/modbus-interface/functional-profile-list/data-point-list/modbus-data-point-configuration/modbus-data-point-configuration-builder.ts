@@ -1,6 +1,6 @@
 import { ModbusDataPointConfiguration } from "@/models/product/modbus-types";
 import { buildModbusDataType } from "./modbus-data-type-builder";
-import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
+import { wrapInArray } from "@/utils/builder-utils";
 import { validateModbusDataPointConfiguration } from "./modbus-data-point-configuration-schema";
 
 /**

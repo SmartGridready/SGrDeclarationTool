@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  MessagingDataPointConfiguration,
-  MESSAGING_DATA_TYPE_VALUES,
-} from "@/models/product/messaging-types";
+import { MessagingDataPointConfiguration } from "@/models/product/messaging-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { responseQuerySchema } from "@/sections/shared/response-query/response-query-schema";
 import { messagingValueMappingSchema } from "@/sections/shared/messaging-value-mapping/messaging-value-mapping-schema";
@@ -10,12 +7,6 @@ import { messagingValueMappingSchema } from "@/sections/shared/messaging-value-m
 /**
  * MessagingDataPointConfiguration validation schemas and validators
  */
-
-// Extract enum values from constants
-const MESSAGING_DATA_TYPE_VALUES_ARRAY = MESSAGING_DATA_TYPE_VALUES as unknown as [
-  string,
-  ...string[],
-];
 
 // MessagingDataType schema (union of simple types)
 const messagingDataTypeSchema = z.union([

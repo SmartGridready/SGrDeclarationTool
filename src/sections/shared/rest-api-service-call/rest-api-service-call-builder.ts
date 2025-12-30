@@ -10,7 +10,7 @@ import {
   JMESPathMapping,
   JMESPathMappingRecord,
 } from "@/models/generic";
-import { wrapInArray, setOptionalXmlField, setOptionalXmlArray } from "@/utils/builder-utils";
+import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
 import { validateRestApiServiceCall } from "./rest-api-service-call-schema";
 
 /**

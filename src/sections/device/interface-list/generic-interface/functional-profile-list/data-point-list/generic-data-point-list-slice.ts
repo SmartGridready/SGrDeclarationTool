@@ -25,7 +25,7 @@ export interface GenericDataPointListSlice {
 export function createGenericDataPointListSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void,
   getFunctionalProfile: (state: TState) => GenericFunctionalProfile | undefined,
-  functionalProfileIndex: number
+  _functionalProfileIndex: number // Kept for API consistency with other slice factories
 ): GenericDataPointListSlice {
   // Helper to get data point list
   const getDataPointList = (state: TState) => getFunctionalProfile(state)?.dataPointList;

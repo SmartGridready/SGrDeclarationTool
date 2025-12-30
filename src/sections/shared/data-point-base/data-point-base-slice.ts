@@ -1,11 +1,9 @@
 import {
-  DataPointBase,
   DataPointDescription,
   DataDirectionProduct,
   DataTypeProduct,
   Units,
   GenericAttributeListProduct,
-  DynamicParameterDescriptionList,
 } from "@/models";
 import { createAlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
 import { createLegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";

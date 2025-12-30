@@ -5,7 +5,6 @@ import {
   ParameterList,
   ParameterEntry,
   HttpMethod,
-  HTTP_METHOD_VALUES,
   RestApiValueMapping,
 } from "@/models/product/rest-api-types";
 import {

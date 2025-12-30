@@ -59,7 +59,7 @@ export function RestApiServiceCallForm<TStoreState extends RestApiServiceCallSli
         },
     onRemove: required
       ? undefined
-      : (actions) => {
+      : () => {
           // Note: The actual removal should be handled by the parent component
           // This is just a placeholder
         },

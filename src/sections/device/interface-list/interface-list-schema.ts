@@ -5,10 +5,11 @@ import { modbusInterfaceSchema } from "./modbus-interface/modbus-interface-schem
 import { restApiInterfaceSchema } from "./rest-api-interface/rest-api-interface-schema";
 import { messagingInterfaceSchema } from "./messaging-interface/messaging-interface-schema";
 import { contactInterfaceSchema } from "./contact-interface/contact-interface-schema";
+import { genericInterfaceSchema } from "./generic-interface/generic-interface-schema";
 
 /**
  * Interface List validation schemas and validators
- * Supports modbusInterface OR restApiInterface OR messagingInterface OR contactInterface (union type)
+ * Supports modbusInterface OR restApiInterface OR messagingInterface OR contactInterface OR genericInterface (union type)
  */
 
 // Modbus Interface variant
@@ -31,12 +32,18 @@ const contactInterfaceListSchema = z.object({
   contactInterface: contactInterfaceSchema,
 });
 
+// Generic Interface variant
+const genericInterfaceListSchema = z.object({
+  genericInterface: genericInterfaceSchema,
+});
+
 // Union of all interface types
 export const interfaceListSchema = z.union([
   modbusInterfaceListSchema,
   restApiInterfaceListSchema,
   messagingInterfaceListSchema,
   contactInterfaceListSchema,
+  genericInterfaceListSchema,
 ]);
 
 // Type exports for TypeScript inference

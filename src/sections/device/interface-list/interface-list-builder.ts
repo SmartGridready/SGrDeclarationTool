@@ -3,6 +3,7 @@ import { buildModbusInterface } from "./modbus-interface/modbus-interface-builde
 import { buildRestApiInterface } from "./rest-api-interface/rest-api-interface-builder";
 import { buildMessagingInterface } from "./messaging-interface/messaging-interface-builder";
 import { buildContactInterface } from "./contact-interface/contact-interface-builder";
+import { buildGenericInterface } from "./generic-interface/generic-interface-builder";
 import { wrapInArray } from "@/utils/builder-utils";
 import { validateInterfaceList } from "./interface-list-schema";
 
@@ -52,6 +53,13 @@ export function buildInterfaceList(
   if ("contactInterface" in interfaceList && interfaceList.contactInterface) {
     interfaceListXml.contactInterface = wrapInArray(
       buildContactInterface(interfaceList.contactInterface)
+    );
+  }
+
+  // Check for genericInterface
+  if ("genericInterface" in interfaceList && interfaceList.genericInterface) {
+    interfaceListXml.genericInterface = wrapInArray(
+      buildGenericInterface(interfaceList.genericInterface)
     );
   }
 

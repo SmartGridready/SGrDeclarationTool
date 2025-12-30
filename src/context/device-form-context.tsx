@@ -25,6 +25,9 @@ export type { RestApiInterfaceSlice } from "@/sections/device/interface-list/res
 export type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
 export type { RestApiInterfaceDescriptionSlice } from "@/sections/device/interface-list/rest-api-interface/interface-description/interface-description-slice";
 export type { MessagingFunctionalProfileListSlice } from "@/sections/device/interface-list/messaging-interface/functional-profile-list/messaging-functional-profile-list-slice";
+export type { MessagingInterfaceDescriptionSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/interface-description-slice";
+export type { MessageBrokerAuthenticationBasicSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/basic/message-broker-authentication-basic-slice";
+export type { MessageBrokerAuthenticationClientCertificateSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/client-certificate/message-broker-authentication-client-certificate-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -47,6 +50,9 @@ import type { RestApiInterfaceSlice } from "@/sections/device/interface-list/res
 import type { RestApiFunctionalProfileListSlice } from "@/sections/device/interface-list/rest-api-interface/functional-profile-list/rest-api-functional-profile-list-slice";
 import type { RestApiInterfaceDescriptionSlice } from "@/sections/device/interface-list/rest-api-interface/interface-description/interface-description-slice";
 import type { MessagingFunctionalProfileListSlice } from "@/sections/device/interface-list/messaging-interface/functional-profile-list/messaging-functional-profile-list-slice";
+import type { MessagingInterfaceDescriptionSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/interface-description-slice";
+import type { MessageBrokerAuthenticationBasicSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/basic/message-broker-authentication-basic-slice";
+import type { MessageBrokerAuthenticationClientCertificateSlice } from "@/sections/device/interface-list/messaging-interface/interface-description/message-broker-authentication/client-certificate/message-broker-authentication-client-certificate-slice";
 
 /**
  * Context value for device forms.
@@ -175,6 +181,21 @@ export interface DeviceFormContextValue {
    * Functional profile list actions for Messaging interface.
    */
   messagingFunctionalProfileListActions: MessagingFunctionalProfileListSlice;
+
+  /**
+   * Messaging interface description actions (includes authentication).
+   */
+  messagingInterfaceDescriptionActions: MessagingInterfaceDescriptionSlice;
+
+  /**
+   * Message broker authentication basic actions for Messaging interface.
+   */
+  messageBrokerAuthenticationBasicActions: MessageBrokerAuthenticationBasicSlice;
+
+  /**
+   * Message broker authentication client certificate actions for Messaging interface.
+   */
+  messageBrokerAuthenticationClientCertificateActions: MessageBrokerAuthenticationClientCertificateSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

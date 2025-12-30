@@ -32,6 +32,13 @@ export type MessageBrokerAuthentication =
       clientCertificateAuthentication: MessageBrokerAuthenticationClientCertificate;
     };
 
+export const MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES = [
+  "basicAuthentication",
+  "clientCertificateAuthentication",
+] as const;
+export type MessageBrokerAuthenticationType =
+  (typeof MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES)[number];
+
 export interface MessageBrokerListElement {
   host: string;
   port: string;

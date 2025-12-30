@@ -31,6 +31,13 @@ import {
   MessagingDataPoint,
   MessagingInterface,
 } from "@/models/product/messaging-interface";
+import {
+  MessageBrokerAuthenticationBasic,
+  MessageBrokerAuthenticationClientCertificate,
+  MessageBrokerAuthentication,
+  MessageBrokerAuthenticationType,
+  MessageBrokerListElement,
+} from "@/models/product/messaging-types";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
@@ -371,4 +378,53 @@ export function createEmptyGenericAttributeProduct(): GenericAttributeProduct {
  */
 export function createEmptyGenericAttributeProductEnd(): GenericAttributeProductEnd {
   return createEmptyGenericAttributeBase();
+}
+
+/**
+ * Creates a new empty MessageBrokerAuthenticationBasic with minimal required values
+ */
+export function createEmptyMessageBrokerAuthenticationBasic(): MessageBrokerAuthenticationBasic {
+  return {
+    username: "",
+    password: "",
+  };
+}
+
+/**
+ * Creates a new empty MessageBrokerAuthenticationClientCertificate with minimal required values
+ */
+export function createEmptyMessageBrokerAuthenticationClientCertificate(): MessageBrokerAuthenticationClientCertificate {
+  return {
+    keystorePath: "",
+    keystorePassword: "",
+    truststorePath: "",
+    truststorePassword: "",
+  };
+}
+
+/**
+ * Creates a new empty MessageBrokerAuthentication with minimal required values
+ */
+export function createEmptyMessageBrokerAuthentication(
+  authType: MessageBrokerAuthenticationType
+): MessageBrokerAuthentication {
+  if (authType === "basicAuthentication") {
+    return {
+      basicAuthentication: createEmptyMessageBrokerAuthenticationBasic(),
+    };
+  } else {
+    return {
+      clientCertificateAuthentication: createEmptyMessageBrokerAuthenticationClientCertificate(),
+    };
+  }
+}
+
+/**
+ * Creates a new empty MessageBrokerListElement with minimal required values
+ */
+export function createEmptyMessageBrokerListElement(): MessageBrokerListElement {
+  return {
+    host: "",
+    port: "",
+  };
 }

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.21.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.20.0...v0.21.0) (2025-12-30)
+
+
+### Features
+
+* implement builders for generic interface (GL-8) ([13fa60d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/13fa60d6466bbc37eef66faa1ba348f51a74af20))
+* implement forms for generic interface (GL-12) ([ba760c9](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ba760c9df9c74a9a8d4529e58df24fb375c0c8f8))
+* implement mappers for generic interface (GL-7) ([e58eb79](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e58eb79ad93a10682f2b499f877973ce8fec1a56))
+* implement model for generic interface (GL-9) ([2cb4912](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2cb4912058b5fa688ef2861bb0afc88686ec2a23))
+* implement schemas for generic interface (GL-18) ([a4332a3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a4332a3602946d9a935c917e985a8a3096919e8f))
+* implement slices for generic interface (GL-16) ([bc0863a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bc0863a04353a26d183396f4e05395954a3f1037))
+
 ## [0.20.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.19.0...v0.20.0) (2025-12-30)
 
 

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.19.0...v0.20.0) (2025-12-30)
+
+
+### Features
+
+* implement builders for contact interface (GL-8) ([1d07487](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1d07487dd0648f1b077580036aad474afad8a9c6))
+* implement forms for contact interface (GL-12) ([55a639e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/55a639eca9dac7cd5636191f56d2ccb10f9c6393))
+* implement mappers for contact interface (GL-7) ([3ec277c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3ec277c09d0dcf388968a31a66b914ab9678f811))
+* implement model for contact interface (GL-9) ([34bc6f5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/34bc6f54dea92ccd713140c7d339ceb6e4eb3ea0))
+* implement schemas for contact interface (GL-18) ([1b66063](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1b660637d8f77c0c5539720cfd14466afe99c793))
+* implement slices for contact interface (GL-16) ([5deeb85](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/5deeb85b483a30f046896d67a98751c9473134b0))
+
 ## [0.19.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.18.1...v0.19.0) (2025-12-30)
 
 

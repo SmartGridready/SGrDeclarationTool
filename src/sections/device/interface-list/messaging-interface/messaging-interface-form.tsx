@@ -4,6 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { useDeviceFormContext } from "@/context/device-form-context";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
+import { MessagingInterfaceDescriptionForm } from "./interface-description/interface-description-form";
 import { MessagingFunctionalProfileListForm } from "./functional-profile-list/messaging-functional-profile-list-form";
 
 /**
@@ -35,7 +36,7 @@ export function MessagingInterfaceForm() {
       required={true}
       nested={true}
     >
-      {/* TODO: Add MessagingInterfaceDescriptionForm when implemented */}
+      <MessagingInterfaceDescriptionForm />
       <MessagingFunctionalProfileListForm />
     </FormSection>
   );

@@ -62,6 +62,9 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
       restApiFunctionalProfileListActions: store,
       restApiInterfaceDescriptionActions: store,
       messagingFunctionalProfileListActions: store,
+      messagingInterfaceDescriptionActions: store,
+      messageBrokerAuthenticationBasicActions: store,
+      messageBrokerAuthenticationClientCertificateActions: store,
     };
   }, [store]);
 

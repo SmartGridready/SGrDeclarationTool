@@ -47,6 +47,7 @@ export function getOptionalStringValue(
  * @param field - The field name to extract
  * @param defaultValue - Default value if field is missing or invalid
  * @returns The parsed number or default
+ * @note Uses parseFloat to handle both integers and decimal numbers
  */
 export function getNumberValue(
   xml: Xml2JsObject | undefined,
@@ -57,7 +58,7 @@ export function getNumberValue(
   if (value === undefined || value === null || value === "") {
     return defaultValue;
   }
-  const parsed = parseInt(String(value), 10);
+  const parsed = parseFloat(String(value));
   return isNaN(parsed) ? defaultValue : parsed;
 }
 
@@ -66,6 +67,7 @@ export function getNumberValue(
  * @param xml - The XML object
  * @param field - The field name to extract
  * @returns The parsed number or undefined
+ * @note Uses parseFloat to handle both integers and decimal numbers
  */
 export function getOptionalNumberValue(
   xml: Xml2JsObject | undefined,
@@ -75,7 +77,7 @@ export function getOptionalNumberValue(
   if (value === undefined || value === null || value === "") {
     return undefined;
   }
-  const parsed = parseInt(String(value), 10);
+  const parsed = parseFloat(String(value));
   return isNaN(parsed) ? undefined : parsed;
 }
 

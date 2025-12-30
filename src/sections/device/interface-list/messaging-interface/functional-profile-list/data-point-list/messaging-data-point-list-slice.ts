@@ -8,6 +8,10 @@ import {
   createDataPointBaseSlice,
   DataPointBaseSlice,
 } from "@/sections/shared/data-point-base/data-point-base-slice";
+import {
+  createMessagingDataPointConfigurationSlice,
+  MessagingDataPointConfigurationSlice,
+} from "./messaging-data-point-configuration/messaging-data-point-configuration-slice";
 
 export interface MessagingDataPointListSlice {
   // Data point list management
@@ -17,6 +21,7 @@ export interface MessagingDataPointListSlice {
 
   // Get slice for a specific data point
   getDataPointSlice: (index: number) => DataPointBaseSlice;
+  getMessagingDataPointConfigurationSlice: (index: number) => MessagingDataPointConfigurationSlice;
 }
 
 /**
@@ -74,6 +79,21 @@ export function createMessagingDataPointListSlice<TState extends { device?: Devi
         // This allows the slice to modify genericAttributeList directly
         return getDataPoint(state, index);
       });
+    },
+
+    getMessagingDataPointConfigurationSlice: (
+      index: number
+    ): MessagingDataPointConfigurationSlice => {
+      return createMessagingDataPointConfigurationSlice(
+        set,
+        (state) => getDataPoint(state, index)?.messagingDataPointConfiguration,
+        (state, configuration) => {
+          const dataPoint = getDataPoint(state, index);
+          if (dataPoint && configuration) {
+            dataPoint.messagingDataPointConfiguration = configuration;
+          }
+        }
+      );
     },
   };
 }

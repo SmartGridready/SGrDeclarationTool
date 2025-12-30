@@ -75,6 +75,12 @@ export interface InMessage {
   valueMapping?: MessagingValueMapping;
 }
 
+export const MESSAGING_DATA_TYPE_VALUES = [
+  "number",
+  "string",
+  "JSON_array",
+  "JSON_object",
+] as const;
 export type MessagingDataType =
   | { number: EmptyType }
   | { string: EmptyType }

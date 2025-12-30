@@ -37,6 +37,8 @@ import {
   MessageBrokerAuthentication,
   MessageBrokerAuthenticationType,
   MessageBrokerListElement,
+  OutMessage,
+  InMessage,
 } from "@/models/product/messaging-types";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
@@ -426,5 +428,24 @@ export function createEmptyMessageBrokerListElement(): MessageBrokerListElement 
   return {
     host: "",
     port: "",
+  };
+}
+
+/**
+ * Creates a new empty OutMessage with minimal required values
+ */
+export function createEmptyOutMessage(): OutMessage {
+  return {
+    topic: "",
+    template: "",
+  };
+}
+
+/**
+ * Creates a new empty InMessage with minimal required values
+ */
+export function createEmptyInMessage(): InMessage {
+  return {
+    topic: "",
   };
 }

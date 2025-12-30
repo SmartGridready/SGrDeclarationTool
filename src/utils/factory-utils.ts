@@ -32,6 +32,7 @@ import {
   MessagingInterface,
 } from "@/models/product/messaging-interface";
 import { ContactInterface, ContactFunctionalProfile } from "@/models/product/contact-interface";
+import { GenericInterface, GenericFunctionalProfile } from "@/models/product/generic-interface";
 import { DataPointBase } from "@/models/generic";
 import {
   MessageBrokerAuthenticationBasic,
@@ -102,6 +103,17 @@ export function createEmptyContactInterface(): ContactInterface {
       numberOfContacts: 1,
       contactStabilisationTimeMs: 0,
     },
+    functionalProfileList: {
+      functionalProfileListElement: [],
+    },
+  };
+}
+
+/**
+ * Creates an empty GenericInterface with minimal required values
+ */
+export function createEmptyGenericInterface(): GenericInterface {
+  return {
     functionalProfileList: {
       functionalProfileListElement: [],
     },
@@ -203,6 +215,13 @@ export function createEmptyContactFunctionalProfile(): ContactFunctionalProfile 
 }
 
 /**
+ * Creates a new empty GenericFunctionalProfile with minimal required values
+ */
+export function createEmptyGenericFunctionalProfile(): GenericFunctionalProfile {
+  return createEmptyFunctionalProfileBase() as GenericFunctionalProfile;
+}
+
+/**
  * Creates a new empty data point (Modbus or REST API) with minimal required values
  */
 function createEmptyDataPointBase() {
@@ -246,6 +265,13 @@ export function createEmptyMessagingDataPoint(): MessagingDataPoint {
  * Creates a new empty ContactDataPoint (DataPointBase) with minimal required values
  */
 export function createEmptyContactDataPoint(): DataPointBase {
+  return createEmptyDataPointBase() as DataPointBase;
+}
+
+/**
+ * Creates a new empty GenericDataPoint (DataPointBase) with minimal required values
+ */
+export function createEmptyGenericDataPoint(): DataPointBase {
   return createEmptyDataPointBase() as DataPointBase;
 }
 

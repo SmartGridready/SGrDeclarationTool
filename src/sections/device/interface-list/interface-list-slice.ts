@@ -4,6 +4,7 @@ import {
   createEmptyRestApiInterface,
   createEmptyMessagingInterface,
   createEmptyContactInterface,
+  createEmptyGenericInterface,
 } from "@/utils/factory-utils";
 import {
   createModbusInterfaceSlice,
@@ -21,12 +22,17 @@ import {
   createContactInterfaceSlice,
   ContactInterfaceSlice,
 } from "./contact-interface/contact-interface-slice";
+import {
+  createGenericInterfaceSlice,
+  GenericInterfaceSlice,
+} from "./generic-interface/generic-interface-slice";
 
 export interface InterfaceListSlice
   extends ModbusInterfaceSlice,
     RestApiInterfaceSlice,
     MessagingInterfaceSlice,
-    ContactInterfaceSlice {
+    ContactInterfaceSlice,
+    GenericInterfaceSlice {
   setInterfaceType: (interfaceType: InterfaceType) => void;
 }
 
@@ -40,12 +46,14 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
   const restApiInterfaceSlice = createRestApiInterfaceSlice(set);
   const messagingInterfaceSlice = createMessagingInterfaceSlice(set);
   const contactInterfaceSlice = createContactInterfaceSlice(set);
+  const genericInterfaceSlice = createGenericInterfaceSlice(set);
 
   return {
     ...modbusInterfaceSlice,
     ...restApiInterfaceSlice,
     ...messagingInterfaceSlice,
     ...contactInterfaceSlice,
+    ...genericInterfaceSlice,
 
     setInterfaceType: (interfaceType) =>
       set((state) => {
@@ -64,10 +72,9 @@ export function createInterfaceListSlice<TState extends { device?: DeviceFrame }
           case "contactInterface":
             state.device.interfaceList = { contactInterface: createEmptyContactInterface() };
             break;
-          // TODO: Add other interface types when implemented
-          // case "genericInterface":
-          //   state.device.interfaceList = { genericInterface: createEmptyGenericInterface() };
-          //   break;
+          case "genericInterface":
+            state.device.interfaceList = { genericInterface: createEmptyGenericInterface() };
+            break;
           case "messagingInterface":
             state.device.interfaceList = { messagingInterface: createEmptyMessagingInterface() };
             break;

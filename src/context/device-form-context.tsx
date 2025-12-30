@@ -31,6 +31,8 @@ export type { MessageBrokerAuthenticationClientCertificateSlice } from "@/sectio
 export type { ContactInterfaceSlice } from "@/sections/device/interface-list/contact-interface/contact-interface-slice";
 export type { ContactFunctionalProfileListSlice } from "@/sections/device/interface-list/contact-interface/functional-profile-list/contact-functional-profile-list-slice";
 export type { ContactInterfaceDescriptionSlice } from "@/sections/device/interface-list/contact-interface/interface-description/interface-description-slice";
+export type { GenericInterfaceSlice } from "@/sections/device/interface-list/generic-interface/generic-interface-slice";
+export type { GenericFunctionalProfileListSlice } from "@/sections/device/interface-list/generic-interface/functional-profile-list/generic-functional-profile-list-slice";
 
 import type { DeviceIdentificationSlice } from "@/sections/device/device-identification/device-identification-slice";
 import type { DeviceInformationSlice } from "@/sections/device/device-information/device-information-slice";
@@ -59,6 +61,8 @@ import type { MessageBrokerAuthenticationClientCertificateSlice } from "@/sectio
 import type { ContactInterfaceSlice } from "@/sections/device/interface-list/contact-interface/contact-interface-slice";
 import type { ContactFunctionalProfileListSlice } from "@/sections/device/interface-list/contact-interface/functional-profile-list/contact-functional-profile-list-slice";
 import type { ContactInterfaceDescriptionSlice } from "@/sections/device/interface-list/contact-interface/interface-description/interface-description-slice";
+import type { GenericInterfaceSlice } from "@/sections/device/interface-list/generic-interface/generic-interface-slice";
+import type { GenericFunctionalProfileListSlice } from "@/sections/device/interface-list/generic-interface/functional-profile-list/generic-functional-profile-list-slice";
 
 /**
  * Context value for device forms.
@@ -217,6 +221,16 @@ export interface DeviceFormContextValue {
    * Contact interface description actions.
    */
   contactInterfaceDescriptionActions: ContactInterfaceDescriptionSlice;
+
+  /**
+   * Generic interface actions (includes functional profile list).
+   */
+  genericInterfaceActions: GenericInterfaceSlice;
+
+  /**
+   * Functional profile list actions for Generic interface.
+   */
+  genericFunctionalProfileListActions: GenericFunctionalProfileListSlice;
 }
 
 const DeviceFormContext = createContext<DeviceFormContextValue | null>(null);

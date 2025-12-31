@@ -264,6 +264,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
         onPreview={handlePreview}
         onExport={exportFile}
         emptyButtonLabel={emptyButtonLabel}
+        isLoading={previewLoading || libraryLoading}
       />
 
       <ConfirmationDialog

@@ -2,7 +2,7 @@
 
 import { BaseModal } from "@/components/editor/base-modal";
 import { Button } from "@/components/shadcn/button";
-import { Loader2 } from "lucide-react";
+import { LoadingSpinner } from "@/components/shadcn/loading-spinner";
 
 interface XmlPreviewModalProps {
   open: boolean;
@@ -30,10 +30,7 @@ export function XmlPreviewModal({
     <div className="h-full w-full overflow-hidden relative">
       {isLoading ? (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <p className="text-sm text-muted-foreground">Generating preview...</p>
-          </div>
+          <LoadingSpinner message="Generating preview..." />
         </div>
       ) : previewHtml ? (
         <iframe

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { BaseModal } from "@/components/editor/base-modal";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
+import { LoadingSpinner } from "@/components/shadcn/loading-spinner";
 import { Search } from "lucide-react";
 import { LibraryItem } from "@/utils/library-api-utils";
 import { cn } from "@/utils/style-utils";
@@ -81,7 +82,9 @@ export function LibraryImportModal({
 
       <div className="flex-1 border rounded-lg overflow-hidden bg-muted/20 min-h-0">
         {loading ? (
-          <div className="p-6 text-center text-muted-foreground">Loading profiles...</div>
+          <div className="flex items-center justify-center h-full min-h-[200px]">
+            <LoadingSpinner message="Loading profiles..." />
+          </div>
         ) : error ? (
           <div className="p-6 text-center text-destructive">{error}</div>
         ) : filteredItems.length === 0 ? (

@@ -1,13 +1,7 @@
 import { DeviceFrame } from "@/models";
-import {
-  MessagingDataPoint,
-  MessagingFunctionalProfile,
-} from "@/models/product/messaging-interface";
+import { MessagingDataPoint, MessagingFunctionalProfile } from "@/models/product/messaging-interface";
 import { createEmptyMessagingDataPoint } from "@/utils/factory-utils";
-import {
-  createDataPointBaseSlice,
-  DataPointBaseSlice,
-} from "@/sections/shared/data-point-base/data-point-base-slice";
+import { createDataPointBaseSlice, DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import {
   createMessagingDataPointConfigurationSlice,
   MessagingDataPointConfigurationSlice,
@@ -81,9 +75,7 @@ export function createMessagingDataPointListSlice<TState extends { device?: Devi
       });
     },
 
-    getMessagingDataPointConfigurationSlice: (
-      index: number
-    ): MessagingDataPointConfigurationSlice => {
+    getMessagingDataPointConfigurationSlice: (index: number): MessagingDataPointConfigurationSlice => {
       return createMessagingDataPointConfigurationSlice(
         set,
         (state) => getDataPoint(state, index)?.messagingDataPointConfiguration,

@@ -1,8 +1,5 @@
 import { OutMessage } from "@/models/product/messaging-types";
-import {
-  createResponseQuerySlice,
-  ResponseQuerySlice,
-} from "@/sections/shared/response-query/response-query-slice";
+import { createResponseQuerySlice, ResponseQuerySlice } from "@/sections/shared/response-query/response-query-slice";
 import {
   createMessagingValueMappingSlice,
   MessagingValueMappingSlice,

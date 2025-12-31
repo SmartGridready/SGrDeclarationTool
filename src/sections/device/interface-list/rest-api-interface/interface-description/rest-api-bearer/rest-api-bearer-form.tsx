@@ -17,8 +17,7 @@ function isRestApiInterface(
 }
 
 export function RestApiBearerForm() {
-  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const restApiBearer = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
@@ -58,8 +57,7 @@ export function RestApiBearerForm() {
             const interfaceList = store.device?.interfaceList;
             return {
               restApiServiceCall: isRestApiInterface(interfaceList)
-                ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBearer
-                    ?.restApiServiceCall
+                ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBearer?.restApiServiceCall
                 : undefined,
             };
           }}

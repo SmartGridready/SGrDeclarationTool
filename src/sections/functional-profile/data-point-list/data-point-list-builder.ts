@@ -24,19 +24,12 @@ import {
   isJsonDataType,
   getSimpleTypeName,
 } from "@/sections/functional-profile/data-point-list/data-type-utils";
-import {
-  buildSimpleDataType,
-  setOptionalXmlField,
-  wrapInArray,
-  setOptionalXmlArray,
-} from "@/utils/builder-utils";
+import { buildSimpleDataType, setOptionalXmlField, wrapInArray, setOptionalXmlArray } from "@/utils/builder-utils";
 
 /**
  * Builds XML object for dataPointList from FunctionalProfileDataPointList model
  */
-export function buildDataPointList(
-  dataPointList: FunctionalProfileDataPointList
-): Record<string, unknown> {
+export function buildDataPointList(dataPointList: FunctionalProfileDataPointList): Record<string, unknown> {
   const validation = validateDataPointList(dataPointList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
@@ -45,9 +38,7 @@ export function buildDataPointList(
   }
 
   return {
-    dataPointListElement: dataPointList.dataPointListElement.map((element) =>
-      buildDataPointElement(element)
-    ),
+    dataPointListElement: dataPointList.dataPointListElement.map((element) => buildDataPointElement(element)),
   };
 }
 
@@ -93,9 +84,7 @@ function buildDataPointElement(element: FunctionalProfileDataPoint): Record<stri
 
   // Add optional genericAttributeList at element level
   if (element.genericAttributeList) {
-    elementXml.genericAttributeList = [
-      buildGenericAttributeListForDataPoint(element.genericAttributeList),
-    ];
+    elementXml.genericAttributeList = [buildGenericAttributeListForDataPoint(element.genericAttributeList)];
   }
 
   return elementXml;
@@ -239,9 +228,7 @@ function buildJsonDataType(jsonOutput: JSonOutputFunctionalProfile): Record<stri
 /**
  * Builds XML object for json item (array or element)
  */
-function buildJsonItem(
-  item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
-): Record<string, unknown> {
+function buildJsonItem(item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile): Record<string, unknown> {
   // Check if it's an array (has name property)
   if ("name" in item || "items" in item) {
     return buildJsonArray(item as JSonArrayOutputFunctionalProfile);

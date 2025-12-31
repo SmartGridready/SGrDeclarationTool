@@ -17,9 +17,7 @@ const INTERFACE_TYPE_OPTIONS = createFormOptions(INTERFACE_TYPE_VALUES);
 /**
  * Helper function to determine which interface type is currently selected
  */
-function getSelectedInterfaceType(
-  interfaceList: InterfaceList | undefined
-): InterfaceType | undefined {
+function getSelectedInterfaceType(interfaceList: InterfaceList | undefined): InterfaceType | undefined {
   if (!interfaceList) return undefined;
 
   // Find the first interface type that exists in the interfaceList
@@ -27,8 +25,7 @@ function getSelectedInterfaceType(
 }
 
 export function InterfaceListForm() {
-  const { useDeviceState, useValidation, interfaceListActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, interfaceListActions, pathPrefix } = useDeviceFormContext();
 
   const interfaceList = useDeviceState((d) => d?.interfaceList);
   const { getError } = useValidation();

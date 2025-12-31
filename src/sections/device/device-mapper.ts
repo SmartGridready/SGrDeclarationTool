@@ -83,11 +83,7 @@ function mapDevice(parsed: any): DeviceFrame {
   };
 
   const configurationListXml = getFirstElement(frameData, "configurationList");
-  setOptionalField(
-    device,
-    "configurationList",
-    configurationListXml && mapConfigurationList(configurationListXml)
-  );
+  setOptionalField(device, "configurationList", configurationListXml && mapConfigurationList(configurationListXml));
 
   const genericAttributeListXml = getFirstElement(frameData, "genericAttributeList");
   setOptionalField(

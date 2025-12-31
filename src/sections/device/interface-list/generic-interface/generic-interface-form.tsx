@@ -19,9 +19,7 @@ export function GenericInterfaceForm() {
   const { useDeviceState } = useDeviceFormContext();
 
   const interfaceList = useDeviceState((d) => d?.interfaceList);
-  const genericInterface = isGenericInterface(interfaceList)
-    ? interfaceList.genericInterface
-    : undefined;
+  const genericInterface = isGenericInterface(interfaceList) ? interfaceList.genericInterface : undefined;
 
   // Don't render if Generic interface is not selected
   if (!genericInterface) {

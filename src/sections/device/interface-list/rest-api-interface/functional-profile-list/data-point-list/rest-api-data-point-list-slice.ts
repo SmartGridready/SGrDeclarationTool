@@ -1,10 +1,7 @@
 import { DeviceFrame } from "@/models";
 import { RestApiDataPoint, RestApiFunctionalProfile } from "@/models/product/rest-api-interface";
 import { createEmptyRestApiDataPoint } from "@/utils/factory-utils";
-import {
-  createDataPointBaseSlice,
-  DataPointBaseSlice,
-} from "@/sections/shared/data-point-base/data-point-base-slice";
+import { createDataPointBaseSlice, DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import {
   createRestApiDataPointConfigurationSlice,
   RestApiDataPointConfigurationSlice,

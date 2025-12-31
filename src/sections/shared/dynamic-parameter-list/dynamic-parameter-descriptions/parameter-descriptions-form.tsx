@@ -25,43 +25,38 @@ export function DynamicParameterDescriptionsForm({
 }: DynamicParameterDescriptionsFormProps) {
   // Create an adapter store that wraps the parameter descriptions
   const adaptedStore = useMemo(() => {
-    const store: { legibleDescriptions?: DynamicParameterDescription[] } & LegibleDescriptionSlice =
-      {
-        legibleDescriptions: parameterDescriptions,
-        addLegibleDescription: (description) => {
-          actions.addParameterDescription(
-            listIndex,
-            paramIndex,
-            description as DynamicParameterDescription
-          );
-        },
-        removeLegibleDescription: (index) => {
-          actions.removeParameterDescription(listIndex, paramIndex, index);
-        },
-        removeAllLegibleDescriptions: () => {
-          // Remove all descriptions by removing them one by one
-          if (parameterDescriptions) {
-            for (let i = parameterDescriptions.length - 1; i >= 0; i--) {
-              actions.removeParameterDescription(listIndex, paramIndex, i);
-            }
+    const store: { legibleDescriptions?: DynamicParameterDescription[] } & LegibleDescriptionSlice = {
+      legibleDescriptions: parameterDescriptions,
+      addLegibleDescription: (description) => {
+        actions.addParameterDescription(listIndex, paramIndex, description as DynamicParameterDescription);
+      },
+      removeLegibleDescription: (index) => {
+        actions.removeParameterDescription(listIndex, paramIndex, index);
+      },
+      removeAllLegibleDescriptions: () => {
+        // Remove all descriptions by removing them one by one
+        if (parameterDescriptions) {
+          for (let i = parameterDescriptions.length - 1; i >= 0; i--) {
+            actions.removeParameterDescription(listIndex, paramIndex, i);
           }
-        },
-        updateTextElement: (index, textElement) => {
-          actions.updateParameterDescriptionText(listIndex, paramIndex, index, textElement);
-        },
-        updateLanguage: (index, language) => {
-          actions.updateParameterDescriptionLanguage(listIndex, paramIndex, index, language);
-        },
-        updateUri: (index, uri) => {
-          actions.updateParameterDescriptionUri(listIndex, paramIndex, index, uri);
-        },
-        updateLabel: (index, label) => {
-          actions.updateParameterDescriptionLabel(listIndex, paramIndex, index, label);
-        },
-        addEmptyLegibleDescription: () => {
-          actions.addEmptyParameterDescription(listIndex, paramIndex);
-        },
-      };
+        }
+      },
+      updateTextElement: (index, textElement) => {
+        actions.updateParameterDescriptionText(listIndex, paramIndex, index, textElement);
+      },
+      updateLanguage: (index, language) => {
+        actions.updateParameterDescriptionLanguage(listIndex, paramIndex, index, language);
+      },
+      updateUri: (index, uri) => {
+        actions.updateParameterDescriptionUri(listIndex, paramIndex, index, uri);
+      },
+      updateLabel: (index, label) => {
+        actions.updateParameterDescriptionLabel(listIndex, paramIndex, index, label);
+      },
+      addEmptyLegibleDescription: () => {
+        actions.addEmptyParameterDescription(listIndex, paramIndex);
+      },
+    };
     return store;
   }, [listIndex, paramIndex, parameterDescriptions, actions]);
 

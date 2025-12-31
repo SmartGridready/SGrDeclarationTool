@@ -59,9 +59,7 @@ export function AccessProtectionForm({
             items={accessProtection.modbusExceptionCode || []}
             onAdd={() => {
               const existing = accessProtection.modbusExceptionCode || [];
-              const available = MODBUS_EXCEPTION_CODE_VALUES.find(
-                (code) => !existing.includes(code)
-              );
+              const available = MODBUS_EXCEPTION_CODE_VALUES.find((code) => !existing.includes(code));
               if (available) {
                 actions.addModbusExceptionCode(available);
               }

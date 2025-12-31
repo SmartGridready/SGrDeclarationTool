@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { FunctionalProfileFrame } from "@/models";
-import {
-  releaseNotesSchema,
-  changeLogSchema,
-} from "@/sections/shared/release-notes/release-notes-schema";
+import { releaseNotesSchema, changeLogSchema } from "@/sections/shared/release-notes/release-notes-schema";
 import {
   functionalProfileIdentificationSchema,
   versionNumberSchema,
@@ -46,10 +43,7 @@ export {
 
 // Re-export types for TypeScript inference
 export type { VersionNumberInput } from "@/sections/shared/profile-identification/profile-identification-schema";
-export type {
-  ChangeLogInput,
-  ReleaseNotesInput,
-} from "@/sections/shared/release-notes/release-notes-schema";
+export type { ChangeLogInput, ReleaseNotesInput } from "@/sections/shared/release-notes/release-notes-schema";
 export type { FunctionalProfileIdentificationInput } from "@/sections/shared/profile-identification/profile-identification-schema";
 export type { AlternativeNamesInput } from "@/sections/shared/alternative-names/alternative-names-schema";
 export type { LegibleDescriptionsInput } from "@/sections/shared/legible-description/legible-description-schema";

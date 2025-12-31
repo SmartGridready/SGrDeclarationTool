@@ -17,12 +17,8 @@ export const genericAttributeListFunctionalProfileSchema = z.object({
 });
 
 // Type exports for TypeScript inference
-export type GenericAttributeFunctionalProfileInput = z.input<
-  typeof genericAttributeFunctionalProfileSchema
->;
-export type GenericAttributeListFunctionalProfileInput = z.input<
-  typeof genericAttributeListFunctionalProfileSchema
->;
+export type GenericAttributeFunctionalProfileInput = z.input<typeof genericAttributeFunctionalProfileSchema>;
+export type GenericAttributeListFunctionalProfileInput = z.input<typeof genericAttributeListFunctionalProfileSchema>;
 
 // Validators
 export function validateGenericAttribute(

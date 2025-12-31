@@ -50,9 +50,7 @@ export const interfaceListSchema = z.union([
 export type InterfaceListInput = z.input<typeof interfaceListSchema>;
 
 // Validators
-export function validateInterfaceList(
-  interfaceList: InterfaceList
-): ValidationResult<InterfaceList> {
+export function validateInterfaceList(interfaceList: InterfaceList): ValidationResult<InterfaceList> {
   const result = validateWithSchema(interfaceListSchema, interfaceList);
   return result as ValidationResult<InterfaceList>;
 }

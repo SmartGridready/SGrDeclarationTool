@@ -23,14 +23,11 @@ export interface GenericAttributeListSlice {
  * Creates a generic attribute list slice specifically for functional profile stores
  * This is a convenience function that pre-configures the getters/setters
  */
-export function createGenericAttributeListSlice<
-  TState extends { profile?: FunctionalProfileFrame },
->(set: (fn: (state: TState) => void) => void): GenericAttributeListSlice {
+export function createGenericAttributeListSlice<TState extends { profile?: FunctionalProfileFrame }>(
+  set: (fn: (state: TState) => void) => void
+): GenericAttributeListSlice {
   const getGenericAttributeList = (state: TState) => state.profile?.genericAttributeList;
-  const setGenericAttributeList = (
-    state: TState,
-    list: GenericAttributeListFunctionalProfile | undefined
-  ) => {
+  const setGenericAttributeList = (state: TState, list: GenericAttributeListFunctionalProfile | undefined) => {
     if (state.profile) {
       state.profile.genericAttributeList = list;
     }

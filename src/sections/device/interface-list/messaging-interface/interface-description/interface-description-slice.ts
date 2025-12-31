@@ -1,27 +1,17 @@
 import { DeviceFrame, InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
-import {
-  MessagingPlatformType,
-  MessageBrokerAuthenticationType,
-} from "@/models/product/messaging-types";
+import { MessagingPlatformType, MessageBrokerAuthenticationType } from "@/models/product/messaging-types";
 import { createEmptyMessageBrokerAuthentication } from "@/utils/factory-utils";
 import {
   createMessageBrokerAuthenticationSlice,
   MessageBrokerAuthenticationSlice,
 } from "./message-broker-authentication/message-broker-authentication-slice";
-import {
-  createMessageBrokerListSlice,
-  MessageBrokerListSlice,
-} from "./message-broker-list/message-broker-list-slice";
+import { createMessageBrokerListSlice, MessageBrokerListSlice } from "./message-broker-list/message-broker-list-slice";
 
-export interface MessagingInterfaceDescriptionSlice
-  extends MessageBrokerAuthenticationSlice,
-    MessageBrokerListSlice {
+export interface MessagingInterfaceDescriptionSlice extends MessageBrokerAuthenticationSlice, MessageBrokerListSlice {
   updatePlatform: (platform: MessagingPlatformType) => void;
   updateClientId: (clientId: string | undefined) => void;
-  updateMessageBrokerAuthenticationType: (
-    authType: MessageBrokerAuthenticationType | undefined
-  ) => void;
+  updateMessageBrokerAuthenticationType: (authType: MessageBrokerAuthenticationType | undefined) => void;
 }
 
 /**
@@ -78,8 +68,7 @@ export function createMessagingInterfaceDescriptionSlice<TState extends { device
           if (!authType) {
             description.messageBrokerAuthentication = undefined;
           } else {
-            description.messageBrokerAuthentication =
-              createEmptyMessageBrokerAuthentication(authType);
+            description.messageBrokerAuthentication = createEmptyMessageBrokerAuthentication(authType);
           }
         }
       }),

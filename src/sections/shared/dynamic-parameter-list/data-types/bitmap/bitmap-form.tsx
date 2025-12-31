@@ -24,22 +24,15 @@ export function DynamicParameterListBitmapForm({
   // Create an adapter that maps parameter list actions to the shared bitmap slice interface
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
     return {
-      setBitmapDataType: (bitmap) =>
-        actions.setParameterListBitmapDataType(listIndex, paramIndex, bitmap),
+      setBitmapDataType: (bitmap) => actions.setParameterListBitmapDataType(listIndex, paramIndex, bitmap),
       addBitmapEntry: (entry) => actions.addParameterListBitmapEntry(listIndex, paramIndex, entry),
-      removeBitmapEntry: (entryIndex) =>
-        actions.removeParameterListBitmapEntry(listIndex, paramIndex, entryIndex),
+      removeBitmapEntry: (entryIndex) => actions.removeParameterListBitmapEntry(listIndex, paramIndex, entryIndex),
       updateBitmapEntryLiteral: (entryIndex, literal) =>
         actions.updateParameterListBitmapEntryLiteral(listIndex, paramIndex, entryIndex, literal),
       updateBitmapEntryHexMask: (entryIndex, hexMask) =>
         actions.updateParameterListBitmapEntryHexMask(listIndex, paramIndex, entryIndex, hexMask),
       updateBitmapEntryDescription: (entryIndex, description) =>
-        actions.updateParameterListBitmapEntryDescription(
-          listIndex,
-          paramIndex,
-          entryIndex,
-          description
-        ),
+        actions.updateParameterListBitmapEntryDescription(listIndex, paramIndex, entryIndex, description),
       addEmptyBitmapEntry: () => actions.addEmptyParameterListBitmapEntry(listIndex, paramIndex),
     };
   }, [listIndex, paramIndex, actions]);

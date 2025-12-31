@@ -1,8 +1,5 @@
 import { DeviceFrame } from "@/models";
-import {
-  ModbusFunctionalProfile,
-  ModbusFunctionalProfileList,
-} from "@/models/product/modbus-interface";
+import { ModbusFunctionalProfile, ModbusFunctionalProfileList } from "@/models/product/modbus-interface";
 import { createEmptyModbusFunctionalProfile } from "@/utils/factory-utils";
 import {
   createFunctionalProfileBaseSlice,
@@ -12,10 +9,7 @@ import {
   createModbusDataPointListSlice,
   ModbusDataPointListSlice,
 } from "./data-point-list/modbus-data-point-list-slice";
-import {
-  createModbusAttributesSlice,
-  ModbusAttributesSlice,
-} from "./modbus-attributes/modbus-attributes-slice";
+import { createModbusAttributesSlice, ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 
 export interface ModbusFunctionalProfileListSlice {
   // Functional profile list management
@@ -44,10 +38,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
     state.device?.interfaceList?.modbusInterface?.functionalProfileList;
 
   // Helper to get a specific functional profile
-  const getFunctionalProfile = (
-    state: TState,
-    index: number
-  ): ModbusFunctionalProfile | undefined =>
+  const getFunctionalProfile = (state: TState, index: number): ModbusFunctionalProfile | undefined =>
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
@@ -61,9 +52,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
               functionalProfileListElement: [],
             };
           }
-          modbusInterface.functionalProfileList.functionalProfileListElement.push(
-            createEmptyModbusFunctionalProfile()
-          );
+          modbusInterface.functionalProfileList.functionalProfileListElement.push(createEmptyModbusFunctionalProfile());
         }
       }),
 
@@ -92,11 +81,7 @@ export function createModbusFunctionalProfileListSlice<TState extends { device?:
     },
 
     getModbusDataPointListSlice: (index: number): ModbusDataPointListSlice => {
-      return createModbusDataPointListSlice(
-        set,
-        (state) => getFunctionalProfile(state, index),
-        index
-      );
+      return createModbusDataPointListSlice(set, (state) => getFunctionalProfile(state, index), index);
     },
 
     getModbusAttributesSlice: (index: number): ModbusAttributesSlice => {

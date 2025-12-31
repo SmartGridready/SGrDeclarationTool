@@ -9,9 +9,7 @@ import { wrapInArray } from "@/utils/builder-utils";
  * Builds XML object for functionalProfileIdentification from FunctionalProfileIdentification model
  * @throws Error if required fields are missing
  */
-export function buildProfileIdentification(
-  identification: FunctionalProfileIdentification
-): Record<string, unknown> {
+export function buildProfileIdentification(identification: FunctionalProfileIdentification): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateFunctionalProfileIdentification(identification);
   if (!validation.success) {

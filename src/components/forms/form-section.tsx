@@ -2,18 +2,8 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Plus, Trash2 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/shadcn/card";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/shadcn/collapsible";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/shadcn/card";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/shadcn/collapsible";
 import { Button } from "@/components/shadcn/button";
 import { cn } from "@/utils/style-utils";
 
@@ -49,9 +39,7 @@ export function FormSection({
     // If not required and not added, show Add button (same as top-level)
     if (!required && !isAdded) {
       return (
-        <Card
-          className={cn("w-full cursor-pointer hover:opacity-70 transition-opacity", className)}
-        >
+        <Card className={cn("w-full cursor-pointer hover:opacity-70 transition-opacity", className)}>
           <CardHeader className="py-1 px-3" onClick={onAdd}>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col items-start text-left">
@@ -78,9 +66,7 @@ export function FormSection({
                     {title}
                     {required && <span className="text-destructive ml-1">*</span>}
                   </CardTitle>
-                  {description && (
-                    <CardDescription className="mt-0.5">{description}</CardDescription>
-                  )}
+                  {description && <CardDescription className="mt-0.5">{description}</CardDescription>}
                 </div>
                 <div className="ml-4 shrink-0">
                   {isOpen ? (

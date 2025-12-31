@@ -29,10 +29,7 @@ export interface LegibleDescriptionSlice {
 export function createLegibleDescriptionSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getLegibleDescriptions: (state: TState) => LegibleDescription[] | undefined,
-  setLegibleDescriptions: (
-    state: TState,
-    legibleDescriptions: LegibleDescription[] | undefined
-  ) => void,
+  setLegibleDescriptions: (state: TState, legibleDescriptions: LegibleDescription[] | undefined) => void,
   maxItems: number = 4,
   isOptional: boolean = true
 ): LegibleDescriptionSlice {

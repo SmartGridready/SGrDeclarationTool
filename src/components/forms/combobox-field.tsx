@@ -50,9 +50,7 @@ export function ComboboxField({
     if (!searchTerm) return options;
     const lowerSearch = searchTerm.toLowerCase();
     return options.filter(
-      (option) =>
-        option.value.toLowerCase().includes(lowerSearch) ||
-        option.label.toLowerCase().includes(lowerSearch)
+      (option) => option.value.toLowerCase().includes(lowerSearch) || option.label.toLowerCase().includes(lowerSearch)
     );
   }, [searchTerm, options]);
 
@@ -62,9 +60,7 @@ export function ComboboxField({
     setOpen(false);
   };
 
-  const inputClassName = error
-    ? `${className} border-destructive focus:ring-destructive`
-    : className;
+  const inputClassName = error ? `${className} border-destructive focus:ring-destructive` : className;
 
   return (
     <div className="space-y-2">

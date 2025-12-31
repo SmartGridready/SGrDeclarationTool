@@ -16,16 +16,8 @@ import {
   GenericAttributeProduct,
   GenericAttributeProductEnd,
 } from "@/models";
-import {
-  ModbusInterface,
-  ModbusFunctionalProfile,
-  ModbusDataPoint,
-} from "@/models/product/modbus-interface";
-import {
-  RestApiInterface,
-  RestApiFunctionalProfile,
-  RestApiDataPoint,
-} from "@/models/product/rest-api-interface";
+import { ModbusInterface, ModbusFunctionalProfile, ModbusDataPoint } from "@/models/product/modbus-interface";
+import { RestApiInterface, RestApiFunctionalProfile, RestApiDataPoint } from "@/models/product/rest-api-interface";
 import {
   MessagingFunctionalProfile,
   MessagingDataPoint,

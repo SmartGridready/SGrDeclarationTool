@@ -8,9 +8,7 @@ import { validateMessagingInterface } from "./messaging-interface-schema";
  * Builds XML object for messagingInterface from MessagingInterface model
  * @throws Error if required fields are missing
  */
-export function buildMessagingInterface(
-  messagingInterface: MessagingInterface
-): Record<string, unknown> {
+export function buildMessagingInterface(messagingInterface: MessagingInterface): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateMessagingInterface(messagingInterface);
   if (!validation.success) {

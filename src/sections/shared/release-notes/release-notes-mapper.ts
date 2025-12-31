@@ -18,11 +18,7 @@ export function mapReleaseNotes(releaseNotesXml: Xml2JsObject | undefined): Rele
 
   // Map optional fields
   setOptionalField(releaseNotes, "remarks", getOptionalStringValue(releaseNotesXml, "remarks"));
-  setOptionalField(
-    releaseNotes,
-    "changeLog",
-    mapOptionalArray(releaseNotesXml, "changeLog", mapChangeLogEntry)
-  );
+  setOptionalField(releaseNotes, "changeLog", mapOptionalArray(releaseNotesXml, "changeLog", mapChangeLogEntry));
 
   return releaseNotes;
 }

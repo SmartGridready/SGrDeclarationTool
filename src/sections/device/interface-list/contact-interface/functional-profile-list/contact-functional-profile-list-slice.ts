@@ -45,16 +45,11 @@ export function createContactFunctionalProfileListSlice<TState extends { device?
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): ContactFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList
-      : undefined;
+    return isContactInterface(interfaceList) ? interfaceList.contactInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
-  const getFunctionalProfile = (
-    state: TState,
-    index: number
-  ): ContactFunctionalProfile | undefined =>
+  const getFunctionalProfile = (state: TState, index: number): ContactFunctionalProfile | undefined =>
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
@@ -100,11 +95,7 @@ export function createContactFunctionalProfileListSlice<TState extends { device?
     },
 
     getContactDataPointListSlice: (index: number): ContactDataPointListSlice => {
-      return createContactDataPointListSlice(
-        set,
-        (state) => getFunctionalProfile(state, index),
-        index
-      );
+      return createContactDataPointListSlice(set, (state) => getFunctionalProfile(state, index), index);
     },
   };
 }

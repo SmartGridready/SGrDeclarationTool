@@ -23,9 +23,7 @@ export type RestApiDataPointInput = z.input<typeof restApiDataPointSchema>;
 export type RestApiDataPointListInput = z.input<typeof restApiDataPointListSchema>;
 
 // Validators
-export function validateRestApiDataPoint(
-  dataPoint: RestApiDataPoint
-): ValidationResult<RestApiDataPoint> {
+export function validateRestApiDataPoint(dataPoint: RestApiDataPoint): ValidationResult<RestApiDataPoint> {
   const result = validateWithSchema(restApiDataPointSchema, dataPoint);
   return result as ValidationResult<RestApiDataPoint>;
 }

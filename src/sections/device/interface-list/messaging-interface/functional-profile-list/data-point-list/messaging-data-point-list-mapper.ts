@@ -11,16 +11,11 @@ function mapMessagingDataPoint(xml: Xml2JsObject): MessagingDataPoint {
   const baseDataPoint = mapDataPointBase(xml);
 
   // Map the messaging-specific configuration
-  const messagingDataPointConfigurationXml = getFirstElement(
-    xml,
-    "messagingDataPointConfiguration"
-  );
+  const messagingDataPointConfigurationXml = getFirstElement(xml, "messagingDataPointConfiguration");
 
   return {
     ...baseDataPoint,
-    messagingDataPointConfiguration: mapMessagingDataPointConfiguration(
-      messagingDataPointConfigurationXml
-    ),
+    messagingDataPointConfiguration: mapMessagingDataPointConfiguration(messagingDataPointConfigurationXml),
   };
 }
 

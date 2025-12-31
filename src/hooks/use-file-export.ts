@@ -48,8 +48,7 @@ export function useFileExport<T>({
 
       if (!validation.success) {
         const firstFieldError = getFirstFieldError(validation);
-        const errorMessageText =
-          firstFieldError || "Please fix validation errors before exporting.";
+        const errorMessageText = firstFieldError || "Please fix validation errors before exporting.";
 
         toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
           description: errorMessageText,
@@ -83,8 +82,7 @@ export function useFileExport<T>({
         description: SUCCESS_MESSAGES.FILE_EXPORT.DOWNLOAD_READY(filename),
       });
     } catch (error) {
-      const errorMessageText =
-        error instanceof Error ? error.message : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
+      const errorMessageText = error instanceof Error ? error.message : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
 
       // Update the loading toast to error (this replaces it automatically)
       toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {

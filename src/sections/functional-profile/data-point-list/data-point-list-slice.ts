@@ -9,18 +9,12 @@ import {
 } from "@/models";
 import { createEmptyDataPoint } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
-import {
-  createEnumSlice,
-  EnumSlice,
-} from "@/sections/functional-profile/data-point-list/data-types/enum/enum-slice";
+import { createEnumSlice, EnumSlice } from "@/sections/functional-profile/data-point-list/data-types/enum/enum-slice";
 import {
   createBitmapSlice,
   BitmapSlice,
 } from "@/sections/functional-profile/data-point-list/data-types/bitmap/bitmap-slice";
-import {
-  createJsonSlice,
-  JsonSlice,
-} from "@/sections/functional-profile/data-point-list/data-types/json/json-slice";
+import { createJsonSlice, JsonSlice } from "@/sections/functional-profile/data-point-list/data-types/json/json-slice";
 import { createParameterListSlice } from "@/sections/functional-profile/data-point-list/dynamic-parameter-list/parameter-list-slice";
 import { DynamicParameterListSlice } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-slice";
 import {
@@ -64,10 +58,7 @@ export function createDataPointListSlice<TState extends { profile?: FunctionalPr
   set: (fn: (state: TState) => void) => void
 ): DataPointListSlice {
   const getDataPointList = (state: TState) => state.profile?.dataPointList;
-  const setDataPointList = (
-    state: TState,
-    dataPointList: FunctionalProfileDataPointList | undefined
-  ) => {
+  const setDataPointList = (state: TState, dataPointList: FunctionalProfileDataPointList | undefined) => {
     if (state.profile) {
       state.profile.dataPointList = dataPointList;
     }

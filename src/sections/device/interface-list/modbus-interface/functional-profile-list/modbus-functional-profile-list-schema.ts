@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  ModbusFunctionalProfileList,
-  ModbusFunctionalProfile,
-} from "@/models/product/modbus-interface";
+import { ModbusFunctionalProfileList, ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { functionalProfileBaseSchema } from "@/sections/shared/functional-profile-base/functional-profile-base-schema";
 import { modbusAttributesSchema } from "@/sections/shared/modbus-attributes/modbus-attributes-schema";

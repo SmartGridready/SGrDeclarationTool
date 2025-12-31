@@ -32,9 +32,9 @@ export function createModbusDataPointBooleanSlice<TState extends { device?: Devi
     functionalProfileIndex: number,
     dataPointIndex: number
   ): ModbusDataPoint | undefined => {
-    return state.device?.interfaceList?.modbusInterface?.functionalProfileList
-      ?.functionalProfileListElement?.[functionalProfileIndex]?.dataPointList
-      ?.dataPointListElement?.[dataPointIndex];
+    return state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
+      functionalProfileIndex
+    ]?.dataPointList?.dataPointListElement?.[dataPointIndex];
   };
 
   return {
@@ -63,8 +63,7 @@ export function createModbusDataPointBooleanSlice<TState extends { device?: Devi
         if (modbusDataType && "boolean" in modbusDataType) {
           if (trueValue !== undefined) {
             // Check if falseValue exists, keep it if it does
-            const hasFalseValue =
-              typeof modbusDataType.boolean === "object" && "falseValue" in modbusDataType.boolean;
+            const hasFalseValue = typeof modbusDataType.boolean === "object" && "falseValue" in modbusDataType.boolean;
             if (hasFalseValue) {
               modbusDataType.boolean = {
                 trueValue: trueValue,
@@ -75,8 +74,7 @@ export function createModbusDataPointBooleanSlice<TState extends { device?: Devi
             }
           } else {
             // Remove trueValue, keep falseValue if it exists, otherwise set to empty
-            const hasFalseValue =
-              typeof modbusDataType.boolean === "object" && "falseValue" in modbusDataType.boolean;
+            const hasFalseValue = typeof modbusDataType.boolean === "object" && "falseValue" in modbusDataType.boolean;
             if (hasFalseValue) {
               modbusDataType.boolean = {
                 falseValue: (modbusDataType.boolean as { falseValue: number }).falseValue,
@@ -89,19 +87,14 @@ export function createModbusDataPointBooleanSlice<TState extends { device?: Devi
       });
     },
 
-    updateModbusDataPointBooleanFalseValue: (
-      functionalProfileIndex,
-      dataPointIndex,
-      falseValue
-    ) => {
+    updateModbusDataPointBooleanFalseValue: (functionalProfileIndex, dataPointIndex, falseValue) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
         if (modbusDataType && "boolean" in modbusDataType) {
           if (falseValue !== undefined) {
             // Check if trueValue exists, keep it if it does
-            const hasTrueValue =
-              typeof modbusDataType.boolean === "object" && "trueValue" in modbusDataType.boolean;
+            const hasTrueValue = typeof modbusDataType.boolean === "object" && "trueValue" in modbusDataType.boolean;
             if (hasTrueValue) {
               modbusDataType.boolean = {
                 trueValue: (modbusDataType.boolean as { trueValue: number }).trueValue,
@@ -112,8 +105,7 @@ export function createModbusDataPointBooleanSlice<TState extends { device?: Devi
             }
           } else {
             // Remove falseValue, keep trueValue if it exists, otherwise set to empty
-            const hasTrueValue =
-              typeof modbusDataType.boolean === "object" && "trueValue" in modbusDataType.boolean;
+            const hasTrueValue = typeof modbusDataType.boolean === "object" && "trueValue" in modbusDataType.boolean;
             if (hasTrueValue) {
               modbusDataType.boolean = {
                 trueValue: (modbusDataType.boolean as { trueValue: number }).trueValue,

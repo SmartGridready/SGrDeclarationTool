@@ -3,21 +3,9 @@ import { createEmptyEnumEntryProductWithOrdinal } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface ModbusDataPointEnumSlice {
-  setModbusDataPointEnumDataType: (
-    functionalProfileIndex: number,
-    dataPointIndex: number,
-    enumMap: Enum
-  ) => void;
-  addModbusDataPointEnumEntry: (
-    functionalProfileIndex: number,
-    dataPointIndex: number,
-    entry: EnumEntry
-  ) => void;
-  removeModbusDataPointEnumEntry: (
-    functionalProfileIndex: number,
-    dataPointIndex: number,
-    entryIndex: number
-  ) => void;
+  setModbusDataPointEnumDataType: (functionalProfileIndex: number, dataPointIndex: number, enumMap: Enum) => void;
+  addModbusDataPointEnumEntry: (functionalProfileIndex: number, dataPointIndex: number, entry: EnumEntry) => void;
+  removeModbusDataPointEnumEntry: (functionalProfileIndex: number, dataPointIndex: number, entryIndex: number) => void;
   updateModbusDataPointEnumEntryLiteral: (
     functionalProfileIndex: number,
     dataPointIndex: number,
@@ -41,10 +29,7 @@ export interface ModbusDataPointEnumSlice {
     dataPointIndex: number,
     hexMask: string | undefined
   ) => void;
-  addEmptyModbusDataPointEnumEntry: (
-    functionalProfileIndex: number,
-    dataPointIndex: number
-  ) => void;
+  addEmptyModbusDataPointEnumEntry: (functionalProfileIndex: number, dataPointIndex: number) => void;
 }
 
 /**
@@ -59,9 +44,9 @@ export function createModbusDataPointEnumSlice<TState extends { device?: DeviceF
     functionalProfileIndex: number,
     dataPointIndex: number
   ): ModbusDataPoint | undefined => {
-    return state.device?.interfaceList?.modbusInterface?.functionalProfileList
-      ?.functionalProfileListElement?.[functionalProfileIndex]?.dataPointList
-      ?.dataPointListElement?.[dataPointIndex];
+    return state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
+      functionalProfileIndex
+    ]?.dataPointList?.dataPointListElement?.[dataPointIndex];
   };
 
   return {
@@ -110,47 +95,29 @@ export function createModbusDataPointEnumSlice<TState extends { device?: DeviceF
       });
     },
 
-    updateModbusDataPointEnumEntryLiteral: (
-      functionalProfileIndex,
-      dataPointIndex,
-      entryIndex,
-      literal
-    ) => {
+    updateModbusDataPointEnumEntryLiteral: (functionalProfileIndex, dataPointIndex, entryIndex, literal) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
-        const entry =
-          modbusDataType && "enum" in modbusDataType && modbusDataType.enum.enumEntry?.[entryIndex];
+        const entry = modbusDataType && "enum" in modbusDataType && modbusDataType.enum.enumEntry?.[entryIndex];
         if (entry) entry.literal = literal;
       });
     },
 
-    updateModbusDataPointEnumEntryOrdinal: (
-      functionalProfileIndex,
-      dataPointIndex,
-      entryIndex,
-      ordinal
-    ) => {
+    updateModbusDataPointEnumEntryOrdinal: (functionalProfileIndex, dataPointIndex, entryIndex, ordinal) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
-        const entry =
-          modbusDataType && "enum" in modbusDataType && modbusDataType.enum.enumEntry?.[entryIndex];
+        const entry = modbusDataType && "enum" in modbusDataType && modbusDataType.enum.enumEntry?.[entryIndex];
         if (entry) entry.ordinal = ordinal;
       });
     },
 
-    updateModbusDataPointEnumEntryDescription: (
-      functionalProfileIndex,
-      dataPointIndex,
-      entryIndex,
-      description
-    ) => {
+    updateModbusDataPointEnumEntryDescription: (functionalProfileIndex, dataPointIndex, entryIndex, description) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
-        const entry =
-          modbusDataType && "enum" in modbusDataType && modbusDataType.enum.enumEntry?.[entryIndex];
+        const entry = modbusDataType && "enum" in modbusDataType && modbusDataType.enum.enumEntry?.[entryIndex];
         if (entry) entry.description = description;
       });
     },

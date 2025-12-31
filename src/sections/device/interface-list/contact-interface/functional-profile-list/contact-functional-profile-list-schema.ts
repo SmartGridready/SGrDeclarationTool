@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  ContactFunctionalProfileList,
-  ContactFunctionalProfile,
-} from "@/models/product/contact-interface";
+import { ContactFunctionalProfileList, ContactFunctionalProfile } from "@/models/product/contact-interface";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { functionalProfileBaseSchema } from "@/sections/shared/functional-profile-base/functional-profile-base-schema";
 import { contactDataPointListSchema } from "./data-point-list/contact-data-point-list-schema";

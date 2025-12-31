@@ -5,11 +5,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { InputField } from "@/components/forms/input-field";
 import { MessageFilter } from "@/models/generic";
 import { createFormOptions } from "@/models/form-options-helper";
-import {
-  MessageFilterSlice,
-  MESSAGE_FILTER_TYPE_VALUES,
-  MessageFilterType,
-} from "./message-filter-slice";
+import { MessageFilterSlice, MESSAGE_FILTER_TYPE_VALUES, MessageFilterType } from "./message-filter-slice";
 
 const MESSAGE_FILTER_TYPE_OPTIONS = createFormOptions(MESSAGE_FILTER_TYPE_VALUES);
 
@@ -20,12 +16,7 @@ interface MessageFilterFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function MessageFilterForm({
-  messageFilter,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: MessageFilterFormProps) {
+export function MessageFilterForm({ messageFilter, actions, fieldPathPrefix, getError }: MessageFilterFormProps) {
   const filterType = messageFilter
     ? "plaintextFilter" in messageFilter
       ? "plaintextFilter"

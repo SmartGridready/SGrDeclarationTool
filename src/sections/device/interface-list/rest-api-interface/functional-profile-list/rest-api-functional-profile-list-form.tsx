@@ -21,8 +21,7 @@ function isRestApiInterface(
 }
 
 export function RestApiFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, restApiFunctionalProfileListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, pathPrefix, restApiFunctionalProfileListActions } = useDeviceFormContext();
 
   const fieldPathPrefix = pathPrefix
     ? buildDeviceFieldPath(pathPrefix, "interfaceList.restApiInterface.functionalProfileList")
@@ -38,14 +37,11 @@ export function RestApiFunctionalProfileListForm() {
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? !!interfaceList.restApiInterface.functionalProfileList
-      : false;
+    return isRestApiInterface(interfaceList) ? !!interfaceList.restApiInterface.functionalProfileList : false;
   });
 
   const handleAdd = () => restApiFunctionalProfileListActions.addEmptyRestApiFunctionalProfile();
-  const handleRemove = () =>
-    restApiFunctionalProfileListActions.removeAllRestApiFunctionalProfiles();
+  const handleRemove = () => restApiFunctionalProfileListActions.removeAllRestApiFunctionalProfiles();
 
   return (
     <FormSection
@@ -68,12 +64,8 @@ export function RestApiFunctionalProfileListForm() {
           <RestApiFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={restApiFunctionalProfileListActions.getRestApiFunctionalProfileSlice(
-              index
-            )}
-            dataPointListSlice={restApiFunctionalProfileListActions.getRestApiDataPointListSlice(
-              index
-            )}
+            functionalProfileSlice={restApiFunctionalProfileListActions.getRestApiFunctionalProfileSlice(index)}
+            dataPointListSlice={restApiFunctionalProfileListActions.getRestApiDataPointListSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -95,15 +87,12 @@ function RestApiFunctionalProfileItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: RestApiFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, restApiFunctionalProfileListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, restApiFunctionalProfileListActions } = useDeviceFormContext();
 
   const functionalProfileData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]
+      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
       : undefined;
   });
 

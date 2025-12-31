@@ -45,16 +45,11 @@ export function createRestApiFunctionalProfileListSlice<TState extends { device?
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): RestApiFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList
-      : undefined;
+    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
-  const getFunctionalProfile = (
-    state: TState,
-    index: number
-  ): RestApiFunctionalProfile | undefined =>
+  const getFunctionalProfile = (state: TState, index: number): RestApiFunctionalProfile | undefined =>
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
@@ -100,11 +95,7 @@ export function createRestApiFunctionalProfileListSlice<TState extends { device?
     },
 
     getRestApiDataPointListSlice: (index: number): RestApiDataPointListSlice => {
-      return createRestApiDataPointListSlice(
-        set,
-        (state) => getFunctionalProfile(state, index),
-        index
-      );
+      return createRestApiDataPointListSlice(set, (state) => getFunctionalProfile(state, index), index);
     },
   };
 }

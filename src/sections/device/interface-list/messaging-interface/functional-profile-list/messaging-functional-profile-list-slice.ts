@@ -45,16 +45,11 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): MessagingFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.functionalProfileList
-      : undefined;
+    return isMessagingInterface(interfaceList) ? interfaceList.messagingInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
-  const getFunctionalProfile = (
-    state: TState,
-    index: number
-  ): MessagingFunctionalProfile | undefined =>
+  const getFunctionalProfile = (state: TState, index: number): MessagingFunctionalProfile | undefined =>
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
@@ -100,11 +95,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
     },
 
     getMessagingDataPointListSlice: (index: number): MessagingDataPointListSlice => {
-      return createMessagingDataPointListSlice(
-        set,
-        (state) => getFunctionalProfile(state, index),
-        index
-      );
+      return createMessagingDataPointListSlice(set, (state) => getFunctionalProfile(state, index), index);
     },
   };
 }

@@ -24,24 +24,16 @@ export function DynamicParameterListEnumForm({
   // Create an adapter that maps parameter list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
-      setEnumDataType: (enumMap) =>
-        actions.setParameterListEnumDataType(listIndex, paramIndex, enumMap),
+      setEnumDataType: (enumMap) => actions.setParameterListEnumDataType(listIndex, paramIndex, enumMap),
       addEnumEntry: (entry) => actions.addParameterListEnumEntry(listIndex, paramIndex, entry),
-      removeEnumEntry: (entryIndex) =>
-        actions.removeParameterListEnumEntry(listIndex, paramIndex, entryIndex),
+      removeEnumEntry: (entryIndex) => actions.removeParameterListEnumEntry(listIndex, paramIndex, entryIndex),
       updateEnumEntryLiteral: (entryIndex, literal) =>
         actions.updateParameterListEnumEntryLiteral(listIndex, paramIndex, entryIndex, literal),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
         actions.updateParameterListEnumEntryOrdinal(listIndex, paramIndex, entryIndex, ordinal),
       updateEnumEntryDescription: (entryIndex, description) =>
-        actions.updateParameterListEnumEntryDescription(
-          listIndex,
-          paramIndex,
-          entryIndex,
-          description
-        ),
-      updateEnumHexMask: (hexMask) =>
-        actions.updateParameterListEnumHexMask(listIndex, paramIndex, hexMask),
+        actions.updateParameterListEnumEntryDescription(listIndex, paramIndex, entryIndex, description),
+      updateEnumHexMask: (hexMask) => actions.updateParameterListEnumHexMask(listIndex, paramIndex, hexMask),
       addEmptyEnumEntry: () => actions.addEmptyParameterListEnumEntry(listIndex, paramIndex),
     };
   }, [listIndex, paramIndex, actions]);

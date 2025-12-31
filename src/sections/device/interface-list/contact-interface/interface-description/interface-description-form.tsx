@@ -17,23 +17,17 @@ function isContactInterface(
 }
 
 export function ContactInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, contactInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, contactInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const { getError } = useValidation();
 
   const interfaceList = useDeviceState((d) => d?.interfaceList);
-  const contactInterface = isContactInterface(interfaceList)
-    ? interfaceList.contactInterface
-    : undefined;
+  const contactInterface = isContactInterface(interfaceList) ? interfaceList.contactInterface : undefined;
 
   const description = contactInterface?.contactInterfaceDescription;
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.contactInterface.contactInterfaceDescription.${field}`
-    );
+    buildDeviceFieldPath(pathPrefix, `interfaceList.contactInterface.contactInterfaceDescription.${field}`);
 
   if (!description) {
     return null;
@@ -54,9 +48,7 @@ export function ContactInterfaceDescriptionForm() {
           required={true}
           value={description.numberOfContacts?.toString() || ""}
           onChange={(value) =>
-            contactInterfaceDescriptionActions.updateNumberOfContacts(
-              value ? parseInt(value, 10) : 0
-            )
+            contactInterfaceDescriptionActions.updateNumberOfContacts(value ? parseInt(value, 10) : 0)
           }
           error={getError(fieldPath("numberOfContacts"))}
         />
@@ -67,9 +59,7 @@ export function ContactInterfaceDescriptionForm() {
           required={true}
           value={description.contactStabilisationTimeMs?.toString() || ""}
           onChange={(value) =>
-            contactInterfaceDescriptionActions.updateContactStabilisationTimeMs(
-              value ? parseInt(value, 10) : 0
-            )
+            contactInterfaceDescriptionActions.updateContactStabilisationTimeMs(value ? parseInt(value, 10) : 0)
           }
           error={getError(fieldPath("contactStabilisationTimeMs"))}
         />

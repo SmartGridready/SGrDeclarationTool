@@ -11,9 +11,7 @@ import { wrapInArray } from "@/utils/builder-utils";
 /**
  * Builds XML object for genericAttributeList from GenericAttributeListProduct model
  */
-export function buildGenericAttributeListProduct(
-  attributeList: GenericAttributeListProduct
-): Record<string, unknown> {
+export function buildGenericAttributeListProduct(attributeList: GenericAttributeListProduct): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateGenericAttributeListProduct(attributeList);
   if (!validation.success) {
@@ -40,9 +38,7 @@ function buildGenericAttributeProduct(attr: GenericAttributeProduct): Record<str
 
   // Check if it's a nested attribute
   if ("genericAttributeList" in attr) {
-    elementXml.genericAttributeList = wrapInArray(
-      buildGenericAttributeListProductEnd(attr.genericAttributeList)
-    );
+    elementXml.genericAttributeList = wrapInArray(buildGenericAttributeListProductEnd(attr.genericAttributeList));
   } else {
     // Simple attribute
     elementXml.dataType = wrapInArray(buildDataTypeProduct(attr.dataType));
@@ -56,9 +52,7 @@ function buildGenericAttributeProduct(attr: GenericAttributeProduct): Record<str
 /**
  * Builds XML object for nested genericAttributeList (GenericAttributeListProductEnd)
  */
-function buildGenericAttributeListProductEnd(
-  nestedList: GenericAttributeListProductEnd
-): Record<string, unknown> {
+function buildGenericAttributeListProductEnd(nestedList: GenericAttributeListProductEnd): Record<string, unknown> {
   return {
     genericAttributeListElement: nestedList.genericAttributeListElement.map((attr) =>
       buildGenericAttributeProductEnd(attr)
@@ -69,9 +63,7 @@ function buildGenericAttributeListProductEnd(
 /**
  * Builds XML object for a single nested genericAttributeListElement (GenericAttributeProductEnd)
  */
-function buildGenericAttributeProductEnd(
-  attr: GenericAttributeProductEnd
-): Record<string, unknown> {
+function buildGenericAttributeProductEnd(attr: GenericAttributeProductEnd): Record<string, unknown> {
   return {
     name: wrapInArray(attr.name),
     dataType: wrapInArray(buildDataTypeProduct(attr.dataType)),

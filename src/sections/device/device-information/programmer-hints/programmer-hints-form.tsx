@@ -12,8 +12,7 @@ import { DeviceFrame } from "@/models";
  * so we reuse the LegibleDescriptionForm with an adapter.
  */
 export function ProgrammerHintsForm() {
-  const { useDeviceState, useValidation, deviceInformationActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, deviceInformationActions, pathPrefix } = useDeviceFormContext();
 
   // Create a store hook adapter that maps ProgrammerHintsSlice to LegibleDescriptionSlice interface
   const useStore = <TSelected,>(

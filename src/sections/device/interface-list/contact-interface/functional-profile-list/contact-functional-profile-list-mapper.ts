@@ -1,7 +1,4 @@
-import {
-  ContactFunctionalProfileList,
-  ContactFunctionalProfile,
-} from "@/models/product/contact-interface";
+import { ContactFunctionalProfileList, ContactFunctionalProfile } from "@/models/product/contact-interface";
 import { getFirstElement, mapArray, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-mapper";
 import { mapContactDataPointList } from "./data-point-list/contact-data-point-list-mapper";

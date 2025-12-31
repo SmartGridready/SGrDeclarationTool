@@ -1,12 +1,6 @@
 import { ModbusAttributes, ModbusLayer6Deviation } from "@/models/product/modbus-types";
-import {
-  createScalingFactorSlice,
-  ScalingFactorSlice,
-} from "./scaling-factor/scaling-factor-slice";
-import {
-  createAccessProtectionSlice,
-  AccessProtectionSlice,
-} from "./access-protection/access-protection-slice";
+import { createScalingFactorSlice, ScalingFactorSlice } from "./scaling-factor/scaling-factor-slice";
+import { createAccessProtectionSlice, AccessProtectionSlice } from "./access-protection/access-protection-slice";
 
 export interface ModbusAttributesSlice extends ScalingFactorSlice, AccessProtectionSlice {
   addModbusAttributes: () => void;

@@ -25,9 +25,7 @@ export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
         label="Hex Mask"
         name={`dataPoint-${dataPointIndex}-enum-hexMask`}
         value={enumMap.hexMask || ""}
-        onChange={(value) =>
-          dataPointListActions.updateEnumHexMask(dataPointIndex, value || undefined)
-        }
+        onChange={(value) => dataPointListActions.updateEnumHexMask(dataPointIndex, value || undefined)}
         placeholder="Enter hex mask (e.g., 0xFF)"
       />
       <ArrayField<EnumEntryRecordFunctionalProfile>
@@ -42,9 +40,7 @@ export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
               label="Literal"
               name={`dataPoint-${dataPointIndex}-enum-${entryIndex}-literal`}
               value={entry.literal}
-              onChange={(value) =>
-                dataPointListActions.updateEnumEntryLiteral(dataPointIndex, entryIndex, value)
-              }
+              onChange={(value) => dataPointListActions.updateEnumEntryLiteral(dataPointIndex, entryIndex, value)}
               placeholder="Enter enum literal"
               required={true}
             />
@@ -53,11 +49,7 @@ export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
               name={`dataPoint-${dataPointIndex}-enum-${entryIndex}-description`}
               value={entry.description || ""}
               onChange={(value) =>
-                dataPointListActions.updateEnumEntryDescription(
-                  dataPointIndex,
-                  entryIndex,
-                  value || undefined
-                )
+                dataPointListActions.updateEnumEntryDescription(dataPointIndex, entryIndex, value || undefined)
               }
               placeholder="Enter description"
             />

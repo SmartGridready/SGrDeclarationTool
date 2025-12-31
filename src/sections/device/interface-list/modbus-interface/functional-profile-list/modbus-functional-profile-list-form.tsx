@@ -50,9 +50,7 @@ export function ModbusFunctionalProfileListForm() {
           <ModbusFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={functionalProfileListActions.getModbusFunctionalProfileSlice(
-              index
-            )}
+            functionalProfileSlice={functionalProfileListActions.getModbusFunctionalProfileSlice(index)}
             dataPointListSlice={functionalProfileListActions.getModbusDataPointListSlice(index)}
             modbusAttributesSlice={functionalProfileListActions.getModbusAttributesSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
@@ -82,9 +80,7 @@ function ModbusFunctionalProfileItemForm({
 
   const functionalProfileData = useDeviceState(
     (d) =>
-      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-        functionalProfileIndex
-      ]
+      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
   );
 
   const functionalProfileName =

@@ -6,17 +6,12 @@ import { mapContactFunctionalProfileList } from "./functional-profile-list/conta
 /**
  * Maps XML contactInterface to ContactInterface model
  */
-export function mapContactInterface(
-  contactInterfaceXml: Xml2JsObject | undefined
-): ContactInterface {
+export function mapContactInterface(contactInterfaceXml: Xml2JsObject | undefined): ContactInterface {
   if (!contactInterfaceXml) {
     throw new Error("contactInterface is required");
   }
 
-  const contactInterfaceDescriptionXml = getFirstElement(
-    contactInterfaceXml,
-    "contactInterfaceDescription"
-  );
+  const contactInterfaceDescriptionXml = getFirstElement(contactInterfaceXml, "contactInterfaceDescription");
   if (!contactInterfaceDescriptionXml) {
     throw new Error("contactInterfaceDescription is required in contactInterface");
   }

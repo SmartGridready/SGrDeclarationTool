@@ -41,10 +41,7 @@ export function createValueMappingSlice<TState>(
           if (!serviceCall.valueMapping) {
             serviceCall.valueMapping = { mapping: [] };
           }
-          serviceCall.valueMapping.mapping = ensureArray(
-            serviceCall.valueMapping.mapping,
-            () => []
-          );
+          serviceCall.valueMapping.mapping = ensureArray(serviceCall.valueMapping.mapping, () => []);
           serviceCall.valueMapping.mapping.push({ genericValue: "", deviceValue: "" });
         }
       }),

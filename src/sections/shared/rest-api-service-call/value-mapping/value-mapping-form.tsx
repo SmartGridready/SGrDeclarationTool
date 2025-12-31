@@ -14,12 +14,7 @@ interface ValueMappingFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function ValueMappingForm({
-  serviceCall,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: ValueMappingFormProps) {
+export function ValueMappingForm({ serviceCall, actions, fieldPathPrefix, getError }: ValueMappingFormProps) {
   return (
     <FormSection
       title="Value Mapping"

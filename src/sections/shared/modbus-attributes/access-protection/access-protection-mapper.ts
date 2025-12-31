@@ -4,9 +4,7 @@ import { getStringValue, Xml2JsObject } from "@/utils/mapper-utils";
 /**
  * Maps XML accessProtection to AccessProtectionEnabled model
  */
-export function mapAccessProtection(
-  accessProtectionXml: Xml2JsObject | undefined
-): AccessProtectionEnabled {
+export function mapAccessProtection(accessProtectionXml: Xml2JsObject | undefined): AccessProtectionEnabled {
   if (!accessProtectionXml) {
     throw new Error("accessProtection is required");
   }

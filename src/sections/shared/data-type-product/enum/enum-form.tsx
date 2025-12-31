@@ -53,18 +53,14 @@ export function DataTypeProductEnumForm({
               name={`${fieldPathPrefix}-${entryIndex}-ordinal`}
               type="number"
               value={entry.ordinal?.toString() || ""}
-              onChange={(value) =>
-                actions.updateEnumEntryOrdinal(entryIndex, value ? parseInt(value, 10) : undefined)
-              }
+              onChange={(value) => actions.updateEnumEntryOrdinal(entryIndex, value ? parseInt(value, 10) : undefined)}
               placeholder="Enter ordinal number"
             />
             <InputField
               label="Description"
               name={`${fieldPathPrefix}-${entryIndex}-description`}
               value={entry.description || ""}
-              onChange={(value) =>
-                actions.updateEnumEntryDescription(entryIndex, value || undefined)
-              }
+              onChange={(value) => actions.updateEnumEntryDescription(entryIndex, value || undefined)}
               placeholder="Enter description"
             />
           </>

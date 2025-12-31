@@ -60,8 +60,7 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): Record<string, u
     $: {
       xmlns: "http://www.smartgridready.com/ns/V0/",
       "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:schemaLocation":
-        "http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/SGrIncluder.xsd",
+      "xsi:schemaLocation": "http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/SGrIncluder.xsd",
     },
   };
 
@@ -88,8 +87,7 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): Record<string, u
   setOptionalXmlArray(
     functionalProfileXml,
     "legibleDescription",
-    frame.functionalProfile.legibleDescription &&
-      frame.functionalProfile.legibleDescription.length > 0
+    frame.functionalProfile.legibleDescription && frame.functionalProfile.legibleDescription.length > 0
       ? buildLegibleDescription(frame.functionalProfile.legibleDescription)
       : undefined
   );
@@ -97,13 +95,8 @@ function buildFunctionalProfile(frame: FunctionalProfileFrame): Record<string, u
   functionalProfileFrame.functionalProfile = wrapInArray(functionalProfileXml);
 
   // Build genericAttributeList if present
-  if (
-    frame.genericAttributeList &&
-    frame.genericAttributeList.genericAttributeListElement.length > 0
-  ) {
-    functionalProfileFrame.genericAttributeList = wrapInArray(
-      buildGenericAttributeList(frame.genericAttributeList)
-    );
+  if (frame.genericAttributeList && frame.genericAttributeList.genericAttributeListElement.length > 0) {
+    functionalProfileFrame.genericAttributeList = wrapInArray(buildGenericAttributeList(frame.genericAttributeList));
   }
 
   // Build dataPointList if present

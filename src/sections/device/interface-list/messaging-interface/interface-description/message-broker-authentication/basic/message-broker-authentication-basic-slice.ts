@@ -21,9 +21,9 @@ function isMessagingInterface(
 /**
  * Creates a Message Broker Authentication Basic slice for Device stores.
  */
-export function createMessageBrokerAuthenticationBasicSlice<
-  TState extends { device?: DeviceFrame },
->(set: (fn: (state: TState) => void) => void): MessageBrokerAuthenticationBasicSlice {
+export function createMessageBrokerAuthenticationBasicSlice<TState extends { device?: DeviceFrame }>(
+  set: (fn: (state: TState) => void) => void
+): MessageBrokerAuthenticationBasicSlice {
   const getMessagingInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
     return isMessagingInterface(interfaceList)
@@ -36,8 +36,7 @@ export function createMessageBrokerAuthenticationBasicSlice<
       set((state) => {
         const description = getMessagingInterfaceDescription(state);
         if (description && !description.messageBrokerAuthentication) {
-          description.messageBrokerAuthentication =
-            createEmptyMessageBrokerAuthentication("basicAuthentication");
+          description.messageBrokerAuthentication = createEmptyMessageBrokerAuthentication("basicAuthentication");
         }
       }),
 

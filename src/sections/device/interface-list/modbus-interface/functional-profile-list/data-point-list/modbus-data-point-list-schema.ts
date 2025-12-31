@@ -26,16 +26,12 @@ export type ModbusDataPointInput = z.input<typeof modbusDataPointSchema>;
 export type ModbusDataPointListInput = z.input<typeof modbusDataPointListSchema>;
 
 // Validators
-export function validateModbusDataPoint(
-  dataPoint: ModbusDataPoint
-): ValidationResult<ModbusDataPoint> {
+export function validateModbusDataPoint(dataPoint: ModbusDataPoint): ValidationResult<ModbusDataPoint> {
   const result = validateWithSchema(modbusDataPointSchema, dataPoint);
   return result as ValidationResult<ModbusDataPoint>;
 }
 
-export function validateModbusDataPointList(
-  dataPointList: ModbusDataPointList
-): ValidationResult<ModbusDataPointList> {
+export function validateModbusDataPointList(dataPointList: ModbusDataPointList): ValidationResult<ModbusDataPointList> {
   const result = validateWithSchema(modbusDataPointListSchema, dataPointList);
   return result as ValidationResult<ModbusDataPointList>;
 }

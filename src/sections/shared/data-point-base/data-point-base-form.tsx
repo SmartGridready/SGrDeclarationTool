@@ -201,9 +201,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             name="unitConversionMultiplicator"
             type="number"
             value={dataPoint.unitConversionMultiplicator?.toString() || ""}
-            onChange={(value) =>
-              actions.updateUnitConversionMultiplicator(value ? parseFloat(value) : undefined)
-            }
+            onChange={(value) => actions.updateUnitConversionMultiplicator(value ? parseFloat(value) : undefined)}
             placeholder="Optional multiplicator"
             error={getFieldError("unitConversionMultiplicator")}
           />
@@ -228,9 +226,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
 
         {isJsonDataTypeProduct(dataPoint.dataType) && (
           <FormSection title="JSON Data Type" nested={true}>
-            <p className="text-sm text-muted-foreground">
-              JSON data type does not require additional configuration.
-            </p>
+            <p className="text-sm text-muted-foreground">JSON data type does not require additional configuration.</p>
           </FormSection>
         )}
 

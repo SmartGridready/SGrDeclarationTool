@@ -27,15 +27,9 @@ const genericAttributeListFunctionalProfileSchema = z.object({
  * Data Point List validation schemas
  */
 
-const DATA_DIRECTION_VALUES = DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const DATA_DIRECTION_VALUES = DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES as unknown as [string, ...string[]];
 const PRESENCE_LEVEL_VALUES_ARRAY = PRESENCE_LEVEL_VALUES as unknown as [string, ...string[]];
-const DATA_TYPE_VALUES = DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const DATA_TYPE_VALUES = DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES as unknown as [string, ...string[]];
 const UNIT_VALUES = UNITS_VALUES as unknown as [string, ...string[]];
 
 // Data Type Functional Profile Schema - accepts both string (for form) and object (for model)
@@ -95,9 +89,7 @@ const dataTypeFunctionalProfileSchema = z.union([
 
 // Data Point Description Schema
 export const dataPointDescriptionSchema = z.object({
-  dataPointName: z
-    .string({ message: "Data point name is required" })
-    .min(1, "Data point name cannot be empty"),
+  dataPointName: z.string({ message: "Data point name is required" }).min(1, "Data point name cannot be empty"),
   dataDirection: z.enum(DATA_DIRECTION_VALUES, {
     message: "Data direction is required",
   }),
@@ -131,9 +123,7 @@ export type FunctionalProfileDataPointInput = z.input<typeof functionalProfileDa
 export type DataPointListInput = z.input<typeof dataPointListSchema>;
 
 // Validators
-export function validateDataPoint(
-  dataPoint: FunctionalProfileDataPoint
-): ValidationResult<FunctionalProfileDataPoint> {
+export function validateDataPoint(dataPoint: FunctionalProfileDataPoint): ValidationResult<FunctionalProfileDataPoint> {
   const result = validateWithSchema(functionalProfileDataPointSchema, dataPoint);
   return result as ValidationResult<FunctionalProfileDataPoint>;
 }

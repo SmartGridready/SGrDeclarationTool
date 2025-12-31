@@ -1,10 +1,7 @@
 "use client";
 
 import { LegibleDescriptionForm as SharedLegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
-import {
-  useFunctionalProfileFormContext,
-  buildProfileFieldPath,
-} from "@/context/functional-profile-form-context";
+import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
 
 /**
@@ -12,8 +9,7 @@ import { createProfileStoreAdapter } from "@/hooks/use-form-section";
  * Uses the FunctionalProfileFormContext to connect to the store.
  */
 export function LegibleDescriptionForm() {
-  const { useProfileState, useValidation, legibleDescriptionActions, pathPrefix } =
-    useFunctionalProfileFormContext();
+  const { useProfileState, useValidation, legibleDescriptionActions, pathPrefix } = useFunctionalProfileFormContext();
 
   const profile = useProfileState((p) => p);
   const useStore = createProfileStoreAdapter(profile, legibleDescriptionActions);

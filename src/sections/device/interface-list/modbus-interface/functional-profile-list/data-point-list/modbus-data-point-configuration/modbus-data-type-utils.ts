@@ -2,22 +2,14 @@
  * Shared utilities for working with ModbusDataType
  */
 
-import {
-  ModbusDataType,
-  ModbusBoolean,
-  Enum,
-  BitmapProduct,
-  MODBUS_DATA_TYPE_VALUES,
-} from "@/models";
+import { ModbusDataType, ModbusBoolean, Enum, BitmapProduct, MODBUS_DATA_TYPE_VALUES } from "@/models";
 import { EmptyType } from "@/models/generic";
 import { createFormOptions } from "@/models/form-options-helper";
 
 /**
  * Type guard to check if a ModbusDataType is a boolean type
  */
-export function isModbusBooleanDataType(
-  dataType: ModbusDataType
-): dataType is { boolean: ModbusBoolean } {
+export function isModbusBooleanDataType(dataType: ModbusDataType): dataType is { boolean: ModbusBoolean } {
   return typeof dataType === "object" && "boolean" in dataType;
 }
 
@@ -31,9 +23,7 @@ export function isModbusEnumDataType(dataType: ModbusDataType): dataType is { en
 /**
  * Type guard to check if a ModbusDataType is a bitmap type
  */
-export function isModbusBitmapDataType(
-  dataType: ModbusDataType
-): dataType is { bitmap: BitmapProduct } {
+export function isModbusBitmapDataType(dataType: ModbusDataType): dataType is { bitmap: BitmapProduct } {
   return typeof dataType === "object" && "bitmap" in dataType;
 }
 
@@ -43,12 +33,7 @@ export function isModbusBitmapDataType(
  */
 export function getModbusSimpleTypeName(dataType: ModbusDataType): string | undefined {
   // Check if it's a simple type (not boolean, enum, or bitmap)
-  if (
-    typeof dataType !== "object" ||
-    "boolean" in dataType ||
-    "enum" in dataType ||
-    "bitmap" in dataType
-  ) {
+  if (typeof dataType !== "object" || "boolean" in dataType || "enum" in dataType || "bitmap" in dataType) {
     return undefined;
   }
 

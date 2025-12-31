@@ -25,9 +25,7 @@ export function createRestApiBasicSlice<TState extends { device?: DeviceFrame }>
 ): RestApiBasicSlice {
   const getRestApiInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.restApiInterfaceDescription
-      : undefined;
+    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
   };
 
   return {

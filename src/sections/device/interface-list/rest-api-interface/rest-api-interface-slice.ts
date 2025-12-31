@@ -8,9 +8,7 @@ import {
   RestApiInterfaceDescriptionSlice,
 } from "./interface-description/interface-description-slice";
 
-export interface RestApiInterfaceSlice
-  extends RestApiFunctionalProfileListSlice,
-    RestApiInterfaceDescriptionSlice {}
+export interface RestApiInterfaceSlice extends RestApiFunctionalProfileListSlice, RestApiInterfaceDescriptionSlice {}
 
 /**
  * Creates a REST API interface slice for Device stores.

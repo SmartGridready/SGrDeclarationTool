@@ -8,20 +8,13 @@ import { getOptionalStringValue } from "@/utils/mapper-utils";
 /**
  * Maps XML dataPointList to ModbusDataPointList model
  */
-export function mapModbusDataPointList(
-  dataPointListXml: Xml2JsObject | undefined
-): ModbusDataPointList {
+export function mapModbusDataPointList(dataPointListXml: Xml2JsObject | undefined): ModbusDataPointList {
   if (!dataPointListXml) {
     throw new Error("dataPointList is required");
   }
 
   return {
-    dataPointListElement: mapArray(
-      dataPointListXml,
-      "dataPointListElement",
-      mapModbusDataPoint,
-      []
-    ),
+    dataPointListElement: mapArray(dataPointListXml, "dataPointListElement", mapModbusDataPoint, []),
   };
 }
 
@@ -37,15 +30,11 @@ function mapModbusDataPoint(elementXml: Xml2JsObject): ModbusDataPoint {
   };
 
   // Map optional modbusDataPointConfiguration
-  const modbusDataPointConfigurationXml = getFirstElement(
-    elementXml,
-    "modbusDataPointConfiguration"
-  );
+  const modbusDataPointConfigurationXml = getFirstElement(elementXml, "modbusDataPointConfiguration");
   setOptionalField(
     modbusDataPoint,
     "modbusDataPointConfiguration",
-    modbusDataPointConfigurationXml &&
-      mapModbusDataPointConfiguration(modbusDataPointConfigurationXml)
+    modbusDataPointConfigurationXml && mapModbusDataPointConfiguration(modbusDataPointConfigurationXml)
   );
 
   // Map optional blockCacheIdentification

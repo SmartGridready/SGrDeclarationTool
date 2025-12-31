@@ -1,15 +1,10 @@
-import {
-  MasterFunctionsSupportedList,
-  MasterFunctionsSupported,
-} from "@/models/product/modbus-types";
+import { MasterFunctionsSupportedList, MasterFunctionsSupported } from "@/models/product/modbus-types";
 import { Xml2JsObject } from "@/utils/mapper-utils";
 
 /**
  * Maps XML masterFunctionsSupportedList to MasterFunctionsSupportedList model
  */
-export function mapMasterFunctionsSupportedList(
-  listXml: Xml2JsObject | undefined
-): MasterFunctionsSupportedList {
+export function mapMasterFunctionsSupportedList(listXml: Xml2JsObject | undefined): MasterFunctionsSupportedList {
   if (!listXml) {
     throw new Error("masterFunctionsSupportedList is required");
   }

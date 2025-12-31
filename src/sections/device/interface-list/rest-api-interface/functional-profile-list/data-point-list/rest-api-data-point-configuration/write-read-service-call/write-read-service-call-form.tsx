@@ -4,10 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { RestApiServiceCallForm } from "@/sections/shared/rest-api-service-call/rest-api-service-call-form";
 import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
 import { RestApiDataPointConfiguration } from "@/models/product/rest-api-types";
-import {
-  isWriteReadServiceCallConfig,
-  WriteReadServiceCallSlice,
-} from "./write-read-service-call-slice";
+import { isWriteReadServiceCallConfig, WriteReadServiceCallSlice } from "./write-read-service-call-slice";
 
 interface WriteReadServiceCallFormProps {
   config: RestApiDataPointConfiguration;

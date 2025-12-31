@@ -1,15 +1,5 @@
-import {
-  RestApiServiceCall,
-  HeaderEntry,
-  ParameterEntry,
-  RestApiValueMapping,
-} from "@/models/product/rest-api-types";
-import {
-  ResponseQuery,
-  ValueMapping,
-  JMESPathMapping,
-  JMESPathMappingRecord,
-} from "@/models/generic";
+import { RestApiServiceCall, HeaderEntry, ParameterEntry, RestApiValueMapping } from "@/models/product/rest-api-types";
+import { ResponseQuery, ValueMapping, JMESPathMapping, JMESPathMappingRecord } from "@/models/generic";
 import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
 import { validateRestApiServiceCall } from "./rest-api-service-call-schema";
 
@@ -26,9 +16,7 @@ function buildHeaderEntry(headerEntry: HeaderEntry): Record<string, unknown> {
 /**
  * Builds XML object for headerList from HeaderList model
  */
-function buildHeaderList(
-  headerList: { header?: HeaderEntry[] } | undefined
-): Record<string, unknown> | undefined {
+function buildHeaderList(headerList: { header?: HeaderEntry[] } | undefined): Record<string, unknown> | undefined {
   if (!headerList || !headerList.header || headerList.header.length === 0) {
     return undefined;
   }
@@ -87,9 +75,7 @@ function buildJmesPathMapping(jmesPathMapping: JMESPathMapping): Record<string, 
 /**
  * Builds XML object for responseQuery from ResponseQuery model
  */
-function buildResponseQuery(
-  responseQuery: ResponseQuery | undefined
-): Record<string, unknown> | undefined {
+function buildResponseQuery(responseQuery: ResponseQuery | undefined): Record<string, unknown> | undefined {
   if (!responseQuery) {
     return undefined;
   }
@@ -105,9 +91,7 @@ function buildResponseQuery(
 
   // Add jmesPathMappings if present
   if ("jmesPathMappings" in responseQuery && responseQuery.jmesPathMappings) {
-    responseQueryXml.jmesPathMappings = wrapInArray(
-      buildJmesPathMapping(responseQuery.jmesPathMappings)
-    );
+    responseQueryXml.jmesPathMappings = wrapInArray(buildJmesPathMapping(responseQuery.jmesPathMappings));
   }
 
   return responseQueryXml;
@@ -126,9 +110,7 @@ function buildValueMapping(valueMapping: ValueMapping): Record<string, unknown> 
 /**
  * Builds XML object for restApiValueMapping from RestApiValueMapping model
  */
-function buildRestApiValueMapping(
-  valueMapping: RestApiValueMapping | undefined
-): Record<string, unknown> | undefined {
+function buildRestApiValueMapping(valueMapping: RestApiValueMapping | undefined): Record<string, unknown> | undefined {
   if (!valueMapping || !valueMapping.mapping || valueMapping.mapping.length === 0) {
     return undefined;
   }

@@ -39,16 +39,14 @@ export function ModbusDataPointListForm({
   // Get state from context
   const dataPoints = useDeviceState(
     (d) =>
-      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-        functionalProfileIndex
-      ]?.dataPointList?.dataPointListElement
+      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement
   );
 
   const isAdded = useDeviceState(
     (d) =>
-      !!d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-        functionalProfileIndex
-      ]?.dataPointList
+      !!d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList
   );
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
@@ -108,9 +106,8 @@ function ModbusDataPointItemForm({
 
   const dataPointData = useDeviceState(
     (d) =>
-      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-        functionalProfileIndex
-      ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement?.[dataPointIndex]
   );
 
   const { getError } = useValidation();
@@ -120,8 +117,7 @@ function ModbusDataPointItemForm({
     dataPointIndex
   );
 
-  const dataPointName =
-    dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
+  const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
   const handleRemove = () => {
     dataPointListSlice.removeDataPoint(dataPointIndex);
@@ -162,9 +158,7 @@ function ModbusDataPointItemForm({
           nested={true}
           isAdded={dataPointData?.blockCacheIdentification !== undefined}
           onAdd={() => dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, "")}
-          onRemove={() =>
-            dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, undefined)
-          }
+          onRemove={() => dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, undefined)}
         >
           <FormGroup>
             <InputField
@@ -174,10 +168,7 @@ function ModbusDataPointItemForm({
               type="text"
               value={dataPointData?.blockCacheIdentification || ""}
               onChange={(value) =>
-                dataPointListSlice.updateBlockCacheIdentification(
-                  dataPointIndex,
-                  value || undefined
-                )
+                dataPointListSlice.updateBlockCacheIdentification(dataPointIndex, value || undefined)
               }
               placeholder="Enter block cache identification"
               error={getError(`${fieldPathPrefix}.blockCacheIdentification`)}

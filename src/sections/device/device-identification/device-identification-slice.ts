@@ -3,9 +3,7 @@ import { DeviceFrame, SpecificationOwnerIdentification } from "@/models";
 export interface DeviceIdentificationSlice {
   updateDeviceName: (deviceName: string) => void;
   updateManufacturerName: (manufacturerName: string | undefined) => void;
-  updateSpecificationOwnerIdentification: (
-    specificationOwnerIdentification: SpecificationOwnerIdentification
-  ) => void;
+  updateSpecificationOwnerIdentification: (specificationOwnerIdentification: SpecificationOwnerIdentification) => void;
 }
 
 /**

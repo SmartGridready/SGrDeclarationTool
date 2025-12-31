@@ -15,9 +15,7 @@ export function mapValueMapping(valueMappingXml: Xml2JsObject): ValueMapping {
 /**
  * Maps XML messagingValueMapping to MessagingValueMapping model
  */
-export function mapMessagingValueMapping(
-  valueMappingXml: Xml2JsObject | undefined
-): MessagingValueMapping | undefined {
+export function mapMessagingValueMapping(valueMappingXml: Xml2JsObject | undefined): MessagingValueMapping | undefined {
   if (!valueMappingXml) {
     return undefined;
   }

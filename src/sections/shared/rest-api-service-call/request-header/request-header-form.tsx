@@ -14,12 +14,7 @@ interface RequestHeaderFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function RequestHeaderForm({
-  serviceCall,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: RequestHeaderFormProps) {
+export function RequestHeaderForm({ serviceCall, actions, fieldPathPrefix, getError }: RequestHeaderFormProps) {
   return (
     <FormSection
       title="Request Header"

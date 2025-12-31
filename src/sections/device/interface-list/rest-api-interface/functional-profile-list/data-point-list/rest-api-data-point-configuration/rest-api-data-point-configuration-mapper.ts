@@ -1,10 +1,5 @@
 import { RestApiDataPointConfiguration, RestApiDataType } from "@/models/product/rest-api-types";
-import {
-  getTypedValue,
-  getFirstElement,
-  setOptionalField,
-  Xml2JsObject,
-} from "@/utils/mapper-utils";
+import { getTypedValue, getFirstElement, setOptionalField, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapRestApiServiceCall } from "@/sections/shared/rest-api-service-call/rest-api-service-call-mapper";
 
 /**

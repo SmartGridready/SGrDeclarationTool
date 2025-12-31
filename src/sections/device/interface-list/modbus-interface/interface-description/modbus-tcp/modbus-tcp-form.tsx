@@ -8,16 +8,11 @@ import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-for
 export function ModbusTcpForm() {
   const { useDeviceState, useValidation, modbusTcpActions, pathPrefix } = useDeviceFormContext();
 
-  const modbusTcp = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusTcp
-  );
+  const modbusTcp = useDeviceState((d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusTcp);
   const { getError } = useValidation();
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.modbusInterface.modbusInterfaceDescription.modbusTcp.${field}`
-    );
+    buildDeviceFieldPath(pathPrefix, `interfaceList.modbusInterface.modbusInterfaceDescription.modbusTcp.${field}`);
 
   return (
     <FormSection

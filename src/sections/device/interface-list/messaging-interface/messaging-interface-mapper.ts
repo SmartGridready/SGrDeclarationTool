@@ -6,25 +6,18 @@ import { mapMessagingFunctionalProfileList } from "./functional-profile-list/mes
 /**
  * Maps XML messagingInterface to MessagingInterface model
  */
-export function mapMessagingInterface(
-  messagingInterfaceXml: Xml2JsObject | undefined
-): MessagingInterface {
+export function mapMessagingInterface(messagingInterfaceXml: Xml2JsObject | undefined): MessagingInterface {
   if (!messagingInterfaceXml) {
     throw new Error("messagingInterface is required");
   }
 
-  const messagingInterfaceDescriptionXml = getFirstElement(
-    messagingInterfaceXml,
-    "messagingInterfaceDescription"
-  );
+  const messagingInterfaceDescriptionXml = getFirstElement(messagingInterfaceXml, "messagingInterfaceDescription");
   if (!messagingInterfaceDescriptionXml) {
     throw new Error("messagingInterfaceDescription is required in messagingInterface");
   }
 
   const messagingInterface: MessagingInterface = {
-    messagingInterfaceDescription: mapMessagingInterfaceDescription(
-      messagingInterfaceDescriptionXml
-    ),
+    messagingInterfaceDescription: mapMessagingInterfaceDescription(messagingInterfaceDescriptionXml),
     functionalProfileList: mapMessagingFunctionalProfileList(
       getFirstElement(messagingInterfaceXml, "functionalProfileList")
     ),

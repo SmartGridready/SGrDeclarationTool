@@ -22,10 +22,7 @@ export function ConfigurationDescriptionsForm({
     const store: { legibleDescriptions?: ConfigurationDescription[] } & LegibleDescriptionSlice = {
       legibleDescriptions: configurationDescriptions,
       addLegibleDescription: (description) => {
-        configurationListActions.addConfigurationDescription(
-          configIndex,
-          description as ConfigurationDescription
-        );
+        configurationListActions.addConfigurationDescription(configIndex, description as ConfigurationDescription);
       },
       removeLegibleDescription: (index) => {
         configurationListActions.removeConfigurationDescription(configIndex, index);
@@ -39,18 +36,10 @@ export function ConfigurationDescriptionsForm({
         }
       },
       updateTextElement: (index, textElement) => {
-        configurationListActions.updateConfigurationDescriptionText(
-          configIndex,
-          index,
-          textElement
-        );
+        configurationListActions.updateConfigurationDescriptionText(configIndex, index, textElement);
       },
       updateLanguage: (index, language) => {
-        configurationListActions.updateConfigurationDescriptionLanguage(
-          configIndex,
-          index,
-          language
-        );
+        configurationListActions.updateConfigurationDescriptionLanguage(configIndex, index, language);
       },
       updateUri: (index, uri) => {
         configurationListActions.updateConfigurationDescriptionUri(configIndex, index, uri);

@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  MasterFunctionsSupportedList,
-  MASTER_FUNCTIONS_SUPPORTED_VALUES,
-} from "@/models/product/modbus-types";
+import { MasterFunctionsSupportedList, MASTER_FUNCTIONS_SUPPORTED_VALUES } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -10,10 +7,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract enum values from constants
-const MASTER_FUNCTIONS_SUPPORTED_VALUES_ARRAY = MASTER_FUNCTIONS_SUPPORTED_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const MASTER_FUNCTIONS_SUPPORTED_VALUES_ARRAY = MASTER_FUNCTIONS_SUPPORTED_VALUES as unknown as [string, ...string[]];
 
 export const masterFunctionsSupportedListSchema = z.object({
   masterFunctionsSupported: z.array(z.enum(MASTER_FUNCTIONS_SUPPORTED_VALUES_ARRAY)),

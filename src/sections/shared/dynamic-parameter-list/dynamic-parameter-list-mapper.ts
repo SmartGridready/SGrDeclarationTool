@@ -17,9 +17,7 @@ import { mapDataTypeProduct } from "@/sections/shared/data-type-product/data-typ
 /**
  * Maps XML parameterList to DynamicParameterDescriptionList model
  */
-export function mapDynamicParameterList(
-  parameterListXml: Xml2JsObject | undefined
-): DynamicParameterDescriptionList {
+export function mapDynamicParameterList(parameterListXml: Xml2JsObject | undefined): DynamicParameterDescriptionList {
   if (!parameterListXml) {
     return {};
   }

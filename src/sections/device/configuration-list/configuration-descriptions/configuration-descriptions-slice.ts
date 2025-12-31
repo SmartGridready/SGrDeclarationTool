@@ -7,26 +7,10 @@ import {
 export interface ConfigurationDescriptionsSlice {
   addConfigurationDescription: (configIndex: number, description: ConfigurationDescription) => void;
   removeConfigurationDescription: (configIndex: number, descIndex: number) => void;
-  updateConfigurationDescriptionText: (
-    configIndex: number,
-    descIndex: number,
-    text: string
-  ) => void;
-  updateConfigurationDescriptionLanguage: (
-    configIndex: number,
-    descIndex: number,
-    language: Language
-  ) => void;
-  updateConfigurationDescriptionUri: (
-    configIndex: number,
-    descIndex: number,
-    uri: string | undefined
-  ) => void;
-  updateConfigurationDescriptionLabel: (
-    configIndex: number,
-    descIndex: number,
-    label: string | undefined
-  ) => void;
+  updateConfigurationDescriptionText: (configIndex: number, descIndex: number, text: string) => void;
+  updateConfigurationDescriptionLanguage: (configIndex: number, descIndex: number, language: Language) => void;
+  updateConfigurationDescriptionUri: (configIndex: number, descIndex: number, uri: string | undefined) => void;
+  updateConfigurationDescriptionLabel: (configIndex: number, descIndex: number, label: string | undefined) => void;
   addEmptyConfigurationDescription: (configIndex: number) => void;
 }
 
@@ -42,9 +26,7 @@ export function createConfigurationDescriptionsSlice<TState extends { device?: D
   const getSliceForIndex = (configIndex: number): LegibleDescriptionSlice => {
     return createLegibleDescriptionSlice(
       set,
-      (state) =>
-        state.device?.configurationList?.configurationListElement?.[configIndex]
-          ?.configurationDescription,
+      (state) => state.device?.configurationList?.configurationListElement?.[configIndex]?.configurationDescription,
       (state, descriptions) => {
         const config = state.device?.configurationList?.configurationListElement?.[configIndex];
         if (config) {
@@ -79,7 +61,6 @@ export function createConfigurationDescriptionsSlice<TState extends { device?: D
       }
     },
 
-    addEmptyConfigurationDescription: (configIndex) =>
-      getSliceForIndex(configIndex).addEmptyLegibleDescription(),
+    addEmptyConfigurationDescription: (configIndex) => getSliceForIndex(configIndex).addEmptyLegibleDescription(),
   };
 }

@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  AccessProtectionEnabled,
-  MODBUS_EXCEPTION_CODE_VALUES,
-} from "@/models/product/modbus-types";
+import { AccessProtectionEnabled, MODBUS_EXCEPTION_CODE_VALUES } from "@/models/product/modbus-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -10,10 +7,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract enum values from constants
-const MODBUS_EXCEPTION_CODE_VALUES_ARRAY = MODBUS_EXCEPTION_CODE_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const MODBUS_EXCEPTION_CODE_VALUES_ARRAY = MODBUS_EXCEPTION_CODE_VALUES as unknown as [string, ...string[]];
 
 export const accessProtectionEnabledSchema = z.object({
   modbusExceptionCode: z

@@ -3,18 +3,13 @@ import { buildDataPointBase } from "@/sections/shared/data-point-base/data-point
 import { buildModbusAttributes } from "@/sections/shared/modbus-attributes/modbus-attributes-builder";
 import { buildModbusDataPointConfiguration } from "./modbus-data-point-configuration/modbus-data-point-configuration-builder";
 import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
-import {
-  validateModbusDataPointList,
-  validateModbusDataPoint,
-} from "./modbus-data-point-list-schema";
+import { validateModbusDataPointList, validateModbusDataPoint } from "./modbus-data-point-list-schema";
 
 /**
  * Builds XML object for dataPointList from ModbusDataPointList model
  * @throws Error if required fields are missing
  */
-export function buildModbusDataPointList(
-  dataPointList: ModbusDataPointList
-): Record<string, unknown> {
+export function buildModbusDataPointList(dataPointList: ModbusDataPointList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateModbusDataPointList(dataPointList);
   if (!validation.success) {
@@ -23,9 +18,7 @@ export function buildModbusDataPointList(
     throw new Error(errorMessage);
   }
   const listXml: Record<string, unknown> = {
-    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) =>
-      buildModbusDataPoint(dataPoint)
-    ),
+    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) => buildModbusDataPoint(dataPoint)),
   };
 
   return listXml;

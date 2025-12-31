@@ -1,17 +1,8 @@
 import { DeviceFrame, ModbusDataPoint } from "@/models";
 import { ModbusDataType, RegisterType, BitRank } from "@/models/product/modbus-types";
-import {
-  createModbusDataPointEnumSlice,
-  ModbusDataPointEnumSlice,
-} from "./data-types/enum/enum-slice";
-import {
-  createModbusDataPointBitmapSlice,
-  ModbusDataPointBitmapSlice,
-} from "./data-types/bitmap/bitmap-slice";
-import {
-  createModbusDataPointBooleanSlice,
-  ModbusDataPointBooleanSlice,
-} from "./data-types/boolean/boolean-slice";
+import { createModbusDataPointEnumSlice, ModbusDataPointEnumSlice } from "./data-types/enum/enum-slice";
+import { createModbusDataPointBitmapSlice, ModbusDataPointBitmapSlice } from "./data-types/bitmap/bitmap-slice";
+import { createModbusDataPointBooleanSlice, ModbusDataPointBooleanSlice } from "./data-types/boolean/boolean-slice";
 
 export interface ModbusDataPointConfigurationSlice
   extends ModbusDataPointEnumSlice,
@@ -19,10 +10,7 @@ export interface ModbusDataPointConfigurationSlice
     ModbusDataPointBooleanSlice {
   // Configuration management
   addModbusDataPointConfiguration: (functionalProfileIndex: number, dataPointIndex: number) => void;
-  removeModbusDataPointConfiguration: (
-    functionalProfileIndex: number,
-    dataPointIndex: number
-  ) => void;
+  removeModbusDataPointConfiguration: (functionalProfileIndex: number, dataPointIndex: number) => void;
 
   // Configuration field updates
   updateModbusDataType: (
@@ -31,21 +19,9 @@ export interface ModbusDataPointConfigurationSlice
     modbusDataType: ModbusDataType
   ) => void;
   updateAddress: (functionalProfileIndex: number, dataPointIndex: number, address: number) => void;
-  updateBitRank: (
-    functionalProfileIndex: number,
-    dataPointIndex: number,
-    bitRank: BitRank | undefined
-  ) => void;
-  updateRegisterType: (
-    functionalProfileIndex: number,
-    dataPointIndex: number,
-    registerType: RegisterType
-  ) => void;
-  updateNumberOfRegisters: (
-    functionalProfileIndex: number,
-    dataPointIndex: number,
-    numberOfRegisters: number
-  ) => void;
+  updateBitRank: (functionalProfileIndex: number, dataPointIndex: number, bitRank: BitRank | undefined) => void;
+  updateRegisterType: (functionalProfileIndex: number, dataPointIndex: number, registerType: RegisterType) => void;
+  updateNumberOfRegisters: (functionalProfileIndex: number, dataPointIndex: number, numberOfRegisters: number) => void;
 }
 
 /**
@@ -59,9 +35,9 @@ export function createModbusDataPointConfigurationSlice<TState extends { device?
     functionalProfileIndex: number,
     dataPointIndex: number
   ): ModbusDataPoint | undefined => {
-    return state.device?.interfaceList?.modbusInterface?.functionalProfileList
-      ?.functionalProfileListElement?.[functionalProfileIndex]?.dataPointList
-      ?.dataPointListElement?.[dataPointIndex];
+    return state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
+      functionalProfileIndex
+    ]?.dataPointList?.dataPointListElement?.[dataPointIndex];
   };
 
   // Create data type slices

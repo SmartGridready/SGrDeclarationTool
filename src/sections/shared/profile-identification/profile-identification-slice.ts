@@ -15,9 +15,7 @@ export interface FunctionalProfileContainer {
 
 export interface FunctionalProfileIdentificationSlice {
   // Field-specific updates
-  updateSpecificationOwnerIdentification: (
-    specificationOwnerIdentification: SpecificationOwnerIdentification
-  ) => void;
+  updateSpecificationOwnerIdentification: (specificationOwnerIdentification: SpecificationOwnerIdentification) => void;
   updateFunctionalProfileCategory: (functionalProfileCategory: FunctionalProfileCategory) => void;
   updateFunctionalProfileType: (functionalProfileType: string) => void;
   updateLevelOfOperation: (levelOfOperation: LevelOfOperation) => void;

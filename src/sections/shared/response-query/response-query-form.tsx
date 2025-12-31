@@ -17,18 +17,11 @@ interface ResponseQueryFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function ResponseQueryForm({
-  responseQuery,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: ResponseQueryFormProps) {
+export function ResponseQueryForm({ responseQuery, actions, fieldPathPrefix, getError }: ResponseQueryFormProps) {
   // Show query field for expression types (all except JMESPathMapping)
   // The query field is optional in the model, but should be available for these types
   const shouldShowQueryField =
-    responseQuery &&
-    responseQuery.queryType !== "JMESPathMapping" &&
-    !("jmesPathMappings" in responseQuery);
+    responseQuery && responseQuery.queryType !== "JMESPathMapping" && !("jmesPathMappings" in responseQuery);
   const queryValue = responseQuery && "query" in responseQuery ? responseQuery.query : "";
 
   return (
@@ -49,9 +42,7 @@ export function ResponseQueryForm({
             required={true}
             options={RESPONSE_QUERY_TYPE_OPTIONS}
             value={responseQuery.queryType}
-            onChange={(value) =>
-              actions.updateResponseQueryType(value as ResponseQuery["queryType"])
-            }
+            onChange={(value) => actions.updateResponseQueryType(value as ResponseQuery["queryType"])}
             placeholder="Select query type"
             error={getError(`${fieldPathPrefix}.responseQuery.queryType`)}
           />

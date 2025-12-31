@@ -1,11 +1,5 @@
 import { Label } from "@/components/shadcn/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/shadcn/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shadcn/select";
 
 export interface SelectOption {
   readonly value: string;
@@ -38,9 +32,7 @@ export function SelectField({
   ...props
 }: SelectFieldProps) {
   const hasError = !!error;
-  const triggerClassName = hasError
-    ? `${className} border-destructive focus:ring-destructive`
-    : className;
+  const triggerClassName = hasError ? `${className} border-destructive focus:ring-destructive` : className;
 
   return (
     <div className="space-y-2">

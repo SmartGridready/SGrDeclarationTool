@@ -9,9 +9,7 @@ import { wrapInArray, setOptionalXmlField, setOptionalXmlArray } from "@/utils/b
  * Builds XML object for deviceInformation from DeviceInformation model
  * @throws Error if required fields are missing
  */
-export function buildDeviceInformation(
-  deviceInformation: DeviceInformation
-): Record<string, unknown> {
+export function buildDeviceInformation(deviceInformation: DeviceInformation): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateDeviceInformation(deviceInformation);
   if (!validation.success) {
@@ -24,9 +22,7 @@ export function buildDeviceInformation(
 
   // Build optional alternativeNames (must come first according to model)
   if (deviceInformation.alternativeNames) {
-    deviceInformationXml.alternativeNames = wrapInArray(
-      buildAlternativeNames(deviceInformation.alternativeNames)
-    );
+    deviceInformationXml.alternativeNames = wrapInArray(buildAlternativeNames(deviceInformation.alternativeNames));
   }
 
   // Build optional legibleDescription (must come after alternativeNames, before deviceCategory)
@@ -53,19 +49,13 @@ export function buildDeviceInformation(
     "manufacturerSpecificationIdentification",
     deviceInformation.manufacturerSpecificationIdentification
   );
-  setOptionalXmlField(
-    deviceInformationXml,
-    "manufacturerLabel",
-    deviceInformation.manufacturerLabel
-  );
+  setOptionalXmlField(deviceInformationXml, "manufacturerLabel", deviceInformation.manufacturerLabel);
   setOptionalXmlField(deviceInformationXml, "generalRemarks", deviceInformation.generalRemarks);
   setOptionalXmlField(deviceInformationXml, "levelOfOperation", deviceInformation.levelOfOperation);
 
   // Build optional versionNumber
   if (deviceInformation.versionNumber) {
-    deviceInformationXml.versionNumber = wrapInArray(
-      buildVersionNumber(deviceInformation.versionNumber)
-    );
+    deviceInformationXml.versionNumber = wrapInArray(buildVersionNumber(deviceInformation.versionNumber));
   }
 
   setOptionalXmlField(deviceInformationXml, "testState", deviceInformation.testState);

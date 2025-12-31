@@ -1,10 +1,7 @@
 import { DeviceFrame, DataPointBase } from "@/models";
 import { ContactFunctionalProfile } from "@/models/product/contact-interface";
 import { createEmptyContactDataPoint } from "@/utils/factory-utils";
-import {
-  createDataPointBaseSlice,
-  DataPointBaseSlice,
-} from "@/sections/shared/data-point-base/data-point-base-slice";
+import { createDataPointBaseSlice, DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 
 export interface ContactDataPointListSlice {
   // Data point list management

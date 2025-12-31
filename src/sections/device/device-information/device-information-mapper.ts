@@ -1,11 +1,4 @@
-import {
-  DeviceInformation,
-  DeviceCategory,
-  TestState,
-  LevelOfOperation,
-  PowerSource,
-  VersionNumber,
-} from "@/models";
+import { DeviceInformation, DeviceCategory, TestState, LevelOfOperation, PowerSource, VersionNumber } from "@/models";
 import {
   getStringValue,
   getTypedValue,
@@ -21,19 +14,13 @@ import { mapLegibleDescription } from "@/sections/shared/legible-description/leg
 /**
  * Maps XML deviceInformation to DeviceInformation model
  */
-export function mapDeviceInformation(
-  deviceInformationXml: Xml2JsObject | undefined
-): DeviceInformation {
+export function mapDeviceInformation(deviceInformationXml: Xml2JsObject | undefined): DeviceInformation {
   if (!deviceInformationXml) {
     throw new Error("deviceInformation is required");
   }
 
   const deviceInformation: DeviceInformation = {
-    deviceCategory: getTypedValue<DeviceCategory>(
-      deviceInformationXml,
-      "deviceCategory",
-      "SubMeterElectricity"
-    ),
+    deviceCategory: getTypedValue<DeviceCategory>(deviceInformationXml, "deviceCategory", "SubMeterElectricity"),
     isLocalControl: getStringValue(deviceInformationXml, "isLocalControl") === "true",
   };
 
@@ -69,22 +56,10 @@ export function mapDeviceInformation(
     "hardwareRevision",
     getOptionalStringValue(deviceInformationXml, "hardwareRevision")
   );
-  setOptionalField(
-    deviceInformation,
-    "brandName",
-    getOptionalStringValue(deviceInformationXml, "brandName")
-  );
+  setOptionalField(deviceInformation, "brandName", getOptionalStringValue(deviceInformationXml, "brandName"));
   const powerSourceValue = getOptionalStringValue(deviceInformationXml, "powerSource");
-  setOptionalField(
-    deviceInformation,
-    "powerSource",
-    powerSourceValue ? (powerSourceValue as PowerSource) : undefined
-  );
-  setOptionalField(
-    deviceInformation,
-    "nominalPower",
-    getOptionalStringValue(deviceInformationXml, "nominalPower")
-  );
+  setOptionalField(deviceInformation, "powerSource", powerSourceValue ? (powerSourceValue as PowerSource) : undefined);
+  setOptionalField(deviceInformation, "nominalPower", getOptionalStringValue(deviceInformationXml, "nominalPower"));
   setOptionalField(
     deviceInformation,
     "manufacturerSpecificationIdentification",
@@ -95,11 +70,7 @@ export function mapDeviceInformation(
     "manufacturerLabel",
     getOptionalStringValue(deviceInformationXml, "manufacturerLabel")
   );
-  setOptionalField(
-    deviceInformation,
-    "generalRemarks",
-    getOptionalStringValue(deviceInformationXml, "generalRemarks")
-  );
+  setOptionalField(deviceInformation, "generalRemarks", getOptionalStringValue(deviceInformationXml, "generalRemarks"));
   const levelOfOperationValue = getOptionalStringValue(deviceInformationXml, "levelOfOperation");
   setOptionalField(
     deviceInformation,
@@ -114,11 +85,7 @@ export function mapDeviceInformation(
   }
 
   const testStateValue = getOptionalStringValue(deviceInformationXml, "testState");
-  setOptionalField(
-    deviceInformation,
-    "testState",
-    testStateValue ? (testStateValue as TestState) : undefined
-  );
+  setOptionalField(deviceInformation, "testState", testStateValue ? (testStateValue as TestState) : undefined);
 
   // Map optional programmerHints
   if (

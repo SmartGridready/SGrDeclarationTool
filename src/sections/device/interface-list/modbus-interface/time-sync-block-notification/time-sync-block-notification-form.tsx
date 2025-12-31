@@ -88,10 +88,7 @@ function TimeSyncBlockNotificationItemForm({
           type="text"
           value={notification.blockCacheIdentification}
           onChange={(value) =>
-            timeSyncBlockNotificationActions.updateBlockCacheIdentification(
-              notificationIndex,
-              value
-            )
+            timeSyncBlockNotificationActions.updateBlockCacheIdentification(notificationIndex, value)
           }
           placeholder="Enter block cache identification"
           error={getError(`${fieldPathPrefix}.blockCacheIdentification`)}
@@ -103,10 +100,7 @@ function TimeSyncBlockNotificationItemForm({
           type="number"
           value={notification.firstAddress.toString()}
           onChange={(value) =>
-            timeSyncBlockNotificationActions.updateFirstAddress(
-              notificationIndex,
-              value ? parseInt(value, 10) : 0
-            )
+            timeSyncBlockNotificationActions.updateFirstAddress(notificationIndex, value ? parseInt(value, 10) : 0)
           }
           placeholder="Enter first address"
           error={getError(`${fieldPathPrefix}.firstAddress`)}
@@ -121,10 +115,7 @@ function TimeSyncBlockNotificationItemForm({
           type="number"
           value={notification.size.toString()}
           onChange={(value) =>
-            timeSyncBlockNotificationActions.updateSize(
-              notificationIndex,
-              value ? parseInt(value, 10) : 1
-            )
+            timeSyncBlockNotificationActions.updateSize(notificationIndex, value ? parseInt(value, 10) : 1)
           }
           placeholder="Enter size"
           error={getError(`${fieldPathPrefix}.size`)}
@@ -153,10 +144,7 @@ function TimeSyncBlockNotificationItemForm({
           type="number"
           value={notification.timeToLiveMs.toString()}
           onChange={(value) =>
-            timeSyncBlockNotificationActions.updateTimeToLiveMs(
-              notificationIndex,
-              value ? parseInt(value, 10) : 1000
-            )
+            timeSyncBlockNotificationActions.updateTimeToLiveMs(notificationIndex, value ? parseInt(value, 10) : 1000)
           }
           placeholder="Enter time to live in milliseconds"
           error={getError(`${fieldPathPrefix}.timeToLiveMs`)}

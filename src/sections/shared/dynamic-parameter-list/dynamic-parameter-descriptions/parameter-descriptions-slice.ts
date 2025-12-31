@@ -5,18 +5,9 @@ import {
 } from "@/sections/shared/legible-description/legible-description-slice";
 
 export interface DynamicParameterDescriptionsSlice {
-  addParameterDescription: (
-    listIndex: number,
-    paramIndex: number,
-    description: DynamicParameterDescription
-  ) => void;
+  addParameterDescription: (listIndex: number, paramIndex: number, description: DynamicParameterDescription) => void;
   removeParameterDescription: (listIndex: number, paramIndex: number, descIndex: number) => void;
-  updateParameterDescriptionText: (
-    listIndex: number,
-    paramIndex: number,
-    descIndex: number,
-    text: string
-  ) => void;
+  updateParameterDescriptionText: (listIndex: number, paramIndex: number, descIndex: number, text: string) => void;
   updateParameterDescriptionLanguage: (
     listIndex: number,
     paramIndex: number,
@@ -45,18 +36,13 @@ export interface DynamicParameterDescriptionsSlice {
  */
 export function createDynamicParameterDescriptionsSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getParameterList: (
-    state: TState,
-    listIndex: number
-  ) => DynamicParameterDescriptionList | undefined
+  getParameterList: (state: TState, listIndex: number) => DynamicParameterDescriptionList | undefined
 ): DynamicParameterDescriptionsSlice {
   // Helper function to get a slice bound to specific listIndex and paramIndex
   const getSliceForIndices = (listIndex: number, paramIndex: number): LegibleDescriptionSlice => {
     return createLegibleDescriptionSlice(
       set,
-      (state) =>
-        getParameterList(state, listIndex)?.parameterListElement?.[paramIndex]
-          ?.parameterDescription,
+      (state) => getParameterList(state, listIndex)?.parameterListElement?.[paramIndex]?.parameterDescription,
       (state, descriptions) => {
         const paramList = getParameterList(state, listIndex);
         const param = paramList?.parameterListElement?.[paramIndex];
@@ -71,9 +57,7 @@ export function createDynamicParameterDescriptionsSlice<TState>(
 
   return {
     addParameterDescription: (listIndex, paramIndex, description) =>
-      getSliceForIndices(listIndex, paramIndex).addLegibleDescription(
-        description as DynamicParameterDescription
-      ),
+      getSliceForIndices(listIndex, paramIndex).addLegibleDescription(description as DynamicParameterDescription),
 
     removeParameterDescription: (listIndex, paramIndex, descIndex) =>
       getSliceForIndices(listIndex, paramIndex).removeLegibleDescription(descIndex),

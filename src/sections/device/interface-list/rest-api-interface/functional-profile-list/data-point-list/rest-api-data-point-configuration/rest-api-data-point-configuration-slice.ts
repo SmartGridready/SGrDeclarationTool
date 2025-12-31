@@ -36,9 +36,7 @@ export interface RestApiDataPointConfigurationSlice
 /**
  * Determines the current configuration type based on the configuration structure
  */
-export function getConfigurationType(
-  config: RestApiDataPointConfiguration | undefined
-): ConfigType | undefined {
+export function getConfigurationType(config: RestApiDataPointConfiguration | undefined): ConfigType | undefined {
   if (!config) return undefined;
   if (isSingleServiceCallConfig(config)) return "single";
   if (isWriteReadServiceCallConfig(config)) return "writeRead";

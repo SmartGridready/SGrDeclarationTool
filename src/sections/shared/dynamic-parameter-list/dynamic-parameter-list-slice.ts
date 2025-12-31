@@ -23,11 +23,7 @@ export interface DynamicParameterListSlice
   addParameterListElement: (listIndex: number) => void;
   removeParameterListElement: (listIndex: number, paramIndex: number) => void;
   updateParameterListElementName: (listIndex: number, paramIndex: number, name: string) => void;
-  updateParameterListElementDataType: (
-    listIndex: number,
-    paramIndex: number,
-    dataType: DataTypeProduct
-  ) => void;
+  updateParameterListElementDataType: (listIndex: number, paramIndex: number, dataType: DataTypeProduct) => void;
   updateParameterListElementDefaultValue: (
     listIndex: number,
     paramIndex: number,
@@ -45,10 +41,7 @@ export interface DynamicParameterListSlice
  */
 export function createDynamicParameterListSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getParameterList: (
-    state: TState,
-    listIndex: number
-  ) => DynamicParameterDescriptionList | undefined,
+  getParameterList: (state: TState, listIndex: number) => DynamicParameterDescriptionList | undefined,
   setParameterList: (
     state: TState,
     listIndex: number,

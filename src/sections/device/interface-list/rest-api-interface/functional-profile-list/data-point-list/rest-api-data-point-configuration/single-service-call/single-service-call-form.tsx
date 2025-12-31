@@ -11,11 +11,7 @@ interface SingleServiceCallFormProps {
   fieldPathPrefix: string;
 }
 
-export function SingleServiceCallForm({
-  config,
-  useValidation,
-  fieldPathPrefix,
-}: SingleServiceCallFormProps) {
+export function SingleServiceCallForm({ config, useValidation, fieldPathPrefix }: SingleServiceCallFormProps) {
   if (!isSingleServiceCallConfig(config)) {
     return null;
   }

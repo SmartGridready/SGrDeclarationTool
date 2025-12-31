@@ -1,7 +1,4 @@
-import {
-  GenericFunctionalProfileList,
-  GenericFunctionalProfile,
-} from "@/models/product/generic-interface";
+import { GenericFunctionalProfileList, GenericFunctionalProfile } from "@/models/product/generic-interface";
 import { buildFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-builder";
 import { buildGenericDataPointList } from "./data-point-list/generic-data-point-list-builder";
 import { wrapInArray } from "@/utils/builder-utils";
@@ -21,14 +18,13 @@ export function buildGenericFunctionalProfileList(
   const validation = validateGenericFunctionalProfileList(functionalProfileList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for Generic functional profile list";
+    const errorMessage = firstError?.message || "Validation failed for Generic functional profile list";
     throw new Error(errorMessage);
   }
 
   const listXml: Record<string, unknown> = {
-    functionalProfileListElement: functionalProfileList.functionalProfileListElement.map(
-      (functionalProfile) => buildGenericFunctionalProfile(functionalProfile)
+    functionalProfileListElement: functionalProfileList.functionalProfileListElement.map((functionalProfile) =>
+      buildGenericFunctionalProfile(functionalProfile)
     ),
   };
 
@@ -39,9 +35,7 @@ export function buildGenericFunctionalProfileList(
  * Builds XML object for functionalProfileListElement from GenericFunctionalProfile model
  * @throws Error if required fields are missing
  */
-function buildGenericFunctionalProfile(
-  functionalProfile: GenericFunctionalProfile
-): Record<string, unknown> {
+function buildGenericFunctionalProfile(functionalProfile: GenericFunctionalProfile): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateGenericFunctionalProfile(functionalProfile);
   if (!validation.success) {
@@ -55,9 +49,7 @@ function buildGenericFunctionalProfile(
   const functionalProfileXml = functionalProfileBaseXml;
 
   // Add required dataPointList
-  functionalProfileXml.dataPointList = wrapInArray(
-    buildGenericDataPointList(functionalProfile.dataPointList)
-  );
+  functionalProfileXml.dataPointList = wrapInArray(buildGenericDataPointList(functionalProfile.dataPointList));
 
   return functionalProfileXml;
 }

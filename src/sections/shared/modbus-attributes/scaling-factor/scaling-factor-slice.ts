@@ -14,9 +14,7 @@ export interface ScalingFactorSlice {
  */
 export function createScalingFactorSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getModbusInterface: (
-    state: TState
-  ) => { modbusAttributes?: { scalingFactor?: ScalingFactor } } | undefined
+  getModbusInterface: (state: TState) => { modbusAttributes?: { scalingFactor?: ScalingFactor } } | undefined
 ): ScalingFactorSlice {
   const getScalingFactor = (state: TState): ScalingFactor | undefined => {
     return getModbusInterface(state)?.modbusAttributes?.scalingFactor;

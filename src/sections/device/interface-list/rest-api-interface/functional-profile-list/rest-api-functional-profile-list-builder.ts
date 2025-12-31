@@ -1,7 +1,4 @@
-import {
-  RestApiFunctionalProfileList,
-  RestApiFunctionalProfile,
-} from "@/models/product/rest-api-interface";
+import { RestApiFunctionalProfileList, RestApiFunctionalProfile } from "@/models/product/rest-api-interface";
 import { buildFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-builder";
 import { buildRestApiDataPointList } from "./data-point-list/rest-api-data-point-list-builder";
 import { wrapInArray } from "@/utils/builder-utils";
@@ -21,14 +18,13 @@ export function buildRestApiFunctionalProfileList(
   const validation = validateRestApiFunctionalProfileList(functionalProfileList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for REST API functional profile list";
+    const errorMessage = firstError?.message || "Validation failed for REST API functional profile list";
     throw new Error(errorMessage);
   }
 
   const listXml: Record<string, unknown> = {
-    functionalProfileListElement: functionalProfileList.functionalProfileListElement.map(
-      (functionalProfile) => buildRestApiFunctionalProfile(functionalProfile)
+    functionalProfileListElement: functionalProfileList.functionalProfileListElement.map((functionalProfile) =>
+      buildRestApiFunctionalProfile(functionalProfile)
     ),
   };
 
@@ -39,9 +35,7 @@ export function buildRestApiFunctionalProfileList(
  * Builds XML object for functionalProfileListElement from RestApiFunctionalProfile model
  * @throws Error if required fields are missing
  */
-function buildRestApiFunctionalProfile(
-  functionalProfile: RestApiFunctionalProfile
-): Record<string, unknown> {
+function buildRestApiFunctionalProfile(functionalProfile: RestApiFunctionalProfile): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateRestApiFunctionalProfile(functionalProfile);
   if (!validation.success) {
@@ -55,9 +49,7 @@ function buildRestApiFunctionalProfile(
   const functionalProfileXml = functionalProfileBaseXml;
 
   // Add required dataPointList
-  functionalProfileXml.dataPointList = wrapInArray(
-    buildRestApiDataPointList(functionalProfile.dataPointList)
-  );
+  functionalProfileXml.dataPointList = wrapInArray(buildRestApiDataPointList(functionalProfile.dataPointList));
 
   return functionalProfileXml;
 }

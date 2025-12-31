@@ -1,7 +1,4 @@
-import {
-  MessagingFunctionalProfile,
-  MessagingFunctionalProfileList,
-} from "@/models/product/messaging-interface";
+import { MessagingFunctionalProfile, MessagingFunctionalProfileList } from "@/models/product/messaging-interface";
 import { mapArray, getFirstElement, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-mapper";
 import { mapMessagingDataPointList } from "./data-point-list/messaging-data-point-list-mapper";
@@ -25,18 +22,12 @@ function mapMessagingFunctionalProfile(xml: Xml2JsObject): MessagingFunctionalPr
 /**
  * Maps XML functionalProfileList to MessagingFunctionalProfileList model
  */
-export function mapMessagingFunctionalProfileList(
-  xml: Xml2JsObject | undefined
-): MessagingFunctionalProfileList {
+export function mapMessagingFunctionalProfileList(xml: Xml2JsObject | undefined): MessagingFunctionalProfileList {
   if (!xml) {
     return { functionalProfileListElement: [] };
   }
 
   return {
-    functionalProfileListElement: mapArray(
-      xml,
-      "functionalProfileListElement",
-      mapMessagingFunctionalProfile
-    ),
+    functionalProfileListElement: mapArray(xml, "functionalProfileListElement", mapMessagingFunctionalProfile),
   };
 }

@@ -48,9 +48,7 @@ export function RestApiDataPointConfigurationForm({
   // both service calls are present (the structure alone can't distinguish
   // between write-read and read-write when both are filled)
   const derivedConfigType = getConfigurationType(config);
-  const [selectedConfigType, setSelectedConfigType] = useState<ConfigType | undefined>(
-    derivedConfigType
-  );
+  const [selectedConfigType, setSelectedConfigType] = useState<ConfigType | undefined>(derivedConfigType);
 
   // Sync with derived type when config changes externally (e.g., on initial load)
   // but only if selectedConfigType is undefined or config was removed
@@ -115,11 +113,7 @@ export function RestApiDataPointConfigurationForm({
 
           {/* Render the appropriate service call form based on configuration type */}
           {configType === "single" && (
-            <SingleServiceCallForm
-              config={config}
-              useValidation={useValidation}
-              fieldPathPrefix={fieldPathPrefix}
-            />
+            <SingleServiceCallForm config={config} useValidation={useValidation} fieldPathPrefix={fieldPathPrefix} />
           )}
 
           {configType === "writeRead" && (

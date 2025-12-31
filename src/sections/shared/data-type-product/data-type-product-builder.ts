@@ -1,10 +1,4 @@
-import {
-  DataTypeProduct,
-  EnumMapProduct,
-  EnumEntryProductRecord,
-  BitmapProduct,
-  BitmapEntryProduct,
-} from "@/models";
+import { DataTypeProduct, EnumMapProduct, EnumEntryProductRecord, BitmapProduct, BitmapEntryProduct } from "@/models";
 import { wrapInArray, setOptionalXmlField, buildSimpleDataType } from "@/utils/builder-utils";
 
 /**

@@ -24,9 +24,7 @@ export const alternativeNamesSchema = z.object({
 export type AlternativeNamesInput = z.input<typeof alternativeNamesSchema>;
 
 // Validators
-export function validateAlternativeNames(
-  alternativeNames: AlternativeNames
-): ValidationResult<AlternativeNames> {
+export function validateAlternativeNames(alternativeNames: AlternativeNames): ValidationResult<AlternativeNames> {
   const result = validateWithSchema(alternativeNamesSchema, alternativeNames);
   return result as ValidationResult<AlternativeNames>;
 }

@@ -1,7 +1,4 @@
-import {
-  ContactFunctionalProfileList,
-  ContactFunctionalProfile,
-} from "@/models/product/contact-interface";
+import { ContactFunctionalProfileList, ContactFunctionalProfile } from "@/models/product/contact-interface";
 import { buildFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-builder";
 import { buildContactDataPointList } from "./data-point-list/contact-data-point-list-builder";
 import { wrapInArray } from "@/utils/builder-utils";
@@ -21,14 +18,13 @@ export function buildContactFunctionalProfileList(
   const validation = validateContactFunctionalProfileList(functionalProfileList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for Contact functional profile list";
+    const errorMessage = firstError?.message || "Validation failed for Contact functional profile list";
     throw new Error(errorMessage);
   }
 
   const listXml: Record<string, unknown> = {
-    functionalProfileListElement: functionalProfileList.functionalProfileListElement.map(
-      (functionalProfile) => buildContactFunctionalProfile(functionalProfile)
+    functionalProfileListElement: functionalProfileList.functionalProfileListElement.map((functionalProfile) =>
+      buildContactFunctionalProfile(functionalProfile)
     ),
   };
 
@@ -39,9 +35,7 @@ export function buildContactFunctionalProfileList(
  * Builds XML object for functionalProfileListElement from ContactFunctionalProfile model
  * @throws Error if required fields are missing
  */
-function buildContactFunctionalProfile(
-  functionalProfile: ContactFunctionalProfile
-): Record<string, unknown> {
+function buildContactFunctionalProfile(functionalProfile: ContactFunctionalProfile): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateContactFunctionalProfile(functionalProfile);
   if (!validation.success) {
@@ -55,9 +49,7 @@ function buildContactFunctionalProfile(
   const functionalProfileXml = functionalProfileBaseXml;
 
   // Add required dataPointList
-  functionalProfileXml.dataPointList = wrapInArray(
-    buildContactDataPointList(functionalProfile.dataPointList)
-  );
+  functionalProfileXml.dataPointList = wrapInArray(buildContactDataPointList(functionalProfile.dataPointList));
 
   return functionalProfileXml;
 }

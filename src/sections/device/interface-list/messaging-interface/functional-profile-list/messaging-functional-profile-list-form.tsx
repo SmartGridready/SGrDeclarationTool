@@ -5,10 +5,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
 import { InterfaceList } from "@/models";
-import {
-  MessagingFunctionalProfile,
-  MessagingInterface,
-} from "@/models/product/messaging-interface";
+import { MessagingFunctionalProfile, MessagingInterface } from "@/models/product/messaging-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
 import { MessagingDataPointListForm } from "./data-point-list/messaging-data-point-list-form";
@@ -24,8 +21,7 @@ function isMessagingInterface(
 }
 
 export function MessagingFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, messagingFunctionalProfileListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, pathPrefix, messagingFunctionalProfileListActions } = useDeviceFormContext();
 
   const fieldPathPrefix = pathPrefix
     ? buildDeviceFieldPath(pathPrefix, "interfaceList.messagingInterface.functionalProfileList")
@@ -41,15 +37,11 @@ export function MessagingFunctionalProfileListForm() {
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? !!interfaceList.messagingInterface.functionalProfileList
-      : false;
+    return isMessagingInterface(interfaceList) ? !!interfaceList.messagingInterface.functionalProfileList : false;
   });
 
-  const handleAdd = () =>
-    messagingFunctionalProfileListActions.addEmptyMessagingFunctionalProfile();
-  const handleRemove = () =>
-    messagingFunctionalProfileListActions.removeAllMessagingFunctionalProfiles();
+  const handleAdd = () => messagingFunctionalProfileListActions.addEmptyMessagingFunctionalProfile();
+  const handleRemove = () => messagingFunctionalProfileListActions.removeAllMessagingFunctionalProfiles();
 
   return (
     <FormSection
@@ -72,12 +64,8 @@ export function MessagingFunctionalProfileListForm() {
           <MessagingFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={messagingFunctionalProfileListActions.getMessagingFunctionalProfileSlice(
-              index
-            )}
-            dataPointListSlice={messagingFunctionalProfileListActions.getMessagingDataPointListSlice(
-              index
-            )}
+            functionalProfileSlice={messagingFunctionalProfileListActions.getMessagingFunctionalProfileSlice(index)}
+            dataPointListSlice={messagingFunctionalProfileListActions.getMessagingDataPointListSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -99,15 +87,12 @@ function MessagingFunctionalProfileItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: MessagingFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, messagingFunctionalProfileListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, messagingFunctionalProfileListActions } = useDeviceFormContext();
 
   const functionalProfileData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]
+      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
       : undefined;
   });
 

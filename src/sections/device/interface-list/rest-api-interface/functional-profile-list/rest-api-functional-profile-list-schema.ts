@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  RestApiFunctionalProfileList,
-  RestApiFunctionalProfile,
-} from "@/models/product/rest-api-interface";
+import { RestApiFunctionalProfileList, RestApiFunctionalProfile } from "@/models/product/rest-api-interface";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { functionalProfileBaseSchema } from "@/sections/shared/functional-profile-base/functional-profile-base-schema";
 import { restApiDataPointListSchema } from "./data-point-list/rest-api-data-point-list-schema";

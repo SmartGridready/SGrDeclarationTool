@@ -21,9 +21,7 @@ export type ContactDataPointInput = z.input<typeof contactDataPointSchema>;
 export type ContactDataPointListInput = z.input<typeof contactDataPointListSchema>;
 
 // Validators
-export function validateContactDataPoint(
-  dataPoint: DataPointBase
-): ValidationResult<DataPointBase> {
+export function validateContactDataPoint(dataPoint: DataPointBase): ValidationResult<DataPointBase> {
   const result = validateWithSchema(contactDataPointSchema, dataPoint);
   return result as ValidationResult<DataPointBase>;
 }

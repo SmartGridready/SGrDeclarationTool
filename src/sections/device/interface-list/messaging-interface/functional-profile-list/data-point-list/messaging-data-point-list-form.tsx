@@ -46,18 +46,16 @@ export function MessagingDataPointListForm({
   const dataPoints = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement
+      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement
       : undefined;
   });
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isMessagingInterface(interfaceList)
-      ? !!interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList
+      ? !!interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList
       : false;
   });
 
@@ -117,14 +115,12 @@ function MessagingDataPointItemForm({
   const dataPointData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement?.[dataPointIndex]
       : undefined;
   });
 
-  const dataPointName =
-    dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
+  const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
   const handleRemove = () => {
     dataPointListSlice.removeDataPoint(dataPointIndex);

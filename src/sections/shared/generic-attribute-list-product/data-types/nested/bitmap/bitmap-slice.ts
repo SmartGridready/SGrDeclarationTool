@@ -1,9 +1,4 @@
-import {
-  BitmapProduct,
-  BitmapEntryProduct,
-  GenericAttributeProduct,
-  GenericAttributeListProductEnd,
-} from "@/models";
+import { BitmapProduct, BitmapEntryProduct, GenericAttributeProduct, GenericAttributeListProductEnd } from "@/models";
 import {
   createDataTypeProductBitmapSlice,
   DataTypeProductBitmapSlice,
@@ -43,10 +38,7 @@ export interface GenericAttributeListProductNestedBitmapSlice {
     entryIndex: number,
     description: string | undefined
   ) => void;
-  addEmptyGenericAttributeListNestedBitmapEntry: (
-    elementIndex: number,
-    nestedElementIndex: number
-  ) => void;
+  addEmptyGenericAttributeListNestedBitmapEntry: (elementIndex: number, nestedElementIndex: number) => void;
 }
 
 /**
@@ -67,25 +59,20 @@ export function createGenericAttributeListProductNestedBitmapSlice<TState>(
   getAttribute: (state: TState, elementIndex: number) => GenericAttributeProduct | undefined
 ): GenericAttributeListProductNestedBitmapSlice {
   // Helper function to get a slice bound to specific element and nested element indices
-  const getSliceForIndices = (
-    elementIndex: number,
-    nestedElementIndex: number
-  ): DataTypeProductBitmapSlice => {
+  const getSliceForIndices = (elementIndex: number, nestedElementIndex: number): DataTypeProductBitmapSlice => {
     return createDataTypeProductBitmapSlice(
       set,
       (state) => {
         const attr = getAttribute(state, elementIndex);
         if (attr && isNestedGenericAttribute(attr)) {
-          return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex]
-            ?.dataType;
+          return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex]?.dataType;
         }
         return undefined;
       },
       (state, dataType) => {
         const attr = getAttribute(state, elementIndex);
         if (attr && isNestedGenericAttribute(attr)) {
-          const nestedElement =
-            attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          const nestedElement = attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
           if (nestedElement) {
             nestedElement.dataType = dataType;
           }
@@ -104,38 +91,18 @@ export function createGenericAttributeListProductNestedBitmapSlice<TState>(
     removeGenericAttributeListNestedBitmapEntry: (elementIndex, nestedElementIndex, entryIndex) =>
       getSliceForIndices(elementIndex, nestedElementIndex).removeBitmapEntry(entryIndex),
 
-    updateGenericAttributeListNestedBitmapEntryLiteral: (
-      elementIndex,
-      nestedElementIndex,
-      entryIndex,
-      literal
-    ) =>
-      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryLiteral(
-        entryIndex,
-        literal
-      ),
+    updateGenericAttributeListNestedBitmapEntryLiteral: (elementIndex, nestedElementIndex, entryIndex, literal) =>
+      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryLiteral(entryIndex, literal),
 
-    updateGenericAttributeListNestedBitmapEntryHexMask: (
-      elementIndex,
-      nestedElementIndex,
-      entryIndex,
-      hexMask
-    ) =>
-      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryHexMask(
-        entryIndex,
-        hexMask
-      ),
+    updateGenericAttributeListNestedBitmapEntryHexMask: (elementIndex, nestedElementIndex, entryIndex, hexMask) =>
+      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryHexMask(entryIndex, hexMask),
 
     updateGenericAttributeListNestedBitmapEntryDescription: (
       elementIndex,
       nestedElementIndex,
       entryIndex,
       description
-    ) =>
-      getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryDescription(
-        entryIndex,
-        description
-      ),
+    ) => getSliceForIndices(elementIndex, nestedElementIndex).updateBitmapEntryDescription(entryIndex, description),
 
     addEmptyGenericAttributeListNestedBitmapEntry: (elementIndex, nestedElementIndex) =>
       getSliceForIndices(elementIndex, nestedElementIndex).addEmptyBitmapEntry(),

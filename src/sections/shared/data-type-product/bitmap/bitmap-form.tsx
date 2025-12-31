@@ -53,9 +53,7 @@ export function DataTypeProductBitmapForm({
               label="Description"
               name={`${fieldPathPrefix}-${entryIndex}-description`}
               value={entry.description || ""}
-              onChange={(value) =>
-                actions.updateBitmapEntryDescription(entryIndex, value || undefined)
-              }
+              onChange={(value) => actions.updateBitmapEntryDescription(entryIndex, value || undefined)}
               placeholder="Enter description"
             />
           </>

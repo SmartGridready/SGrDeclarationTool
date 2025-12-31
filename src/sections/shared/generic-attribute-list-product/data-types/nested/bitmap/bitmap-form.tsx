@@ -25,19 +25,11 @@ export function GenericAttributeListProductNestedBitmapForm({
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
     return {
       setBitmapDataType: (bitmap) =>
-        actions.setGenericAttributeListNestedBitmapDataType(
-          elementIndex,
-          nestedElementIndex,
-          bitmap
-        ),
+        actions.setGenericAttributeListNestedBitmapDataType(elementIndex, nestedElementIndex, bitmap),
       addBitmapEntry: (entry) =>
         actions.addGenericAttributeListNestedBitmapEntry(elementIndex, nestedElementIndex, entry),
       removeBitmapEntry: (entryIndex) =>
-        actions.removeGenericAttributeListNestedBitmapEntry(
-          elementIndex,
-          nestedElementIndex,
-          entryIndex
-        ),
+        actions.removeGenericAttributeListNestedBitmapEntry(elementIndex, nestedElementIndex, entryIndex),
       updateBitmapEntryLiteral: (entryIndex, literal) =>
         actions.updateGenericAttributeListNestedBitmapEntryLiteral(
           elementIndex,

@@ -1,8 +1,4 @@
-import {
-  BitmapFunctionalProfile,
-  BitmapEntryFunctionalProfile,
-  FunctionalProfileDataPoint,
-} from "@/models";
+import { BitmapFunctionalProfile, BitmapEntryFunctionalProfile, FunctionalProfileDataPoint } from "@/models";
 import { createEmptyBitmapEntryFunctionalProfile } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
@@ -11,11 +7,7 @@ export interface BitmapSlice {
   addBitmapEntry: (dataPointIndex: number, entry: BitmapEntryFunctionalProfile) => void;
   removeBitmapEntry: (dataPointIndex: number, entryIndex: number) => void;
   updateBitmapEntryLiteral: (dataPointIndex: number, entryIndex: number, literal: string) => void;
-  updateBitmapEntryDescription: (
-    dataPointIndex: number,
-    entryIndex: number,
-    description: string | undefined
-  ) => void;
+  updateBitmapEntryDescription: (dataPointIndex: number, entryIndex: number, description: string | undefined) => void;
   addEmptyBitmapEntry: (dataPointIndex: number) => void;
 }
 

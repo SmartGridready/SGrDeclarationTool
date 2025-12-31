@@ -5,9 +5,7 @@ import { mapRestApiServiceCall } from "@/sections/shared/rest-api-service-call/r
 /**
  * Maps XML restApiBearer to RestApiBearer model
  */
-export function mapRestApiBearer(
-  restApiBearerXml: Xml2JsObject | undefined
-): RestApiBearer | undefined {
+export function mapRestApiBearer(restApiBearerXml: Xml2JsObject | undefined): RestApiBearer | undefined {
   if (!restApiBearerXml) {
     return undefined;
   }

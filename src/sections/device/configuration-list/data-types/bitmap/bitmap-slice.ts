@@ -8,16 +8,8 @@ export interface ConfigurationListBitmapSlice {
   setConfigurationListBitmapDataType: (configIndex: number, bitmap: BitmapProduct) => void;
   addConfigurationListBitmapEntry: (configIndex: number, entry: BitmapEntryProduct) => void;
   removeConfigurationListBitmapEntry: (configIndex: number, entryIndex: number) => void;
-  updateConfigurationListBitmapEntryLiteral: (
-    configIndex: number,
-    entryIndex: number,
-    literal: string
-  ) => void;
-  updateConfigurationListBitmapEntryHexMask: (
-    configIndex: number,
-    entryIndex: number,
-    hexMask: string
-  ) => void;
+  updateConfigurationListBitmapEntryLiteral: (configIndex: number, entryIndex: number, literal: string) => void;
+  updateConfigurationListBitmapEntryHexMask: (configIndex: number, entryIndex: number, hexMask: string) => void;
   updateConfigurationListBitmapEntryDescription: (
     configIndex: number,
     entryIndex: number,
@@ -33,10 +25,7 @@ export interface ConfigurationListBitmapSlice {
 export function createConfigurationListBitmapSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): ConfigurationListBitmapSlice {
-  const getConfiguration = (
-    state: TState,
-    configIndex: number
-  ): ConfigurationListElement | undefined => {
+  const getConfiguration = (state: TState, configIndex: number): ConfigurationListElement | undefined => {
     return state.device?.configurationList?.configurationListElement?.[configIndex];
   };
 
@@ -58,8 +47,7 @@ export function createConfigurationListBitmapSlice<TState extends { device?: Dev
     setConfigurationListBitmapDataType: (configIndex, bitmap) =>
       getSliceForIndex(configIndex).setBitmapDataType(bitmap),
 
-    addConfigurationListBitmapEntry: (configIndex, entry) =>
-      getSliceForIndex(configIndex).addBitmapEntry(entry),
+    addConfigurationListBitmapEntry: (configIndex, entry) => getSliceForIndex(configIndex).addBitmapEntry(entry),
 
     removeConfigurationListBitmapEntry: (configIndex, entryIndex) =>
       getSliceForIndex(configIndex).removeBitmapEntry(entryIndex),
@@ -73,7 +61,6 @@ export function createConfigurationListBitmapSlice<TState extends { device?: Dev
     updateConfigurationListBitmapEntryDescription: (configIndex, entryIndex, description) =>
       getSliceForIndex(configIndex).updateBitmapEntryDescription(entryIndex, description),
 
-    addEmptyConfigurationListBitmapEntry: (configIndex) =>
-      getSliceForIndex(configIndex).addEmptyBitmapEntry(),
+    addEmptyConfigurationListBitmapEntry: (configIndex) => getSliceForIndex(configIndex).addEmptyBitmapEntry(),
   };
 }

@@ -1,10 +1,4 @@
-import {
-  DataTypeProduct,
-  EnumMapProduct,
-  EnumEntryProductRecord,
-  BitmapProduct,
-  BitmapEntryProduct,
-} from "@/models";
+import { DataTypeProduct, EnumMapProduct, EnumEntryProductRecord, BitmapProduct, BitmapEntryProduct } from "@/models";
 import {
   getStringValue,
   getOptionalStringValue,

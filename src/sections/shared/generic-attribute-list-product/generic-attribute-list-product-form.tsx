@@ -33,9 +33,7 @@ import { createFormOptions } from "@/models/form-options-helper";
 const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 const UNIT_OPTIONS = createFormOptions(UNITS_VALUES);
 
-interface GenericAttributeListProductFormProps<
-  TStoreState extends GenericAttributeListProductSlice,
-> {
+interface GenericAttributeListProductFormProps<TStoreState extends GenericAttributeListProductSlice> {
   /**
    * Store hook function (e.g., useProfileStore, useDeviceStore)
    */
@@ -76,9 +74,7 @@ interface GenericAttributeListProductFormProps<
   required?: boolean;
 }
 
-export function GenericAttributeListProductForm<
-  TStoreState extends GenericAttributeListProductSlice,
->({
+export function GenericAttributeListProductForm<TStoreState extends GenericAttributeListProductSlice>({
   useStore,
   useValidation,
   stateSelector,
@@ -128,14 +124,10 @@ export function GenericAttributeListProductForm<
                 name={`${fieldPathPrefix}-${elementIndex}-name`}
                 type="text"
                 value={element.name}
-                onChange={(value) =>
-                  actions.updateGenericAttributeListElementName(elementIndex, value)
-                }
+                onChange={(value) => actions.updateGenericAttributeListElementName(elementIndex, value)}
                 placeholder="Enter attribute name"
                 required={true}
-                error={getError(
-                  `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.name`
-                )}
+                error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.name`)}
               />
               <SelectField
                 label="Attribute Type"
@@ -148,12 +140,7 @@ export function GenericAttributeListProductForm<
                 onChange={(value) => {
                   if (value === "simple" && isNestedGenericAttribute(element)) {
                     // Convert nested to simple
-                    actions.setGenericAttributeListElementAsSimple(
-                      elementIndex,
-                      { float64: {} },
-                      "",
-                      "NO_UNITS"
-                    );
+                    actions.setGenericAttributeListElementAsSimple(elementIndex, { float64: {} }, "", "NO_UNITS");
                   } else if (value === "nested" && isSimpleGenericAttribute(element)) {
                     // Convert simple to nested
                     actions.setGenericAttributeListElementAsNested(elementIndex);
@@ -182,43 +169,30 @@ export function GenericAttributeListProductForm<
                           bitmapEntry: [],
                         });
                       } else {
-                        actions.updateGenericAttributeListElementDataType(
-                          elementIndex,
-                          newDataType
-                        );
+                        actions.updateGenericAttributeListElementDataType(elementIndex, newDataType);
                       }
                     }}
                     required={true}
-                    error={getError(
-                      `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.dataType`
-                    )}
+                    error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.dataType`)}
                   />
                   <InputField
                     label="Value"
                     name={`${fieldPathPrefix}-${elementIndex}-value`}
                     type="text"
                     value={element.value || ""}
-                    onChange={(value) =>
-                      actions.updateGenericAttributeListElementValue(elementIndex, value)
-                    }
+                    onChange={(value) => actions.updateGenericAttributeListElementValue(elementIndex, value)}
                     placeholder="Enter value"
                     required={true}
-                    error={getError(
-                      `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.value`
-                    )}
+                    error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.value`)}
                   />
                   <SelectField
                     label="Unit"
                     name={`${fieldPathPrefix}-${elementIndex}-unit`}
                     options={UNIT_OPTIONS as unknown as { value: string; label: string }[]}
                     value={element.unit}
-                    onChange={(value) =>
-                      actions.updateGenericAttributeListElementUnit(elementIndex, value as Units)
-                    }
+                    onChange={(value) => actions.updateGenericAttributeListElementUnit(elementIndex, value as Units)}
                     required={true}
-                    error={getError(
-                      `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.unit`
-                    )}
+                    error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.unit`)}
                   />
                 </FormGroup>
 
@@ -249,10 +223,7 @@ export function GenericAttributeListProductForm<
                   items={element.genericAttributeList.genericAttributeListElement}
                   onAdd={() => actions.addNestedGenericAttributeListElement(elementIndex)}
                   onRemove={(nestedElementIndex) =>
-                    actions.removeNestedGenericAttributeListElement(
-                      elementIndex,
-                      nestedElementIndex
-                    )
+                    actions.removeNestedGenericAttributeListElement(elementIndex, nestedElementIndex)
                   }
                   emptyMessage="No nested generic attribute elements added"
                   renderItem={(nestedElement, nestedElementIndex) => (
@@ -264,11 +235,7 @@ export function GenericAttributeListProductForm<
                           type="text"
                           value={nestedElement.name}
                           onChange={(value) =>
-                            actions.updateNestedGenericAttributeListElementName(
-                              elementIndex,
-                              nestedElementIndex,
-                              value
-                            )
+                            actions.updateNestedGenericAttributeListElementName(elementIndex, nestedElementIndex, value)
                           }
                           placeholder="Enter nested attribute name"
                           required={true}
@@ -279,30 +246,18 @@ export function GenericAttributeListProductForm<
                         <SelectField
                           label="Data Type"
                           name={`${fieldPathPrefix}-${elementIndex}-nested-${nestedElementIndex}-dataType`}
-                          options={
-                            DATA_TYPE_OPTIONS as unknown as { value: string; label: string }[]
-                          }
+                          options={DATA_TYPE_OPTIONS as unknown as { value: string; label: string }[]}
                           value={getDataTypeProductStringValue(nestedElement.dataType)}
                           onChange={(value) => {
                             const newDataType = createDataTypeProductFromString(value);
-                            if (
-                              value === "enum" &&
-                              !isEnumDataTypeProduct(nestedElement.dataType)
-                            ) {
-                              actions.setGenericAttributeListNestedEnumDataType(
-                                elementIndex,
-                                nestedElementIndex,
-                                { enumEntry: [] }
-                              );
-                            } else if (
-                              value === "bitmap" &&
-                              !isBitmapDataTypeProduct(nestedElement.dataType)
-                            ) {
-                              actions.setGenericAttributeListNestedBitmapDataType(
-                                elementIndex,
-                                nestedElementIndex,
-                                { bitmapEntry: [] }
-                              );
+                            if (value === "enum" && !isEnumDataTypeProduct(nestedElement.dataType)) {
+                              actions.setGenericAttributeListNestedEnumDataType(elementIndex, nestedElementIndex, {
+                                enumEntry: [],
+                              });
+                            } else if (value === "bitmap" && !isBitmapDataTypeProduct(nestedElement.dataType)) {
+                              actions.setGenericAttributeListNestedBitmapDataType(elementIndex, nestedElementIndex, {
+                                bitmapEntry: [],
+                              });
                             } else {
                               actions.updateNestedGenericAttributeListElementDataType(
                                 elementIndex,

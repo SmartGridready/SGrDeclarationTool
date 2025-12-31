@@ -5,20 +5,10 @@ import {
 } from "@/sections/shared/data-type-product/enum/enum-slice";
 
 export interface GenericAttributeListProductSimpleEnumSlice {
-  setGenericAttributeListSimpleEnumDataType: (
-    elementIndex: number,
-    enumMap: EnumMapProduct
-  ) => void;
-  addGenericAttributeListSimpleEnumEntry: (
-    elementIndex: number,
-    entry: EnumEntryProductRecord
-  ) => void;
+  setGenericAttributeListSimpleEnumDataType: (elementIndex: number, enumMap: EnumMapProduct) => void;
+  addGenericAttributeListSimpleEnumEntry: (elementIndex: number, entry: EnumEntryProductRecord) => void;
   removeGenericAttributeListSimpleEnumEntry: (elementIndex: number, entryIndex: number) => void;
-  updateGenericAttributeListSimpleEnumEntryLiteral: (
-    elementIndex: number,
-    entryIndex: number,
-    literal: string
-  ) => void;
+  updateGenericAttributeListSimpleEnumEntryLiteral: (elementIndex: number, entryIndex: number, literal: string) => void;
   updateGenericAttributeListSimpleEnumEntryOrdinal: (
     elementIndex: number,
     entryIndex: number,
@@ -29,10 +19,7 @@ export interface GenericAttributeListProductSimpleEnumSlice {
     entryIndex: number,
     description: string | undefined
   ) => void;
-  updateGenericAttributeListSimpleEnumHexMask: (
-    elementIndex: number,
-    hexMask: string | undefined
-  ) => void;
+  updateGenericAttributeListSimpleEnumHexMask: (elementIndex: number, hexMask: string | undefined) => void;
   addEmptyGenericAttributeListSimpleEnumEntry: (elementIndex: number) => void;
 }
 
@@ -65,8 +52,7 @@ export function createGenericAttributeListProductSimpleEnumSlice<TState>(
     setGenericAttributeListSimpleEnumDataType: (elementIndex, enumMap) =>
       getSliceForIndex(elementIndex).setEnumDataType(enumMap),
 
-    addGenericAttributeListSimpleEnumEntry: (elementIndex, entry) =>
-      getSliceForIndex(elementIndex).addEnumEntry(entry),
+    addGenericAttributeListSimpleEnumEntry: (elementIndex, entry) => getSliceForIndex(elementIndex).addEnumEntry(entry),
 
     removeGenericAttributeListSimpleEnumEntry: (elementIndex, entryIndex) =>
       getSliceForIndex(elementIndex).removeEnumEntry(entryIndex),
@@ -83,7 +69,6 @@ export function createGenericAttributeListProductSimpleEnumSlice<TState>(
     updateGenericAttributeListSimpleEnumHexMask: (elementIndex, hexMask) =>
       getSliceForIndex(elementIndex).updateEnumHexMask(hexMask),
 
-    addEmptyGenericAttributeListSimpleEnumEntry: (elementIndex) =>
-      getSliceForIndex(elementIndex).addEmptyEnumEntry(),
+    addEmptyGenericAttributeListSimpleEnumEntry: (elementIndex) => getSliceForIndex(elementIndex).addEmptyEnumEntry(),
   };
 }

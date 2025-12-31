@@ -15,9 +15,7 @@ export const messagingDataPointSchema = dataPointBaseSchema.extend({
 
 // MessageDataPointList schema
 export const messageDataPointListSchema = z.object({
-  dataPointListElement: z
-    .array(messagingDataPointSchema)
-    .min(1, "At least one data point is required"),
+  dataPointListElement: z.array(messagingDataPointSchema).min(1, "At least one data point is required"),
 });
 
 // Type exports for TypeScript inference
@@ -25,9 +23,7 @@ export type MessagingDataPointInput = z.input<typeof messagingDataPointSchema>;
 export type MessageDataPointListInput = z.input<typeof messageDataPointListSchema>;
 
 // Validators
-export function validateMessagingDataPoint(
-  dataPoint: MessagingDataPoint
-): ValidationResult<MessagingDataPoint> {
+export function validateMessagingDataPoint(dataPoint: MessagingDataPoint): ValidationResult<MessagingDataPoint> {
   const result = validateWithSchema(messagingDataPointSchema, dataPoint);
   return result as ValidationResult<MessagingDataPoint>;
 }

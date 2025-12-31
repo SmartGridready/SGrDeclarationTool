@@ -2,10 +2,7 @@
 
 import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
-import {
-  MessagingDataPointConfiguration,
-  MESSAGING_DATA_TYPE_VALUES,
-} from "@/models/product/messaging-types";
+import { MessagingDataPointConfiguration, MESSAGING_DATA_TYPE_VALUES } from "@/models/product/messaging-types";
 import { createFormOptions } from "@/models/form-options-helper";
 import { MessagingDataPointConfigurationSlice } from "./messaging-data-point-configuration-slice";
 import { OutMessageForm } from "./out-message/out-message-form";

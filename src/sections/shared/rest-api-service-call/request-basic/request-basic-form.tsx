@@ -4,11 +4,7 @@ import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { TextareaField } from "@/components/forms/textarea-field";
 import { FormGroup } from "@/components/forms/form-group";
-import {
-  RestApiServiceCall,
-  HTTP_METHOD_VALUES,
-  HttpMethod,
-} from "@/models/product/rest-api-types";
+import { RestApiServiceCall, HTTP_METHOD_VALUES, HttpMethod } from "@/models/product/rest-api-types";
 import { createFormOptions } from "@/models/form-options-helper";
 import { RequestBasicSlice } from "./request-basic-slice";
 
@@ -21,12 +17,7 @@ interface RequestBasicFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function RequestBasicForm({
-  serviceCall,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: RequestBasicFormProps) {
+export function RequestBasicForm({ serviceCall, actions, fieldPathPrefix, getError }: RequestBasicFormProps) {
   return (
     <div className="space-y-4">
       <FormGroup>

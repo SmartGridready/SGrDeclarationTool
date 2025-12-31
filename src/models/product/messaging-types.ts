@@ -3,13 +3,7 @@
  * Generated from MessagingTypes.xsd
  */
 
-import {
-  MessageFilter,
-  ResponseQuery,
-  BooleanParameter,
-  ValueMapping,
-  EmptyType,
-} from "@/models/generic";
+import { MessageFilter, ResponseQuery, BooleanParameter, ValueMapping, EmptyType } from "@/models/generic";
 
 export const MESSAGING_PLATFORM_TYPE_VALUES = ["MQTT5", "Kafka"] as const;
 export type MessagingPlatformType = (typeof MESSAGING_PLATFORM_TYPE_VALUES)[number];
@@ -36,8 +30,7 @@ export const MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES = [
   "basicAuthentication",
   "clientCertificateAuthentication",
 ] as const;
-export type MessageBrokerAuthenticationType =
-  (typeof MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES)[number];
+export type MessageBrokerAuthenticationType = (typeof MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES)[number];
 
 export interface MessageBrokerListElement {
   host: string;
@@ -75,12 +68,7 @@ export interface InMessage {
   valueMapping?: MessagingValueMapping;
 }
 
-export const MESSAGING_DATA_TYPE_VALUES = [
-  "number",
-  "string",
-  "JSON_array",
-  "JSON_object",
-] as const;
+export const MESSAGING_DATA_TYPE_VALUES = ["number", "string", "JSON_array", "JSON_object"] as const;
 export type MessagingDataType =
   | { number: EmptyType }
   | { string: EmptyType }

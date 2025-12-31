@@ -9,15 +9,12 @@ import { validateModbusInterfaceDescription } from "./interface-description-sche
  * Builds XML object for modbusInterfaceDescription from ModbusInterfaceDescription model
  * @throws Error if required fields are missing
  */
-export function buildModbusInterfaceDescription(
-  description: ModbusInterfaceDescription
-): Record<string, unknown> {
+export function buildModbusInterfaceDescription(description: ModbusInterfaceDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateModbusInterfaceDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for modbus interface description";
+    const errorMessage = firstError?.message || "Validation failed for modbus interface description";
     throw new Error(errorMessage);
   }
   const descriptionXml: Record<string, unknown> = {
@@ -35,9 +32,7 @@ export function buildModbusInterfaceDescription(
   }
 
   // Required fields (must come after modbusTcp/modbusRtu)
-  descriptionXml.firstRegisterAddressIsOne = wrapInArray(
-    description.firstRegisterAddressIsOne.toString()
-  );
+  descriptionXml.firstRegisterAddressIsOne = wrapInArray(description.firstRegisterAddressIsOne.toString());
   descriptionXml.bitOrder = wrapInArray(description.bitOrder);
 
   // Include optional masterFunctionsSupportedList (must come last)

@@ -69,11 +69,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
   };
 
   // Map optional arrayLength
-  setOptionalField(
-    dataPoint.dataPoint,
-    "arrayLength",
-    getOptionalNumberValue(dpXml, "arrayLength")
-  );
+  setOptionalField(dataPoint.dataPoint, "arrayLength", getOptionalNumberValue(dpXml, "arrayLength"));
 
   // Map optional alternativeNames
   const alternativeNamesXml = getFirstElement(dpXml, "alternativeNames");
@@ -84,11 +80,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
   );
 
   // Map optional legibleDescription
-  if (
-    dpXml.legibleDescription &&
-    Array.isArray(dpXml.legibleDescription) &&
-    dpXml.legibleDescription.length > 0
-  ) {
+  if (dpXml.legibleDescription && Array.isArray(dpXml.legibleDescription) && dpXml.legibleDescription.length > 0) {
     const mappedLegibleDescription = mapLegibleDescription(dpXml.legibleDescription);
     setOptionalField(
       dataPoint.dataPoint,
@@ -99,11 +91,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
 
   // Map optional parameterList
   const parameterListXml = getFirstElement(dpXml, "parameterList");
-  setOptionalField(
-    dataPoint.dataPoint,
-    "parameterList",
-    parameterListXml && mapDynamicParameterList(parameterListXml)
-  );
+  setOptionalField(dataPoint.dataPoint, "parameterList", parameterListXml && mapDynamicParameterList(parameterListXml));
 
   // Map optional genericAttributeList at element level
   const genericAttributeListXml = getFirstElement(elementXml, "genericAttributeList");
@@ -199,11 +187,7 @@ function mapBitmapDataType(bitmapXml: any): BitmapFunctionalProfile {
   const bitmap: BitmapFunctionalProfile = {};
 
   // Map optional bitmapEntry array
-  setOptionalField(
-    bitmap,
-    "bitmapEntry",
-    mapOptionalArray(bitmapXml, "bitmapEntry", mapBitmapEntry)
-  );
+  setOptionalField(bitmap, "bitmapEntry", mapOptionalArray(bitmapXml, "bitmapEntry", mapBitmapEntry));
 
   return bitmap;
 }

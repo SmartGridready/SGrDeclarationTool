@@ -7,10 +7,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract enum values from constants
-const RESPONSE_QUERY_TYPE_VALUES_ARRAY = RESPONSE_QUERY_TYPE_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const RESPONSE_QUERY_TYPE_VALUES_ARRAY = RESPONSE_QUERY_TYPE_VALUES as unknown as [string, ...string[]];
 
 // JMESPathMappingRecord schema
 export const jmesPathMappingRecordSchema = z.object({
@@ -54,9 +51,7 @@ export type JMESPathMappingRecordInput = z.input<typeof jmesPathMappingRecordSch
 export type JMESPathMappingInput = z.input<typeof jmesPathMappingSchema>;
 
 // Validators
-export function validateResponseQuery(
-  responseQuery: ResponseQuery
-): ValidationResult<ResponseQuery> {
+export function validateResponseQuery(responseQuery: ResponseQuery): ValidationResult<ResponseQuery> {
   const result = validateWithSchema(responseQuerySchema, responseQuery);
   return result as ValidationResult<ResponseQuery>;
 }

@@ -1,21 +1,12 @@
 import { InMessage } from "@/models/product/messaging-types";
-import {
-  createResponseQuerySlice,
-  ResponseQuerySlice,
-} from "@/sections/shared/response-query/response-query-slice";
+import { createResponseQuerySlice, ResponseQuerySlice } from "@/sections/shared/response-query/response-query-slice";
 import {
   createMessagingValueMappingSlice,
   MessagingValueMappingSlice,
 } from "@/sections/shared/messaging-value-mapping/messaging-value-mapping-slice";
-import {
-  createMessageFilterSlice,
-  MessageFilterSlice,
-} from "./message-filter/message-filter-slice";
+import { createMessageFilterSlice, MessageFilterSlice } from "./message-filter/message-filter-slice";
 
-export interface InMessageSlice
-  extends ResponseQuerySlice,
-    MessagingValueMappingSlice,
-    MessageFilterSlice {
+export interface InMessageSlice extends ResponseQuerySlice, MessagingValueMappingSlice, MessageFilterSlice {
   updateTopic: (topic: string) => void;
 }
 

@@ -50,23 +50,12 @@ function JsonItemsEditor({
     dataPointListActions.removeJsonItemAtPath(dataPointIndex, [...currentPath, itemIndex]);
   };
 
-  const handleUpdateArrayItem = (
-    itemIndex: number,
-    updatedItem: JSonArrayOutputFunctionalProfile
-  ) => {
-    dataPointListActions.updateJsonArrayItemAtPath(
-      dataPointIndex,
-      [...currentPath, itemIndex],
-      updatedItem
-    );
+  const handleUpdateArrayItem = (itemIndex: number, updatedItem: JSonArrayOutputFunctionalProfile) => {
+    dataPointListActions.updateJsonArrayItemAtPath(dataPointIndex, [...currentPath, itemIndex], updatedItem);
   };
 
   const handleUpdateElemItem = (itemIndex: number, updatedItem: JSonElemFunctionalProfile) => {
-    dataPointListActions.updateJsonElemItemAtPath(
-      dataPointIndex,
-      [...currentPath, itemIndex],
-      updatedItem
-    );
+    dataPointListActions.updateJsonElemItemAtPath(dataPointIndex, [...currentPath, itemIndex], updatedItem);
   };
 
   return (

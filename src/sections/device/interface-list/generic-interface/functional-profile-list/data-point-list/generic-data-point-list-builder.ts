@@ -1,18 +1,13 @@
 import { GenericDataPointList } from "@/models/product/generic-interface";
 import { DataPointBase } from "@/models/generic";
 import { buildDataPointBase } from "@/sections/shared/data-point-base/data-point-base-builder";
-import {
-  validateGenericDataPointList,
-  validateGenericDataPoint,
-} from "./generic-data-point-list-schema";
+import { validateGenericDataPointList, validateGenericDataPoint } from "./generic-data-point-list-schema";
 
 /**
  * Builds XML object for dataPointList from GenericDataPointList model
  * @throws Error if required fields are missing
  */
-export function buildGenericDataPointList(
-  dataPointList: GenericDataPointList
-): Record<string, unknown> {
+export function buildGenericDataPointList(dataPointList: GenericDataPointList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateGenericDataPointList(dataPointList);
   if (!validation.success) {
@@ -22,9 +17,7 @@ export function buildGenericDataPointList(
   }
 
   const listXml: Record<string, unknown> = {
-    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) =>
-      buildGenericDataPoint(dataPoint)
-    ),
+    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) => buildGenericDataPoint(dataPoint)),
   };
 
   return listXml;

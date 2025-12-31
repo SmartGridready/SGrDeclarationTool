@@ -18,11 +18,7 @@ export type Xml2JsObject = Record<string, Xml2JsValue[]>;
  * @param defaultValue - Default value if field is missing or empty
  * @returns The string value or default
  */
-export function getStringValue(
-  xml: Xml2JsObject | undefined,
-  field: string,
-  defaultValue: string = ""
-): string {
+export function getStringValue(xml: Xml2JsObject | undefined, field: string, defaultValue: string = ""): string {
   const value = xml?.[field]?.[0];
   return typeof value === "string" ? value : defaultValue;
 }
@@ -33,10 +29,7 @@ export function getStringValue(
  * @param field - The field name to extract
  * @returns The string value or undefined
  */
-export function getOptionalStringValue(
-  xml: Xml2JsObject | undefined,
-  field: string
-): string | undefined {
+export function getOptionalStringValue(xml: Xml2JsObject | undefined, field: string): string | undefined {
   const value = xml?.[field]?.[0];
   return typeof value === "string" ? value : undefined;
 }
@@ -49,11 +42,7 @@ export function getOptionalStringValue(
  * @returns The parsed number or default
  * @note Uses parseFloat to handle both integers and decimal numbers
  */
-export function getNumberValue(
-  xml: Xml2JsObject | undefined,
-  field: string,
-  defaultValue: number = 0
-): number {
+export function getNumberValue(xml: Xml2JsObject | undefined, field: string, defaultValue: number = 0): number {
   const value = xml?.[field]?.[0];
   if (value === undefined || value === null || value === "") {
     return defaultValue;
@@ -69,10 +58,7 @@ export function getNumberValue(
  * @returns The parsed number or undefined
  * @note Uses parseFloat to handle both integers and decimal numbers
  */
-export function getOptionalNumberValue(
-  xml: Xml2JsObject | undefined,
-  field: string
-): number | undefined {
+export function getOptionalNumberValue(xml: Xml2JsObject | undefined, field: string): number | undefined {
   const value = xml?.[field]?.[0];
   if (value === undefined || value === null || value === "") {
     return undefined;
@@ -99,10 +85,7 @@ export function getTypedValue<T>(xml: Xml2JsObject | undefined, field: string, d
  * @param field - The field name to extract
  * @returns The typed value or undefined
  */
-export function getOptionalTypedValue<T>(
-  xml: Xml2JsObject | undefined,
-  field: string
-): T | undefined {
+export function getOptionalTypedValue<T>(xml: Xml2JsObject | undefined, field: string): T | undefined {
   const value = xml?.[field]?.[0];
   return value ? (value as T) : undefined;
 }
@@ -126,8 +109,7 @@ export function mapArray<T>(
     return defaultValue;
   }
   const filtered = array.filter(
-    (item): item is Xml2JsObject =>
-      typeof item === "object" && item !== null && !Array.isArray(item)
+    (item): item is Xml2JsObject => typeof item === "object" && item !== null && !Array.isArray(item)
   );
   return filtered.map(mapper);
 }
@@ -149,10 +131,7 @@ export function mapOptionalArray<T>(
     return undefined;
   }
   const mapped = array
-    .filter(
-      (item): item is Xml2JsObject =>
-        typeof item === "object" && item !== null && !Array.isArray(item)
-    )
+    .filter((item): item is Xml2JsObject => typeof item === "object" && item !== null && !Array.isArray(item))
     .map(mapper);
   return mapped.length > 0 ? mapped : undefined;
 }
@@ -163,18 +142,13 @@ export function mapOptionalArray<T>(
  * @param field - The field name
  * @returns The first element or undefined
  */
-export function getFirstElement(
-  xml: Xml2JsObject | undefined,
-  field: string
-): Xml2JsObject | undefined {
+export function getFirstElement(xml: Xml2JsObject | undefined, field: string): Xml2JsObject | undefined {
   const array = xml?.[field];
   if (!Array.isArray(array) || array.length === 0) {
     return undefined;
   }
   const first = array[0];
-  return typeof first === "object" && first !== null && !Array.isArray(first)
-    ? (first as Xml2JsObject)
-    : undefined;
+  return typeof first === "object" && first !== null && !Array.isArray(first) ? (first as Xml2JsObject) : undefined;
 }
 
 /**

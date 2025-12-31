@@ -37,19 +37,14 @@ export function mapDataPointBase(dataPointBaseXml: Xml2JsObject | undefined): Da
 /**
  * Maps XML dataPointDescription to DataPointDescription model
  */
-export function mapDataPointDescription(
-  descriptionXml: Xml2JsObject | undefined
-): DataPointDescription {
+export function mapDataPointDescription(descriptionXml: Xml2JsObject | undefined): DataPointDescription {
   if (!descriptionXml) {
     throw new Error("dataPointDescription is required");
   }
 
   const description: DataPointDescription = {
     dataPointName: getStringValue(descriptionXml, "dataPointName"),
-    dataDirection: getStringValue(
-      descriptionXml,
-      "dataDirection"
-    ) as DataPointDescription["dataDirection"],
+    dataDirection: getStringValue(descriptionXml, "dataDirection") as DataPointDescription["dataDirection"],
     dataType: mapDataTypeProduct(getFirstElement(descriptionXml, "dataType")),
     unit: getStringValue(descriptionXml, "unit") as DataPointDescription["unit"],
   };
@@ -75,10 +70,7 @@ export function mapDataPointDescription(
     description.maximumValue = maximumValue;
   }
 
-  const unitConversionMultiplicator = getOptionalNumberValue(
-    descriptionXml,
-    "unitConversionMultiplicator"
-  );
+  const unitConversionMultiplicator = getOptionalNumberValue(descriptionXml, "unitConversionMultiplicator");
   if (unitConversionMultiplicator !== undefined) {
     description.unitConversionMultiplicator = unitConversionMultiplicator;
   }

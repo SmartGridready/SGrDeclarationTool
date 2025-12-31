@@ -1,18 +1,12 @@
 import { DeviceFrame } from "@/models";
-import {
-  MasterFunctionsSupported,
-  MasterFunctionsSupportedList,
-} from "@/models/product/modbus-types";
+import { MasterFunctionsSupported, MasterFunctionsSupportedList } from "@/models/product/modbus-types";
 
 export interface MasterFunctionsSupportedListSlice {
   addMasterFunctionsSupportedList: () => void;
   removeMasterFunctionsSupportedList: () => void;
   addMasterFunctionSupported: (functionSupported: MasterFunctionsSupported) => void;
   removeMasterFunctionSupported: (index: number) => void;
-  updateMasterFunctionSupported: (
-    index: number,
-    functionSupported: MasterFunctionsSupported
-  ) => void;
+  updateMasterFunctionSupported: (index: number, functionSupported: MasterFunctionsSupported) => void;
 }
 
 /**
@@ -21,18 +15,14 @@ export interface MasterFunctionsSupportedListSlice {
 export function createMasterFunctionsSupportedListSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): MasterFunctionsSupportedListSlice {
-  const getMasterFunctionsSupportedList = (
-    state: TState
-  ): MasterFunctionsSupportedList | undefined => {
-    return state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription
-      ?.masterFunctionsSupportedList;
+  const getMasterFunctionsSupportedList = (state: TState): MasterFunctionsSupportedList | undefined => {
+    return state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList;
   };
 
   return {
     addMasterFunctionsSupportedList: () =>
       set((state) => {
-        const description =
-          state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+        const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
         if (description && !description.masterFunctionsSupportedList) {
           description.masterFunctionsSupportedList = {
             masterFunctionsSupported: [],
@@ -42,8 +32,7 @@ export function createMasterFunctionsSupportedListSlice<TState extends { device?
 
     removeMasterFunctionsSupportedList: () =>
       set((state) => {
-        const description =
-          state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+        const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
         if (description) {
           description.masterFunctionsSupportedList = undefined;
         }
@@ -66,8 +55,7 @@ export function createMasterFunctionsSupportedListSlice<TState extends { device?
         if (list?.masterFunctionsSupported) {
           list.masterFunctionsSupported.splice(index, 1);
           if (list.masterFunctionsSupported.length === 0) {
-            const description =
-              state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+            const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
             if (description) {
               description.masterFunctionsSupportedList = undefined;
             }

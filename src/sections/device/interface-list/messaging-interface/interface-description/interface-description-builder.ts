@@ -63,9 +63,7 @@ function buildMessageBrokerListElement(element: MessageBrokerListElement): Recor
  */
 function buildMessageBrokerList(brokerList: MessageBrokerList): Record<string, unknown> {
   return {
-    messageBrokerListElement: brokerList.messageBrokerListElement.map(
-      buildMessageBrokerListElement
-    ),
+    messageBrokerListElement: brokerList.messageBrokerListElement.map(buildMessageBrokerListElement),
   };
 }
 
@@ -131,8 +129,7 @@ export function buildMessagingInterfaceDescription(
   const validation = validateMessagingInterfaceDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for messaging interface description";
+    const errorMessage = firstError?.message || "Validation failed for messaging interface description";
     throw new Error(errorMessage);
   }
 

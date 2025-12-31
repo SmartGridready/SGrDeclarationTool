@@ -5,9 +5,7 @@ import { mapGenericFunctionalProfileList } from "./functional-profile-list/gener
 /**
  * Maps XML genericInterface to GenericInterface model
  */
-export function mapGenericInterface(
-  genericInterfaceXml: Xml2JsObject | undefined
-): GenericInterface {
+export function mapGenericInterface(genericInterfaceXml: Xml2JsObject | undefined): GenericInterface {
   if (!genericInterfaceXml) {
     throw new Error("genericInterface is required");
   }

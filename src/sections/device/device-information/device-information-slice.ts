@@ -14,10 +14,7 @@ import {
   ProgrammerHintsSlice,
 } from "@/sections/device/device-information/programmer-hints/programmer-hints-slice";
 
-export interface DeviceInformationSlice
-  extends AlternativeNamesSlice,
-    LegibleDescriptionSlice,
-    ProgrammerHintsSlice {
+export interface DeviceInformationSlice extends AlternativeNamesSlice, LegibleDescriptionSlice, ProgrammerHintsSlice {
   updateDeviceCategory: (deviceCategory: DeviceCategory) => void;
   updateIsLocalControl: (isLocalControl: boolean) => void;
   updateSoftwareRevision: (softwareRevision: string | undefined) => void;
@@ -25,9 +22,7 @@ export interface DeviceInformationSlice
   updateBrandName: (brandName: string | undefined) => void;
   updatePowerSource: (powerSource: PowerSource | undefined) => void;
   updateNominalPower: (nominalPower: string | undefined) => void;
-  updateManufacturerSpecificationIdentification: (
-    manufacturerSpecificationIdentification: string | undefined
-  ) => void;
+  updateManufacturerSpecificationIdentification: (manufacturerSpecificationIdentification: string | undefined) => void;
   updateManufacturerLabel: (manufacturerLabel: string | undefined) => void;
   updateGeneralRemarks: (generalRemarks: string | undefined) => void;
   updateLevelOfOperation: (levelOfOperation: LevelOfOperation | undefined) => void;

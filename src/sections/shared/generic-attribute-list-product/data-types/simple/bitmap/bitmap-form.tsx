@@ -22,32 +22,16 @@ export function GenericAttributeListProductSimpleBitmapForm({
   // Create an adapter that maps generic attribute list actions to the shared bitmap slice interface
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
     return {
-      setBitmapDataType: (bitmap) =>
-        actions.setGenericAttributeListSimpleBitmapDataType(elementIndex, bitmap),
-      addBitmapEntry: (entry) =>
-        actions.addGenericAttributeListSimpleBitmapEntry(elementIndex, entry),
-      removeBitmapEntry: (entryIndex) =>
-        actions.removeGenericAttributeListSimpleBitmapEntry(elementIndex, entryIndex),
+      setBitmapDataType: (bitmap) => actions.setGenericAttributeListSimpleBitmapDataType(elementIndex, bitmap),
+      addBitmapEntry: (entry) => actions.addGenericAttributeListSimpleBitmapEntry(elementIndex, entry),
+      removeBitmapEntry: (entryIndex) => actions.removeGenericAttributeListSimpleBitmapEntry(elementIndex, entryIndex),
       updateBitmapEntryLiteral: (entryIndex, literal) =>
-        actions.updateGenericAttributeListSimpleBitmapEntryLiteral(
-          elementIndex,
-          entryIndex,
-          literal
-        ),
+        actions.updateGenericAttributeListSimpleBitmapEntryLiteral(elementIndex, entryIndex, literal),
       updateBitmapEntryHexMask: (entryIndex, hexMask) =>
-        actions.updateGenericAttributeListSimpleBitmapEntryHexMask(
-          elementIndex,
-          entryIndex,
-          hexMask
-        ),
+        actions.updateGenericAttributeListSimpleBitmapEntryHexMask(elementIndex, entryIndex, hexMask),
       updateBitmapEntryDescription: (entryIndex, description) =>
-        actions.updateGenericAttributeListSimpleBitmapEntryDescription(
-          elementIndex,
-          entryIndex,
-          description
-        ),
-      addEmptyBitmapEntry: () =>
-        actions.addEmptyGenericAttributeListSimpleBitmapEntry(elementIndex),
+        actions.updateGenericAttributeListSimpleBitmapEntryDescription(elementIndex, entryIndex, description),
+      addEmptyBitmapEntry: () => actions.addEmptyGenericAttributeListSimpleBitmapEntry(elementIndex),
     };
   }, [elementIndex, actions]);
 

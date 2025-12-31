@@ -50,9 +50,7 @@ export const genericAttributeListProductSchema = z.object({
 
 // Type exports for TypeScript inference
 export type GenericAttributeProductEndInput = z.input<typeof genericAttributeProductEndSchema>;
-export type GenericAttributeListProductEndInput = z.input<
-  typeof genericAttributeListProductEndSchema
->;
+export type GenericAttributeListProductEndInput = z.input<typeof genericAttributeListProductEndSchema>;
 export type GenericAttributeProductInput = z.input<typeof genericAttributeProductSchema>;
 export type GenericAttributeListProductInput = z.input<typeof genericAttributeListProductSchema>;
 

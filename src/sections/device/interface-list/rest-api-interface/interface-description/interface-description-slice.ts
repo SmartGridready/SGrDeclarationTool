@@ -1,14 +1,8 @@
 import { DeviceFrame, InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
-import {
-  RestApiInterfaceSelection,
-  RestApiAuthenticationMethod,
-} from "@/models/product/rest-api-types";
+import { RestApiInterfaceSelection, RestApiAuthenticationMethod } from "@/models/product/rest-api-types";
 import { createRestApiBasicSlice, RestApiBasicSlice } from "./rest-api-basic/rest-api-basic-slice";
-import {
-  createRestApiBearerSlice,
-  RestApiBearerSlice,
-} from "./rest-api-bearer/rest-api-bearer-slice";
+import { createRestApiBearerSlice, RestApiBearerSlice } from "./rest-api-bearer/rest-api-bearer-slice";
 
 export interface RestApiInterfaceDescriptionSlice extends RestApiBasicSlice, RestApiBearerSlice {
   updateRestApiInterfaceSelection: (selection: RestApiInterfaceSelection) => void;
@@ -34,9 +28,7 @@ export function createRestApiInterfaceDescriptionSlice<TState extends { device?:
 ): RestApiInterfaceDescriptionSlice {
   const getRestApiInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.restApiInterfaceDescription
-      : undefined;
+    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
   };
 
   // Create nested slices

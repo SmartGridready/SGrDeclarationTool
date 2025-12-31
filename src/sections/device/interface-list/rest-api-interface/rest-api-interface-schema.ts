@@ -17,9 +17,7 @@ export const restApiInterfaceSchema = z.object({
 export type RestApiInterfaceInput = z.input<typeof restApiInterfaceSchema>;
 
 // Validators
-export function validateRestApiInterface(
-  restApiInterface: RestApiInterface
-): ValidationResult<RestApiInterface> {
+export function validateRestApiInterface(restApiInterface: RestApiInterface): ValidationResult<RestApiInterface> {
   const result = validateWithSchema(restApiInterfaceSchema, restApiInterface);
   return result as ValidationResult<RestApiInterface>;
 }

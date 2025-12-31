@@ -77,10 +77,7 @@ export function createAccessProtectionSlice<TState>(
         const modbusInterface = getModbusInterface(state);
         if (accessProtection?.modbusExceptionCode) {
           accessProtection.modbusExceptionCode.splice(index, 1);
-          if (
-            accessProtection.modbusExceptionCode.length === 0 &&
-            modbusInterface?.modbusAttributes
-          ) {
+          if (accessProtection.modbusExceptionCode.length === 0 && modbusInterface?.modbusAttributes) {
             modbusInterface.modbusAttributes.accessProtection = undefined;
           }
         }
@@ -89,10 +86,7 @@ export function createAccessProtectionSlice<TState>(
     updateModbusExceptionCode: (index, exceptionCode) =>
       set((state) => {
         const accessProtection = getAccessProtection(state);
-        if (
-          accessProtection?.modbusExceptionCode &&
-          accessProtection.modbusExceptionCode[index] !== undefined
-        ) {
+        if (accessProtection?.modbusExceptionCode && accessProtection.modbusExceptionCode[index] !== undefined) {
           accessProtection.modbusExceptionCode[index] = exceptionCode;
         }
       }),

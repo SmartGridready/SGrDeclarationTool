@@ -20,9 +20,7 @@ export function ContactInterfaceForm() {
   const { useDeviceState } = useDeviceFormContext();
 
   const interfaceList = useDeviceState((d) => d?.interfaceList);
-  const contactInterface = isContactInterface(interfaceList)
-    ? interfaceList.contactInterface
-    : undefined;
+  const contactInterface = isContactInterface(interfaceList) ? interfaceList.contactInterface : undefined;
 
   // Don't render if Contact interface is not selected
   if (!contactInterface) {

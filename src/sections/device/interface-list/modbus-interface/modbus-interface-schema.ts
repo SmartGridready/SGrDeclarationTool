@@ -21,9 +21,7 @@ export const modbusInterfaceSchema = z.object({
 export type ModbusInterfaceInput = z.input<typeof modbusInterfaceSchema>;
 
 // Validators
-export function validateModbusInterface(
-  modbusInterface: ModbusInterface
-): ValidationResult<ModbusInterface> {
+export function validateModbusInterface(modbusInterface: ModbusInterface): ValidationResult<ModbusInterface> {
   const result = validateWithSchema(modbusInterfaceSchema, modbusInterface);
   return result as ValidationResult<ModbusInterface>;
 }

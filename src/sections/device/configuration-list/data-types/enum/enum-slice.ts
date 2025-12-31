@@ -1,9 +1,4 @@
-import {
-  EnumMapProduct,
-  EnumEntryProductRecord,
-  DeviceFrame,
-  ConfigurationListElement,
-} from "@/models";
+import { EnumMapProduct, EnumEntryProductRecord, DeviceFrame, ConfigurationListElement } from "@/models";
 import {
   createDataTypeProductEnumSlice,
   DataTypeProductEnumSlice,
@@ -13,11 +8,7 @@ export interface ConfigurationListEnumSlice {
   setConfigurationListEnumDataType: (configIndex: number, enumMap: EnumMapProduct) => void;
   addConfigurationListEnumEntry: (configIndex: number, entry: EnumEntryProductRecord) => void;
   removeConfigurationListEnumEntry: (configIndex: number, entryIndex: number) => void;
-  updateConfigurationListEnumEntryLiteral: (
-    configIndex: number,
-    entryIndex: number,
-    literal: string
-  ) => void;
+  updateConfigurationListEnumEntryLiteral: (configIndex: number, entryIndex: number, literal: string) => void;
   updateConfigurationListEnumEntryOrdinal: (
     configIndex: number,
     entryIndex: number,
@@ -39,10 +30,7 @@ export interface ConfigurationListEnumSlice {
 export function createConfigurationListEnumSlice<TState extends { device?: DeviceFrame }>(
   set: (fn: (state: TState) => void) => void
 ): ConfigurationListEnumSlice {
-  const getConfiguration = (
-    state: TState,
-    configIndex: number
-  ): ConfigurationListElement | undefined => {
+  const getConfiguration = (state: TState, configIndex: number): ConfigurationListElement | undefined => {
     return state.device?.configurationList?.configurationListElement?.[configIndex];
   };
 
@@ -61,11 +49,9 @@ export function createConfigurationListEnumSlice<TState extends { device?: Devic
   };
 
   return {
-    setConfigurationListEnumDataType: (configIndex, enumMap) =>
-      getSliceForIndex(configIndex).setEnumDataType(enumMap),
+    setConfigurationListEnumDataType: (configIndex, enumMap) => getSliceForIndex(configIndex).setEnumDataType(enumMap),
 
-    addConfigurationListEnumEntry: (configIndex, entry) =>
-      getSliceForIndex(configIndex).addEnumEntry(entry),
+    addConfigurationListEnumEntry: (configIndex, entry) => getSliceForIndex(configIndex).addEnumEntry(entry),
 
     removeConfigurationListEnumEntry: (configIndex, entryIndex) =>
       getSliceForIndex(configIndex).removeEnumEntry(entryIndex),
@@ -82,7 +68,6 @@ export function createConfigurationListEnumSlice<TState extends { device?: Devic
     updateConfigurationListEnumHexMask: (configIndex, hexMask) =>
       getSliceForIndex(configIndex).updateEnumHexMask(hexMask),
 
-    addEmptyConfigurationListEnumEntry: (configIndex) =>
-      getSliceForIndex(configIndex).addEmptyEnumEntry(),
+    addEmptyConfigurationListEnumEntry: (configIndex) => getSliceForIndex(configIndex).addEmptyEnumEntry(),
   };
 }

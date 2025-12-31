@@ -17,8 +17,7 @@ function isRestApiInterface(
 }
 
 export function RestApiBasicForm() {
-  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const restApiBasic = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;

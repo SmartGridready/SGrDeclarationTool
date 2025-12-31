@@ -20,8 +20,7 @@ const MODBUS_INTERFACE_SELECTION_OPTIONS = createFormOptions(MODBUS_INTERFACE_SE
 const BIT_ORDER_OPTIONS = createFormOptions(BIT_ORDER_VALUES);
 
 export function ModbusInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, modbusInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, modbusInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const modbusInterfaceDescription = useDeviceState(
     (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription
@@ -33,10 +32,7 @@ export function ModbusInterfaceDescriptionForm() {
   }
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.modbusInterface.modbusInterfaceDescription.${field}`
-    );
+    buildDeviceFieldPath(pathPrefix, `interfaceList.modbusInterface.modbusInterfaceDescription.${field}`);
 
   return (
     <FormSection
@@ -53,9 +49,7 @@ export function ModbusInterfaceDescriptionForm() {
           options={MODBUS_INTERFACE_SELECTION_OPTIONS}
           value={modbusInterfaceDescription.modbusInterfaceSelection}
           onChange={(value) =>
-            modbusInterfaceDescriptionActions.updateModbusInterfaceSelection(
-              value as ModbusInterfaceSelection
-            )
+            modbusInterfaceDescriptionActions.updateModbusInterfaceSelection(value as ModbusInterfaceSelection)
           }
           error={getError(fieldPath("modbusInterfaceSelection"))}
         />
@@ -65,9 +59,7 @@ export function ModbusInterfaceDescriptionForm() {
           required={true}
           options={BOOLEAN_OPTIONS}
           value={modbusInterfaceDescription.firstRegisterAddressIsOne.toString()}
-          onChange={(value) =>
-            modbusInterfaceDescriptionActions.updateFirstRegisterAddressIsOne(value === "true")
-          }
+          onChange={(value) => modbusInterfaceDescriptionActions.updateFirstRegisterAddressIsOne(value === "true")}
           error={getError(fieldPath("firstRegisterAddressIsOne"))}
         />
       </FormGroup>

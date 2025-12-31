@@ -14,12 +14,7 @@ interface JmesPathMappingFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function JmesPathMappingForm({
-  responseQuery,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: JmesPathMappingFormProps) {
+export function JmesPathMappingForm({ responseQuery, actions, fieldPathPrefix, getError }: JmesPathMappingFormProps) {
   const hasJmesPathMappings = responseQuery !== undefined && "jmesPathMappings" in responseQuery;
 
   return (
@@ -46,42 +41,30 @@ export function JmesPathMappingForm({
                 name={`${fieldPathPrefix}-jmespath-${index}-from`}
                 type="text"
                 value={mapping.from}
-                onChange={(value) =>
-                  actions.updateResponseQueryJmesPathMappingRecordFrom(index, value)
-                }
+                onChange={(value) => actions.updateResponseQueryJmesPathMappingRecordFrom(index, value)}
                 placeholder="Enter source path"
                 required={true}
-                error={getError(
-                  `${fieldPathPrefix}.responseQuery.jmesPathMappings.mapping[${index}].from`
-                )}
+                error={getError(`${fieldPathPrefix}.responseQuery.jmesPathMappings.mapping[${index}].from`)}
               />
               <InputField
                 label="To"
                 name={`${fieldPathPrefix}-jmespath-${index}-to`}
                 type="text"
                 value={mapping.to}
-                onChange={(value) =>
-                  actions.updateResponseQueryJmesPathMappingRecordTo(index, value)
-                }
+                onChange={(value) => actions.updateResponseQueryJmesPathMappingRecordTo(index, value)}
                 placeholder="Enter target path"
                 required={true}
-                error={getError(
-                  `${fieldPathPrefix}.responseQuery.jmesPathMappings.mapping[${index}].to`
-                )}
+                error={getError(`${fieldPathPrefix}.responseQuery.jmesPathMappings.mapping[${index}].to`)}
               />
               <InputField
                 label="Name (Optional)"
                 name={`${fieldPathPrefix}-jmespath-${index}-name`}
                 type="text"
                 value={mapping.name || ""}
-                onChange={(value) =>
-                  actions.updateResponseQueryJmesPathMappingRecordName(index, value || undefined)
-                }
+                onChange={(value) => actions.updateResponseQueryJmesPathMappingRecordName(index, value || undefined)}
                 placeholder="Enter mapping name"
                 required={false}
-                error={getError(
-                  `${fieldPathPrefix}.responseQuery.jmesPathMappings.mapping[${index}].name`
-                )}
+                error={getError(`${fieldPathPrefix}.responseQuery.jmesPathMappings.mapping[${index}].name`)}
               />
             </FormGroup>
           )}

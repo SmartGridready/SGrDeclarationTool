@@ -45,18 +45,16 @@ export function ContactDataPointListForm({
   const dataPoints = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement
+      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement
       : undefined;
   });
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isContactInterface(interfaceList)
-      ? !!interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList
+      ? !!interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList
       : false;
   });
 
@@ -115,14 +113,12 @@ function ContactDataPointItemForm({
   const dataPointData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement?.[dataPointIndex]
       : undefined;
   });
 
-  const dataPointName =
-    dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
+  const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
   const handleRemove = () => {
     dataPointListSlice.removeDataPoint(dataPointIndex);

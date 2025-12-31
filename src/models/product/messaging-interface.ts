@@ -4,10 +4,7 @@
  */
 
 import { FunctionalProfileBase, DataPointBase } from "@/models/generic";
-import {
-  MessagingDataPointConfiguration,
-  MessagingInterfaceDescription,
-} from "@/models/product/messaging-types";
+import { MessagingDataPointConfiguration, MessagingInterfaceDescription } from "@/models/product/messaging-types";
 
 export interface MessagingDataPoint extends DataPointBase {
   messagingDataPointConfiguration: MessagingDataPointConfiguration;

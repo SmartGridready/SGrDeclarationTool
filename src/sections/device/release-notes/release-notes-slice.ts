@@ -1,8 +1,5 @@
 import { DeviceFrame } from "@/models";
-import {
-  createReleaseNotesSlice,
-  ReleaseNotesSlice,
-} from "@/sections/shared/release-notes/release-notes-slice";
+import { createReleaseNotesSlice, ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 
 // Re-export the interface for convenience
 export type { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";

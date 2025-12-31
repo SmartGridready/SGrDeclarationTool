@@ -18,11 +18,7 @@ export function ensureArray<T>(array: T[] | undefined, init: () => T[]): T[] {
 /**
  * Helper to safely remove an item from an array and clean up if empty
  */
-export function removeArrayItem<T>(
-  array: T[] | undefined,
-  index: number,
-  onEmpty?: () => void
-): void {
+export function removeArrayItem<T>(array: T[] | undefined, index: number, onEmpty?: () => void): void {
   if (array && index >= 0 && index < array.length) {
     array.splice(index, 1);
     if (array.length === 0 && onEmpty) {

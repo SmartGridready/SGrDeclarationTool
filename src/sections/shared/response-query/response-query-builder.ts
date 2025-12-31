@@ -25,9 +25,7 @@ export function buildJmesPathMapping(jmesPathMapping: JMESPathMapping): Record<s
 /**
  * Builds XML object for responseQuery from ResponseQuery model
  */
-export function buildResponseQuery(
-  responseQuery: ResponseQuery | undefined
-): Record<string, unknown> | undefined {
+export function buildResponseQuery(responseQuery: ResponseQuery | undefined): Record<string, unknown> | undefined {
   if (!responseQuery) {
     return undefined;
   }
@@ -43,9 +41,7 @@ export function buildResponseQuery(
 
   // Add jmesPathMappings if present
   if ("jmesPathMappings" in responseQuery && responseQuery.jmesPathMappings) {
-    responseQueryXml.jmesPathMappings = wrapInArray(
-      buildJmesPathMapping(responseQuery.jmesPathMappings)
-    );
+    responseQueryXml.jmesPathMappings = wrapInArray(buildJmesPathMapping(responseQuery.jmesPathMappings));
   }
 
   return responseQueryXml;

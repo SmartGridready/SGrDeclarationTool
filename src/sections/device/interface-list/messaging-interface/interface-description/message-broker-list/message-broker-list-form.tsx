@@ -21,8 +21,7 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerListForm() {
-  const { useDeviceState, messagingInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, messagingInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const messageBrokerList = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
@@ -49,9 +48,7 @@ export function MessageBrokerListForm() {
           label="Message Broker"
           items={messageBrokerList.messageBrokerListElement}
           onAdd={() => messagingInterfaceDescriptionActions.addMessageBrokerListElement()}
-          onRemove={(index) =>
-            messagingInterfaceDescriptionActions.removeMessageBrokerListElement(index)
-          }
+          onRemove={(index) => messagingInterfaceDescriptionActions.removeMessageBrokerListElement(index)}
           emptyMessage="No message brokers added"
           noWrapper={true}
           renderItem={(item, index) => (
@@ -74,11 +71,7 @@ interface MessageBrokerListElementFormProps {
   fieldPathPrefix: string;
 }
 
-function MessageBrokerListElementForm({
-  elementIndex,
-  element,
-  fieldPathPrefix,
-}: MessageBrokerListElementFormProps) {
+function MessageBrokerListElementForm({ elementIndex, element, fieldPathPrefix }: MessageBrokerListElementFormProps) {
   const { useValidation, messagingInterfaceDescriptionActions } = useDeviceFormContext();
   const { getError } = useValidation();
 
@@ -105,10 +98,7 @@ function MessageBrokerListElementForm({
           type="text"
           value={element.host}
           onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementHost(
-              elementIndex,
-              value
-            )
+            messagingInterfaceDescriptionActions.updateMessageBrokerListElementHost(elementIndex, value)
           }
           error={getError(`${fieldPathPrefix}.host`)}
         />
@@ -119,10 +109,7 @@ function MessageBrokerListElementForm({
           type="text"
           value={element.port}
           onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementPort(
-              elementIndex,
-              value
-            )
+            messagingInterfaceDescriptionActions.updateMessageBrokerListElementPort(elementIndex, value)
           }
           error={getError(`${fieldPathPrefix}.port`)}
         />
@@ -137,10 +124,7 @@ function MessageBrokerListElementForm({
           options={BOOLEAN_OPTIONS}
           value={element.tls}
           onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementTls(
-              elementIndex,
-              value || undefined
-            )
+            messagingInterfaceDescriptionActions.updateMessageBrokerListElementTls(elementIndex, value || undefined)
           }
           error={getError(`${fieldPathPrefix}.tls`)}
         />

@@ -7,9 +7,7 @@ import { wrapInArray, setOptionalXmlField, setOptionalXmlArray } from "@/utils/b
 /**
  * Builds XML object for parameterList from DynamicParameterDescriptionList model
  */
-export function buildDynamicParameterList(
-  parameterList: DynamicParameterDescriptionList
-): Record<string, unknown> {
+export function buildDynamicParameterList(parameterList: DynamicParameterDescriptionList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateDynamicParameterList(parameterList);
   if (!validation.success) {
@@ -33,9 +31,7 @@ export function buildDynamicParameterList(
 /**
  * Builds XML object for parameterListElement from DynamicParameterDescriptionListElement model
  */
-function buildParameterListElement(
-  element: DynamicParameterDescriptionListElement
-): Record<string, unknown> {
+function buildParameterListElement(element: DynamicParameterDescriptionListElement): Record<string, unknown> {
   const elementXml: Record<string, unknown> = {
     name: wrapInArray(element.name),
     dataType: wrapInArray(buildDataTypeProduct(element.dataType)),

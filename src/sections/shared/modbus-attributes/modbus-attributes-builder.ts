@@ -37,9 +37,7 @@ export function buildModbusAttributes(
 
   // Include optional accessProtection
   if (modbusAttributes.accessProtection) {
-    attributesXml.accessProtection = wrapInArray(
-      buildAccessProtection(modbusAttributes.accessProtection)
-    );
+    attributesXml.accessProtection = wrapInArray(buildAccessProtection(modbusAttributes.accessProtection));
   }
 
   // Include optional layer6Deviation

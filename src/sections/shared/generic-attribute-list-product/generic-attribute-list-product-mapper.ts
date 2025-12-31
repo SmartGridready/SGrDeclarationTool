@@ -5,13 +5,7 @@ import {
   GenericAttributeProductEnd,
   Units,
 } from "@/models";
-import {
-  mapArray,
-  getStringValue,
-  getTypedValue,
-  getFirstElement,
-  Xml2JsObject,
-} from "@/utils/mapper-utils";
+import { mapArray, getStringValue, getTypedValue, getFirstElement, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-mapper";
 
 /**
@@ -48,9 +42,7 @@ function mapGenericAttributeProduct(elementXml: Xml2JsObject): GenericAttributeP
   // Otherwise it's a simple attribute (has dataType, value, unit)
   const dataTypeXml = getFirstElement(elementXml, "dataType");
   if (!dataTypeXml) {
-    throw new Error(
-      "genericAttributeListElement must have either dataType or genericAttributeList"
-    );
+    throw new Error("genericAttributeListElement must have either dataType or genericAttributeList");
   }
 
   return {
@@ -64,9 +56,7 @@ function mapGenericAttributeProduct(elementXml: Xml2JsObject): GenericAttributeP
 /**
  * Maps XML genericAttributeList (nested) to GenericAttributeListProductEnd model
  */
-function mapGenericAttributeListProductEnd(
-  genericAttributeListXml: Xml2JsObject
-): GenericAttributeListProductEnd {
+function mapGenericAttributeListProductEnd(genericAttributeListXml: Xml2JsObject): GenericAttributeListProductEnd {
   return {
     genericAttributeListElement: mapArray(
       genericAttributeListXml,

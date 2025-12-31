@@ -32,9 +32,7 @@ function buildMessagingDataType(dataType: MessagingDataType): Record<string, unk
 /**
  * Builds XML object for messageFilter from MessageFilter model
  */
-function buildMessageFilter(
-  filter: MessageFilter | undefined
-): Record<string, unknown> | undefined {
+function buildMessageFilter(filter: MessageFilter | undefined): Record<string, unknown> | undefined {
   if (!filter) {
     return undefined;
   }
@@ -161,15 +159,12 @@ function buildInMessage(inMessage: InMessage | undefined): Record<string, unknow
  * Builds XML object for messagingDataPointConfiguration from MessagingDataPointConfiguration model
  * @throws Error if required fields are missing
  */
-export function buildMessagingDataPointConfiguration(
-  config: MessagingDataPointConfiguration
-): Record<string, unknown> {
+export function buildMessagingDataPointConfiguration(config: MessagingDataPointConfiguration): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateMessagingDataPointConfiguration(config);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for messaging data point configuration";
+    const errorMessage = firstError?.message || "Validation failed for messaging data point configuration";
     throw new Error(errorMessage);
   }
 

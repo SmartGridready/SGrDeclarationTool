@@ -38,10 +38,7 @@ export interface WriteServiceCallSlice {
   writeRemoveResponseQueryJmesPathMappingRecord: (index: number) => void;
   writeUpdateResponseQueryJmesPathMappingRecordFrom: (index: number, from: string) => void;
   writeUpdateResponseQueryJmesPathMappingRecordTo: (index: number, to: string) => void;
-  writeUpdateResponseQueryJmesPathMappingRecordName: (
-    index: number,
-    name: string | undefined
-  ) => void;
+  writeUpdateResponseQueryJmesPathMappingRecordName: (index: number, name: string | undefined) => void;
   writeAddValueMapping: () => void;
   writeRemoveValueMapping: () => void;
   writeAddValueMappingEntry: () => void;
@@ -88,10 +85,7 @@ export interface ReadServiceCallSlice {
   readRemoveResponseQueryJmesPathMappingRecord: (index: number) => void;
   readUpdateResponseQueryJmesPathMappingRecordFrom: (index: number, from: string) => void;
   readUpdateResponseQueryJmesPathMappingRecordTo: (index: number, to: string) => void;
-  readUpdateResponseQueryJmesPathMappingRecordName: (
-    index: number,
-    name: string | undefined
-  ) => void;
+  readUpdateResponseQueryJmesPathMappingRecordName: (index: number, name: string | undefined) => void;
   readAddValueMapping: () => void;
   readRemoveValueMapping: () => void;
   readAddValueMappingEntry: () => void;
@@ -111,9 +105,7 @@ export function isWriteReadServiceCallConfig(
   restApiWriteServiceCall: RestApiServiceCall;
   restApiReadServiceCall?: RestApiServiceCall;
 } {
-  return (
-    config !== undefined && "restApiWriteServiceCall" in config && !("restApiServiceCall" in config)
-  );
+  return config !== undefined && "restApiWriteServiceCall" in config && !("restApiServiceCall" in config);
 }
 
 /**
@@ -133,10 +125,7 @@ export function createWriteReadServiceCallSlice<TState>(
     return isWriteReadServiceCallConfig(config) ? config.restApiWriteServiceCall : undefined;
   };
 
-  const setWriteServiceCall = (
-    state: TState,
-    restApiServiceCall: RestApiServiceCall | undefined
-  ) => {
+  const setWriteServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const config = getConfig(state);
     if (isWriteReadServiceCallConfig(config) && restApiServiceCall) {
       config.restApiWriteServiceCall = restApiServiceCall;
@@ -149,10 +138,7 @@ export function createWriteReadServiceCallSlice<TState>(
     return isWriteReadServiceCallConfig(config) ? config.restApiReadServiceCall : undefined;
   };
 
-  const setReadServiceCall = (
-    state: TState,
-    restApiServiceCall: RestApiServiceCall | undefined
-  ) => {
+  const setReadServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const config = getConfig(state);
     if (isWriteReadServiceCallConfig(config)) {
       config.restApiReadServiceCall = restApiServiceCall;
@@ -193,14 +179,10 @@ export function createWriteReadServiceCallSlice<TState>(
     writeAddResponseQueryJmesPathMapping: writeSlice.addResponseQueryJmesPathMapping,
     writeRemoveResponseQueryJmesPathMapping: writeSlice.removeResponseQueryJmesPathMapping,
     writeAddResponseQueryJmesPathMappingRecord: writeSlice.addResponseQueryJmesPathMappingRecord,
-    writeRemoveResponseQueryJmesPathMappingRecord:
-      writeSlice.removeResponseQueryJmesPathMappingRecord,
-    writeUpdateResponseQueryJmesPathMappingRecordFrom:
-      writeSlice.updateResponseQueryJmesPathMappingRecordFrom,
-    writeUpdateResponseQueryJmesPathMappingRecordTo:
-      writeSlice.updateResponseQueryJmesPathMappingRecordTo,
-    writeUpdateResponseQueryJmesPathMappingRecordName:
-      writeSlice.updateResponseQueryJmesPathMappingRecordName,
+    writeRemoveResponseQueryJmesPathMappingRecord: writeSlice.removeResponseQueryJmesPathMappingRecord,
+    writeUpdateResponseQueryJmesPathMappingRecordFrom: writeSlice.updateResponseQueryJmesPathMappingRecordFrom,
+    writeUpdateResponseQueryJmesPathMappingRecordTo: writeSlice.updateResponseQueryJmesPathMappingRecordTo,
+    writeUpdateResponseQueryJmesPathMappingRecordName: writeSlice.updateResponseQueryJmesPathMappingRecordName,
     writeAddValueMapping: writeSlice.addValueMapping,
     writeRemoveValueMapping: writeSlice.removeValueMapping,
     writeAddValueMappingEntry: writeSlice.addValueMappingEntry,
@@ -253,14 +235,10 @@ export function createWriteReadServiceCallSlice<TState>(
     readAddResponseQueryJmesPathMapping: readSlice.addResponseQueryJmesPathMapping,
     readRemoveResponseQueryJmesPathMapping: readSlice.removeResponseQueryJmesPathMapping,
     readAddResponseQueryJmesPathMappingRecord: readSlice.addResponseQueryJmesPathMappingRecord,
-    readRemoveResponseQueryJmesPathMappingRecord:
-      readSlice.removeResponseQueryJmesPathMappingRecord,
-    readUpdateResponseQueryJmesPathMappingRecordFrom:
-      readSlice.updateResponseQueryJmesPathMappingRecordFrom,
-    readUpdateResponseQueryJmesPathMappingRecordTo:
-      readSlice.updateResponseQueryJmesPathMappingRecordTo,
-    readUpdateResponseQueryJmesPathMappingRecordName:
-      readSlice.updateResponseQueryJmesPathMappingRecordName,
+    readRemoveResponseQueryJmesPathMappingRecord: readSlice.removeResponseQueryJmesPathMappingRecord,
+    readUpdateResponseQueryJmesPathMappingRecordFrom: readSlice.updateResponseQueryJmesPathMappingRecordFrom,
+    readUpdateResponseQueryJmesPathMappingRecordTo: readSlice.updateResponseQueryJmesPathMappingRecordTo,
+    readUpdateResponseQueryJmesPathMappingRecordName: readSlice.updateResponseQueryJmesPathMappingRecordName,
     readAddValueMapping: readSlice.addValueMapping,
     readRemoveValueMapping: readSlice.removeValueMapping,
     readAddValueMappingEntry: readSlice.addValueMappingEntry,

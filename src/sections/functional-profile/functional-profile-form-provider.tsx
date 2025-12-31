@@ -6,10 +6,7 @@ import {
   FunctionalProfileFormProvider,
   FunctionalProfileFormContextValue,
 } from "@/context/functional-profile-form-context";
-import {
-  useProfileStore,
-  ProfileStoreState,
-} from "@/sections/functional-profile/functional-profile-store";
+import { useProfileStore, ProfileStoreState } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/hooks/use-profile-validation";
 
 interface StandaloneFunctionalProfileFormProviderProps {
@@ -30,9 +27,7 @@ function useStandaloneProfileState<T>(selector: (profile: ProfileStoreState["pro
  * Provider for standalone FunctionalProfile editor.
  * Wraps the useProfileStore to provide the FunctionalProfileFormContext.
  */
-export function StandaloneFunctionalProfileFormProvider({
-  children,
-}: StandaloneFunctionalProfileFormProviderProps) {
+export function StandaloneFunctionalProfileFormProvider({ children }: StandaloneFunctionalProfileFormProviderProps) {
   // Get actions from the store (these are stable references)
   const store = useProfileStore();
 
@@ -58,7 +53,5 @@ export function StandaloneFunctionalProfileFormProvider({
     };
   }, [store]);
 
-  return (
-    <FunctionalProfileFormProvider value={contextValue}>{children}</FunctionalProfileFormProvider>
-  );
+  return <FunctionalProfileFormProvider value={contextValue}>{children}</FunctionalProfileFormProvider>;
 }

@@ -13,10 +13,14 @@ import { restApiBearerSchema } from "./rest-api-bearer/rest-api-bearer-schema";
  */
 
 // Extract enum values from constants
-const REST_API_INTERFACE_SELECTION_VALUES_ARRAY =
-  REST_API_INTERFACE_SELECTION_VALUES as unknown as [string, ...string[]];
-const REST_API_AUTHENTICATION_METHOD_VALUES_ARRAY =
-  REST_API_AUTHENTICATION_METHOD_VALUES as unknown as [string, ...string[]];
+const REST_API_INTERFACE_SELECTION_VALUES_ARRAY = REST_API_INTERFACE_SELECTION_VALUES as unknown as [
+  string,
+  ...string[],
+];
+const REST_API_AUTHENTICATION_METHOD_VALUES_ARRAY = REST_API_AUTHENTICATION_METHOD_VALUES as unknown as [
+  string,
+  ...string[],
+];
 
 export const restApiInterfaceDescriptionSchema = z.object({
   restApiInterfaceSelection: z.enum(REST_API_INTERFACE_SELECTION_VALUES_ARRAY),

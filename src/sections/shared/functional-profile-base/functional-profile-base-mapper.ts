@@ -8,9 +8,7 @@ import { getStringValue, getFirstElement, Xml2JsObject } from "@/utils/mapper-ut
 /**
  * Maps XML functionalProfileBase to FunctionalProfileBase model
  */
-export function mapFunctionalProfileBase(
-  functionalProfileBaseXml: Xml2JsObject | undefined
-): FunctionalProfileBase {
+export function mapFunctionalProfileBase(functionalProfileBaseXml: Xml2JsObject | undefined): FunctionalProfileBase {
   const functionalProfileXml = getFirstElement(functionalProfileBaseXml, "functionalProfile");
   if (!functionalProfileXml) {
     throw new Error("functionalProfile is required in functionalProfileBase");
@@ -23,8 +21,7 @@ export function mapFunctionalProfileBase(
   // Map optional genericAttributeList if present
   const genericAttributeListXml = getFirstElement(functionalProfileBaseXml, "genericAttributeList");
   if (genericAttributeListXml) {
-    functionalProfileBase.genericAttributeList =
-      mapGenericAttributeListProduct(genericAttributeListXml);
+    functionalProfileBase.genericAttributeList = mapGenericAttributeListProduct(genericAttributeListXml);
   }
 
   return functionalProfileBase;

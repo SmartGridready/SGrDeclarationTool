@@ -110,12 +110,7 @@ export const BIT_ORDER_VALUES = [
 ] as const;
 export type BitOrder = (typeof BIT_ORDER_VALUES)[number];
 
-export const REGISTER_TYPE_VALUES = [
-  "Coil",
-  "DiscreteInput",
-  "InputRegister",
-  "HoldRegister",
-] as const;
+export const REGISTER_TYPE_VALUES = ["Coil", "DiscreteInput", "InputRegister", "HoldRegister"] as const;
 export type RegisterType = (typeof REGISTER_TYPE_VALUES)[number];
 
 export type BitRank = number; // 0..15

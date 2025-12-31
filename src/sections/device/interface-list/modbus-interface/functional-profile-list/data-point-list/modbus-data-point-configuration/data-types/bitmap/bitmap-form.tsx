@@ -32,15 +32,9 @@ export function ModbusDataPointBitmapForm({
       <ArrayField<BitmapEntryProduct>
         label="Bitmap Entries"
         items={bitmap.bitmapEntry}
-        onAdd={() =>
-          actions.addEmptyModbusDataPointBitmapEntry(functionalProfileIndex, dataPointIndex)
-        }
+        onAdd={() => actions.addEmptyModbusDataPointBitmapEntry(functionalProfileIndex, dataPointIndex)}
         onRemove={(entryIndex) =>
-          actions.removeModbusDataPointBitmapEntry(
-            functionalProfileIndex,
-            dataPointIndex,
-            entryIndex
-          )
+          actions.removeModbusDataPointBitmapEntry(functionalProfileIndex, dataPointIndex, entryIndex)
         }
         emptyMessage="No bitmap entries added"
         renderItem={(entry, entryIndex) => (

@@ -8,18 +8,14 @@ import { DataTypeProduct, EnumMapProduct, BitmapProduct, DataTypeChoice } from "
 /**
  * Type guard to check if a DataTypeProduct is an enum type
  */
-export function isEnumDataTypeProduct(
-  dataType: DataTypeProduct
-): dataType is { enum: EnumMapProduct } {
+export function isEnumDataTypeProduct(dataType: DataTypeProduct): dataType is { enum: EnumMapProduct } {
   return typeof dataType === "object" && "enum" in dataType;
 }
 
 /**
  * Type guard to check if a DataTypeProduct is a bitmap type
  */
-export function isBitmapDataTypeProduct(
-  dataType: DataTypeProduct
-): dataType is { bitmap: BitmapProduct } {
+export function isBitmapDataTypeProduct(dataType: DataTypeProduct): dataType is { bitmap: BitmapProduct } {
   return typeof dataType === "object" && "bitmap" in dataType;
 }
 
@@ -36,12 +32,7 @@ export function isJsonDataTypeProduct(dataType: DataTypeProduct): dataType is { 
  */
 export function getSimpleTypeNameProduct(dataType: DataTypeProduct): string | undefined {
   // Check if it's a simple type (not enum, bitmap, or json)
-  if (
-    typeof dataType !== "object" ||
-    "enum" in dataType ||
-    "bitmap" in dataType ||
-    "json" in dataType
-  ) {
+  if (typeof dataType !== "object" || "enum" in dataType || "bitmap" in dataType || "json" in dataType) {
     return undefined;
   }
 

@@ -7,12 +7,7 @@ import {
   HttpMethod,
   RestApiValueMapping,
 } from "@/models/product/rest-api-types";
-import {
-  ResponseQuery,
-  ValueMapping,
-  JMESPathMapping,
-  JMESPathMappingRecord,
-} from "@/models/generic";
+import { ResponseQuery, ValueMapping, JMESPathMapping, JMESPathMappingRecord } from "@/models/generic";
 import {
   getStringValue,
   getOptionalStringValue,
@@ -106,10 +101,7 @@ function mapResponseQuery(responseQueryXml: Xml2JsObject | undefined): ResponseQ
     return undefined;
   }
 
-  const queryType = getOptionalTypedValue<ResponseQuery["queryType"]>(
-    responseQueryXml,
-    "queryType"
-  );
+  const queryType = getOptionalTypedValue<ResponseQuery["queryType"]>(responseQueryXml, "queryType");
   if (!queryType) {
     return undefined;
   }
@@ -147,9 +139,7 @@ function mapValueMapping(valueMappingXml: Xml2JsObject): ValueMapping {
 /**
  * Maps XML restApiValueMapping to RestApiValueMapping model
  */
-function mapRestApiValueMapping(
-  valueMappingXml: Xml2JsObject | undefined
-): RestApiValueMapping | undefined {
+function mapRestApiValueMapping(valueMappingXml: Xml2JsObject | undefined): RestApiValueMapping | undefined {
   if (!valueMappingXml) {
     return undefined;
   }
@@ -165,9 +155,7 @@ function mapRestApiValueMapping(
 /**
  * Maps XML restApiServiceCall to RestApiServiceCall model
  */
-export function mapRestApiServiceCall(
-  serviceCallXml: Xml2JsObject | undefined
-): RestApiServiceCall | undefined {
+export function mapRestApiServiceCall(serviceCallXml: Xml2JsObject | undefined): RestApiServiceCall | undefined {
   if (!serviceCallXml) {
     return undefined;
   }
@@ -187,11 +175,7 @@ export function mapRestApiServiceCall(
   setOptionalField(serviceCall, "requestHeader", mapHeaderList(requestHeaderXml));
 
   // Map optional requestPath
-  setOptionalField(
-    serviceCall,
-    "requestPath",
-    getOptionalStringValue(serviceCallXml, "requestPath")
-  );
+  setOptionalField(serviceCall, "requestPath", getOptionalStringValue(serviceCallXml, "requestPath"));
 
   // Map optional requestQuery
   const requestQueryXml = getFirstElement(serviceCallXml, "requestQuery");
@@ -202,11 +186,7 @@ export function mapRestApiServiceCall(
   setOptionalField(serviceCall, "requestForm", mapParameterList(requestFormXml));
 
   // Map optional requestBody
-  setOptionalField(
-    serviceCall,
-    "requestBody",
-    getOptionalStringValue(serviceCallXml, "requestBody")
-  );
+  setOptionalField(serviceCall, "requestBody", getOptionalStringValue(serviceCallXml, "requestBody"));
 
   // Map optional responseQuery
   const responseQueryXml = getFirstElement(serviceCallXml, "responseQuery");

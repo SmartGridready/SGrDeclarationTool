@@ -12,16 +12,10 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract category values from constants
-const FUNCTIONAL_PROFILE_CATEGORY_VALUES_ARRAY = FUNCTIONAL_PROFILE_CATEGORY_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const FUNCTIONAL_PROFILE_CATEGORY_VALUES_ARRAY = FUNCTIONAL_PROFILE_CATEGORY_VALUES as unknown as [string, ...string[]];
 
 // Extract level of operation values from constants
-const LEVEL_OF_OPERATION_VALUES_ARRAY = LEVEL_OF_OPERATION_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const LEVEL_OF_OPERATION_VALUES_ARRAY = LEVEL_OF_OPERATION_VALUES as unknown as [string, ...string[]];
 
 // Version Number Schema
 export const versionNumberSchema = z.object({
@@ -55,9 +49,7 @@ export const functionalProfileIdentificationSchema = z.object({
 
 // Type exports for TypeScript inference
 export type VersionNumberInput = z.input<typeof versionNumberSchema>;
-export type FunctionalProfileIdentificationInput = z.input<
-  typeof functionalProfileIdentificationSchema
->;
+export type FunctionalProfileIdentificationInput = z.input<typeof functionalProfileIdentificationSchema>;
 
 // Validators
 export function validateFunctionalProfileIdentification(
@@ -67,9 +59,7 @@ export function validateFunctionalProfileIdentification(
   return result as ValidationResult<FunctionalProfileIdentification>;
 }
 
-export function validateVersionNumber(
-  versionNumber: VersionNumber
-): ValidationResult<VersionNumber> {
+export function validateVersionNumber(versionNumber: VersionNumber): ValidationResult<VersionNumber> {
   const result = validateWithSchema(versionNumberSchema, versionNumber);
   return result as ValidationResult<VersionNumber>;
 }

@@ -11,9 +11,7 @@ import { validateInterfaceList } from "./interface-list-schema";
  * Builds XML object for interfaceList from InterfaceList model
  * @throws Error if required fields are missing
  */
-export function buildInterfaceList(
-  interfaceList: InterfaceList | undefined
-): Record<string, unknown> | undefined {
+export function buildInterfaceList(interfaceList: InterfaceList | undefined): Record<string, unknown> | undefined {
   if (!interfaceList) {
     return undefined;
   }
@@ -30,37 +28,27 @@ export function buildInterfaceList(
 
   // Check for modbusInterface
   if ("modbusInterface" in interfaceList && interfaceList.modbusInterface) {
-    interfaceListXml.modbusInterface = wrapInArray(
-      buildModbusInterface(interfaceList.modbusInterface)
-    );
+    interfaceListXml.modbusInterface = wrapInArray(buildModbusInterface(interfaceList.modbusInterface));
   }
 
   // Check for restApiInterface
   if ("restApiInterface" in interfaceList && interfaceList.restApiInterface) {
-    interfaceListXml.restApiInterface = wrapInArray(
-      buildRestApiInterface(interfaceList.restApiInterface)
-    );
+    interfaceListXml.restApiInterface = wrapInArray(buildRestApiInterface(interfaceList.restApiInterface));
   }
 
   // Check for messagingInterface
   if ("messagingInterface" in interfaceList && interfaceList.messagingInterface) {
-    interfaceListXml.messagingInterface = wrapInArray(
-      buildMessagingInterface(interfaceList.messagingInterface)
-    );
+    interfaceListXml.messagingInterface = wrapInArray(buildMessagingInterface(interfaceList.messagingInterface));
   }
 
   // Check for contactInterface
   if ("contactInterface" in interfaceList && interfaceList.contactInterface) {
-    interfaceListXml.contactInterface = wrapInArray(
-      buildContactInterface(interfaceList.contactInterface)
-    );
+    interfaceListXml.contactInterface = wrapInArray(buildContactInterface(interfaceList.contactInterface));
   }
 
   // Check for genericInterface
   if ("genericInterface" in interfaceList && interfaceList.genericInterface) {
-    interfaceListXml.genericInterface = wrapInArray(
-      buildGenericInterface(interfaceList.genericInterface)
-    );
+    interfaceListXml.genericInterface = wrapInArray(buildGenericInterface(interfaceList.genericInterface));
   }
 
   return interfaceListXml;

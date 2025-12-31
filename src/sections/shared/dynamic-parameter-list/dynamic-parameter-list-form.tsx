@@ -120,9 +120,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   name={`${fieldPathPrefix}-${listIndex}-param-${paramIndex}-name`}
                   type="text"
                   value={param.name}
-                  onChange={(value) =>
-                    actions.updateParameterListElementName(listIndex, paramIndex, value)
-                  }
+                  onChange={(value) => actions.updateParameterListElementName(listIndex, paramIndex, value)}
                   placeholder="Enter parameter name"
                   required={true}
                   error={getError(`${fieldPathPrefix}.parameterListElement.${paramIndex}.name`)}
@@ -143,11 +141,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                         bitmapEntry: [],
                       });
                     } else {
-                      actions.updateParameterListElementDataType(
-                        listIndex,
-                        paramIndex,
-                        newDataType
-                      );
+                      actions.updateParameterListElementDataType(listIndex, paramIndex, newDataType);
                     }
                   }}
                   required={true}
@@ -159,17 +153,11 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   type="text"
                   value={param.defaultValue || ""}
                   onChange={(value) =>
-                    actions.updateParameterListElementDefaultValue(
-                      listIndex,
-                      paramIndex,
-                      value || undefined
-                    )
+                    actions.updateParameterListElementDefaultValue(listIndex, paramIndex, value || undefined)
                   }
                   placeholder="Enter default value"
                   required={false}
-                  error={getError(
-                    `${fieldPathPrefix}.parameterListElement.${paramIndex}.defaultValue`
-                  )}
+                  error={getError(`${fieldPathPrefix}.parameterListElement.${paramIndex}.defaultValue`)}
                 />
               </FormGroup>
 

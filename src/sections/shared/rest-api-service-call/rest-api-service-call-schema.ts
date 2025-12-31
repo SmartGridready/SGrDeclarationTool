@@ -9,10 +9,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 // Extract enum values from constants
 const HTTP_METHOD_VALUES_ARRAY = HTTP_METHOD_VALUES as unknown as [string, ...string[]];
-const RESPONSE_QUERY_TYPE_VALUES_ARRAY = RESPONSE_QUERY_TYPE_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const RESPONSE_QUERY_TYPE_VALUES_ARRAY = RESPONSE_QUERY_TYPE_VALUES as unknown as [string, ...string[]];
 
 // HeaderEntry schema
 const headerEntrySchema = z.object({
@@ -94,9 +91,7 @@ export const restApiServiceCallSchema = z.object({
 export type RestApiServiceCallInput = z.input<typeof restApiServiceCallSchema>;
 
 // Validators
-export function validateRestApiServiceCall(
-  serviceCall: RestApiServiceCall
-): ValidationResult<RestApiServiceCall> {
+export function validateRestApiServiceCall(serviceCall: RestApiServiceCall): ValidationResult<RestApiServiceCall> {
   const result = validateWithSchema(restApiServiceCallSchema, serviceCall);
   return result as ValidationResult<RestApiServiceCall>;
 }

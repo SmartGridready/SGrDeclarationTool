@@ -21,9 +21,7 @@ export type GenericDataPointInput = z.input<typeof genericDataPointSchema>;
 export type GenericDataPointListInput = z.input<typeof genericDataPointListSchema>;
 
 // Validators
-export function validateGenericDataPoint(
-  dataPoint: DataPointBase
-): ValidationResult<DataPointBase> {
+export function validateGenericDataPoint(dataPoint: DataPointBase): ValidationResult<DataPointBase> {
   const result = validateWithSchema(genericDataPointSchema, dataPoint);
   return result as ValidationResult<DataPointBase>;
 }

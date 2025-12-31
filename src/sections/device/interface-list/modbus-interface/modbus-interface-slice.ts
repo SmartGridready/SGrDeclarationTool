@@ -3,10 +3,7 @@ import {
   createModbusInterfaceDescriptionSlice,
   ModbusInterfaceDescriptionSlice,
 } from "./interface-description/interface-description-slice";
-import {
-  createModbusAttributesSlice,
-  ModbusAttributesSlice,
-} from "./modbus-attributes/modbus-attributes-slice";
+import { createModbusAttributesSlice, ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 import {
   createModbusFunctionalProfileListSlice,
   ModbusFunctionalProfileListSlice,

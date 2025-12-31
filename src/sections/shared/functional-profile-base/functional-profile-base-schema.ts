@@ -17,14 +17,8 @@ export const functionalProfileDescriptionSchema = z.object({
     .min(1, "Functional profile name cannot be empty"),
   functionalProfileIdentification: functionalProfileIdentificationSchema,
   alternativeNames: alternativeNamesSchema.optional(),
-  legibleDescription: z
-    .array(legibleDescriptionSchema)
-    .max(4, "Maximum 4 legible descriptions allowed")
-    .optional(),
-  programmerHints: z
-    .array(legibleDescriptionSchema)
-    .max(4, "Maximum 4 programmer hints allowed")
-    .optional(),
+  legibleDescription: z.array(legibleDescriptionSchema).max(4, "Maximum 4 legible descriptions allowed").optional(),
+  programmerHints: z.array(legibleDescriptionSchema).max(4, "Maximum 4 programmer hints allowed").optional(),
 });
 
 // Functional Profile Base Schema

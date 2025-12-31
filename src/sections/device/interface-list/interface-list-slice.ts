@@ -6,26 +6,14 @@ import {
   createEmptyContactInterface,
   createEmptyGenericInterface,
 } from "@/utils/factory-utils";
-import {
-  createModbusInterfaceSlice,
-  ModbusInterfaceSlice,
-} from "./modbus-interface/modbus-interface-slice";
-import {
-  createRestApiInterfaceSlice,
-  RestApiInterfaceSlice,
-} from "./rest-api-interface/rest-api-interface-slice";
+import { createModbusInterfaceSlice, ModbusInterfaceSlice } from "./modbus-interface/modbus-interface-slice";
+import { createRestApiInterfaceSlice, RestApiInterfaceSlice } from "./rest-api-interface/rest-api-interface-slice";
 import {
   createMessagingInterfaceSlice,
   MessagingInterfaceSlice,
 } from "./messaging-interface/messaging-interface-slice";
-import {
-  createContactInterfaceSlice,
-  ContactInterfaceSlice,
-} from "./contact-interface/contact-interface-slice";
-import {
-  createGenericInterfaceSlice,
-  GenericInterfaceSlice,
-} from "./generic-interface/generic-interface-slice";
+import { createContactInterfaceSlice, ContactInterfaceSlice } from "./contact-interface/contact-interface-slice";
+import { createGenericInterfaceSlice, GenericInterfaceSlice } from "./generic-interface/generic-interface-slice";
 
 export interface InterfaceListSlice
   extends ModbusInterfaceSlice,

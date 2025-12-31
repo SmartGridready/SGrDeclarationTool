@@ -17,14 +17,12 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerAuthenticationBasicForm() {
-  const { useDeviceState, useValidation, messageBrokerAuthenticationBasicActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, messageBrokerAuthenticationBasicActions, pathPrefix } = useDeviceFormContext();
 
   const basicAuth = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     if (isMessagingInterface(interfaceList)) {
-      const auth =
-        interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
+      const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
       return auth && "basicAuthentication" in auth ? auth.basicAuthentication : undefined;
     }
     return undefined;

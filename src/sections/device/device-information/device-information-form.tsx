@@ -27,8 +27,7 @@ const TEST_STATE_OPTIONS = createFormOptions(TEST_STATE_VALUES);
 const LEVEL_OF_OPERATION_OPTIONS = createFormOptions(LEVEL_OF_OPERATION_VALUES);
 
 export function DeviceInformationForm() {
-  const { useDeviceState, useValidation, pathPrefix, deviceInformationActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, pathPrefix, deviceInformationActions } = useDeviceFormContext();
 
   const deviceInformation = useDeviceState((d) => d?.deviceInformation);
   const { getError } = useValidation();
@@ -37,8 +36,7 @@ export function DeviceInformationForm() {
     return null;
   }
 
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(pathPrefix, `deviceInformation.${field}`);
+  const fieldPath = (field: string) => buildDeviceFieldPath(pathPrefix, `deviceInformation.${field}`);
 
   return (
     <FormSection
@@ -60,9 +58,7 @@ export function DeviceInformationForm() {
           required={true}
           options={DEVICE_CATEGORY_OPTIONS}
           value={deviceInformation.deviceCategory}
-          onChange={(value) =>
-            deviceInformationActions.updateDeviceCategory(value as DeviceCategory)
-          }
+          onChange={(value) => deviceInformationActions.updateDeviceCategory(value as DeviceCategory)}
           error={getError(fieldPath("deviceCategory"))}
         />
         <SelectField
@@ -73,9 +69,7 @@ export function DeviceInformationForm() {
           placeholder="Select level"
           value={deviceInformation.levelOfOperation || ""}
           onChange={(value) =>
-            deviceInformationActions.updateLevelOfOperation(
-              (value as LevelOfOperation) || undefined
-            )
+            deviceInformationActions.updateLevelOfOperation((value as LevelOfOperation) || undefined)
           }
           error={getError(fieldPath("levelOfOperation"))}
         />
@@ -98,9 +92,7 @@ export function DeviceInformationForm() {
           options={TEST_STATE_OPTIONS}
           placeholder="Select test state"
           value={deviceInformation.testState || ""}
-          onChange={(value) =>
-            deviceInformationActions.updateTestState((value as TestState) || undefined)
-          }
+          onChange={(value) => deviceInformationActions.updateTestState((value as TestState) || undefined)}
           error={getError(fieldPath("testState"))}
         />
       </FormGroup>
@@ -135,9 +127,7 @@ export function DeviceInformationForm() {
           type="text"
           value={deviceInformation.manufacturerSpecificationIdentification || ""}
           onChange={(value) =>
-            deviceInformationActions.updateManufacturerSpecificationIdentification(
-              value || undefined
-            )
+            deviceInformationActions.updateManufacturerSpecificationIdentification(value || undefined)
           }
           error={getError(fieldPath("manufacturerSpecificationIdentification"))}
         />
@@ -173,9 +163,7 @@ export function DeviceInformationForm() {
           type="number"
           value={deviceInformation.versionNumber?.primaryVersionNumber?.toString() || ""}
           onChange={(value) =>
-            deviceInformationActions.updatePrimaryVersionNumber(
-              value ? parseInt(value, 10) : undefined
-            )
+            deviceInformationActions.updatePrimaryVersionNumber(value ? parseInt(value, 10) : undefined)
           }
           error={getError(fieldPath("versionNumber.primaryVersionNumber"))}
         />
@@ -186,9 +174,7 @@ export function DeviceInformationForm() {
           type="number"
           value={deviceInformation.versionNumber?.secondaryVersionNumber?.toString() || ""}
           onChange={(value) =>
-            deviceInformationActions.updateSecondaryVersionNumber(
-              value ? parseInt(value, 10) : undefined
-            )
+            deviceInformationActions.updateSecondaryVersionNumber(value ? parseInt(value, 10) : undefined)
           }
           error={getError(fieldPath("versionNumber.secondaryVersionNumber"))}
         />
@@ -199,9 +185,7 @@ export function DeviceInformationForm() {
           type="number"
           value={deviceInformation.versionNumber?.subReleaseVersionNumber?.toString() || ""}
           onChange={(value) =>
-            deviceInformationActions.updateSubReleaseVersionNumber(
-              value ? parseInt(value, 10) : undefined
-            )
+            deviceInformationActions.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : undefined)
           }
           error={getError(fieldPath("versionNumber.subReleaseVersionNumber"))}
         />
@@ -216,9 +200,7 @@ export function DeviceInformationForm() {
           options={POWER_SOURCE_OPTIONS}
           placeholder="Select power source"
           value={deviceInformation.powerSource || ""}
-          onChange={(value) =>
-            deviceInformationActions.updatePowerSource((value as PowerSource) || undefined)
-          }
+          onChange={(value) => deviceInformationActions.updatePowerSource((value as PowerSource) || undefined)}
           error={getError(fieldPath("powerSource"))}
         />
         <InputField

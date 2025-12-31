@@ -45,16 +45,11 @@ export function createGenericFunctionalProfileListSlice<TState extends { device?
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): GenericFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isGenericInterface(interfaceList)
-      ? interfaceList.genericInterface.functionalProfileList
-      : undefined;
+    return isGenericInterface(interfaceList) ? interfaceList.genericInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
-  const getFunctionalProfile = (
-    state: TState,
-    index: number
-  ): GenericFunctionalProfile | undefined =>
+  const getFunctionalProfile = (state: TState, index: number): GenericFunctionalProfile | undefined =>
     getFunctionalProfileList(state)?.functionalProfileListElement?.[index];
 
   return {
@@ -100,11 +95,7 @@ export function createGenericFunctionalProfileListSlice<TState extends { device?
     },
 
     getGenericDataPointListSlice: (index: number): GenericDataPointListSlice => {
-      return createGenericDataPointListSlice(
-        set,
-        (state) => getFunctionalProfile(state, index),
-        index
-      );
+      return createGenericDataPointListSlice(set, (state) => getFunctionalProfile(state, index), index);
     },
   };
 }

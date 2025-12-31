@@ -1,10 +1,7 @@
 import { DeviceFrame, DataPointBase } from "@/models";
 import { GenericFunctionalProfile } from "@/models/product/generic-interface";
 import { createEmptyGenericDataPoint } from "@/utils/factory-utils";
-import {
-  createDataPointBaseSlice,
-  DataPointBaseSlice,
-} from "@/sections/shared/data-point-base/data-point-base-slice";
+import { createDataPointBaseSlice, DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 
 export interface GenericDataPointListSlice {
   // Data point list management

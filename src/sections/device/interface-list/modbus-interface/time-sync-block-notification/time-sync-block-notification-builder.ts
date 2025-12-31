@@ -6,15 +6,12 @@ import { validateTimeSyncBlockNotification } from "./time-sync-block-notificatio
  * Builds XML object for timeSyncBlockNotification from TimeSyncBlockNotification model
  * @throws Error if required fields are missing
  */
-export function buildTimeSyncBlockNotification(
-  notification: TimeSyncBlockNotification
-): Record<string, unknown> {
+export function buildTimeSyncBlockNotification(notification: TimeSyncBlockNotification): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateTimeSyncBlockNotification(notification);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for time sync block notification";
+    const errorMessage = firstError?.message || "Validation failed for time sync block notification";
     throw new Error(errorMessage);
   }
   const notificationXml: Record<string, unknown> = {

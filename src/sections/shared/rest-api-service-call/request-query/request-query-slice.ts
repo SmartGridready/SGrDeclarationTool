@@ -41,10 +41,7 @@ export function createRequestQuerySlice<TState>(
           if (!serviceCall.requestQuery) {
             serviceCall.requestQuery = { parameter: [] };
           }
-          serviceCall.requestQuery.parameter = ensureArray(
-            serviceCall.requestQuery.parameter,
-            () => []
-          );
+          serviceCall.requestQuery.parameter = ensureArray(serviceCall.requestQuery.parameter, () => []);
           serviceCall.requestQuery.parameter.push({ name: "", value: "" });
         }
       }),

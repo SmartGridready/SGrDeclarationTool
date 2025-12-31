@@ -1,8 +1,5 @@
 import { ResponseQuery, ResponseQueryType } from "@/models/generic";
-import {
-  createJmesPathMappingSlice,
-  JmesPathMappingSlice,
-} from "./jmespath/jmespath-mapping-slice";
+import { createJmesPathMappingSlice, JmesPathMappingSlice } from "./jmespath/jmespath-mapping-slice";
 
 export interface ResponseQuerySlice extends JmesPathMappingSlice {
   addResponseQuery: () => void;

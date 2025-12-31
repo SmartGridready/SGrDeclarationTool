@@ -25,33 +25,14 @@ export function GenericAttributeListProductNestedEnumForm({
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
       setEnumDataType: (enumMap) =>
-        actions.setGenericAttributeListNestedEnumDataType(
-          elementIndex,
-          nestedElementIndex,
-          enumMap
-        ),
-      addEnumEntry: (entry) =>
-        actions.addGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex, entry),
+        actions.setGenericAttributeListNestedEnumDataType(elementIndex, nestedElementIndex, enumMap),
+      addEnumEntry: (entry) => actions.addGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex, entry),
       removeEnumEntry: (entryIndex) =>
-        actions.removeGenericAttributeListNestedEnumEntry(
-          elementIndex,
-          nestedElementIndex,
-          entryIndex
-        ),
+        actions.removeGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex, entryIndex),
       updateEnumEntryLiteral: (entryIndex, literal) =>
-        actions.updateGenericAttributeListNestedEnumEntryLiteral(
-          elementIndex,
-          nestedElementIndex,
-          entryIndex,
-          literal
-        ),
+        actions.updateGenericAttributeListNestedEnumEntryLiteral(elementIndex, nestedElementIndex, entryIndex, literal),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
-        actions.updateGenericAttributeListNestedEnumEntryOrdinal(
-          elementIndex,
-          nestedElementIndex,
-          entryIndex,
-          ordinal
-        ),
+        actions.updateGenericAttributeListNestedEnumEntryOrdinal(elementIndex, nestedElementIndex, entryIndex, ordinal),
       updateEnumEntryDescription: (entryIndex, description) =>
         actions.updateGenericAttributeListNestedEnumEntryDescription(
           elementIndex,
@@ -60,13 +41,8 @@ export function GenericAttributeListProductNestedEnumForm({
           description
         ),
       updateEnumHexMask: (hexMask) =>
-        actions.updateGenericAttributeListNestedEnumHexMask(
-          elementIndex,
-          nestedElementIndex,
-          hexMask
-        ),
-      addEmptyEnumEntry: () =>
-        actions.addEmptyGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex),
+        actions.updateGenericAttributeListNestedEnumHexMask(elementIndex, nestedElementIndex, hexMask),
+      addEmptyEnumEntry: () => actions.addEmptyGenericAttributeListNestedEnumEntry(elementIndex, nestedElementIndex),
     };
   }, [elementIndex, nestedElementIndex, actions]);
 

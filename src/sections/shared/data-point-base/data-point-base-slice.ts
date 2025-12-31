@@ -134,23 +134,18 @@ export function createDataPointBaseSlice<TState>(
     ...dynamicParameterListSlice,
     addParameterList: (_listIndex: number) => dynamicParameterListSlice.addParameterList(0),
     removeParameterList: (_listIndex: number) => dynamicParameterListSlice.removeParameterList(0),
-    addParameterListElement: (_listIndex: number) =>
-      dynamicParameterListSlice.addParameterListElement(0),
+    addParameterListElement: (_listIndex: number) => dynamicParameterListSlice.addParameterListElement(0),
     removeParameterListElement: (_listIndex: number, paramIndex: number) =>
       dynamicParameterListSlice.removeParameterListElement(0, paramIndex),
     updateParameterListElementName: (_listIndex: number, paramIndex: number, name: string) =>
       dynamicParameterListSlice.updateParameterListElementName(0, paramIndex, name),
-    updateParameterListElementDataType: (
-      _listIndex: number,
-      paramIndex: number,
-      dataType: DataTypeProduct
-    ) => dynamicParameterListSlice.updateParameterListElementDataType(0, paramIndex, dataType),
+    updateParameterListElementDataType: (_listIndex: number, paramIndex: number, dataType: DataTypeProduct) =>
+      dynamicParameterListSlice.updateParameterListElementDataType(0, paramIndex, dataType),
     updateParameterListElementDefaultValue: (
       _listIndex: number,
       paramIndex: number,
       defaultValue: string | undefined
-    ) =>
-      dynamicParameterListSlice.updateParameterListElementDefaultValue(0, paramIndex, defaultValue),
+    ) => dynamicParameterListSlice.updateParameterListElementDefaultValue(0, paramIndex, defaultValue),
   };
 
   // Data type enum and bitmap slices

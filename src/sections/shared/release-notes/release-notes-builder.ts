@@ -1,8 +1,5 @@
 import { ReleaseNotes, ChangeLog } from "@/models";
-import {
-  validateChangeLog,
-  validateReleaseNotes,
-} from "@/sections/shared/release-notes/release-notes-schema";
+import { validateChangeLog, validateReleaseNotes } from "@/sections/shared/release-notes/release-notes-schema";
 import { wrapInArray, setOptionalXmlField, setOptionalXmlArray } from "@/utils/builder-utils";
 
 /**

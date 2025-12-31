@@ -15,9 +15,7 @@ import { createFormOptions } from "@/models/form-options-helper";
 import { MessageBrokerAuthenticationBasicForm } from "./basic/message-broker-authentication-basic-form";
 import { MessageBrokerAuthenticationClientCertificateForm } from "./client-certificate/message-broker-authentication-client-certificate-form";
 
-const MESSAGE_BROKER_AUTHENTICATION_TYPE_OPTIONS = createFormOptions(
-  MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES
-);
+const MESSAGE_BROKER_AUTHENTICATION_TYPE_OPTIONS = createFormOptions(MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES);
 
 /**
  * Type guard to check if interface list is Messaging interface
@@ -52,8 +50,7 @@ function isClientCertificateAuthentication(auth: MessageBrokerAuthentication | u
 }
 
 export function MessageBrokerAuthenticationForm() {
-  const { useDeviceState, useValidation, messagingInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, messagingInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const messagingInterfaceDescription = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
@@ -85,9 +82,7 @@ export function MessageBrokerAuthenticationForm() {
 
   const handleAdd = () => {
     // Default to basic authentication when adding
-    messagingInterfaceDescriptionActions.updateMessageBrokerAuthenticationType(
-      "basicAuthentication"
-    );
+    messagingInterfaceDescriptionActions.updateMessageBrokerAuthenticationType("basicAuthentication");
   };
 
   const handleRemove = () => {

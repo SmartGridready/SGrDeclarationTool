@@ -8,9 +8,7 @@ import {
   ContactInterfaceDescriptionSlice,
 } from "./interface-description/interface-description-slice";
 
-export interface ContactInterfaceSlice
-  extends ContactFunctionalProfileListSlice,
-    ContactInterfaceDescriptionSlice {}
+export interface ContactInterfaceSlice extends ContactFunctionalProfileListSlice, ContactInterfaceDescriptionSlice {}
 
 /**
  * Creates a Contact interface slice for Device stores.

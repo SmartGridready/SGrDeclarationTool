@@ -1,18 +1,10 @@
-import {
-  SerialInterfaceCapability,
-  BaudRate,
-  ByteLength,
-  Parity,
-  StopBitLength,
-} from "@/models/generic";
+import { SerialInterfaceCapability, BaudRate, ByteLength, Parity, StopBitLength } from "@/models/generic";
 import { Xml2JsObject } from "@/utils/mapper-utils";
 
 /**
  * Maps XML serialInterfaceCapability to SerialInterfaceCapability model
  */
-export function mapSerialInterfaceCapability(
-  capabilityXml: Xml2JsObject | undefined
-): SerialInterfaceCapability {
+export function mapSerialInterfaceCapability(capabilityXml: Xml2JsObject | undefined): SerialInterfaceCapability {
   if (!capabilityXml) {
     throw new Error("serialInterfaceCapability is required");
   }

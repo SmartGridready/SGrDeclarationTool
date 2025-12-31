@@ -11,43 +11,24 @@ interface ConfigurationListEnumFormProps {
   enumMap: EnumMapProduct;
 }
 
-export function ConfigurationListEnumForm({
-  configIndex,
-  enumMap,
-}: ConfigurationListEnumFormProps) {
+export function ConfigurationListEnumForm({ configIndex, enumMap }: ConfigurationListEnumFormProps) {
   const { configurationListActions } = useDeviceFormContext();
 
   // Create an adapter that maps configuration list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
-      setEnumDataType: (enumMap) =>
-        configurationListActions.setConfigurationListEnumDataType(configIndex, enumMap),
-      addEnumEntry: (entry) =>
-        configurationListActions.addConfigurationListEnumEntry(configIndex, entry),
+      setEnumDataType: (enumMap) => configurationListActions.setConfigurationListEnumDataType(configIndex, enumMap),
+      addEnumEntry: (entry) => configurationListActions.addConfigurationListEnumEntry(configIndex, entry),
       removeEnumEntry: (entryIndex) =>
         configurationListActions.removeConfigurationListEnumEntry(configIndex, entryIndex),
       updateEnumEntryLiteral: (entryIndex, literal) =>
-        configurationListActions.updateConfigurationListEnumEntryLiteral(
-          configIndex,
-          entryIndex,
-          literal
-        ),
+        configurationListActions.updateConfigurationListEnumEntryLiteral(configIndex, entryIndex, literal),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
-        configurationListActions.updateConfigurationListEnumEntryOrdinal(
-          configIndex,
-          entryIndex,
-          ordinal
-        ),
+        configurationListActions.updateConfigurationListEnumEntryOrdinal(configIndex, entryIndex, ordinal),
       updateEnumEntryDescription: (entryIndex, description) =>
-        configurationListActions.updateConfigurationListEnumEntryDescription(
-          configIndex,
-          entryIndex,
-          description
-        ),
-      updateEnumHexMask: (hexMask) =>
-        configurationListActions.updateConfigurationListEnumHexMask(configIndex, hexMask),
-      addEmptyEnumEntry: () =>
-        configurationListActions.addEmptyConfigurationListEnumEntry(configIndex),
+        configurationListActions.updateConfigurationListEnumEntryDescription(configIndex, entryIndex, description),
+      updateEnumHexMask: (hexMask) => configurationListActions.updateConfigurationListEnumHexMask(configIndex, hexMask),
+      addEmptyEnumEntry: () => configurationListActions.addEmptyConfigurationListEnumEntry(configIndex),
     };
   }, [configIndex, configurationListActions]);
 

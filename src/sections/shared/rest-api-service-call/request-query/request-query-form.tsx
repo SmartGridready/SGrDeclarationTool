@@ -14,12 +14,7 @@ interface RequestQueryFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function RequestQueryForm({
-  serviceCall,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: RequestQueryFormProps) {
+export function RequestQueryForm({ serviceCall, actions, fieldPathPrefix, getError }: RequestQueryFormProps) {
   return (
     <FormSection
       title="Request Query"

@@ -17,12 +17,7 @@ interface ResponseQueryFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function ResponseQueryForm({
-  responseQuery,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: ResponseQueryFormProps) {
+export function ResponseQueryForm({ responseQuery, actions, fieldPathPrefix, getError }: ResponseQueryFormProps) {
   const hasQuery = responseQuery !== undefined && "query" in responseQuery;
 
   return (
@@ -43,9 +38,7 @@ export function ResponseQueryForm({
             required={true}
             options={RESPONSE_QUERY_TYPE_OPTIONS}
             value={responseQuery.queryType}
-            onChange={(value) =>
-              actions.updateResponseQueryType(value as ResponseQuery["queryType"])
-            }
+            onChange={(value) => actions.updateResponseQueryType(value as ResponseQuery["queryType"])}
             placeholder="Select query type"
             error={getError(`${fieldPathPrefix}.responseQuery.queryType`)}
           />

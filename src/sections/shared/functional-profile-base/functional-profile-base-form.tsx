@@ -74,8 +74,7 @@ export function FunctionalProfileBaseForm<TStoreState extends FunctionalProfileB
   }
 
   // Note: Schema nests fields under "functionalProfile", so we need to include it in the path
-  const getFieldError = (field: string) =>
-    getError(`${fieldPathPrefix}.functionalProfile.${field}`);
+  const getFieldError = (field: string) => getError(`${fieldPathPrefix}.functionalProfile.${field}`);
 
   return (
     <FormSection title={title} description={description} nested={nested} required={true}>

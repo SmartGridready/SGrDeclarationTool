@@ -8,15 +8,12 @@ import { buildRestApiBearer } from "./rest-api-bearer/rest-api-bearer-builder";
  * Builds XML object for restApiInterfaceDescription from RestApiInterfaceDescription model
  * @throws Error if required fields are missing
  */
-export function buildRestApiInterfaceDescription(
-  description: RestApiInterfaceDescription
-): Record<string, unknown> {
+export function buildRestApiInterfaceDescription(description: RestApiInterfaceDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateRestApiInterfaceDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for REST API interface description";
+    const errorMessage = firstError?.message || "Validation failed for REST API interface description";
     throw new Error(errorMessage);
   }
 
@@ -26,11 +23,7 @@ export function buildRestApiInterfaceDescription(
   };
 
   // Include optional restApiAuthenticationMethod
-  setOptionalXmlField(
-    descriptionXml,
-    "restApiAuthenticationMethod",
-    description.restApiAuthenticationMethod
-  );
+  setOptionalXmlField(descriptionXml, "restApiAuthenticationMethod", description.restApiAuthenticationMethod);
 
   // Include optional restApiBearer
   if (description.restApiBearer) {
@@ -49,11 +42,7 @@ export function buildRestApiInterfaceDescription(
   }
 
   // Include optional restApiVerifyCertificate
-  setOptionalXmlField(
-    descriptionXml,
-    "restApiVerifyCertificate",
-    description.restApiVerifyCertificate
-  );
+  setOptionalXmlField(descriptionXml, "restApiVerifyCertificate", description.restApiVerifyCertificate);
 
   return descriptionXml;
 }

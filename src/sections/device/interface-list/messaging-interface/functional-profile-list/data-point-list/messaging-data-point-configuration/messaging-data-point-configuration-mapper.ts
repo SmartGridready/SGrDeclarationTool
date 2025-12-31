@@ -215,9 +215,7 @@ function mapInMessage(xml: Xml2JsObject | undefined): InMessage | undefined {
 /**
  * Maps XML messagingDataPointConfiguration to MessagingDataPointConfiguration model
  */
-export function mapMessagingDataPointConfiguration(
-  xml: Xml2JsObject | undefined
-): MessagingDataPointConfiguration {
+export function mapMessagingDataPointConfiguration(xml: Xml2JsObject | undefined): MessagingDataPointConfiguration {
   if (!xml) {
     return {
       messagingDataType: { number: {} },

@@ -8,21 +8,9 @@ export interface DataPointLegibleDescriptionSlice {
   addDataPointLegibleDescription: (dataPointIndex: number) => void;
   removeDataPointLegibleDescription: (dataPointIndex: number, descIndex: number) => void;
   removeAllDataPointLegibleDescriptions: (dataPointIndex: number) => void;
-  updateDataPointLegibleDescriptionText: (
-    dataPointIndex: number,
-    descIndex: number,
-    text: string
-  ) => void;
-  updateDataPointLegibleDescriptionLanguage: (
-    dataPointIndex: number,
-    descIndex: number,
-    language: Language
-  ) => void;
-  updateDataPointLegibleDescriptionUri: (
-    dataPointIndex: number,
-    descIndex: number,
-    uri: string | undefined
-  ) => void;
+  updateDataPointLegibleDescriptionText: (dataPointIndex: number, descIndex: number, text: string) => void;
+  updateDataPointLegibleDescriptionLanguage: (dataPointIndex: number, descIndex: number, language: Language) => void;
+  updateDataPointLegibleDescriptionUri: (dataPointIndex: number, descIndex: number, uri: string | undefined) => void;
 }
 
 /**
@@ -50,8 +38,7 @@ export function createDataPointLegibleDescriptionSlice<TState>(
   };
 
   return {
-    addDataPointLegibleDescription: (dataPointIndex) =>
-      getSliceForIndex(dataPointIndex).addEmptyLegibleDescription(),
+    addDataPointLegibleDescription: (dataPointIndex) => getSliceForIndex(dataPointIndex).addEmptyLegibleDescription(),
 
     removeDataPointLegibleDescription: (dataPointIndex, descIndex) =>
       getSliceForIndex(dataPointIndex).removeLegibleDescription(descIndex),

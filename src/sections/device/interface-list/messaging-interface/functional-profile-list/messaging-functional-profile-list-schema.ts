@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  MessagingFunctionalProfile,
-  MessagingFunctionalProfileList,
-} from "@/models/product/messaging-interface";
+import { MessagingFunctionalProfile, MessagingFunctionalProfileList } from "@/models/product/messaging-interface";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { functionalProfileBaseSchema } from "@/sections/shared/functional-profile-base/functional-profile-base-schema";
 import { messageDataPointListSchema } from "./data-point-list/messaging-data-point-list-schema";
@@ -25,9 +22,7 @@ export const messagingFunctionalProfileListSchema = z.object({
 
 // Type exports for TypeScript inference
 export type MessagingFunctionalProfileInput = z.input<typeof messagingFunctionalProfileSchema>;
-export type MessagingFunctionalProfileListInput = z.input<
-  typeof messagingFunctionalProfileListSchema
->;
+export type MessagingFunctionalProfileListInput = z.input<typeof messagingFunctionalProfileListSchema>;
 
 // Validators
 export function validateMessagingFunctionalProfile(

@@ -17,21 +17,14 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerAuthenticationClientCertificateForm() {
-  const {
-    useDeviceState,
-    useValidation,
-    messageBrokerAuthenticationClientCertificateActions,
-    pathPrefix,
-  } = useDeviceFormContext();
+  const { useDeviceState, useValidation, messageBrokerAuthenticationClientCertificateActions, pathPrefix } =
+    useDeviceFormContext();
 
   const clientCertAuth = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     if (isMessagingInterface(interfaceList)) {
-      const auth =
-        interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
-      return auth && "clientCertificateAuthentication" in auth
-        ? auth.clientCertificateAuthentication
-        : undefined;
+      const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
+      return auth && "clientCertificateAuthentication" in auth ? auth.clientCertificateAuthentication : undefined;
     }
     return undefined;
   });
@@ -72,9 +65,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               type="text"
               value={clientCertAuth.keystorePath}
               onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateKeystorePath(
-                  value
-                )
+                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateKeystorePath(value)
               }
               error={getError(fieldPath("keystorePath"))}
             />
@@ -85,9 +76,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               type="text"
               value={clientCertAuth.keystorePassword}
               onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateKeystorePassword(
-                  value
-                )
+                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateKeystorePassword(value)
               }
               error={getError(fieldPath("keystorePassword"))}
             />
@@ -100,9 +89,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               type="text"
               value={clientCertAuth.truststorePath}
               onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateTruststorePath(
-                  value
-                )
+                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateTruststorePath(value)
               }
               error={getError(fieldPath("truststorePath"))}
             />
@@ -113,9 +100,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               type="text"
               value={clientCertAuth.truststorePassword}
               onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateTruststorePassword(
-                  value
-                )
+                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateTruststorePassword(value)
               }
               error={getError(fieldPath("truststorePassword"))}
             />

@@ -9,9 +9,7 @@ import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
  * Builds XML object for legibleDescription array from LegibleDescription[] model
  * Uses CDATA for textElement to preserve HTML content and special characters
  */
-export function buildLegibleDescription(
-  legibleDescriptions: LegibleDescription[]
-): Record<string, unknown>[] {
+export function buildLegibleDescription(legibleDescriptions: LegibleDescription[]): Record<string, unknown>[] {
   // Validate using validation layer
   const validation = validateLegibleDescriptionArray(legibleDescriptions);
   if (!validation.success) {
@@ -28,9 +26,7 @@ export function buildLegibleDescription(
  * Builds XML object for a single legibleDescription item
  * Uses CDATA for textElement to preserve HTML content and special characters
  */
-export function buildLegibleDescriptionItem(
-  description: LegibleDescription
-): Record<string, unknown> {
+export function buildLegibleDescriptionItem(description: LegibleDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateLegibleDescription(description);
   if (!validation.success) {

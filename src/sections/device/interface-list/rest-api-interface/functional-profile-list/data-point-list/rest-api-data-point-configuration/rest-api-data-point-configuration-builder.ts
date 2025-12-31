@@ -6,9 +6,7 @@ import { validateRestApiDataPointConfiguration } from "./rest-api-data-point-con
 /**
  * Type guards for configuration types
  */
-function isSingleServiceCallConfig(
-  config: RestApiDataPointConfiguration
-): config is RestApiDataPointConfiguration & {
+function isSingleServiceCallConfig(config: RestApiDataPointConfiguration): config is RestApiDataPointConfiguration & {
   restApiServiceCall: RestApiServiceCall;
 } {
   return "restApiServiceCall" in config && config.restApiServiceCall !== undefined;
@@ -45,8 +43,7 @@ export function buildRestApiDataPointConfiguration(
   const validation = validateRestApiDataPointConfiguration(configuration);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for REST API data point configuration";
+    const errorMessage = firstError?.message || "Validation failed for REST API data point configuration";
     throw new Error(errorMessage);
   }
 

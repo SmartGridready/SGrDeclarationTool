@@ -6,9 +6,7 @@ import { validateSerialInterfaceCapability } from "./serial-interface-capability
  * Builds XML object for serialInterfaceCapability from SerialInterfaceCapability model
  * @throws Error if required fields are missing
  */
-export function buildSerialInterfaceCapability(
-  capability: SerialInterfaceCapability
-): Record<string, unknown> {
+export function buildSerialInterfaceCapability(capability: SerialInterfaceCapability): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateSerialInterfaceCapability(capability);
   if (!validation.success) {

@@ -11,9 +11,9 @@ export type { LegibleDescriptionSlice } from "@/sections/shared/legible-descript
  * Creates a legible description slice specifically for functional profile stores
  * This is a convenience function that sets up the getter/setter for profile.functionalProfile.legibleDescription
  */
-export function createLegibleDescriptionSliceForProfile<
-  TState extends { profile?: FunctionalProfileFrame },
->(set: (fn: (state: TState) => void) => void): LegibleDescriptionSlice {
+export function createLegibleDescriptionSliceForProfile<TState extends { profile?: FunctionalProfileFrame }>(
+  set: (fn: (state: TState) => void) => void
+): LegibleDescriptionSlice {
   return createLegibleDescriptionSlice(
     set,
     (state) => state.profile?.functionalProfile.legibleDescription,

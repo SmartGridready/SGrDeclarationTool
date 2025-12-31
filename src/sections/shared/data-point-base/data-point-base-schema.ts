@@ -1,10 +1,5 @@
 import { z } from "zod";
-import {
-  DataPointBase,
-  DataPointDescription,
-  DATA_DIRECTION_PRODUCT_VALUES,
-  UNITS_VALUES,
-} from "@/models";
+import { DataPointBase, DataPointDescription, DATA_DIRECTION_PRODUCT_VALUES, UNITS_VALUES } from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
 import { legibleDescriptionSchema } from "@/sections/shared/legible-description/legible-description-schema";
@@ -17,17 +12,12 @@ import { dataTypeProductSchema } from "@/sections/shared/data-type-product/data-
  */
 
 // Extract enum values from constants
-const DATA_DIRECTION_PRODUCT_VALUES_ARRAY = DATA_DIRECTION_PRODUCT_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const DATA_DIRECTION_PRODUCT_VALUES_ARRAY = DATA_DIRECTION_PRODUCT_VALUES as unknown as [string, ...string[]];
 const UNITS_VALUES_ARRAY = UNITS_VALUES as unknown as [string, ...string[]];
 
 // Data Point Description Schema
 export const dataPointDescriptionSchema = z.object({
-  dataPointName: z
-    .string({ message: "Data point name is required" })
-    .min(1, "Data point name cannot be empty"),
+  dataPointName: z.string({ message: "Data point name is required" }).min(1, "Data point name cannot be empty"),
   dataDirection: z.enum(DATA_DIRECTION_PRODUCT_VALUES_ARRAY, {
     message: "Data direction is required",
   }),
@@ -42,14 +32,8 @@ export const dataPointDescriptionSchema = z.object({
   unitConversionMultiplicator: z.number().optional(),
   parameterList: dynamicParameterListSchema.optional(),
   alternativeNames: alternativeNamesSchema.optional(),
-  legibleDescription: z
-    .array(legibleDescriptionSchema)
-    .max(4, "Maximum 4 legible descriptions allowed")
-    .optional(),
-  programmerHints: z
-    .array(legibleDescriptionSchema)
-    .max(4, "Maximum 4 programmer hints allowed")
-    .optional(),
+  legibleDescription: z.array(legibleDescriptionSchema).max(4, "Maximum 4 legible descriptions allowed").optional(),
+  programmerHints: z.array(legibleDescriptionSchema).max(4, "Maximum 4 programmer hints allowed").optional(),
 });
 
 // Data Point Base Schema

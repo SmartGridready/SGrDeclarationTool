@@ -1,10 +1,7 @@
 "use client";
 
 import { DynamicParameterListForm } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-form";
-import {
-  useFunctionalProfileFormContext,
-  buildProfileFieldPath,
-} from "@/context/functional-profile-form-context";
+import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
 
 interface ParameterListFormProps {
@@ -12,8 +9,7 @@ interface ParameterListFormProps {
 }
 
 export function ParameterListForm({ dataPointIndex }: ParameterListFormProps) {
-  const { useProfileState, useValidation, dataPointListActions, pathPrefix } =
-    useFunctionalProfileFormContext();
+  const { useProfileState, useValidation, dataPointListActions, pathPrefix } = useFunctionalProfileFormContext();
 
   const profile = useProfileState((p) => p);
   const useStore = createProfileStoreAdapter(profile, dataPointListActions);
@@ -28,13 +24,10 @@ export function ParameterListForm({ dataPointIndex }: ParameterListFormProps) {
       useStore={useStore}
       useValidation={useValidation}
       stateSelector={(store) => ({
-        parameterList:
-          store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
-            ?.parameterList,
+        parameterList: store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint?.parameterList,
       })}
       isAddedSelector={(store) =>
-        !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
-          ?.parameterList
+        !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint?.parameterList
       }
       fieldPathPrefix={fieldPathPrefix}
       listIndex={dataPointIndex}

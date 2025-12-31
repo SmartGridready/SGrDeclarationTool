@@ -13,8 +13,7 @@ export default function Home() {
               <Logo />
             </div>
             <CardDescription className="mt-2 text-base">
-              Create or edit device declarations and functional profiles for SmartGridready
-              compliant systems.
+              Create or edit device declarations and functional profiles for SmartGridready compliant systems.
               <br />
               Select an editor below to get started.
             </CardDescription>
@@ -28,9 +27,7 @@ export default function Home() {
               >
                 <div>
                   <h3 className="mb-1 text-lg font-semibold">Devices</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Edit or create Device EIDs
-                  </p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">Edit or create Device EIDs</p>
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
               </Link>
@@ -41,9 +38,7 @@ export default function Home() {
               >
                 <div>
                   <h3 className="mb-1 text-lg font-semibold">Functional Profiles</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Edit or create Functional Profiles
-                  </p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">Edit or create Functional Profiles</p>
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
               </Link>

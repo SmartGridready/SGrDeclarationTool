@@ -13,9 +13,7 @@ import { wrapInArray } from "@/utils/builder-utils";
  * Builds XML object for functionalProfileBase from FunctionalProfileBase model
  * @throws Error if required fields are missing
  */
-export function buildFunctionalProfileBase(
-  functionalProfile: FunctionalProfileBase
-): Record<string, unknown> {
+export function buildFunctionalProfileBase(functionalProfile: FunctionalProfileBase): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateFunctionalProfileBase(functionalProfile);
   if (!validation.success) {
@@ -25,9 +23,7 @@ export function buildFunctionalProfileBase(
   }
 
   const functionalProfileBaseXml: Record<string, unknown> = {
-    functionalProfile: wrapInArray(
-      buildFunctionalProfileDescription(functionalProfile.functionalProfile)
-    ),
+    functionalProfile: wrapInArray(buildFunctionalProfileDescription(functionalProfile.functionalProfile)),
   };
 
   // Include optional genericAttributeList if present
@@ -44,15 +40,12 @@ export function buildFunctionalProfileBase(
  * Builds XML object for functionalProfileDescription from FunctionalProfileDescription model
  * @throws Error if required fields are missing
  */
-export function buildFunctionalProfileDescription(
-  description: FunctionalProfileDescription
-): Record<string, unknown> {
+export function buildFunctionalProfileDescription(description: FunctionalProfileDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateFunctionalProfileDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for functional profile description";
+    const errorMessage = firstError?.message || "Validation failed for functional profile description";
     throw new Error(errorMessage);
   }
 
@@ -65,9 +58,7 @@ export function buildFunctionalProfileDescription(
 
   // Include optional alternativeNames if present
   if (description.alternativeNames) {
-    descriptionXml.alternativeNames = wrapInArray(
-      buildAlternativeNames(description.alternativeNames)
-    );
+    descriptionXml.alternativeNames = wrapInArray(buildAlternativeNames(description.alternativeNames));
   }
 
   // Include optional legibleDescription array if present

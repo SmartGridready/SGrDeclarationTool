@@ -22,16 +22,11 @@ const STOP_BIT_LENGTH_OPTIONS = createFormOptions(STOP_BIT_LENGTH_VALUES);
 export function ModbusRtuForm() {
   const { useDeviceState, useValidation, modbusRtuActions, pathPrefix } = useDeviceFormContext();
 
-  const modbusRtu = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu
-  );
+  const modbusRtu = useDeviceState((d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu);
   const { getError } = useValidation();
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.modbusInterface.modbusInterfaceDescription.modbusRtu.${field}`
-    );
+    buildDeviceFieldPath(pathPrefix, `interfaceList.modbusInterface.modbusInterfaceDescription.modbusRtu.${field}`);
 
   return (
     <FormSection

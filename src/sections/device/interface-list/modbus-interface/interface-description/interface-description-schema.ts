@@ -14,10 +14,7 @@ import { masterFunctionsSupportedListSchema } from "./master-functions-supported
  */
 
 // Extract enum values from constants
-const MODBUS_INTERFACE_SELECTION_VALUES_ARRAY = MODBUS_INTERFACE_SELECTION_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const MODBUS_INTERFACE_SELECTION_VALUES_ARRAY = MODBUS_INTERFACE_SELECTION_VALUES as unknown as [string, ...string[]];
 const BIT_ORDER_VALUES_ARRAY = BIT_ORDER_VALUES as unknown as [string, ...string[]];
 
 export const modbusInterfaceDescriptionSchema = z.object({

@@ -94,9 +94,7 @@ export function LibraryImportModal({
             </div>
             <h3 className="text-lg font-medium mb-2">No items found</h3>
             <p className="text-sm text-muted-foreground max-w-sm">
-              {searchTerm
-                ? "No items match your search. Try a different term."
-                : "No items available."}
+              {searchTerm ? "No items match your search. Try a different term." : "No items available."}
             </p>
           </div>
         ) : (
@@ -119,9 +117,7 @@ export function LibraryImportModal({
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{item.identifier}</div>
                       </div>
-                      {isSelected && (
-                        <div className="ml-2 text-xs text-primary font-medium">Selected</div>
-                      )}
+                      {isSelected && <div className="ml-2 text-xs text-primary font-medium">Selected</div>}
                     </div>
                   </li>
                 );

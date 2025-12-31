@@ -23,9 +23,9 @@ function isMessagingInterface(
 /**
  * Creates a Message Broker Authentication Client Certificate slice for Device stores.
  */
-export function createMessageBrokerAuthenticationClientCertificateSlice<
-  TState extends { device?: DeviceFrame },
->(set: (fn: (state: TState) => void) => void): MessageBrokerAuthenticationClientCertificateSlice {
+export function createMessageBrokerAuthenticationClientCertificateSlice<TState extends { device?: DeviceFrame }>(
+  set: (fn: (state: TState) => void) => void
+): MessageBrokerAuthenticationClientCertificateSlice {
   const getMessagingInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
     return isMessagingInterface(interfaceList)

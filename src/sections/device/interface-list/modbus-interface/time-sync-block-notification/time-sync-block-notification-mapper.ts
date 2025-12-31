@@ -12,17 +12,10 @@ export function mapTimeSyncBlockNotification(
   }
 
   return {
-    blockCacheIdentification: getStringValue(
-      timeSyncBlockNotificationXml,
-      "blockCacheIdentification"
-    ),
+    blockCacheIdentification: getStringValue(timeSyncBlockNotificationXml, "blockCacheIdentification"),
     firstAddress: getNumberValue(timeSyncBlockNotificationXml, "firstAddress", 0),
     size: getNumberValue(timeSyncBlockNotificationXml, "size", 1),
-    registerType: getTypedValue<RegisterType>(
-      timeSyncBlockNotificationXml,
-      "registerType",
-      "HoldRegister"
-    ),
+    registerType: getTypedValue<RegisterType>(timeSyncBlockNotificationXml, "registerType", "HoldRegister"),
     timeToLiveMs: getNumberValue(timeSyncBlockNotificationXml, "timeToLiveMs", 1000),
   };
 }

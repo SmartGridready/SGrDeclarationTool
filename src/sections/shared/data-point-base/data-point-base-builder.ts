@@ -41,9 +41,7 @@ export function buildDataPointBase(dataPoint: DataPointBase): Record<string, unk
  * Builds XML object for dataPointDescription from DataPointDescription model
  * @throws Error if required fields are missing
  */
-export function buildDataPointDescription(
-  description: DataPointDescription
-): Record<string, unknown> {
+export function buildDataPointDescription(description: DataPointDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateDataPointDescription(description);
   if (!validation.success) {
@@ -64,24 +62,16 @@ export function buildDataPointDescription(
   setOptionalXmlField(descriptionXml, "arrayLength", description.arrayLength);
   setOptionalXmlField(descriptionXml, "minimumValue", description.minimumValue);
   setOptionalXmlField(descriptionXml, "maximumValue", description.maximumValue);
-  setOptionalXmlField(
-    descriptionXml,
-    "unitConversionMultiplicator",
-    description.unitConversionMultiplicator
-  );
+  setOptionalXmlField(descriptionXml, "unitConversionMultiplicator", description.unitConversionMultiplicator);
 
   // Include optional parameterList if present
   if (description.parameterList) {
-    descriptionXml.parameterList = wrapInArray(
-      buildDynamicParameterList(description.parameterList)
-    );
+    descriptionXml.parameterList = wrapInArray(buildDynamicParameterList(description.parameterList));
   }
 
   // Include optional alternativeNames if present
   if (description.alternativeNames) {
-    descriptionXml.alternativeNames = wrapInArray(
-      buildAlternativeNames(description.alternativeNames)
-    );
+    descriptionXml.alternativeNames = wrapInArray(buildAlternativeNames(description.alternativeNames));
   }
 
   // Include optional legibleDescription array if present

@@ -29,19 +29,14 @@ export function createRestApiBearerSlice<TState extends { device?: DeviceFrame }
 ): RestApiBearerSlice {
   const getRestApiInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.restApiInterfaceDescription
-      : undefined;
+    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
   };
 
   const getRestApiServiceCall = (state: TState): RestApiServiceCall | undefined => {
     return getRestApiInterfaceDescription(state)?.restApiBearer?.restApiServiceCall;
   };
 
-  const setRestApiServiceCall = (
-    state: TState,
-    restApiServiceCall: RestApiServiceCall | undefined
-  ) => {
+  const setRestApiServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const description = getRestApiInterfaceDescription(state);
     if (description?.restApiBearer && restApiServiceCall) {
       description.restApiBearer.restApiServiceCall = restApiServiceCall;
@@ -49,11 +44,7 @@ export function createRestApiBearerSlice<TState extends { device?: DeviceFrame }
   };
 
   // Create the shared service call slice
-  const serviceCallSlice = createRestApiServiceCallSlice(
-    set,
-    getRestApiServiceCall,
-    setRestApiServiceCall
-  );
+  const serviceCallSlice = createRestApiServiceCallSlice(set, getRestApiServiceCall, setRestApiServiceCall);
 
   return {
     ...serviceCallSlice,

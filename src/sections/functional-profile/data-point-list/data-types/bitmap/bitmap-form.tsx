@@ -25,9 +25,7 @@ export function BitmapForm({ dataPointIndex, bitmap }: BitmapFormProps) {
         label="Bitmap Entries"
         items={bitmap.bitmapEntry}
         onAdd={() => dataPointListActions.addEmptyBitmapEntry(dataPointIndex)}
-        onRemove={(entryIndex) =>
-          dataPointListActions.removeBitmapEntry(dataPointIndex, entryIndex)
-        }
+        onRemove={(entryIndex) => dataPointListActions.removeBitmapEntry(dataPointIndex, entryIndex)}
         emptyMessage="No bitmap entries added"
         renderItem={(entry, entryIndex) => (
           <>
@@ -35,9 +33,7 @@ export function BitmapForm({ dataPointIndex, bitmap }: BitmapFormProps) {
               label="Literal"
               name={`dataPoint-${dataPointIndex}-bitmap-${entryIndex}-literal`}
               value={entry.literal}
-              onChange={(value) =>
-                dataPointListActions.updateBitmapEntryLiteral(dataPointIndex, entryIndex, value)
-              }
+              onChange={(value) => dataPointListActions.updateBitmapEntryLiteral(dataPointIndex, entryIndex, value)}
               placeholder="Enter bitmap literal"
               required={true}
             />
@@ -46,11 +42,7 @@ export function BitmapForm({ dataPointIndex, bitmap }: BitmapFormProps) {
               name={`dataPoint-${dataPointIndex}-bitmap-${entryIndex}-description`}
               value={entry.description || ""}
               onChange={(value) =>
-                dataPointListActions.updateBitmapEntryDescription(
-                  dataPointIndex,
-                  entryIndex,
-                  value || undefined
-                )
+                dataPointListActions.updateBitmapEntryDescription(dataPointIndex, entryIndex, value || undefined)
               }
               placeholder="Enter description"
             />

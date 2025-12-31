@@ -25,10 +25,7 @@ import {
  * - <tls>{{broker_tls}}</tls> -> text content
  * - <tls><true/></tls> -> nested self-closing tag
  */
-function mapBooleanParameter(
-  parentXml: Xml2JsObject,
-  fieldName: string
-): BooleanParameter | undefined {
+function mapBooleanParameter(parentXml: Xml2JsObject, fieldName: string): BooleanParameter | undefined {
   // First check if the field exists as a direct child with text content
   // e.g., <tls>{{broker_tls}}</tls> -> { tls: ["{{broker_tls}}"] }
   const textValue = getOptionalStringValue(parentXml, fieldName);
@@ -79,11 +76,7 @@ function mapMessageBrokerList(xml: Xml2JsObject | undefined): MessageBrokerList 
   }
 
   return {
-    messageBrokerListElement: mapArray(
-      xml,
-      "messageBrokerListElement",
-      mapMessageBrokerListElement
-    ),
+    messageBrokerListElement: mapArray(xml, "messageBrokerListElement", mapMessageBrokerListElement),
   };
 }
 
@@ -100,9 +93,7 @@ function mapBasicAuthentication(xml: Xml2JsObject): MessageBrokerAuthenticationB
 /**
  * Maps XML clientCertificateAuthentication to MessageBrokerAuthenticationClientCertificate model
  */
-function mapClientCertificateAuthentication(
-  xml: Xml2JsObject
-): MessageBrokerAuthenticationClientCertificate {
+function mapClientCertificateAuthentication(xml: Xml2JsObject): MessageBrokerAuthenticationClientCertificate {
   return {
     keystorePath: getStringValue(xml, "keystorePath"),
     keystorePassword: getStringValue(xml, "keystorePassword"),
@@ -114,9 +105,7 @@ function mapClientCertificateAuthentication(
 /**
  * Maps XML messageBrokerAuthentication to MessageBrokerAuthentication model
  */
-function mapMessageBrokerAuthentication(
-  xml: Xml2JsObject | undefined
-): MessageBrokerAuthentication | undefined {
+function mapMessageBrokerAuthentication(xml: Xml2JsObject | undefined): MessageBrokerAuthentication | undefined {
   if (!xml) {
     return undefined;
   }
@@ -143,9 +132,7 @@ function mapMessageBrokerAuthentication(
 /**
  * Maps XML messagingInterfaceDescription to MessagingInterfaceDescription model
  */
-export function mapMessagingInterfaceDescription(
-  xml: Xml2JsObject | undefined
-): MessagingInterfaceDescription {
+export function mapMessagingInterfaceDescription(xml: Xml2JsObject | undefined): MessagingInterfaceDescription {
   if (!xml) {
     throw new Error("messagingInterfaceDescription is required");
   }

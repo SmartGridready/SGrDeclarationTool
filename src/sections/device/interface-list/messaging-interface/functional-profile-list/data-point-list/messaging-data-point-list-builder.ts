@@ -24,9 +24,7 @@ function buildMessagingDataPoint(dataPoint: MessagingDataPoint): Record<string, 
  * Builds XML object for dataPointList from MessageDataPointList model
  * @throws Error if required fields are missing
  */
-export function buildMessagingDataPointList(
-  dataPointList: MessageDataPointList
-): Record<string, unknown> {
+export function buildMessagingDataPointList(dataPointList: MessageDataPointList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateMessageDataPointList(dataPointList);
   if (!validation.success) {

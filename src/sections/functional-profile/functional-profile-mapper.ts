@@ -59,10 +59,7 @@ function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
     throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
   }
 
-  const identificationXml = getFirstElement(
-    functionalProfileXml,
-    "functionalProfileIdentification"
-  );
+  const identificationXml = getFirstElement(functionalProfileXml, "functionalProfileIdentification");
 
   const frame: FunctionalProfileFrame = {
     functionalProfile: {

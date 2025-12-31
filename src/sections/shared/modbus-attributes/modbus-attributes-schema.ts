@@ -9,10 +9,7 @@ import { accessProtectionEnabledSchema } from "./access-protection/access-protec
  */
 
 // Extract enum values from constants
-const MODBUS_LAYER6_DEVIATION_VALUES_ARRAY = MODBUS_LAYER6_DEVIATION_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const MODBUS_LAYER6_DEVIATION_VALUES_ARRAY = MODBUS_LAYER6_DEVIATION_VALUES as unknown as [string, ...string[]];
 
 export const modbusAttributesSchema = z.object({
   scalingFactor: scalingFactorSchema.optional(),
@@ -27,9 +24,7 @@ export const modbusAttributesSchema = z.object({
 export type ModbusAttributesInput = z.input<typeof modbusAttributesSchema>;
 
 // Validators
-export function validateModbusAttributes(
-  attributes: ModbusAttributes
-): ValidationResult<ModbusAttributes> {
+export function validateModbusAttributes(attributes: ModbusAttributes): ValidationResult<ModbusAttributes> {
   const result = validateWithSchema(modbusAttributesSchema, attributes);
   return result as ValidationResult<ModbusAttributes>;
 }

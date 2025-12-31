@@ -1,30 +1,13 @@
-import {
-  BitmapProduct,
-  BitmapEntryProduct,
-  DataTypeProduct,
-  DynamicParameterDescriptionList,
-} from "@/models";
+import { BitmapProduct, BitmapEntryProduct, DataTypeProduct, DynamicParameterDescriptionList } from "@/models";
 import {
   createDataTypeProductBitmapSlice,
   DataTypeProductBitmapSlice,
 } from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
 
 export interface DynamicParameterListBitmapSlice {
-  setParameterListBitmapDataType: (
-    listIndex: number,
-    paramIndex: number,
-    bitmap: BitmapProduct
-  ) => void;
-  addParameterListBitmapEntry: (
-    listIndex: number,
-    paramIndex: number,
-    entry: BitmapEntryProduct
-  ) => void;
-  removeParameterListBitmapEntry: (
-    listIndex: number,
-    paramIndex: number,
-    entryIndex: number
-  ) => void;
+  setParameterListBitmapDataType: (listIndex: number, paramIndex: number, bitmap: BitmapProduct) => void;
+  addParameterListBitmapEntry: (listIndex: number, paramIndex: number, entry: BitmapEntryProduct) => void;
+  removeParameterListBitmapEntry: (listIndex: number, paramIndex: number, entryIndex: number) => void;
   updateParameterListBitmapEntryLiteral: (
     listIndex: number,
     paramIndex: number,
@@ -52,10 +35,7 @@ export interface DynamicParameterListBitmapSlice {
  */
 export function createDynamicParameterListBitmapSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getParameterList: (
-    state: TState,
-    listIndex: number
-  ) => DynamicParameterDescriptionList | undefined
+  getParameterList: (state: TState, listIndex: number) => DynamicParameterDescriptionList | undefined
 ): DynamicParameterListBitmapSlice {
   const getParameter = (
     state: TState,
@@ -67,10 +47,7 @@ export function createDynamicParameterListBitmapSlice<TState>(
   };
 
   // Helper function to get a slice bound to specific listIndex and paramIndex
-  const getSliceForIndices = (
-    listIndex: number,
-    paramIndex: number
-  ): DataTypeProductBitmapSlice => {
+  const getSliceForIndices = (listIndex: number, paramIndex: number): DataTypeProductBitmapSlice => {
     return createDataTypeProductBitmapSlice(
       set,
       (state) => getParameter(state, listIndex, paramIndex)?.dataType,
@@ -100,10 +77,7 @@ export function createDynamicParameterListBitmapSlice<TState>(
       getSliceForIndices(listIndex, paramIndex).updateBitmapEntryHexMask(entryIndex, hexMask),
 
     updateParameterListBitmapEntryDescription: (listIndex, paramIndex, entryIndex, description) =>
-      getSliceForIndices(listIndex, paramIndex).updateBitmapEntryDescription(
-        entryIndex,
-        description
-      ),
+      getSliceForIndices(listIndex, paramIndex).updateBitmapEntryDescription(entryIndex, description),
 
     addEmptyParameterListBitmapEntry: (listIndex, paramIndex) =>
       getSliceForIndices(listIndex, paramIndex).addEmptyBitmapEntry(),

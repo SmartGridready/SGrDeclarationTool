@@ -1,11 +1,5 @@
 import { DeviceFrame } from "@/models";
-import {
-  BaudRate,
-  ByteLength,
-  Parity,
-  StopBitLength,
-  SerialInterfaceCapability,
-} from "@/models/generic";
+import { BaudRate, ByteLength, Parity, StopBitLength, SerialInterfaceCapability } from "@/models/generic";
 
 export interface SerialInterfaceCapabilitySlice {
   addBaudRateSupported: (baudRate: BaudRate) => void;

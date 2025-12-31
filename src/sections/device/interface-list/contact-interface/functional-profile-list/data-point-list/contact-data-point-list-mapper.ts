@@ -6,20 +6,13 @@ import { mapDataPointBase } from "@/sections/shared/data-point-base/data-point-b
 /**
  * Maps XML dataPointList to ContactsDataPointList model
  */
-export function mapContactDataPointList(
-  dataPointListXml: Xml2JsObject | undefined
-): ContactsDataPointList {
+export function mapContactDataPointList(dataPointListXml: Xml2JsObject | undefined): ContactsDataPointList {
   if (!dataPointListXml) {
     throw new Error("dataPointList is required");
   }
 
   return {
-    dataPointListElement: mapArray(
-      dataPointListXml,
-      "dataPointListElement",
-      mapContactDataPoint,
-      []
-    ),
+    dataPointListElement: mapArray(dataPointListXml, "dataPointListElement", mapContactDataPoint, []),
   };
 }
 

@@ -127,8 +127,7 @@ export type DataTypeChoice =
 // ============================================================================
 
 export const DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES = ["R", "W", "RW"] as const;
-export type DataDirectionFunctionalProfile =
-  (typeof DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES)[number];
+export type DataDirectionFunctionalProfile = (typeof DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES)[number];
 
 export const PRESENCE_LEVEL_VALUES = ["M", "R", "O"] as const;
 export type PresenceLevel = (typeof PRESENCE_LEVEL_VALUES)[number];
@@ -193,12 +192,7 @@ interface JSonElemFunctionalProfileBase {
 export const DATA_DIRECTION_PRODUCT_VALUES = ["C", "R", "W", "RW", "RWP"] as const; // Constant, Read, Write, Read-Write, Read-Write-Persistent
 export type DataDirectionProduct = (typeof DATA_DIRECTION_PRODUCT_VALUES)[number];
 
-export const DATA_TYPE_PRODUCT_EXTENDED_VALUES = [
-  ...DATA_TYPE_CHOICE_VALUES,
-  "enum",
-  "bitmap",
-  "json",
-] as const;
+export const DATA_TYPE_PRODUCT_EXTENDED_VALUES = [...DATA_TYPE_CHOICE_VALUES, "enum", "bitmap", "json"] as const;
 
 export type DataTypeProduct =
   | { enum: EnumMapProduct }

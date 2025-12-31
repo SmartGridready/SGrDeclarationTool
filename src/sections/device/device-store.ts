@@ -21,10 +21,7 @@ import {
 } from "@/sections/device/configuration-list/configuration-list-slice";
 import { createGenericAttributeListSlice } from "@/sections/device/generic-attribute-list/generic-attribute-list-slice";
 import { GenericAttributeListProductSlice } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-slice";
-import {
-  createInterfaceListSlice,
-  InterfaceListSlice,
-} from "@/sections/device/interface-list/interface-list-slice";
+import { createInterfaceListSlice, InterfaceListSlice } from "@/sections/device/interface-list/interface-list-slice";
 
 interface DeviceStore {
   device?: DeviceFrame;

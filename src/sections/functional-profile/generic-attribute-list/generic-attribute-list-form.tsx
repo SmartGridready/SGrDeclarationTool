@@ -4,14 +4,10 @@ import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { GenericAttributeFunctionalProfile } from "@/models";
-import {
-  useFunctionalProfileFormContext,
-  buildProfileFieldPath,
-} from "@/context/functional-profile-form-context";
+import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
 
 export function GenericAttributeListForm() {
-  const { useProfileState, useValidation, pathPrefix, genericAttributeListActions } =
-    useFunctionalProfileFormContext();
+  const { useProfileState, useValidation, pathPrefix, genericAttributeListActions } = useFunctionalProfileFormContext();
 
   const state = useProfileState((profile) => ({
     genericAttributes: profile?.genericAttributeList?.genericAttributeListElement,

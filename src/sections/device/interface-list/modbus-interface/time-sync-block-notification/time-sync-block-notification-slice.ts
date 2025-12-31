@@ -12,10 +12,7 @@ export interface TimeSyncBlockNotificationSlice {
   updateBlockCacheIdentification: (index: number, blockCacheIdentification: string) => void;
   updateFirstAddress: (index: number, firstAddress: number) => void;
   updateSize: (index: number, size: number) => void;
-  updateRegisterType: (
-    index: number,
-    registerType: TimeSyncBlockNotification["registerType"]
-  ) => void;
+  updateRegisterType: (index: number, registerType: TimeSyncBlockNotification["registerType"]) => void;
   updateTimeToLiveMs: (index: number, timeToLiveMs: number) => void;
 }
 
@@ -26,16 +23,12 @@ export function createTimeSyncBlockNotificationSlice<TState extends { device?: D
   set: (fn: (state: TState) => void) => void
 ): TimeSyncBlockNotificationSlice {
   // Helper to get time sync block notification list
-  const getTimeSyncBlockNotificationList = (
-    state: TState
-  ): TimeSyncBlockNotification[] | undefined =>
+  const getTimeSyncBlockNotificationList = (state: TState): TimeSyncBlockNotification[] | undefined =>
     state.device?.interfaceList?.modbusInterface?.timeSyncBlockNotification;
 
   // Helper to get a specific time sync block notification
-  const getTimeSyncBlockNotification = (
-    state: TState,
-    index: number
-  ): TimeSyncBlockNotification | undefined => getTimeSyncBlockNotificationList(state)?.[index];
+  const getTimeSyncBlockNotification = (state: TState, index: number): TimeSyncBlockNotification | undefined =>
+    getTimeSyncBlockNotificationList(state)?.[index];
 
   return {
     addEmptyTimeSyncBlockNotification: () =>

@@ -23,14 +23,11 @@ const PARITY_OPTIONS = createFormOptions(PARITY_VALUES);
 const STOP_BIT_LENGTH_OPTIONS = createFormOptions(STOP_BIT_LENGTH_VALUES);
 
 export function SerialInterfaceCapabilityForm() {
-  const { useDeviceState, useValidation, serialInterfaceCapabilityActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, serialInterfaceCapabilityActions } = useDeviceFormContext();
   const { getError } = useValidation();
 
   const serialInterfaceCapability = useDeviceState(
-    (d) =>
-      d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu
-        ?.serialInterfaceCapability
+    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu?.serialInterfaceCapability
   );
 
   if (!serialInterfaceCapability) {

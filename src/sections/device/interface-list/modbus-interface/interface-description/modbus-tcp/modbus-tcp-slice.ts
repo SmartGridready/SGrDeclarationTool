@@ -23,8 +23,7 @@ export function createModbusTcpSlice<TState extends { device?: DeviceFrame }>(
   return {
     addModbusTcp: () =>
       set((state) => {
-        const description =
-          state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+        const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
         if (description && !description.modbusTcp) {
           description.modbusTcp = {
             port: "",
@@ -36,8 +35,7 @@ export function createModbusTcpSlice<TState extends { device?: DeviceFrame }>(
 
     removeModbusTcp: () =>
       set((state) => {
-        const description =
-          state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+        const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
         if (description) {
           description.modbusTcp = undefined;
         }

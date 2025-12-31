@@ -9,10 +9,7 @@ export interface MessageBrokerListSlice {
   updateMessageBrokerListElementHost: (index: number, host: string) => void;
   updateMessageBrokerListElementPort: (index: number, port: string) => void;
   updateMessageBrokerListElementTls: (index: number, tls: string | undefined) => void;
-  updateMessageBrokerListElementTlsVerifyCertificate: (
-    index: number,
-    tlsVerifyCertificate: string | undefined
-  ) => void;
+  updateMessageBrokerListElementTlsVerifyCertificate: (index: number, tlsVerifyCertificate: string | undefined) => void;
 }
 
 /**

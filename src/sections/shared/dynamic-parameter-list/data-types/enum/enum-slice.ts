@@ -1,25 +1,12 @@
-import {
-  EnumMapProduct,
-  EnumEntryProductRecord,
-  DataTypeProduct,
-  DynamicParameterDescriptionList,
-} from "@/models";
+import { EnumMapProduct, EnumEntryProductRecord, DataTypeProduct, DynamicParameterDescriptionList } from "@/models";
 import {
   createDataTypeProductEnumSlice,
   DataTypeProductEnumSlice,
 } from "@/sections/shared/data-type-product/enum/enum-slice";
 
 export interface DynamicParameterListEnumSlice {
-  setParameterListEnumDataType: (
-    listIndex: number,
-    paramIndex: number,
-    enumMap: EnumMapProduct
-  ) => void;
-  addParameterListEnumEntry: (
-    listIndex: number,
-    paramIndex: number,
-    entry: EnumEntryProductRecord
-  ) => void;
+  setParameterListEnumDataType: (listIndex: number, paramIndex: number, enumMap: EnumMapProduct) => void;
+  addParameterListEnumEntry: (listIndex: number, paramIndex: number, entry: EnumEntryProductRecord) => void;
   removeParameterListEnumEntry: (listIndex: number, paramIndex: number, entryIndex: number) => void;
   updateParameterListEnumEntryLiteral: (
     listIndex: number,
@@ -39,11 +26,7 @@ export interface DynamicParameterListEnumSlice {
     entryIndex: number,
     description: string | undefined
   ) => void;
-  updateParameterListEnumHexMask: (
-    listIndex: number,
-    paramIndex: number,
-    hexMask: string | undefined
-  ) => void;
+  updateParameterListEnumHexMask: (listIndex: number, paramIndex: number, hexMask: string | undefined) => void;
   addEmptyParameterListEnumEntry: (listIndex: number, paramIndex: number) => void;
 }
 
@@ -53,10 +36,7 @@ export interface DynamicParameterListEnumSlice {
  */
 export function createDynamicParameterListEnumSlice<TState>(
   set: (fn: (state: TState) => void) => void,
-  getParameterList: (
-    state: TState,
-    listIndex: number
-  ) => DynamicParameterDescriptionList | undefined
+  getParameterList: (state: TState, listIndex: number) => DynamicParameterDescriptionList | undefined
 ): DynamicParameterListEnumSlice {
   const getParameter = (
     state: TState,

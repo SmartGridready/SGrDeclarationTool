@@ -1,7 +1,4 @@
-import {
-  ModbusFunctionalProfileList,
-  ModbusFunctionalProfile,
-} from "@/models/product/modbus-interface";
+import { ModbusFunctionalProfileList, ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 import { getFirstElement, mapArray, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-mapper";
 import { mapModbusAttributes } from "@/sections/shared/modbus-attributes/modbus-attributes-mapper";

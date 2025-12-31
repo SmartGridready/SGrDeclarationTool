@@ -7,10 +7,7 @@ import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
-import {
-  MessagingPlatformType,
-  MESSAGING_PLATFORM_TYPE_VALUES,
-} from "@/models/product/messaging-types";
+import { MessagingPlatformType, MESSAGING_PLATFORM_TYPE_VALUES } from "@/models/product/messaging-types";
 import { createFormOptions } from "@/models/form-options-helper";
 import { MessageBrokerListForm } from "./message-broker-list/message-broker-list-form";
 import { MessageBrokerAuthenticationForm } from "./message-broker-authentication/message-broker-authentication-form";
@@ -27,8 +24,7 @@ function isMessagingInterface(
 }
 
 export function MessagingInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, messagingInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, messagingInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const messagingInterfaceDescription = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
@@ -44,10 +40,7 @@ export function MessagingInterfaceDescriptionForm() {
   }
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.messagingInterface.messagingInterfaceDescription.${field}`
-    );
+    buildDeviceFieldPath(pathPrefix, `interfaceList.messagingInterface.messagingInterfaceDescription.${field}`);
 
   return (
     <FormSection
@@ -63,9 +56,7 @@ export function MessagingInterfaceDescriptionForm() {
           required={true}
           options={MESSAGING_PLATFORM_OPTIONS}
           value={messagingInterfaceDescription.platform}
-          onChange={(value) =>
-            messagingInterfaceDescriptionActions.updatePlatform(value as MessagingPlatformType)
-          }
+          onChange={(value) => messagingInterfaceDescriptionActions.updatePlatform(value as MessagingPlatformType)}
           error={getError(fieldPath("platform"))}
         />
         <InputField
@@ -74,9 +65,7 @@ export function MessagingInterfaceDescriptionForm() {
           required={false}
           type="text"
           value={messagingInterfaceDescription.clientId || ""}
-          onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateClientId(value || undefined)
-          }
+          onChange={(value) => messagingInterfaceDescriptionActions.updateClientId(value || undefined)}
           placeholder="Optional client ID"
           error={getError(fieldPath("clientId"))}
         />

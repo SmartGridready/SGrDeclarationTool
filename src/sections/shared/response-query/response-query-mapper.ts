@@ -32,17 +32,12 @@ export function mapJmesPathMapping(jmesPathMappingXml: Xml2JsObject): JMESPathMa
 /**
  * Maps XML responseQuery to ResponseQuery model
  */
-export function mapResponseQuery(
-  responseQueryXml: Xml2JsObject | undefined
-): ResponseQuery | undefined {
+export function mapResponseQuery(responseQueryXml: Xml2JsObject | undefined): ResponseQuery | undefined {
   if (!responseQueryXml) {
     return undefined;
   }
 
-  const queryType = getOptionalTypedValue<ResponseQuery["queryType"]>(
-    responseQueryXml,
-    "queryType"
-  );
+  const queryType = getOptionalTypedValue<ResponseQuery["queryType"]>(responseQueryXml, "queryType");
   if (!queryType) {
     return undefined;
   }

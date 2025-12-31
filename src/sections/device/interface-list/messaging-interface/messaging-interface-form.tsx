@@ -20,9 +20,7 @@ export function MessagingInterfaceForm() {
   const { useDeviceState } = useDeviceFormContext();
 
   const interfaceList = useDeviceState((d) => d?.interfaceList);
-  const messagingInterface = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface
-    : undefined;
+  const messagingInterface = isMessagingInterface(interfaceList) ? interfaceList.messagingInterface : undefined;
 
   // Don't render if Messaging interface is not selected
   if (!messagingInterface) {

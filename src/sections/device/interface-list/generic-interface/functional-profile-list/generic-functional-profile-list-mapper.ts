@@ -1,7 +1,4 @@
-import {
-  GenericFunctionalProfileList,
-  GenericFunctionalProfile,
-} from "@/models/product/generic-interface";
+import { GenericFunctionalProfileList, GenericFunctionalProfile } from "@/models/product/generic-interface";
 import { getFirstElement, mapArray, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-mapper";
 import { mapGenericDataPointList } from "./data-point-list/generic-data-point-list-mapper";

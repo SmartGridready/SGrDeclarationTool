@@ -1,10 +1,7 @@
 "use client";
 
 import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
-import {
-  useFunctionalProfileFormContext,
-  buildProfileFieldPath,
-} from "@/context/functional-profile-form-context";
+import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { FunctionalProfileFrame } from "@/models";
 
@@ -28,33 +25,20 @@ function useDataPointStoreAdapter(dataPointIndex: number) {
       },
       removeLegibleDescription: (index) =>
         dataPointListActions.removeDataPointLegibleDescription(dataPointIndex, index),
-      removeAllLegibleDescriptions: () =>
-        dataPointListActions.removeAllDataPointLegibleDescriptions(dataPointIndex),
+      removeAllLegibleDescriptions: () => dataPointListActions.removeAllDataPointLegibleDescriptions(dataPointIndex),
       updateTextElement: (index, textElement) =>
-        dataPointListActions.updateDataPointLegibleDescriptionText(
-          dataPointIndex,
-          index,
-          textElement
-        ),
+        dataPointListActions.updateDataPointLegibleDescriptionText(dataPointIndex, index, textElement),
       updateLanguage: (index, language) =>
-        dataPointListActions.updateDataPointLegibleDescriptionLanguage(
-          dataPointIndex,
-          index,
-          language
-        ),
-      updateUri: (index, uri) =>
-        dataPointListActions.updateDataPointLegibleDescriptionUri(dataPointIndex, index, uri),
-      addEmptyLegibleDescription: () =>
-        dataPointListActions.addDataPointLegibleDescription(dataPointIndex),
+        dataPointListActions.updateDataPointLegibleDescriptionLanguage(dataPointIndex, index, language),
+      updateUri: (index, uri) => dataPointListActions.updateDataPointLegibleDescriptionUri(dataPointIndex, index, uri),
+      addEmptyLegibleDescription: () => dataPointListActions.addDataPointLegibleDescription(dataPointIndex),
     };
 
     return selector(adaptedStore);
   };
 }
 
-export function DataPointLegibleDescriptionForm({
-  dataPointIndex,
-}: DataPointLegibleDescriptionFormProps) {
+export function DataPointLegibleDescriptionForm({ dataPointIndex }: DataPointLegibleDescriptionFormProps) {
   const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
   const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
 
@@ -69,12 +53,10 @@ export function DataPointLegibleDescriptionForm({
       useValidation={useValidation}
       stateSelector={(store) => ({
         legibleDescriptions:
-          store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
-            ?.legibleDescription,
+          store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint?.legibleDescription,
       })}
       isAddedSelector={(store) =>
-        !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint
-          ?.legibleDescription
+        !!store.profile?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint?.legibleDescription
       }
       fieldPathPrefix={fieldPathPrefix}
       required={false}

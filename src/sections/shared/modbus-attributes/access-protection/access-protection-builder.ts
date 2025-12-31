@@ -6,9 +6,7 @@ import { validateAccessProtectionEnabled } from "./access-protection-schema";
  * Builds XML object for accessProtection from AccessProtectionEnabled model
  * @throws Error if required fields are missing
  */
-export function buildAccessProtection(
-  accessProtection: AccessProtectionEnabled
-): Record<string, unknown> {
+export function buildAccessProtection(accessProtection: AccessProtectionEnabled): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateAccessProtectionEnabled(accessProtection);
   if (!validation.success) {

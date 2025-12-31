@@ -8,9 +8,7 @@ import { useFunctionalProfileFormContext } from "@/context/functional-profile-fo
 
 interface DataPointGenericAttributeListFormProps {
   dataPointIndex: number;
-  genericAttributeList:
-    | { genericAttributeListElement?: GenericAttributeFunctionalProfile[] }
-    | undefined;
+  genericAttributeList: { genericAttributeListElement?: GenericAttributeFunctionalProfile[] } | undefined;
   getError: (path: string) => string | undefined;
   onAdd: () => void;
   onRemove: () => void;
@@ -49,11 +47,7 @@ export function DataPointGenericAttributeListForm({
             name={`dataPoint-${dataPointIndex}-genericAttribute-${attributeIndex}-name`}
             value={item.name}
             onChange={(value) =>
-              dataPointListActions.updateDataPointGenericAttributeName(
-                dataPointIndex,
-                attributeIndex,
-                value
-              )
+              dataPointListActions.updateDataPointGenericAttributeName(dataPointIndex, attributeIndex, value)
             }
             placeholder="Enter attribute name"
             required={true}

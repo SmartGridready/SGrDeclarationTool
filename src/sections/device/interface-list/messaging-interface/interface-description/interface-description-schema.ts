@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  MessagingInterfaceDescription,
-  MESSAGING_PLATFORM_TYPE_VALUES,
-} from "@/models/product/messaging-types";
+import { MessagingInterfaceDescription, MESSAGING_PLATFORM_TYPE_VALUES } from "@/models/product/messaging-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**
@@ -10,10 +7,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // Extract enum values from constants
-const MESSAGING_PLATFORM_TYPE_VALUES_ARRAY = MESSAGING_PLATFORM_TYPE_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const MESSAGING_PLATFORM_TYPE_VALUES_ARRAY = MESSAGING_PLATFORM_TYPE_VALUES as unknown as [string, ...string[]];
 
 // MessageBrokerListElement schema
 // Note: tls and tlsVerifyCertificate are BooleanParameter (string type that can be "true", "false", or variable like "{{var}}")
@@ -26,9 +20,7 @@ export const messageBrokerListElementSchema = z.object({
 
 // MessageBrokerList schema
 export const messageBrokerListSchema = z.object({
-  messageBrokerListElement: z
-    .array(messageBrokerListElementSchema)
-    .min(1, "At least one message broker is required"),
+  messageBrokerListElement: z.array(messageBrokerListElementSchema).min(1, "At least one message broker is required"),
 });
 
 // Basic Authentication schema
@@ -62,9 +54,7 @@ export const messagingInterfaceDescriptionSchema = z.object({
 });
 
 // Type exports for TypeScript inference
-export type MessagingInterfaceDescriptionInput = z.input<
-  typeof messagingInterfaceDescriptionSchema
->;
+export type MessagingInterfaceDescriptionInput = z.input<typeof messagingInterfaceDescriptionSchema>;
 
 // Validators
 export function validateMessagingInterfaceDescription(

@@ -15,9 +15,7 @@ export const genericInterfaceSchema = z.object({
 export type GenericInterfaceInput = z.input<typeof genericInterfaceSchema>;
 
 // Validators
-export function validateGenericInterface(
-  genericInterface: GenericInterface
-): ValidationResult<GenericInterface> {
+export function validateGenericInterface(genericInterface: GenericInterface): ValidationResult<GenericInterface> {
   const result = validateWithSchema(genericInterfaceSchema, genericInterface);
   return result as ValidationResult<GenericInterface>;
 }

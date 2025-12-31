@@ -5,22 +5,17 @@ import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceFormContext } from "@/context/device-form-context";
-import {
-  MasterFunctionsSupported,
-  MASTER_FUNCTIONS_SUPPORTED_VALUES,
-} from "@/models/product/modbus-types";
+import { MasterFunctionsSupported, MASTER_FUNCTIONS_SUPPORTED_VALUES } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/models/form-options-helper";
 
 const MASTER_FUNCTIONS_SUPPORTED_OPTIONS = createFormOptions(MASTER_FUNCTIONS_SUPPORTED_VALUES);
 
 export function MasterFunctionsSupportedListForm() {
-  const { useDeviceState, useValidation, masterFunctionsSupportedListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, masterFunctionsSupportedListActions } = useDeviceFormContext();
   const { getError } = useValidation();
 
   const masterFunctionsSupportedList = useDeviceState(
-    (d) =>
-      d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
+    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
   );
 
   return (
@@ -40,16 +35,12 @@ export function MasterFunctionsSupportedListForm() {
           onAdd={() => {
             // Add the first available function that's not already in the list
             const existing = masterFunctionsSupportedList.masterFunctionsSupported || [];
-            const available = MASTER_FUNCTIONS_SUPPORTED_VALUES.find(
-              (func) => !existing.includes(func)
-            );
+            const available = MASTER_FUNCTIONS_SUPPORTED_VALUES.find((func) => !existing.includes(func));
             if (available) {
               masterFunctionsSupportedListActions.addMasterFunctionSupported(available);
             }
           }}
-          onRemove={(index) =>
-            masterFunctionsSupportedListActions.removeMasterFunctionSupported(index)
-          }
+          onRemove={(index) => masterFunctionsSupportedListActions.removeMasterFunctionSupported(index)}
           emptyMessage="No master functions added"
           renderItem={(func, index) => (
             <FormGroup>

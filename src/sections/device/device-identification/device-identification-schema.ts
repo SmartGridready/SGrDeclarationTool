@@ -8,9 +8,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 // Device Identification Schema
 export const deviceIdentificationSchema = z.object({
-  deviceName: z
-    .string({ message: "Device name is required" })
-    .min(1, "Device name cannot be empty"),
+  deviceName: z.string({ message: "Device name is required" }).min(1, "Device name cannot be empty"),
   manufacturerName: z.string().optional(),
   specificationOwnerIdentification: z
     .string({ message: "Specification owner identification is required" })
@@ -23,9 +21,7 @@ export type DeviceIdentificationInput = z.input<typeof deviceIdentificationSchem
 // Validators
 export function validateDeviceIdentification(
   device: Pick<DeviceFrame, "deviceName" | "manufacturerName" | "specificationOwnerIdentification">
-): ValidationResult<
-  Pick<DeviceFrame, "deviceName" | "manufacturerName" | "specificationOwnerIdentification">
-> {
+): ValidationResult<Pick<DeviceFrame, "deviceName" | "manufacturerName" | "specificationOwnerIdentification">> {
   const result = validateWithSchema(deviceIdentificationSchema, device);
   return result as ValidationResult<
     Pick<DeviceFrame, "deviceName" | "manufacturerName" | "specificationOwnerIdentification">

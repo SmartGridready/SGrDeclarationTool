@@ -83,12 +83,7 @@ export function DateField({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={date}
-            captionLayout="dropdown"
-            onSelect={handleDateSelect}
-          />
+          <Calendar mode="single" selected={date} captionLayout="dropdown" onSelect={handleDateSelect} />
         </PopoverContent>
       </Popover>
       {error && (

@@ -17,20 +17,9 @@ const sizeClasses = {
 /**
  * Reusable loading spinner component
  */
-export function LoadingSpinner({
-  size = "md",
-  message,
-  className,
-  fullScreen = false,
-}: LoadingSpinnerProps) {
+export function LoadingSpinner({ size = "md", message, className, fullScreen = false }: LoadingSpinnerProps) {
   const spinner = (
-    <div
-      className={cn(
-        "flex flex-col items-center gap-4",
-        fullScreen && "min-h-[400px] justify-center",
-        className
-      )}
-    >
+    <div className={cn("flex flex-col items-center gap-4", fullScreen && "min-h-[400px] justify-center", className)}>
       <Loader2 className={cn(sizeClasses[size], "animate-spin text-muted-foreground")} />
       {message && <p className="text-sm text-muted-foreground">{message}</p>}
     </div>

@@ -42,9 +42,7 @@ export function buildModbusInterface(modbusInterface: ModbusInterface): Record<s
     setOptionalXmlArray(
       modbusInterfaceXml,
       "timeSyncBlockNotification",
-      modbusInterface.timeSyncBlockNotification.map((notification) =>
-        buildTimeSyncBlockNotification(notification)
-      )
+      modbusInterface.timeSyncBlockNotification.map((notification) => buildTimeSyncBlockNotification(notification))
     );
   }
 

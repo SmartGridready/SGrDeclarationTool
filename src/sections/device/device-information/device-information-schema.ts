@@ -1,10 +1,5 @@
 import { z } from "zod";
-import {
-  DeviceInformation,
-  DEVICE_CATEGORY_VALUES,
-  POWER_SOURCE_VALUES,
-  LEVEL_OF_OPERATION_VALUES,
-} from "@/models";
+import { DeviceInformation, DEVICE_CATEGORY_VALUES, POWER_SOURCE_VALUES, LEVEL_OF_OPERATION_VALUES } from "@/models";
 import { TEST_STATE_VALUES } from "@/models/product/product";
 import { alternativeNamesSchema } from "@/sections/shared/alternative-names/alternative-names-schema";
 import { legibleDescriptionsSchema } from "@/sections/shared/legible-description/legible-description-schema";
@@ -19,10 +14,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 const DEVICE_CATEGORY_VALUES_ARRAY = DEVICE_CATEGORY_VALUES as unknown as [string, ...string[]];
 const POWER_SOURCE_VALUES_ARRAY = POWER_SOURCE_VALUES as unknown as [string, ...string[]];
 const TEST_STATE_VALUES_ARRAY = TEST_STATE_VALUES as unknown as [string, ...string[]];
-const LEVEL_OF_OPERATION_VALUES_ARRAY = LEVEL_OF_OPERATION_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const LEVEL_OF_OPERATION_VALUES_ARRAY = LEVEL_OF_OPERATION_VALUES as unknown as [string, ...string[]];
 
 // Device Information Schema
 export const deviceInformationSchema = z.object({
@@ -50,9 +42,7 @@ export const deviceInformationSchema = z.object({
 export type DeviceInformationInput = z.input<typeof deviceInformationSchema>;
 
 // Validators
-export function validateDeviceInformation(
-  deviceInformation: DeviceInformation
-): ValidationResult<DeviceInformation> {
+export function validateDeviceInformation(deviceInformation: DeviceInformation): ValidationResult<DeviceInformation> {
   const result = validateWithSchema(deviceInformationSchema, deviceInformation);
   return result as ValidationResult<DeviceInformation>;
 }

@@ -38,9 +38,8 @@ export function createFunctionalProfileBaseSlice<TState>(
   getFunctionalProfileBase: (state: TState) => FunctionalProfileBaseContainer | undefined
 ): FunctionalProfileBaseSlice {
   // Helper to get functionalProfileDescription
-  const getFunctionalProfileDescription = (
-    state: TState
-  ): FunctionalProfileDescription | undefined => getFunctionalProfileBase(state)?.functionalProfile;
+  const getFunctionalProfileDescription = (state: TState): FunctionalProfileDescription | undefined =>
+    getFunctionalProfileBase(state)?.functionalProfile;
 
   // Create nested slices
   const profileIdentificationSlice = createFunctionalProfileIdentificationSlice(set, (state) => {

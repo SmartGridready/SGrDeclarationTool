@@ -12,9 +12,7 @@ import { mapAccessProtection } from "./access-protection/access-protection-mappe
 /**
  * Maps XML modbusAttributes to ModbusAttributes model
  */
-export function mapModbusAttributes(
-  modbusAttributesXml: Xml2JsObject | undefined
-): ModbusAttributes | undefined {
+export function mapModbusAttributes(modbusAttributesXml: Xml2JsObject | undefined): ModbusAttributes | undefined {
   if (!modbusAttributesXml) {
     return undefined;
   }
@@ -23,25 +21,13 @@ export function mapModbusAttributes(
 
   // Map optional scalingFactor
   const scalingFactorXml = getFirstElement(modbusAttributesXml, "scalingFactor");
-  setOptionalField(
-    modbusAttributes,
-    "scalingFactor",
-    scalingFactorXml && mapScalingFactor(scalingFactorXml)
-  );
+  setOptionalField(modbusAttributes, "scalingFactor", scalingFactorXml && mapScalingFactor(scalingFactorXml));
 
   // Map optional stepByIncrement
-  setOptionalField(
-    modbusAttributes,
-    "stepByIncrement",
-    getOptionalNumberValue(modbusAttributesXml, "stepByIncrement")
-  );
+  setOptionalField(modbusAttributes, "stepByIncrement", getOptionalNumberValue(modbusAttributesXml, "stepByIncrement"));
 
   // Map optional sunssf
-  setOptionalField(
-    modbusAttributes,
-    "sunssf",
-    getOptionalNumberValue(modbusAttributesXml, "sunssf")
-  );
+  setOptionalField(modbusAttributes, "sunssf", getOptionalNumberValue(modbusAttributesXml, "sunssf"));
 
   // Map optional pollingLatencyMs
   setOptionalField(

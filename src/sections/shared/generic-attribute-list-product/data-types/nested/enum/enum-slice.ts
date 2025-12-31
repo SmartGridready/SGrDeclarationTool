@@ -48,10 +48,7 @@ export interface GenericAttributeListProductNestedEnumSlice {
     nestedElementIndex: number,
     hexMask: string | undefined
   ) => void;
-  addEmptyGenericAttributeListNestedEnumEntry: (
-    elementIndex: number,
-    nestedElementIndex: number
-  ) => void;
+  addEmptyGenericAttributeListNestedEnumEntry: (elementIndex: number, nestedElementIndex: number) => void;
 }
 
 /**
@@ -72,25 +69,20 @@ export function createGenericAttributeListProductNestedEnumSlice<TState>(
   getAttribute: (state: TState, elementIndex: number) => GenericAttributeProduct | undefined
 ): GenericAttributeListProductNestedEnumSlice {
   // Helper function to get a slice bound to specific element and nested element indices
-  const getSliceForIndices = (
-    elementIndex: number,
-    nestedElementIndex: number
-  ): DataTypeProductEnumSlice => {
+  const getSliceForIndices = (elementIndex: number, nestedElementIndex: number): DataTypeProductEnumSlice => {
     return createDataTypeProductEnumSlice(
       set,
       (state) => {
         const attr = getAttribute(state, elementIndex);
         if (attr && isNestedGenericAttribute(attr)) {
-          return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex]
-            ?.dataType;
+          return attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex]?.dataType;
         }
         return undefined;
       },
       (state, dataType) => {
         const attr = getAttribute(state, elementIndex);
         if (attr && isNestedGenericAttribute(attr)) {
-          const nestedElement =
-            attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          const nestedElement = attr.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
           if (nestedElement) {
             nestedElement.dataType = dataType;
           }
@@ -109,38 +101,14 @@ export function createGenericAttributeListProductNestedEnumSlice<TState>(
     removeGenericAttributeListNestedEnumEntry: (elementIndex, nestedElementIndex, entryIndex) =>
       getSliceForIndices(elementIndex, nestedElementIndex).removeEnumEntry(entryIndex),
 
-    updateGenericAttributeListNestedEnumEntryLiteral: (
-      elementIndex,
-      nestedElementIndex,
-      entryIndex,
-      literal
-    ) =>
-      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryLiteral(
-        entryIndex,
-        literal
-      ),
+    updateGenericAttributeListNestedEnumEntryLiteral: (elementIndex, nestedElementIndex, entryIndex, literal) =>
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryLiteral(entryIndex, literal),
 
-    updateGenericAttributeListNestedEnumEntryOrdinal: (
-      elementIndex,
-      nestedElementIndex,
-      entryIndex,
-      ordinal
-    ) =>
-      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryOrdinal(
-        entryIndex,
-        ordinal
-      ),
+    updateGenericAttributeListNestedEnumEntryOrdinal: (elementIndex, nestedElementIndex, entryIndex, ordinal) =>
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryOrdinal(entryIndex, ordinal),
 
-    updateGenericAttributeListNestedEnumEntryDescription: (
-      elementIndex,
-      nestedElementIndex,
-      entryIndex,
-      description
-    ) =>
-      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryDescription(
-        entryIndex,
-        description
-      ),
+    updateGenericAttributeListNestedEnumEntryDescription: (elementIndex, nestedElementIndex, entryIndex, description) =>
+      getSliceForIndices(elementIndex, nestedElementIndex).updateEnumEntryDescription(entryIndex, description),
 
     updateGenericAttributeListNestedEnumHexMask: (elementIndex, nestedElementIndex, hexMask) =>
       getSliceForIndices(elementIndex, nestedElementIndex).updateEnumHexMask(hexMask),

@@ -21,15 +21,12 @@ import { ConfigurationListEnumForm } from "@/sections/device/configuration-list/
 import { ConfigurationListBitmapForm } from "@/sections/device/configuration-list/data-types/bitmap/bitmap-form";
 
 export function ConfigurationListForm() {
-  const { useDeviceState, useValidation, configurationListActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, configurationListActions, pathPrefix } = useDeviceFormContext();
 
   const configurationList = useDeviceState((d) => d?.configurationList);
   const { getError } = useValidation();
 
-  const fullPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "configurationList")
-    : "configurationList";
+  const fullPathPrefix = pathPrefix ? buildDeviceFieldPath(pathPrefix, "configurationList") : "configurationList";
 
   return (
     <FormSection
@@ -45,9 +42,7 @@ export function ConfigurationListForm() {
         label="Configuration Elements"
         items={configurationList?.configurationListElement}
         onAdd={() => configurationListActions.addConfigurationListElement()}
-        onRemove={(configIndex) =>
-          configurationListActions.removeConfigurationListElement(configIndex)
-        }
+        onRemove={(configIndex) => configurationListActions.removeConfigurationListElement(configIndex)}
         emptyMessage="No configuration elements added"
         renderItem={(config, configIndex) => (
           <>
@@ -57,9 +52,7 @@ export function ConfigurationListForm() {
                 name={`${fullPathPrefix}-${configIndex}-name`}
                 type="text"
                 value={config.name}
-                onChange={(value) =>
-                  configurationListActions.updateConfigurationListElementName(configIndex, value)
-                }
+                onChange={(value) => configurationListActions.updateConfigurationListElementName(configIndex, value)}
                 placeholder="Enter configuration name"
                 required={true}
                 error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.name`)}
@@ -80,16 +73,11 @@ export function ConfigurationListForm() {
                       bitmapEntry: [],
                     });
                   } else {
-                    configurationListActions.updateConfigurationListElementDataType(
-                      configIndex,
-                      newDataType
-                    );
+                    configurationListActions.updateConfigurationListElementDataType(configIndex, newDataType);
                   }
                 }}
                 required={true}
-                error={getError(
-                  `${fullPathPrefix}.configurationListElement.${configIndex}.dataType`
-                )}
+                error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.dataType`)}
               />
               <InputField
                 label="Default Value"
@@ -97,16 +85,11 @@ export function ConfigurationListForm() {
                 type="text"
                 value={config.defaultValue || ""}
                 onChange={(value) =>
-                  configurationListActions.updateConfigurationListElementDefaultValue(
-                    configIndex,
-                    value || undefined
-                  )
+                  configurationListActions.updateConfigurationListElementDefaultValue(configIndex, value || undefined)
                 }
                 placeholder="Enter default value"
                 required={false}
-                error={getError(
-                  `${fullPathPrefix}.configurationListElement.${configIndex}.defaultValue`
-                )}
+                error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.defaultValue`)}
               />
             </FormGroup>
 
@@ -115,10 +98,7 @@ export function ConfigurationListForm() {
             )}
 
             {isBitmapDataTypeProduct(config.dataType) && (
-              <ConfigurationListBitmapForm
-                configIndex={configIndex}
-                bitmap={config.dataType.bitmap}
-              />
+              <ConfigurationListBitmapForm configIndex={configIndex} bitmap={config.dataType.bitmap} />
             )}
 
             <ConfigurationDescriptionsForm

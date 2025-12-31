@@ -1,11 +1,5 @@
 import { ConfigurationList, ConfigurationListElement } from "@/models";
-import {
-  mapArray,
-  getStringValue,
-  getFirstElement,
-  setOptionalField,
-  Xml2JsObject,
-} from "@/utils/mapper-utils";
+import { mapArray, getStringValue, getFirstElement, setOptionalField, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-mapper";
 import { mapLegibleDescription } from "@/sections/shared/legible-description/legible-description-mapper";
 
@@ -13,9 +7,7 @@ import { mapLegibleDescription } from "@/sections/shared/legible-description/leg
  * Maps XML configurationList to ConfigurationList model
  * Note: minOccurs=1 means at least one configurationListElement is required
  */
-export function mapConfigurationList(
-  configurationListXml: Xml2JsObject | undefined
-): ConfigurationList {
+export function mapConfigurationList(configurationListXml: Xml2JsObject | undefined): ConfigurationList {
   const configurationListElement = mapArray(
     configurationListXml,
     "configurationListElement",

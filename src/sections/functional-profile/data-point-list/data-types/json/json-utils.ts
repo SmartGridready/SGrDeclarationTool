@@ -26,9 +26,7 @@ export function isJsonElement(
 /**
  * Gets the element type (string, number, or date) from a JSON element
  */
-export function getJsonElementType(
-  element: JSonElemFunctionalProfile
-): "string" | "number" | "date" {
+export function getJsonElementType(element: JSonElemFunctionalProfile): "string" | "number" | "date" {
   if ("string" in element) return "string";
   if ("number" in element) return "number";
   return "date";
@@ -37,10 +35,7 @@ export function getJsonElementType(
 /**
  * Creates a JSON element with the specified type
  */
-export function createJsonElement(
-  key: string,
-  type: "string" | "number" | "date"
-): JSonElemFunctionalProfile {
+export function createJsonElement(key: string, type: "string" | "number" | "date"): JSonElemFunctionalProfile {
   switch (type) {
     case "string":
       return { key, string: "" };

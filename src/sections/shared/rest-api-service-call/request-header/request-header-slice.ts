@@ -41,10 +41,7 @@ export function createRequestHeaderSlice<TState>(
           if (!serviceCall.requestHeader) {
             serviceCall.requestHeader = {};
           }
-          serviceCall.requestHeader.header = ensureArray(
-            serviceCall.requestHeader.header,
-            () => []
-          );
+          serviceCall.requestHeader.header = ensureArray(serviceCall.requestHeader.header, () => []);
           serviceCall.requestHeader.header.push({ headerName: "", value: "" });
         }
       }),

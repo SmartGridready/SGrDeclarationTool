@@ -7,9 +7,7 @@ import { validateRestApiBearer } from "./rest-api-bearer-schema";
  * Builds XML object for restApiBearer from RestApiBearer model
  * @throws Error if required fields are missing
  */
-export function buildRestApiBearer(
-  restApiBearer: RestApiBearer | undefined
-): Record<string, unknown> | undefined {
+export function buildRestApiBearer(restApiBearer: RestApiBearer | undefined): Record<string, unknown> | undefined {
   if (!restApiBearer) {
     return undefined;
   }

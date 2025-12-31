@@ -34,20 +34,14 @@ export function ModbusDataPointEnumForm({
         name={`${fieldPathPrefix}-hexMask`}
         value={enumMap.hexMask || ""}
         onChange={(value) =>
-          actions.updateModbusDataPointEnumHexMask(
-            functionalProfileIndex,
-            dataPointIndex,
-            value || undefined
-          )
+          actions.updateModbusDataPointEnumHexMask(functionalProfileIndex, dataPointIndex, value || undefined)
         }
         placeholder="Enter hex mask (e.g., 0xFF)"
       />
       <ArrayField<EnumEntry>
         label="Enum Entries"
         items={enumMap.enumEntry}
-        onAdd={() =>
-          actions.addEmptyModbusDataPointEnumEntry(functionalProfileIndex, dataPointIndex)
-        }
+        onAdd={() => actions.addEmptyModbusDataPointEnumEntry(functionalProfileIndex, dataPointIndex)}
         onRemove={(entryIndex) =>
           actions.removeModbusDataPointEnumEntry(functionalProfileIndex, dataPointIndex, entryIndex)
         }
@@ -59,12 +53,7 @@ export function ModbusDataPointEnumForm({
               name={`${fieldPathPrefix}-${entryIndex}-literal`}
               value={entry.literal}
               onChange={(value) =>
-                actions.updateModbusDataPointEnumEntryLiteral(
-                  functionalProfileIndex,
-                  dataPointIndex,
-                  entryIndex,
-                  value
-                )
+                actions.updateModbusDataPointEnumEntryLiteral(functionalProfileIndex, dataPointIndex, entryIndex, value)
               }
               placeholder="Enter enum literal"
               required={true}

@@ -5,14 +5,8 @@ import {
 } from "@/sections/shared/data-type-product/bitmap/bitmap-slice";
 
 export interface GenericAttributeListProductSimpleBitmapSlice {
-  setGenericAttributeListSimpleBitmapDataType: (
-    elementIndex: number,
-    bitmap: BitmapProduct
-  ) => void;
-  addGenericAttributeListSimpleBitmapEntry: (
-    elementIndex: number,
-    entry: BitmapEntryProduct
-  ) => void;
+  setGenericAttributeListSimpleBitmapDataType: (elementIndex: number, bitmap: BitmapProduct) => void;
+  addGenericAttributeListSimpleBitmapEntry: (elementIndex: number, entry: BitmapEntryProduct) => void;
   removeGenericAttributeListSimpleBitmapEntry: (elementIndex: number, entryIndex: number) => void;
   updateGenericAttributeListSimpleBitmapEntryLiteral: (
     elementIndex: number,
@@ -73,11 +67,8 @@ export function createGenericAttributeListProductSimpleBitmapSlice<TState>(
     updateGenericAttributeListSimpleBitmapEntryHexMask: (elementIndex, entryIndex, hexMask) =>
       getSliceForIndex(elementIndex).updateBitmapEntryHexMask(entryIndex, hexMask),
 
-    updateGenericAttributeListSimpleBitmapEntryDescription: (
-      elementIndex,
-      entryIndex,
-      description
-    ) => getSliceForIndex(elementIndex).updateBitmapEntryDescription(entryIndex, description),
+    updateGenericAttributeListSimpleBitmapEntryDescription: (elementIndex, entryIndex, description) =>
+      getSliceForIndex(elementIndex).updateBitmapEntryDescription(entryIndex, description),
 
     addEmptyGenericAttributeListSimpleBitmapEntry: (elementIndex) =>
       getSliceForIndex(elementIndex).addEmptyBitmapEntry(),

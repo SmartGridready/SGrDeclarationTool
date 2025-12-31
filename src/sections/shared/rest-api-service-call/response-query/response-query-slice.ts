@@ -1,9 +1,6 @@
 import { ResponseQuery, ResponseQueryType } from "@/models/generic";
 import { RestApiServiceCall } from "@/models/product/rest-api-types";
-import {
-  createJmesPathMappingSlice,
-  JmesPathMappingSlice,
-} from "./jmespath/jmespath-mapping-slice";
+import { createJmesPathMappingSlice, JmesPathMappingSlice } from "./jmespath/jmespath-mapping-slice";
 
 export interface ResponseQuerySlice extends JmesPathMappingSlice {
   addResponseQuery: () => void;

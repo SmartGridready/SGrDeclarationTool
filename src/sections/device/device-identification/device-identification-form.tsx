@@ -6,8 +6,7 @@ import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
 
 export function DeviceIdentificationForm() {
-  const { useDeviceState, useValidation, pathPrefix, deviceIdentificationActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, pathPrefix, deviceIdentificationActions } = useDeviceFormContext();
 
   const device = useDeviceState((d) => d);
   const { getError } = useValidation();
@@ -19,11 +18,7 @@ export function DeviceIdentificationForm() {
   const fieldPath = (field: string) => buildDeviceFieldPath(pathPrefix, field);
 
   return (
-    <FormSection
-      title="Device Identification"
-      description="Basic identification data of the device"
-      required={true}
-    >
+    <FormSection title="Device Identification" description="Basic identification data of the device" required={true}>
       <FormGroup>
         <InputField
           label="Device Name"
@@ -40,9 +35,7 @@ export function DeviceIdentificationForm() {
           required={false}
           type="text"
           value={device.manufacturerName || ""}
-          onChange={(value) =>
-            deviceIdentificationActions.updateManufacturerName(value || undefined)
-          }
+          onChange={(value) => deviceIdentificationActions.updateManufacturerName(value || undefined)}
           error={getError(fieldPath("manufacturerName"))}
         />
       </FormGroup>
@@ -54,9 +47,7 @@ export function DeviceIdentificationForm() {
           required={true}
           type="text"
           value={device.specificationOwnerIdentification}
-          onChange={(value) =>
-            deviceIdentificationActions.updateSpecificationOwnerIdentification(value)
-          }
+          onChange={(value) => deviceIdentificationActions.updateSpecificationOwnerIdentification(value)}
           error={getError(fieldPath("specificationOwnerIdentification"))}
         />
       </FormGroup>

@@ -11,11 +11,8 @@ export type { FunctionalProfileIdentificationSlice } from "@/sections/shared/pro
  * Creates a functional profile identification slice specifically for functional profile stores
  * This is a convenience function that pre-configures the getter
  */
-export function createFunctionalProfileIdentificationSlice<
-  TState extends { profile?: FunctionalProfileFrame },
->(set: (fn: (state: TState) => void) => void): FunctionalProfileIdentificationSlice {
-  return createGenericFunctionalProfileIdentificationSlice(
-    set,
-    (state) => state.profile?.functionalProfile
-  );
+export function createFunctionalProfileIdentificationSlice<TState extends { profile?: FunctionalProfileFrame }>(
+  set: (fn: (state: TState) => void) => void
+): FunctionalProfileIdentificationSlice {
+  return createGenericFunctionalProfileIdentificationSlice(set, (state) => state.profile?.functionalProfile);
 }

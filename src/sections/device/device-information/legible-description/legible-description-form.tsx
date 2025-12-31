@@ -9,8 +9,7 @@ import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
  * Uses the DeviceFormContext to connect to the store.
  */
 export function LegibleDescriptionForm() {
-  const { useDeviceState, useValidation, deviceInformationActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, deviceInformationActions, pathPrefix } = useDeviceFormContext();
 
   const device = useDeviceState((d) => d);
   const useStore = createDeviceStoreAdapter(device, deviceInformationActions);

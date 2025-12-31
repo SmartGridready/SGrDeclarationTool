@@ -22,23 +22,16 @@ export function GenericAttributeListProductSimpleEnumForm({
   // Create an adapter that maps generic attribute list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
-      setEnumDataType: (enumMap) =>
-        actions.setGenericAttributeListSimpleEnumDataType(elementIndex, enumMap),
+      setEnumDataType: (enumMap) => actions.setGenericAttributeListSimpleEnumDataType(elementIndex, enumMap),
       addEnumEntry: (entry) => actions.addGenericAttributeListSimpleEnumEntry(elementIndex, entry),
-      removeEnumEntry: (entryIndex) =>
-        actions.removeGenericAttributeListSimpleEnumEntry(elementIndex, entryIndex),
+      removeEnumEntry: (entryIndex) => actions.removeGenericAttributeListSimpleEnumEntry(elementIndex, entryIndex),
       updateEnumEntryLiteral: (entryIndex, literal) =>
         actions.updateGenericAttributeListSimpleEnumEntryLiteral(elementIndex, entryIndex, literal),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
         actions.updateGenericAttributeListSimpleEnumEntryOrdinal(elementIndex, entryIndex, ordinal),
       updateEnumEntryDescription: (entryIndex, description) =>
-        actions.updateGenericAttributeListSimpleEnumEntryDescription(
-          elementIndex,
-          entryIndex,
-          description
-        ),
-      updateEnumHexMask: (hexMask) =>
-        actions.updateGenericAttributeListSimpleEnumHexMask(elementIndex, hexMask),
+        actions.updateGenericAttributeListSimpleEnumEntryDescription(elementIndex, entryIndex, description),
+      updateEnumHexMask: (hexMask) => actions.updateGenericAttributeListSimpleEnumHexMask(elementIndex, hexMask),
       addEmptyEnumEntry: () => actions.addEmptyGenericAttributeListSimpleEnumEntry(elementIndex),
     };
   }, [elementIndex, actions]);

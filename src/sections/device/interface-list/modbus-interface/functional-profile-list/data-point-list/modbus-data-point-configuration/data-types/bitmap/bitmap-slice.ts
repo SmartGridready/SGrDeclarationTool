@@ -36,10 +36,7 @@ export interface ModbusDataPointBitmapSlice {
     entryIndex: number,
     description: string | undefined
   ) => void;
-  addEmptyModbusDataPointBitmapEntry: (
-    functionalProfileIndex: number,
-    dataPointIndex: number
-  ) => void;
+  addEmptyModbusDataPointBitmapEntry: (functionalProfileIndex: number, dataPointIndex: number) => void;
 }
 
 /**
@@ -54,9 +51,9 @@ export function createModbusDataPointBitmapSlice<TState extends { device?: Devic
     functionalProfileIndex: number,
     dataPointIndex: number
   ): ModbusDataPoint | undefined => {
-    return state.device?.interfaceList?.modbusInterface?.functionalProfileList
-      ?.functionalProfileListElement?.[functionalProfileIndex]?.dataPointList
-      ?.dataPointListElement?.[dataPointIndex];
+    return state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
+      functionalProfileIndex
+    ]?.dataPointList?.dataPointListElement?.[dataPointIndex];
   };
 
   return {
@@ -103,53 +100,29 @@ export function createModbusDataPointBitmapSlice<TState extends { device?: Devic
       });
     },
 
-    updateModbusDataPointBitmapEntryLiteral: (
-      functionalProfileIndex,
-      dataPointIndex,
-      entryIndex,
-      literal
-    ) => {
+    updateModbusDataPointBitmapEntryLiteral: (functionalProfileIndex, dataPointIndex, entryIndex, literal) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
-        const entry =
-          modbusDataType &&
-          "bitmap" in modbusDataType &&
-          modbusDataType.bitmap.bitmapEntry?.[entryIndex];
+        const entry = modbusDataType && "bitmap" in modbusDataType && modbusDataType.bitmap.bitmapEntry?.[entryIndex];
         if (entry) entry.literal = literal;
       });
     },
 
-    updateModbusDataPointBitmapEntryHexMask: (
-      functionalProfileIndex,
-      dataPointIndex,
-      entryIndex,
-      hexMask
-    ) => {
+    updateModbusDataPointBitmapEntryHexMask: (functionalProfileIndex, dataPointIndex, entryIndex, hexMask) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
-        const entry =
-          modbusDataType &&
-          "bitmap" in modbusDataType &&
-          modbusDataType.bitmap.bitmapEntry?.[entryIndex];
+        const entry = modbusDataType && "bitmap" in modbusDataType && modbusDataType.bitmap.bitmapEntry?.[entryIndex];
         if (entry) entry.hexMask = hexMask;
       });
     },
 
-    updateModbusDataPointBitmapEntryDescription: (
-      functionalProfileIndex,
-      dataPointIndex,
-      entryIndex,
-      description
-    ) => {
+    updateModbusDataPointBitmapEntryDescription: (functionalProfileIndex, dataPointIndex, entryIndex, description) => {
       set((state) => {
         const dataPoint = getDataPoint(state, functionalProfileIndex, dataPointIndex);
         const modbusDataType = dataPoint?.modbusDataPointConfiguration?.modbusDataType;
-        const entry =
-          modbusDataType &&
-          "bitmap" in modbusDataType &&
-          modbusDataType.bitmap.bitmapEntry?.[entryIndex];
+        const entry = modbusDataType && "bitmap" in modbusDataType && modbusDataType.bitmap.bitmapEntry?.[entryIndex];
         if (entry) entry.description = description;
       });
     },

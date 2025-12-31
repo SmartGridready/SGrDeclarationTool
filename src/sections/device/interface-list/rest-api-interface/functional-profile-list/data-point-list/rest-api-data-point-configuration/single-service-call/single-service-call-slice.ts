@@ -31,10 +31,7 @@ export function createSingleServiceCallSlice<TState>(
     return isSingleServiceCallConfig(config) ? config.restApiServiceCall : undefined;
   };
 
-  const setRestApiServiceCall = (
-    state: TState,
-    restApiServiceCall: RestApiServiceCall | undefined
-  ) => {
+  const setRestApiServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const config = getConfig(state);
     if (isSingleServiceCallConfig(config) && restApiServiceCall) {
       config.restApiServiceCall = restApiServiceCall;
@@ -42,11 +39,7 @@ export function createSingleServiceCallSlice<TState>(
   };
 
   // Create the shared service call slice
-  const serviceCallSlice = createRestApiServiceCallSlice(
-    set,
-    getRestApiServiceCall,
-    setRestApiServiceCall
-  );
+  const serviceCallSlice = createRestApiServiceCallSlice(set, getRestApiServiceCall, setRestApiServiceCall);
 
   return {
     ...serviceCallSlice,

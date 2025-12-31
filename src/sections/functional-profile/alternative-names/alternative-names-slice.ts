@@ -14,9 +14,9 @@ export { updateAlternativeNamesField } from "@/sections/shared/alternative-names
  * Creates an alternative names slice specifically for functional profile stores
  * This is a convenience function that sets up the getter/setter for profile.functionalProfile.alternativeNames
  */
-export function createAlternativeNamesSliceForProfile<
-  TState extends { profile?: FunctionalProfileFrame },
->(set: (fn: (state: TState) => void) => void): AlternativeNamesSlice {
+export function createAlternativeNamesSliceForProfile<TState extends { profile?: FunctionalProfileFrame }>(
+  set: (fn: (state: TState) => void) => void
+): AlternativeNamesSlice {
   return createAlternativeNamesSlice(
     set,
     (state) => state.profile?.functionalProfile.alternativeNames,

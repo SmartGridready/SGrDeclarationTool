@@ -19,9 +19,7 @@ import { RestApiBasicForm } from "./rest-api-basic/rest-api-basic-form";
 import { RestApiBearerForm } from "./rest-api-bearer/rest-api-bearer-form";
 
 const REST_API_INTERFACE_SELECTION_OPTIONS = createFormOptions(REST_API_INTERFACE_SELECTION_VALUES);
-const REST_API_AUTHENTICATION_METHOD_OPTIONS = createFormOptions(
-  REST_API_AUTHENTICATION_METHOD_VALUES
-);
+const REST_API_AUTHENTICATION_METHOD_OPTIONS = createFormOptions(REST_API_AUTHENTICATION_METHOD_VALUES);
 const VERIFY_CERTIFICATE_OPTIONS = BOOLEAN_OPTIONS;
 
 /**
@@ -34,14 +32,11 @@ function isRestApiInterface(
 }
 
 export function RestApiInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
 
   const restApiInterfaceDescription = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.restApiInterfaceDescription
-      : undefined;
+    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
   });
   const { getError } = useValidation();
 
@@ -50,10 +45,7 @@ export function RestApiInterfaceDescriptionForm() {
   }
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.restApiInterface.restApiInterfaceDescription.${field}`
-    );
+    buildDeviceFieldPath(pathPrefix, `interfaceList.restApiInterface.restApiInterfaceDescription.${field}`);
 
   const authMethod = restApiInterfaceDescription.restApiAuthenticationMethod;
   const showBasicAuth = authMethod === "BasicSecurityScheme";
@@ -74,9 +66,7 @@ export function RestApiInterfaceDescriptionForm() {
           options={REST_API_INTERFACE_SELECTION_OPTIONS}
           value={restApiInterfaceDescription.restApiInterfaceSelection}
           onChange={(value) =>
-            restApiInterfaceDescriptionActions.updateRestApiInterfaceSelection(
-              value as RestApiInterfaceSelection
-            )
+            restApiInterfaceDescriptionActions.updateRestApiInterfaceSelection(value as RestApiInterfaceSelection)
           }
           error={getError(fieldPath("restApiInterfaceSelection"))}
         />
@@ -100,9 +90,7 @@ export function RestApiInterfaceDescriptionForm() {
           options={REST_API_AUTHENTICATION_METHOD_OPTIONS}
           value={restApiInterfaceDescription.restApiAuthenticationMethod ?? ""}
           onChange={(value) =>
-            restApiInterfaceDescriptionActions.updateRestApiAuthenticationMethod(
-              value as RestApiAuthenticationMethod
-            )
+            restApiInterfaceDescriptionActions.updateRestApiAuthenticationMethod(value as RestApiAuthenticationMethod)
           }
           error={getError(fieldPath("restApiAuthenticationMethod"))}
         />
@@ -113,9 +101,7 @@ export function RestApiInterfaceDescriptionForm() {
           placeholder="Not specified"
           options={VERIFY_CERTIFICATE_OPTIONS}
           value={restApiInterfaceDescription.restApiVerifyCertificate ?? ""}
-          onChange={(value) =>
-            restApiInterfaceDescriptionActions.updateRestApiVerifyCertificate(value || undefined)
-          }
+          onChange={(value) => restApiInterfaceDescriptionActions.updateRestApiVerifyCertificate(value || undefined)}
           error={getError(fieldPath("restApiVerifyCertificate"))}
         />
       </FormGroup>

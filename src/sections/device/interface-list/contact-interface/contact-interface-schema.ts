@@ -17,9 +17,7 @@ export const contactInterfaceSchema = z.object({
 export type ContactInterfaceInput = z.input<typeof contactInterfaceSchema>;
 
 // Validators
-export function validateContactInterface(
-  contactInterface: ContactInterface
-): ValidationResult<ContactInterface> {
+export function validateContactInterface(contactInterface: ContactInterface): ValidationResult<ContactInterface> {
   const result = validateWithSchema(contactInterfaceSchema, contactInterface);
   return result as ValidationResult<ContactInterface>;
 }

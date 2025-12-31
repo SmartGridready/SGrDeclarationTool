@@ -7,9 +7,7 @@ import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
 /**
  * Builds XML object for configurationList from ConfigurationList model
  */
-export function buildConfigurationList(
-  configurationList: ConfigurationList
-): Record<string, unknown> {
+export function buildConfigurationList(configurationList: ConfigurationList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateConfigurationList(configurationList);
   if (!validation.success) {

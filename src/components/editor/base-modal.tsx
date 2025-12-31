@@ -51,12 +51,7 @@ export function BaseModal({
           {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
         </DialogHeader>
 
-        <div
-          className={cn(
-            "flex-1 flex flex-col overflow-hidden min-h-0",
-            contentClassName || "px-6 py-4"
-          )}
-        >
+        <div className={cn("flex-1 flex flex-col overflow-hidden min-h-0", contentClassName || "px-6 py-4")}>
           {content}
         </div>
 

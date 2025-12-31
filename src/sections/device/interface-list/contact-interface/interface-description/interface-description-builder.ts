@@ -6,15 +6,12 @@ import { validateContactInterfaceDescription } from "./interface-description-sch
  * Builds XML object for contactInterfaceDescription from ContactInterfaceDescription model
  * @throws Error if required fields are missing
  */
-export function buildContactInterfaceDescription(
-  description: ContactInterfaceDescription
-): Record<string, unknown> {
+export function buildContactInterfaceDescription(description: ContactInterfaceDescription): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateContactInterfaceDescription(description);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for Contact interface description";
+    const errorMessage = firstError?.message || "Validation failed for Contact interface description";
     throw new Error(errorMessage);
   }
 

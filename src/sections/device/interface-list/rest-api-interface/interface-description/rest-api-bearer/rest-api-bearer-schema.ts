@@ -15,9 +15,7 @@ export const restApiBearerSchema = z.object({
 export type RestApiBearerInput = z.input<typeof restApiBearerSchema>;
 
 // Validators
-export function validateRestApiBearer(
-  restApiBearer: RestApiBearer
-): ValidationResult<RestApiBearer> {
+export function validateRestApiBearer(restApiBearer: RestApiBearer): ValidationResult<RestApiBearer> {
   const result = validateWithSchema(restApiBearerSchema, restApiBearer);
   return result as ValidationResult<RestApiBearer>;
 }

@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  RestApiDataPointConfiguration,
-  REST_API_DATA_TYPE_VALUES,
-} from "@/models/product/rest-api-types";
+import { RestApiDataPointConfiguration, REST_API_DATA_TYPE_VALUES } from "@/models/product/rest-api-types";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { restApiServiceCallSchema } from "@/sections/shared/rest-api-service-call/rest-api-service-call-schema";
 
@@ -11,10 +8,7 @@ import { restApiServiceCallSchema } from "@/sections/shared/rest-api-service-cal
  */
 
 // Extract enum values from constants
-const REST_API_DATA_TYPE_VALUES_ARRAY = REST_API_DATA_TYPE_VALUES as unknown as [
-  string,
-  ...string[],
-];
+const REST_API_DATA_TYPE_VALUES_ARRAY = REST_API_DATA_TYPE_VALUES as unknown as [string, ...string[]];
 
 // Base schema with dataType
 const dataPointConfigurationBaseSchema = z.object({
@@ -46,9 +40,7 @@ export const restApiDataPointConfigurationSchema = z.union([
 ]);
 
 // Type exports for TypeScript inference
-export type RestApiDataPointConfigurationInput = z.input<
-  typeof restApiDataPointConfigurationSchema
->;
+export type RestApiDataPointConfigurationInput = z.input<typeof restApiDataPointConfigurationSchema>;
 
 // Validators
 export function validateRestApiDataPointConfiguration(

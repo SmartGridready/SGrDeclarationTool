@@ -27,9 +27,7 @@ export function InputField({
   error,
 }: InputFieldProps) {
   const hasError = !!error;
-  const inputClassName = hasError
-    ? `${className} border-destructive focus-visible:ring-destructive`
-    : className;
+  const inputClassName = hasError ? `${className} border-destructive focus-visible:ring-destructive` : className;
 
   return (
     <div className="space-y-2">

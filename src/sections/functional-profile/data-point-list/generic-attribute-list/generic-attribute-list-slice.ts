@@ -7,11 +7,7 @@ export interface DataPointGenericAttributeListSlice {
   removeDataPointGenericAttributeList: (dataPointIndex: number) => void;
   addDataPointGenericAttribute: (dataPointIndex: number) => void;
   removeDataPointGenericAttribute: (dataPointIndex: number, attributeIndex: number) => void;
-  updateDataPointGenericAttributeName: (
-    dataPointIndex: number,
-    attributeIndex: number,
-    name: string
-  ) => void;
+  updateDataPointGenericAttributeName: (dataPointIndex: number, attributeIndex: number, name: string) => void;
 }
 
 /**
@@ -51,13 +47,9 @@ export function createDataPointGenericAttributeListSlice<TState>(
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
         if (dp?.genericAttributeList?.genericAttributeListElement) {
-          removeArrayItem(
-            dp.genericAttributeList.genericAttributeListElement,
-            attributeIndex,
-            () => {
-              if (dp) dp.genericAttributeList = undefined;
-            }
-          );
+          removeArrayItem(dp.genericAttributeList.genericAttributeListElement, attributeIndex, () => {
+            if (dp) dp.genericAttributeList = undefined;
+          });
         }
       }),
 

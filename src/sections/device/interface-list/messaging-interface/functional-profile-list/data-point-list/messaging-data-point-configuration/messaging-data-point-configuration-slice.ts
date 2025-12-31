@@ -30,10 +30,7 @@ export interface MessagingDataPointConfigurationSlice {
 export function createMessagingDataPointConfigurationSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getConfiguration: (state: TState) => MessagingDataPointConfiguration | undefined,
-  setConfiguration: (
-    state: TState,
-    configuration: MessagingDataPointConfiguration | undefined
-  ) => void
+  setConfiguration: (state: TState, configuration: MessagingDataPointConfiguration | undefined) => void
 ): MessagingDataPointConfigurationSlice {
   return {
     updateMessagingDataType: (dataType) =>

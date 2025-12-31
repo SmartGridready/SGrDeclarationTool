@@ -6,20 +6,13 @@ import { mapRestApiDataPointConfiguration } from "./rest-api-data-point-configur
 /**
  * Maps XML dataPointList to RestApiDataPointList model
  */
-export function mapRestApiDataPointList(
-  dataPointListXml: Xml2JsObject | undefined
-): RestApiDataPointList {
+export function mapRestApiDataPointList(dataPointListXml: Xml2JsObject | undefined): RestApiDataPointList {
   if (!dataPointListXml) {
     throw new Error("dataPointList is required");
   }
 
   return {
-    dataPointListElement: mapArray(
-      dataPointListXml,
-      "dataPointListElement",
-      mapRestApiDataPoint,
-      []
-    ),
+    dataPointListElement: mapArray(dataPointListXml, "dataPointListElement", mapRestApiDataPoint, []),
   };
 }
 
@@ -35,10 +28,7 @@ function mapRestApiDataPoint(elementXml: Xml2JsObject): RestApiDataPoint {
   };
 
   // Map optional restApiDataPointConfiguration
-  const restApiDataPointConfigurationXml = getFirstElement(
-    elementXml,
-    "restApiDataPointConfiguration"
-  );
+  const restApiDataPointConfigurationXml = getFirstElement(elementXml, "restApiDataPointConfiguration");
   setOptionalField(
     restApiDataPoint,
     "restApiDataPointConfiguration",

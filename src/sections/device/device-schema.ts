@@ -16,9 +16,7 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 // Device Frame Schema
 export const deviceFrameSchema = z.object({
-  deviceName: z
-    .string({ message: "Device name is required" })
-    .min(1, "Device name cannot be empty"),
+  deviceName: z.string({ message: "Device name is required" }).min(1, "Device name cannot be empty"),
   manufacturerName: z.string().optional(),
   specificationOwnerIdentification: z
     .string({ message: "Specification owner identification is required" })

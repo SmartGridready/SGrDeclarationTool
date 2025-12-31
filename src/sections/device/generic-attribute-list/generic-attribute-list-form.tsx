@@ -9,8 +9,7 @@ import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
  * Uses the DeviceFormContext to connect to the store.
  */
 export function GenericAttributeListForm() {
-  const { useDeviceState, useValidation, genericAttributeListActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, genericAttributeListActions, pathPrefix } = useDeviceFormContext();
 
   const device = useDeviceState((d) => d);
   const useStore = createDeviceStoreAdapter(device, genericAttributeListActions);

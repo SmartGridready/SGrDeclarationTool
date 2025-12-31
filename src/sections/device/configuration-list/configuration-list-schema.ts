@@ -15,9 +15,7 @@ const configurationDescriptionSchema = legibleDescriptionSchema.extend({
 
 // Configuration List Element Schema
 export const configurationListElementSchema = z.object({
-  name: z
-    .string({ message: "Configuration name is required" })
-    .min(1, "Configuration name cannot be empty"),
+  name: z.string({ message: "Configuration name is required" }).min(1, "Configuration name cannot be empty"),
   dataType: dataTypeProductSchema,
   defaultValue: z.string().optional(),
   configurationDescription: z.array(configurationDescriptionSchema).max(4).optional(),
@@ -42,9 +40,7 @@ export function validateConfigurationListElement(
   return result as ValidationResult<ConfigurationListElement>;
 }
 
-export function validateConfigurationList(
-  configurationList: ConfigurationList
-): ValidationResult<ConfigurationList> {
+export function validateConfigurationList(configurationList: ConfigurationList): ValidationResult<ConfigurationList> {
   const result = validateWithSchema(configurationListSchema, configurationList);
   return result as ValidationResult<ConfigurationList>;
 }

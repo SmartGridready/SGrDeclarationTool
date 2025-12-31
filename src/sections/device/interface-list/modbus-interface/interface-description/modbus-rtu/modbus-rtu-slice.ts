@@ -36,8 +36,7 @@ export function createModbusRtuSlice<TState extends { device?: DeviceFrame }>(
     ...serialInterfaceCapabilitySlice,
     addModbusRtu: () =>
       set((state) => {
-        const description =
-          state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+        const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
         if (description && !description.modbusRtu) {
           description.modbusRtu = {
             slaveAddr: "",
@@ -58,8 +57,7 @@ export function createModbusRtuSlice<TState extends { device?: DeviceFrame }>(
 
     removeModbusRtu: () =>
       set((state) => {
-        const description =
-          state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
+        const description = state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription;
         if (description) {
           description.modbusRtu = undefined;
         }

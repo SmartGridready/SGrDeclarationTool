@@ -5,11 +5,7 @@ import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { useDeviceFormContext } from "@/context/device-form-context";
-import {
-  ModbusDataPointConfiguration,
-  RegisterType,
-  REGISTER_TYPE_VALUES,
-} from "@/models/product/modbus-types";
+import { ModbusDataPointConfiguration, RegisterType, REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/models/form-options-helper";
 import {
   getModbusDataTypeStringValue,
@@ -93,24 +89,12 @@ export function ModbusDataPointConfigurationForm({
                 actions.setModbusDataPointEnumDataType(functionalProfileIndex, dataPointIndex, {
                   enumEntry: [],
                 });
-              } else if (
-                value === "bitmap" &&
-                modbusDataType &&
-                !isModbusBitmapDataType(modbusDataType)
-              ) {
+              } else if (value === "bitmap" && modbusDataType && !isModbusBitmapDataType(modbusDataType)) {
                 actions.setModbusDataPointBitmapDataType(functionalProfileIndex, dataPointIndex, {
                   bitmapEntry: [],
                 });
-              } else if (
-                value === "boolean" &&
-                modbusDataType &&
-                !isModbusBooleanDataType(modbusDataType)
-              ) {
-                actions.setModbusDataPointBooleanDataType(
-                  functionalProfileIndex,
-                  dataPointIndex,
-                  {}
-                );
+              } else if (value === "boolean" && modbusDataType && !isModbusBooleanDataType(modbusDataType)) {
+                actions.setModbusDataPointBooleanDataType(functionalProfileIndex, dataPointIndex, {});
               } else {
                 actions.updateModbusDataType(functionalProfileIndex, dataPointIndex, newDataType);
               }
@@ -125,11 +109,7 @@ export function ModbusDataPointConfigurationForm({
           type="number"
           value={configuration.address?.toString() || ""}
           onChange={(value) =>
-            actions.updateAddress(
-              functionalProfileIndex,
-              dataPointIndex,
-              value ? parseInt(value, 10) : 0
-            )
+            actions.updateAddress(functionalProfileIndex, dataPointIndex, value ? parseInt(value, 10) : 0)
           }
           placeholder="Enter register address"
           required={true}
@@ -144,11 +124,7 @@ export function ModbusDataPointConfigurationForm({
           options={REGISTER_TYPE_OPTIONS}
           value={configuration.registerType || ""}
           onChange={(value) =>
-            actions.updateRegisterType(
-              functionalProfileIndex,
-              dataPointIndex,
-              value as RegisterType
-            )
+            actions.updateRegisterType(functionalProfileIndex, dataPointIndex, value as RegisterType)
           }
           placeholder="Select register type"
           required={true}
@@ -160,11 +136,7 @@ export function ModbusDataPointConfigurationForm({
           type="number"
           value={configuration.numberOfRegisters?.toString() || ""}
           onChange={(value) =>
-            actions.updateNumberOfRegisters(
-              functionalProfileIndex,
-              dataPointIndex,
-              value ? parseInt(value, 10) : 1
-            )
+            actions.updateNumberOfRegisters(functionalProfileIndex, dataPointIndex, value ? parseInt(value, 10) : 1)
           }
           placeholder="Enter number of registers"
           required={true}
@@ -178,11 +150,7 @@ export function ModbusDataPointConfigurationForm({
         type="number"
         value={configuration.bitRank?.toString() || ""}
         onChange={(value) =>
-          actions.updateBitRank(
-            functionalProfileIndex,
-            dataPointIndex,
-            value ? parseInt(value, 10) : undefined
-          )
+          actions.updateBitRank(functionalProfileIndex, dataPointIndex, value ? parseInt(value, 10) : undefined)
         }
         placeholder="Enter bit rank (0-15)"
         required={false}

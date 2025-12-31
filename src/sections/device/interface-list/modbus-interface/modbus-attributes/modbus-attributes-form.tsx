@@ -9,16 +9,12 @@ import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
  * Uses the DeviceFormContext to connect to the store.
  */
 export function ModbusAttributesForm() {
-  const { useDeviceState, useValidation, modbusAttributesActions, pathPrefix } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, modbusAttributesActions, pathPrefix } = useDeviceFormContext();
 
   const device = useDeviceState((d) => d);
   const useStore = createDeviceStoreAdapter(device, modbusAttributesActions);
 
-  const fieldPathPrefix = buildDeviceFieldPath(
-    pathPrefix,
-    "interfaceList.modbusInterface.modbusAttributes"
-  );
+  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.modbusAttributes");
 
   return (
     <SharedModbusAttributesForm

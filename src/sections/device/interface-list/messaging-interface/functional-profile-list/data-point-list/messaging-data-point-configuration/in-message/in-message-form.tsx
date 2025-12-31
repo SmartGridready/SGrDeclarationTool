@@ -14,12 +14,7 @@ interface InMessageFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function InMessageForm({
-  inMessage,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: InMessageFormProps) {
+export function InMessageForm({ inMessage, actions, fieldPathPrefix, getError }: InMessageFormProps) {
   if (!inMessage) {
     return null;
   }

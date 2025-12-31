@@ -13,27 +13,21 @@ import {
 /**
  * Type guard to check if a DataTypeFunctionalProfile is an enum type
  */
-export function isEnumDataType(
-  dataType: DataTypeFunctionalProfile
-): dataType is { enum: EnumMapFunctionalProfile } {
+export function isEnumDataType(dataType: DataTypeFunctionalProfile): dataType is { enum: EnumMapFunctionalProfile } {
   return typeof dataType === "object" && "enum" in dataType;
 }
 
 /**
  * Type guard to check if a DataTypeFunctionalProfile is a bitmap type
  */
-export function isBitmapDataType(
-  dataType: DataTypeFunctionalProfile
-): dataType is { bitmap: BitmapFunctionalProfile } {
+export function isBitmapDataType(dataType: DataTypeFunctionalProfile): dataType is { bitmap: BitmapFunctionalProfile } {
   return typeof dataType === "object" && "bitmap" in dataType;
 }
 
 /**
  * Type guard to check if a DataTypeFunctionalProfile is a json type
  */
-export function isJsonDataType(
-  dataType: DataTypeFunctionalProfile
-): dataType is { json: JSonOutputFunctionalProfile } {
+export function isJsonDataType(dataType: DataTypeFunctionalProfile): dataType is { json: JSonOutputFunctionalProfile } {
   return typeof dataType === "object" && "json" in dataType;
 }
 
@@ -43,12 +37,7 @@ export function isJsonDataType(
  */
 export function getSimpleTypeName(dataType: DataTypeFunctionalProfile): string | undefined {
   // Check if it's a simple type (not enum, bitmap, or json)
-  if (
-    typeof dataType !== "object" ||
-    "enum" in dataType ||
-    "bitmap" in dataType ||
-    "json" in dataType
-  ) {
+  if (typeof dataType !== "object" || "enum" in dataType || "bitmap" in dataType || "json" in dataType) {
     return undefined;
   }
 

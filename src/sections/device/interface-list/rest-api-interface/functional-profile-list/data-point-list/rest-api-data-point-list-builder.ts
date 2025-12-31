@@ -2,18 +2,13 @@ import { RestApiDataPointList, RestApiDataPoint } from "@/models/product/rest-ap
 import { buildDataPointBase } from "@/sections/shared/data-point-base/data-point-base-builder";
 import { buildRestApiDataPointConfiguration } from "./rest-api-data-point-configuration/rest-api-data-point-configuration-builder";
 import { wrapInArray } from "@/utils/builder-utils";
-import {
-  validateRestApiDataPointList,
-  validateRestApiDataPoint,
-} from "./rest-api-data-point-list-schema";
+import { validateRestApiDataPointList, validateRestApiDataPoint } from "./rest-api-data-point-list-schema";
 
 /**
  * Builds XML object for dataPointList from RestApiDataPointList model
  * @throws Error if required fields are missing
  */
-export function buildRestApiDataPointList(
-  dataPointList: RestApiDataPointList
-): Record<string, unknown> {
+export function buildRestApiDataPointList(dataPointList: RestApiDataPointList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateRestApiDataPointList(dataPointList);
   if (!validation.success) {
@@ -23,9 +18,7 @@ export function buildRestApiDataPointList(
   }
 
   const listXml: Record<string, unknown> = {
-    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) =>
-      buildRestApiDataPoint(dataPoint)
-    ),
+    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) => buildRestApiDataPoint(dataPoint)),
   };
 
   return listXml;

@@ -85,9 +85,7 @@ const FunctionalProfileFormContext = createContext<FunctionalProfileFormContextV
 export function useFunctionalProfileFormContext(): FunctionalProfileFormContextValue {
   const context = useContext(FunctionalProfileFormContext);
   if (!context) {
-    throw new Error(
-      "useFunctionalProfileFormContext must be used within a FunctionalProfileFormProvider"
-    );
+    throw new Error("useFunctionalProfileFormContext must be used within a FunctionalProfileFormProvider");
   }
   return context;
 }
@@ -103,15 +101,8 @@ export interface FunctionalProfileFormProviderProps {
 /**
  * Provider component for functional profile form context.
  */
-export function FunctionalProfileFormProvider({
-  children,
-  value,
-}: FunctionalProfileFormProviderProps) {
-  return (
-    <FunctionalProfileFormContext.Provider value={value}>
-      {children}
-    </FunctionalProfileFormContext.Provider>
-  );
+export function FunctionalProfileFormProvider({ children, value }: FunctionalProfileFormProviderProps) {
+  return <FunctionalProfileFormContext.Provider value={value}>{children}</FunctionalProfileFormContext.Provider>;
 }
 
 /**

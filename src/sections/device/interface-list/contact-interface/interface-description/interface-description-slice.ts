@@ -24,9 +24,7 @@ export function createContactInterfaceDescriptionSlice<TState extends { device?:
   // Helper to get interface description
   const getInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.contactInterfaceDescription
-      : undefined;
+    return isContactInterface(interfaceList) ? interfaceList.contactInterface.contactInterfaceDescription : undefined;
   };
 
   return {

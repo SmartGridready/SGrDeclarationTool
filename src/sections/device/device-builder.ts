@@ -60,8 +60,7 @@ function buildDevice(device: DeviceFrame): Record<string, unknown> {
     $: {
       xmlns: "http://www.smartgridready.com/ns/V0/",
       "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:schemaLocation":
-        "http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/Product/Product.xsd",
+      "xsi:schemaLocation": "http://www.smartgridready.com/ns/V0/ ../../SchemaDatabase/SGr/Product/Product.xsd",
     },
   };
 
@@ -89,13 +88,8 @@ function buildDevice(device: DeviceFrame): Record<string, unknown> {
   }
 
   // Build optional genericAttributeList
-  if (
-    device.genericAttributeList &&
-    device.genericAttributeList.genericAttributeListElement.length > 0
-  ) {
-    deviceFrame.genericAttributeList = wrapInArray(
-      buildGenericAttributeListProduct(device.genericAttributeList)
-    );
+  if (device.genericAttributeList && device.genericAttributeList.genericAttributeListElement.length > 0) {
+    deviceFrame.genericAttributeList = wrapInArray(buildGenericAttributeListProduct(device.genericAttributeList));
   }
 
   // Build optional interfaceList

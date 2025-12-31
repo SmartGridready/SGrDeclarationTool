@@ -8,47 +8,24 @@ import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 
 export interface JsonSlice {
   setJsonDataType: (index: number, json: JSonOutputFunctionalProfile) => void;
-  addJsonItem: (
-    dataPointIndex: number,
-    item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
-  ) => void;
+  addJsonItem: (dataPointIndex: number, item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile) => void;
   removeJsonItem: (dataPointIndex: number, itemIndex: number) => void;
-  updateJsonArrayItem: (
-    dataPointIndex: number,
-    itemIndex: number,
-    item: JSonArrayOutputFunctionalProfile
-  ) => void;
-  updateJsonElemItem: (
-    dataPointIndex: number,
-    itemIndex: number,
-    item: JSonElemFunctionalProfile
-  ) => void;
+  updateJsonArrayItem: (dataPointIndex: number, itemIndex: number, item: JSonArrayOutputFunctionalProfile) => void;
+  updateJsonElemItem: (dataPointIndex: number, itemIndex: number, item: JSonElemFunctionalProfile) => void;
   addJsonItemAtPath: (
     dataPointIndex: number,
     path: number[],
     item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
   ) => void;
   removeJsonItemAtPath: (dataPointIndex: number, path: number[]) => void;
-  updateJsonArrayItemAtPath: (
-    dataPointIndex: number,
-    path: number[],
-    item: JSonArrayOutputFunctionalProfile
-  ) => void;
-  updateJsonElemItemAtPath: (
-    dataPointIndex: number,
-    path: number[],
-    item: JSonElemFunctionalProfile
-  ) => void;
+  updateJsonArrayItemAtPath: (dataPointIndex: number, path: number[], item: JSonArrayOutputFunctionalProfile) => void;
+  updateJsonElemItemAtPath: (dataPointIndex: number, path: number[], item: JSonElemFunctionalProfile) => void;
   addJsonNestedItem: (
     dataPointIndex: number,
     arrayItemIndex: number,
     item: JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
   ) => void;
-  removeJsonNestedItem: (
-    dataPointIndex: number,
-    arrayItemIndex: number,
-    nestedItemIndex: number
-  ) => void;
+  removeJsonNestedItem: (dataPointIndex: number, arrayItemIndex: number, nestedItemIndex: number) => void;
   updateJsonNestedArrayItem: (
     dataPointIndex: number,
     arrayItemIndex: number,
@@ -105,10 +82,7 @@ export function createJsonSlice<TState>(
     updateJsonArrayItem: (dataPointIndex, itemIndex, item) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
-        const items =
-          dp?.dataPoint.dataType &&
-          "json" in dp.dataPoint.dataType &&
-          dp.dataPoint.dataType.json.items;
+        const items = dp?.dataPoint.dataType && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items;
         if (items && itemIndex >= 0 && itemIndex < items.length) {
           items[itemIndex] = item;
         }
@@ -117,10 +91,7 @@ export function createJsonSlice<TState>(
     updateJsonElemItem: (dataPointIndex, itemIndex, item) =>
       set((state) => {
         const dp = getDataPoint(state, dataPointIndex);
-        const items =
-          dp?.dataPoint.dataType &&
-          "json" in dp.dataPoint.dataType &&
-          dp.dataPoint.dataType.json.items;
+        const items = dp?.dataPoint.dataType && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items;
         if (items && itemIndex >= 0 && itemIndex < items.length) {
           items[itemIndex] = item;
         }
@@ -132,12 +103,7 @@ export function createJsonSlice<TState>(
         if (dp && "json" in dp.dataPoint.dataType && dp.dataPoint.dataType.json.items) {
           const items = dp.dataPoint.dataType.json.items;
           const arrayItem = items[arrayItemIndex];
-          if (
-            arrayItem &&
-            "name" in arrayItem &&
-            arrayItemIndex >= 0 &&
-            arrayItemIndex < items.length
-          ) {
+          if (arrayItem && "name" in arrayItem && arrayItemIndex >= 0 && arrayItemIndex < items.length) {
             const nestedItems = ensureArray(arrayItem.items, () => []);
             nestedItems.push(item);
             arrayItem.items = nestedItems;
@@ -213,18 +179,12 @@ export function createJsonSlice<TState>(
           return;
         }
 
-        let currentItems:
-          | (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[]
-          | undefined = dp.dataPoint.dataType.json.items;
+        let currentItems: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[] | undefined =
+          dp.dataPoint.dataType.json.items;
 
         for (let i = 0; i < path.length; i++) {
           const index = path[i];
-          if (
-            currentItems &&
-            index >= 0 &&
-            index < currentItems.length &&
-            "name" in currentItems[index]
-          ) {
+          if (currentItems && index >= 0 && index < currentItems.length && "name" in currentItems[index]) {
             const arrayItem = currentItems[index] as JSonArrayOutputFunctionalProfile;
             if (i === path.length - 1) {
               const targetItems = ensureArray(arrayItem.items, () => []);
@@ -248,17 +208,10 @@ export function createJsonSlice<TState>(
         const parentPath = path.slice(0, -1);
         const jsonType = dp.dataPoint.dataType.json;
 
-        let currentItems:
-          | (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[]
-          | undefined = jsonType.items;
+        let currentItems: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[] | undefined = jsonType.items;
 
         for (const index of parentPath) {
-          if (
-            currentItems &&
-            index >= 0 &&
-            index < currentItems.length &&
-            "name" in currentItems[index]
-          ) {
+          if (currentItems && index >= 0 && index < currentItems.length && "name" in currentItems[index]) {
             currentItems = (currentItems[index] as JSonArrayOutputFunctionalProfile).items;
           } else {
             return;
@@ -275,18 +228,12 @@ export function createJsonSlice<TState>(
         const dp = getDataPoint(state, dataPointIndex);
         if (!dp || !("json" in dp.dataPoint.dataType) || path.length === 0) return;
 
-        let currentItems:
-          | (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[]
-          | undefined = dp.dataPoint.dataType.json.items;
+        let currentItems: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[] | undefined =
+          dp.dataPoint.dataType.json.items;
 
         for (let i = 0; i < path.length - 1; i++) {
           const index = path[i];
-          if (
-            currentItems &&
-            index >= 0 &&
-            index < currentItems.length &&
-            "name" in currentItems[index]
-          ) {
+          if (currentItems && index >= 0 && index < currentItems.length && "name" in currentItems[index]) {
             currentItems = (currentItems[index] as JSonArrayOutputFunctionalProfile).items;
           } else {
             return;
@@ -304,18 +251,12 @@ export function createJsonSlice<TState>(
         const dp = getDataPoint(state, dataPointIndex);
         if (!dp || !("json" in dp.dataPoint.dataType) || path.length === 0) return;
 
-        let currentItems:
-          | (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[]
-          | undefined = dp.dataPoint.dataType.json.items;
+        let currentItems: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[] | undefined =
+          dp.dataPoint.dataType.json.items;
 
         for (let i = 0; i < path.length - 1; i++) {
           const index = path[i];
-          if (
-            currentItems &&
-            index >= 0 &&
-            index < currentItems.length &&
-            "name" in currentItems[index]
-          ) {
+          if (currentItems && index >= 0 && index < currentItems.length && "name" in currentItems[index]) {
             currentItems = (currentItems[index] as JSonArrayOutputFunctionalProfile).items;
           } else {
             return;

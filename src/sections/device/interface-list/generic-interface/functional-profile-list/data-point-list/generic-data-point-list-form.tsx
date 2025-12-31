@@ -45,18 +45,16 @@ export function GenericDataPointListForm({
   const dataPoints = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isGenericInterface(interfaceList)
-      ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement
+      ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement
       : undefined;
   });
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isGenericInterface(interfaceList)
-      ? !!interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList
+      ? !!interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList
       : false;
   });
 
@@ -115,14 +113,12 @@ function GenericDataPointItemForm({
   const dataPointData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isGenericInterface(interfaceList)
-      ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+      ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement?.[dataPointIndex]
       : undefined;
   });
 
-  const dataPointName =
-    dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
+  const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
   const handleRemove = () => {
     dataPointListSlice.removeDataPoint(dataPointIndex);

@@ -4,10 +4,7 @@
  */
 
 import { FunctionalProfileBase, DataPointBase } from "@/models/generic";
-import {
-  RestApiDataPointConfiguration,
-  RestApiInterfaceDescription,
-} from "@/models/product/rest-api-types";
+import { RestApiDataPointConfiguration, RestApiInterfaceDescription } from "@/models/product/rest-api-types";
 
 export interface RestApiDataPoint extends DataPointBase {
   restApiDataPointConfiguration?: RestApiDataPointConfiguration;

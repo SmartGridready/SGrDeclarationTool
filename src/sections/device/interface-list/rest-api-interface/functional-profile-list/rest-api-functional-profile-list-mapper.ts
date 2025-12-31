@@ -1,7 +1,4 @@
-import {
-  RestApiFunctionalProfileList,
-  RestApiFunctionalProfile,
-} from "@/models/product/rest-api-interface";
+import { RestApiFunctionalProfileList, RestApiFunctionalProfile } from "@/models/product/rest-api-interface";
 import { getFirstElement, mapArray, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-mapper";
 import { mapRestApiDataPointList } from "./data-point-list/rest-api-data-point-list-mapper";

@@ -1,14 +1,8 @@
 import { DeviceFrame } from "@/models";
 import { ModbusDataPoint, ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 import { createEmptyModbusDataPoint } from "@/utils/factory-utils";
-import {
-  createDataPointBaseSlice,
-  DataPointBaseSlice,
-} from "@/sections/shared/data-point-base/data-point-base-slice";
-import {
-  createModbusAttributesSlice,
-  ModbusAttributesSlice,
-} from "./modbus-attributes/modbus-attributes-slice";
+import { createDataPointBaseSlice, DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
+import { createModbusAttributesSlice, ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 import {
   createModbusDataPointConfigurationSlice,
   ModbusDataPointConfigurationSlice,
@@ -33,10 +27,7 @@ export interface ModbusDataPointListSlice {
   ) => ModbusDataPointConfigurationSlice;
 
   // Update blockCacheIdentification for a specific data point
-  updateBlockCacheIdentification: (
-    index: number,
-    blockCacheIdentification: string | undefined
-  ) => void;
+  updateBlockCacheIdentification: (index: number, blockCacheIdentification: string | undefined) => void;
 }
 
 /**

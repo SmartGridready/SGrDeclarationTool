@@ -4,11 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
-import {
-  ModbusLayer6Deviation,
-  MODBUS_LAYER6_DEVIATION_VALUES,
-  ModbusAttributes,
-} from "@/models/product/modbus-types";
+import { ModbusLayer6Deviation, MODBUS_LAYER6_DEVIATION_VALUES, ModbusAttributes } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/models/form-options-helper";
 import { useFormSection } from "@/hooks/use-form-section";
 import { ModbusAttributesSlice } from "./modbus-attributes-slice";
@@ -125,9 +121,7 @@ export function ModbusAttributesForm<TStoreState extends ModbusAttributesSlice>(
               required={false}
               type="number"
               value={modbusAttributes.stepByIncrement?.toString() || ""}
-              onChange={(value) =>
-                actions.updateStepByIncrement(value ? parseFloat(value) : undefined)
-              }
+              onChange={(value) => actions.updateStepByIncrement(value ? parseFloat(value) : undefined)}
               placeholder="Enter step by increment"
               error={getError(fieldPath("stepByIncrement"))}
             />
@@ -150,9 +144,7 @@ export function ModbusAttributesForm<TStoreState extends ModbusAttributesSlice>(
               required={false}
               type="number"
               value={modbusAttributes.pollingLatencyMs?.toString() || ""}
-              onChange={(value) =>
-                actions.updatePollingLatencyMs(value ? parseFloat(value) : undefined)
-              }
+              onChange={(value) => actions.updatePollingLatencyMs(value ? parseFloat(value) : undefined)}
               placeholder="Enter polling latency in milliseconds"
               error={getError(fieldPath("pollingLatencyMs"))}
             />
@@ -162,9 +154,7 @@ export function ModbusAttributesForm<TStoreState extends ModbusAttributesSlice>(
               required={false}
               options={MODBUS_LAYER6_DEVIATION_OPTIONS}
               value={modbusAttributes.layer6Deviation || ""}
-              onChange={(value) =>
-                actions.updateLayer6Deviation((value as ModbusLayer6Deviation) || undefined)
-              }
+              onChange={(value) => actions.updateLayer6Deviation((value as ModbusLayer6Deviation) || undefined)}
               placeholder="Select layer 6 deviation"
               error={getError(fieldPath("layer6Deviation"))}
             />

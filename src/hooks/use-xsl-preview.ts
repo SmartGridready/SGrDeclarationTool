@@ -100,10 +100,7 @@ export function useXslPreview<T>({
 
       html = html.replace(/href="([^"]*\.css)"/g, (_, p) => `href="${fixPath(p, "/xsl/")}"`);
       html = html.replace(/src="([^"]*)"/g, (_, p) => `src="${fixPath(p, "/xsl/")}"`);
-      html = html.replace(
-        /url\(([^)]*)\)/g,
-        (_, p) => `url(${fixPath(p.trim().replace(/["']/g, ""), "/xsl/")})`
-      );
+      html = html.replace(/url\(([^)]*)\)/g, (_, p) => `url(${fixPath(p.trim().replace(/["']/g, ""), "/xsl/")})`);
 
       return html;
     },
@@ -120,8 +117,7 @@ export function useXslPreview<T>({
       const validation = validator(data);
       if (!validation.success) {
         const firstFieldError = getFirstFieldError(validation);
-        const errorMessageText =
-          firstFieldError || "Please fix validation errors before previewing.";
+        const errorMessageText = firstFieldError || "Please fix validation errors before previewing.";
 
         toast.error("Preview failed", {
           description: errorMessageText,

@@ -27,9 +27,7 @@ export function TextareaField({
   rows = 4,
 }: TextareaFieldProps) {
   const hasError = !!error;
-  const textareaClassName = hasError
-    ? `${className} border-destructive focus-visible:ring-destructive`
-    : className;
+  const textareaClassName = hasError ? `${className} border-destructive focus-visible:ring-destructive` : className;
 
   return (
     <div className="space-y-2">

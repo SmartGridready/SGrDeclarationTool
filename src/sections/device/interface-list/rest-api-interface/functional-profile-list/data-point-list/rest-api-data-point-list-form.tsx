@@ -46,18 +46,16 @@ export function RestApiDataPointListForm({
   const dataPoints = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement
+      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement
       : undefined;
   });
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isRestApiInterface(interfaceList)
-      ? !!interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList
+      ? !!interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList
       : false;
   });
 
@@ -116,14 +114,12 @@ function RestApiDataPointItemForm({
   const dataPointData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+          ?.dataPointList?.dataPointListElement?.[dataPointIndex]
       : undefined;
   });
 
-  const dataPointName =
-    dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
+  const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
   const handleRemove = () => {
     dataPointListSlice.removeDataPoint(dataPointIndex);

@@ -16,10 +16,7 @@ import {
   UNITS_VALUES,
 } from "@/models";
 import { createFormOptions } from "@/models/form-options-helper";
-import {
-  useFunctionalProfileFormContext,
-  buildProfileFieldPath,
-} from "@/context/functional-profile-form-context";
+import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
 
 const DATA_DIRECTION_OPTIONS = createFormOptions(DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES);
 const PRESENCE_LEVEL_OPTIONS = createFormOptions(PRESENCE_LEVEL_VALUES);
@@ -41,8 +38,7 @@ import { ParameterListForm } from "@/sections/functional-profile/data-point-list
 import { DataPointGenericAttributeListForm } from "@/sections/functional-profile/data-point-list/generic-attribute-list/generic-attribute-list-form";
 
 export function DataPointListForm() {
-  const { useProfileState, useValidation, pathPrefix, dataPointListActions } =
-    useFunctionalProfileFormContext();
+  const { useProfileState, useValidation, pathPrefix, dataPointListActions } = useFunctionalProfileFormContext();
 
   // Get state from context
   const dataPoints = useProfileState((profile) => profile?.dataPointList?.dataPointListElement);
@@ -82,9 +78,7 @@ export function DataPointListForm() {
               onChange={(value) => actions.updateDataPointName(index, value)}
               placeholder="Enter data point name"
               required={true}
-              error={getError(
-                `dataPointList.dataPointListElement.${index}.dataPoint.dataPointName`
-              )}
+              error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.dataPointName`)}
             />
 
             <FormGroup columns={2}>
@@ -93,13 +87,9 @@ export function DataPointListForm() {
                 name={`dataPoint-${index}-direction`}
                 options={DATA_DIRECTION_OPTIONS as unknown as { value: string; label: string }[]}
                 value={item.dataPoint.dataDirection}
-                onChange={(value) =>
-                  actions.updateDataDirection(index, value as DataDirectionFunctionalProfile)
-                }
+                onChange={(value) => actions.updateDataDirection(index, value as DataDirectionFunctionalProfile)}
                 required={true}
-                error={getError(
-                  `dataPointList.dataPointListElement.${index}.dataPoint.dataDirection`
-                )}
+                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.dataDirection`)}
               />
               <SelectField
                 label="Presence Level"
@@ -108,9 +98,7 @@ export function DataPointListForm() {
                 value={item.dataPoint.presenceLevel}
                 onChange={(value) => actions.updatePresenceLevel(index, value as PresenceLevel)}
                 required={true}
-                error={getError(
-                  `dataPointList.dataPointListElement.${index}.dataPoint.presenceLevel`
-                )}
+                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.presenceLevel`)}
               />
             </FormGroup>
 
@@ -149,13 +137,9 @@ export function DataPointListForm() {
                 name={`dataPoint-${index}-arrayLength`}
                 type="number"
                 value={item.dataPoint.arrayLength?.toString() || ""}
-                onChange={(value) =>
-                  actions.updateArrayLength(index, value ? parseInt(value, 10) : undefined)
-                }
+                onChange={(value) => actions.updateArrayLength(index, value ? parseInt(value, 10) : undefined)}
                 placeholder="Enter array length"
-                error={getError(
-                  `dataPointList.dataPointListElement.${index}.dataPoint.arrayLength`
-                )}
+                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.arrayLength`)}
               />
             </FormGroup>
 

@@ -1,7 +1,4 @@
-import {
-  MessagingFunctionalProfile,
-  MessagingFunctionalProfileList,
-} from "@/models/product/messaging-interface";
+import { MessagingFunctionalProfile, MessagingFunctionalProfileList } from "@/models/product/messaging-interface";
 import { wrapInArray } from "@/utils/builder-utils";
 import { buildFunctionalProfileBase } from "@/sections/shared/functional-profile-base/functional-profile-base-builder";
 import { buildMessagingDataPointList } from "./data-point-list/messaging-data-point-list-builder";
@@ -10,9 +7,7 @@ import { validateMessagingFunctionalProfileList } from "./messaging-functional-p
 /**
  * Builds XML object for functionalProfileListElement from MessagingFunctionalProfile model
  */
-function buildMessagingFunctionalProfile(
-  functionalProfile: MessagingFunctionalProfile
-): Record<string, unknown> {
+function buildMessagingFunctionalProfile(functionalProfile: MessagingFunctionalProfile): Record<string, unknown> {
   // Build the base functional profile properties
   const baseFunctionalProfileXml = buildFunctionalProfileBase(functionalProfile);
 
@@ -36,8 +31,7 @@ export function buildMessagingFunctionalProfileList(
   const validation = validateMessagingFunctionalProfileList(functionalProfileList);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for messaging functional profile list";
+    const errorMessage = firstError?.message || "Validation failed for messaging functional profile list";
     throw new Error(errorMessage);
   }
 

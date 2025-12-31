@@ -67,10 +67,7 @@ export function getFieldError(
 /**
  * Checks if a field has an error
  */
-export function hasFieldError(
-  fieldErrors: Record<string, string[]> | undefined,
-  fieldPath: string
-): boolean {
+export function hasFieldError(fieldErrors: Record<string, string[]> | undefined, fieldPath: string): boolean {
   return getFieldError(fieldErrors, fieldPath) !== undefined;
 }
 

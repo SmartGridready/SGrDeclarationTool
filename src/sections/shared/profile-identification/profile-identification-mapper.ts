@@ -1,28 +1,12 @@
-import {
-  FunctionalProfileIdentification,
-  FunctionalProfileCategory,
-  LevelOfOperation,
-  VersionNumber,
-} from "@/models";
-import {
-  getStringValue,
-  getTypedValue,
-  getNumberValue,
-  getFirstElement,
-  Xml2JsObject,
-} from "@/utils/mapper-utils";
+import { FunctionalProfileIdentification, FunctionalProfileCategory, LevelOfOperation, VersionNumber } from "@/models";
+import { getStringValue, getTypedValue, getNumberValue, getFirstElement, Xml2JsObject } from "@/utils/mapper-utils";
 
 /**
  * Maps XML functionalProfileIdentification to FunctionalProfileIdentification model
  */
-export function mapProfileIdentification(
-  identificationXml: Xml2JsObject | undefined
-): FunctionalProfileIdentification {
+export function mapProfileIdentification(identificationXml: Xml2JsObject | undefined): FunctionalProfileIdentification {
   const identification: FunctionalProfileIdentification = {
-    specificationOwnerIdentification: getStringValue(
-      identificationXml,
-      "specificationOwnerIdentification"
-    ),
+    specificationOwnerIdentification: getStringValue(identificationXml, "specificationOwnerIdentification"),
     functionalProfileCategory: getTypedValue<FunctionalProfileCategory>(
       identificationXml,
       "functionalProfileCategory",

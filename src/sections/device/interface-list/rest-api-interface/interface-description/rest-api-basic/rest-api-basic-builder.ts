@@ -6,9 +6,7 @@ import { validateRestApiBasic } from "./rest-api-basic-schema";
  * Builds XML object for restApiBasic from RestApiBasic model
  * @throws Error if required fields are missing
  */
-export function buildRestApiBasic(
-  restApiBasic: RestApiBasic | undefined
-): Record<string, unknown> | undefined {
+export function buildRestApiBasic(restApiBasic: RestApiBasic | undefined): Record<string, unknown> | undefined {
   if (!restApiBasic) {
     return undefined;
   }

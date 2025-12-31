@@ -5,10 +5,7 @@ import {
   GenericAttributeListProductEnd,
   Units,
 } from "@/models";
-import {
-  createEmptyGenericAttributeProduct,
-  createEmptyGenericAttributeProductEnd,
-} from "@/utils/factory-utils";
+import { createEmptyGenericAttributeProduct, createEmptyGenericAttributeProductEnd } from "@/utils/factory-utils";
 import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 import {
   createGenericAttributeListProductSimpleEnumSlice,
@@ -44,24 +41,14 @@ export interface GenericAttributeListProductSlice
     value: string,
     unit: Units
   ) => void;
-  updateGenericAttributeListElementDataType: (
-    elementIndex: number,
-    dataType: DataTypeProduct
-  ) => void;
+  updateGenericAttributeListElementDataType: (elementIndex: number, dataType: DataTypeProduct) => void;
   updateGenericAttributeListElementValue: (elementIndex: number, value: string) => void;
   updateGenericAttributeListElementUnit: (elementIndex: number, unit: Units) => void;
   // Nested attribute actions
   setGenericAttributeListElementAsNested: (elementIndex: number) => void;
   addNestedGenericAttributeListElement: (elementIndex: number) => void;
-  removeNestedGenericAttributeListElement: (
-    elementIndex: number,
-    nestedElementIndex: number
-  ) => void;
-  updateNestedGenericAttributeListElementName: (
-    elementIndex: number,
-    nestedElementIndex: number,
-    name: string
-  ) => void;
+  removeNestedGenericAttributeListElement: (elementIndex: number, nestedElementIndex: number) => void;
+  updateNestedGenericAttributeListElementName: (elementIndex: number, nestedElementIndex: number, name: string) => void;
   updateNestedGenericAttributeListElementDataType: (
     elementIndex: number,
     nestedElementIndex: number,
@@ -72,11 +59,7 @@ export interface GenericAttributeListProductSlice
     nestedElementIndex: number,
     value: string
   ) => void;
-  updateNestedGenericAttributeListElementUnit: (
-    elementIndex: number,
-    nestedElementIndex: number,
-    unit: Units
-  ) => void;
+  updateNestedGenericAttributeListElementUnit: (elementIndex: number, nestedElementIndex: number, unit: Units) => void;
 }
 
 /**
@@ -106,10 +89,7 @@ export function isNestedGenericAttribute(
 export function createGenericAttributeListProductSlice<TState>(
   set: (fn: (state: TState) => void) => void,
   getGenericAttributeList: (state: TState) => GenericAttributeListProduct | undefined,
-  setGenericAttributeList: (
-    state: TState,
-    genericAttributeList: GenericAttributeListProduct | undefined
-  ) => void
+  setGenericAttributeList: (state: TState, genericAttributeList: GenericAttributeListProduct | undefined) => void
 ): GenericAttributeListProductSlice {
   const getAttribute = (state: TState, elementIndex: number): GenericAttributeProduct | undefined =>
     getGenericAttributeList(state)?.genericAttributeListElement?.[elementIndex];
@@ -226,10 +206,7 @@ export function createGenericAttributeListProductSlice<TState>(
       set((state) => {
         const element = getAttribute(state, elementIndex);
         if (element && isNestedGenericAttribute(element)) {
-          const list = ensureArray(
-            element.genericAttributeList.genericAttributeListElement,
-            () => []
-          );
+          const list = ensureArray(element.genericAttributeList.genericAttributeListElement, () => []);
           list.push(createEmptyGenericAttributeProductEnd());
           element.genericAttributeList.genericAttributeListElement = list;
         }
@@ -239,13 +216,9 @@ export function createGenericAttributeListProductSlice<TState>(
       set((state) => {
         const element = getAttribute(state, elementIndex);
         if (element && isNestedGenericAttribute(element)) {
-          removeArrayItem(
-            element.genericAttributeList.genericAttributeListElement,
-            nestedElementIndex,
-            () => {
-              element.genericAttributeList.genericAttributeListElement = [];
-            }
-          );
+          removeArrayItem(element.genericAttributeList.genericAttributeListElement, nestedElementIndex, () => {
+            element.genericAttributeList.genericAttributeListElement = [];
+          });
         }
       }),
 
@@ -253,8 +226,7 @@ export function createGenericAttributeListProductSlice<TState>(
       set((state) => {
         const element = getAttribute(state, elementIndex);
         if (element && isNestedGenericAttribute(element)) {
-          const nestedElement =
-            element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          const nestedElement = element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
           if (nestedElement) nestedElement.name = name;
         }
       }),
@@ -263,8 +235,7 @@ export function createGenericAttributeListProductSlice<TState>(
       set((state) => {
         const element = getAttribute(state, elementIndex);
         if (element && isNestedGenericAttribute(element)) {
-          const nestedElement =
-            element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          const nestedElement = element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
           if (nestedElement) nestedElement.dataType = dataType;
         }
       }),
@@ -273,8 +244,7 @@ export function createGenericAttributeListProductSlice<TState>(
       set((state) => {
         const element = getAttribute(state, elementIndex);
         if (element && isNestedGenericAttribute(element)) {
-          const nestedElement =
-            element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          const nestedElement = element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
           if (nestedElement) nestedElement.value = value || "";
         }
       }),
@@ -283,8 +253,7 @@ export function createGenericAttributeListProductSlice<TState>(
       set((state) => {
         const element = getAttribute(state, elementIndex);
         if (element && isNestedGenericAttribute(element)) {
-          const nestedElement =
-            element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
+          const nestedElement = element.genericAttributeList.genericAttributeListElement?.[nestedElementIndex];
           if (nestedElement) nestedElement.unit = unit;
         }
       }),

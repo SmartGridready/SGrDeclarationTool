@@ -79,9 +79,7 @@ export const messagingDataPointConfigurationSchema = z.object({
 });
 
 // Type exports for TypeScript inference
-export type MessagingDataPointConfigurationInput = z.input<
-  typeof messagingDataPointConfigurationSchema
->;
+export type MessagingDataPointConfigurationInput = z.input<typeof messagingDataPointConfigurationSchema>;
 export type OutMessageInput = z.input<typeof outMessageSchema>;
 export type InMessageInput = z.input<typeof inMessageSchema>;
 

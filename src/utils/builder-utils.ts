@@ -18,11 +18,7 @@ export function wrapInArray<T>(value: T): T[] {
  * @param field - The field name
  * @param value - The value to include (if defined)
  */
-export function setOptionalXmlField(
-  xmlObject: Record<string, unknown>,
-  field: string,
-  value: unknown
-): void {
+export function setOptionalXmlField(xmlObject: Record<string, unknown>, field: string, value: unknown): void {
   if (value !== undefined && value !== null) {
     xmlObject[field] = wrapInArray(value);
   }

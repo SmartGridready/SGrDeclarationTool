@@ -9,9 +9,7 @@ import { mapGenericInterface } from "./generic-interface/generic-interface-mappe
 /**
  * Maps XML interfaceList to InterfaceList model
  */
-export function mapInterfaceList(
-  interfaceListXml: Xml2JsObject | undefined
-): InterfaceList | undefined {
+export function mapInterfaceList(interfaceListXml: Xml2JsObject | undefined): InterfaceList | undefined {
   if (!interfaceListXml) {
     return undefined;
   }

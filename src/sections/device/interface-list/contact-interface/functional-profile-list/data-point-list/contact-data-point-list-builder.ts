@@ -1,18 +1,13 @@
 import { ContactsDataPointList } from "@/models/product/contact-interface";
 import { DataPointBase } from "@/models/generic";
 import { buildDataPointBase } from "@/sections/shared/data-point-base/data-point-base-builder";
-import {
-  validateContactDataPointList,
-  validateContactDataPoint,
-} from "./contact-data-point-list-schema";
+import { validateContactDataPointList, validateContactDataPoint } from "./contact-data-point-list-schema";
 
 /**
  * Builds XML object for dataPointList from ContactsDataPointList model
  * @throws Error if required fields are missing
  */
-export function buildContactDataPointList(
-  dataPointList: ContactsDataPointList
-): Record<string, unknown> {
+export function buildContactDataPointList(dataPointList: ContactsDataPointList): Record<string, unknown> {
   // Validate using validation layer
   const validation = validateContactDataPointList(dataPointList);
   if (!validation.success) {
@@ -22,9 +17,7 @@ export function buildContactDataPointList(
   }
 
   const listXml: Record<string, unknown> = {
-    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) =>
-      buildContactDataPoint(dataPoint)
-    ),
+    dataPointListElement: dataPointList.dataPointListElement.map((dataPoint) => buildContactDataPoint(dataPoint)),
   };
 
   return listXml;

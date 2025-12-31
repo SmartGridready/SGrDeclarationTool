@@ -50,9 +50,7 @@ export function createProfileStoreAdapter<TActions>(
   actions: TActions
 ) {
   return <TSelected>(
-    selector: (
-      store: { profile?: import("@/models").FunctionalProfileFrame } & TActions
-    ) => TSelected
+    selector: (store: { profile?: import("@/models").FunctionalProfileFrame } & TActions) => TSelected
   ): TSelected => {
     const adaptedStore = {
       profile,
@@ -161,9 +159,7 @@ export function useFormSection<
   // Use stable selectors with the store
   const state = config.useStore(stableStateSelector);
   const actions = config.useStore(stableActionsSelector);
-  const isAddedValue = config.useStore(
-    config.isAddedSelector ? stableIsAddedSelector : () => false
-  );
+  const isAddedValue = config.useStore(config.isAddedSelector ? stableIsAddedSelector : () => false);
   const isAdded = config.isAddedSelector ? isAddedValue : false;
 
   const { getError } = config.useValidation();

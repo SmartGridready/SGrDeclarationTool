@@ -15,9 +15,7 @@ export const scalingFactorSchema = z.object({
 export type ScalingFactorInput = z.input<typeof scalingFactorSchema>;
 
 // Validators
-export function validateScalingFactor(
-  scalingFactor: ScalingFactor
-): ValidationResult<ScalingFactor> {
+export function validateScalingFactor(scalingFactor: ScalingFactor): ValidationResult<ScalingFactor> {
   const result = validateWithSchema(scalingFactorSchema, scalingFactor);
   return result as ValidationResult<ScalingFactor>;
 }

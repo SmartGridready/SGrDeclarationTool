@@ -6,20 +6,13 @@ import { mapDataPointBase } from "@/sections/shared/data-point-base/data-point-b
 /**
  * Maps XML dataPointList to GenericDataPointList model
  */
-export function mapGenericDataPointList(
-  dataPointListXml: Xml2JsObject | undefined
-): GenericDataPointList {
+export function mapGenericDataPointList(dataPointListXml: Xml2JsObject | undefined): GenericDataPointList {
   if (!dataPointListXml) {
     throw new Error("dataPointList is required");
   }
 
   return {
-    dataPointListElement: mapArray(
-      dataPointListXml,
-      "dataPointListElement",
-      mapGenericDataPoint,
-      []
-    ),
+    dataPointListElement: mapArray(dataPointListXml, "dataPointListElement", mapGenericDataPoint, []),
   };
 }
 

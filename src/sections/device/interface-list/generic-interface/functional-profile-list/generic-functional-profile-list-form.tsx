@@ -21,8 +21,7 @@ function isGenericInterface(
 }
 
 export function GenericFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, genericFunctionalProfileListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, pathPrefix, genericFunctionalProfileListActions } = useDeviceFormContext();
 
   const fieldPathPrefix = pathPrefix
     ? buildDeviceFieldPath(pathPrefix, "interfaceList.genericInterface.functionalProfileList")
@@ -38,14 +37,11 @@ export function GenericFunctionalProfileListForm() {
 
   const isAdded = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
-    return isGenericInterface(interfaceList)
-      ? !!interfaceList.genericInterface.functionalProfileList
-      : false;
+    return isGenericInterface(interfaceList) ? !!interfaceList.genericInterface.functionalProfileList : false;
   });
 
   const handleAdd = () => genericFunctionalProfileListActions.addEmptyGenericFunctionalProfile();
-  const handleRemove = () =>
-    genericFunctionalProfileListActions.removeAllGenericFunctionalProfiles();
+  const handleRemove = () => genericFunctionalProfileListActions.removeAllGenericFunctionalProfiles();
 
   return (
     <FormSection
@@ -68,12 +64,8 @@ export function GenericFunctionalProfileListForm() {
           <GenericFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={genericFunctionalProfileListActions.getGenericFunctionalProfileSlice(
-              index
-            )}
-            dataPointListSlice={genericFunctionalProfileListActions.getGenericDataPointListSlice(
-              index
-            )}
+            functionalProfileSlice={genericFunctionalProfileListActions.getGenericFunctionalProfileSlice(index)}
+            dataPointListSlice={genericFunctionalProfileListActions.getGenericDataPointListSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -95,15 +87,12 @@ function GenericFunctionalProfileItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: GenericFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, genericFunctionalProfileListActions } =
-    useDeviceFormContext();
+  const { useDeviceState, useValidation, genericFunctionalProfileListActions } = useDeviceFormContext();
 
   const functionalProfileData = useDeviceState((d) => {
     const interfaceList = d?.interfaceList;
     return isGenericInterface(interfaceList)
-      ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]
+      ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
       : undefined;
   });
 

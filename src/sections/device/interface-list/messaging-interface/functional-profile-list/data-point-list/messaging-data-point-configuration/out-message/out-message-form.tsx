@@ -14,12 +14,7 @@ interface OutMessageFormProps {
   getError: (fieldPath: string) => string | undefined;
 }
 
-export function OutMessageForm({
-  outMessage,
-  actions,
-  fieldPathPrefix,
-  getError,
-}: OutMessageFormProps) {
+export function OutMessageForm({ outMessage, actions, fieldPathPrefix, getError }: OutMessageFormProps) {
   if (!outMessage) {
     return null;
   }

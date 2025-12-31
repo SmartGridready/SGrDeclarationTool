@@ -41,10 +41,7 @@ export function createRequestFormSlice<TState>(
           if (!serviceCall.requestForm) {
             serviceCall.requestForm = { parameter: [] };
           }
-          serviceCall.requestForm.parameter = ensureArray(
-            serviceCall.requestForm.parameter,
-            () => []
-          );
+          serviceCall.requestForm.parameter = ensureArray(serviceCall.requestForm.parameter, () => []);
           serviceCall.requestForm.parameter.push({ name: "", value: "" });
         }
       }),

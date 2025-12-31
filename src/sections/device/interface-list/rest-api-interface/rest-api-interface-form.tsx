@@ -20,9 +20,7 @@ export function RestApiInterfaceForm() {
   const { useDeviceState } = useDeviceFormContext();
 
   const interfaceList = useDeviceState((d) => d?.interfaceList);
-  const restApiInterface = isRestApiInterface(interfaceList)
-    ? interfaceList.restApiInterface
-    : undefined;
+  const restApiInterface = isRestApiInterface(interfaceList) ? interfaceList.restApiInterface : undefined;
 
   // Don't render if REST API interface is not selected
   if (!restApiInterface) {

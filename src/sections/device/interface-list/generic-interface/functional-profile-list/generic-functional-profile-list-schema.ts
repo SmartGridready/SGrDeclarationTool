@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  GenericFunctionalProfileList,
-  GenericFunctionalProfile,
-} from "@/models/product/generic-interface";
+import { GenericFunctionalProfileList, GenericFunctionalProfile } from "@/models/product/generic-interface";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 import { functionalProfileBaseSchema } from "@/sections/shared/functional-profile-base/functional-profile-base-schema";
 import { genericDataPointListSchema } from "./data-point-list/generic-data-point-list-schema";

@@ -1,15 +1,9 @@
 import { RestApiServiceCall } from "@/models/product/rest-api-types";
-import {
-  createRequestHeaderSlice,
-  RequestHeaderSlice,
-} from "./request-header/request-header-slice";
+import { createRequestHeaderSlice, RequestHeaderSlice } from "./request-header/request-header-slice";
 import { createRequestBasicSlice, RequestBasicSlice } from "./request-basic/request-basic-slice";
 import { createRequestQuerySlice, RequestQuerySlice } from "./request-query/request-query-slice";
 import { createRequestFormSlice, RequestFormSlice } from "./request-form/request-form-slice";
-import {
-  createResponseQuerySlice,
-  ResponseQuerySlice,
-} from "./response-query/response-query-slice";
+import { createResponseQuerySlice, ResponseQuerySlice } from "./response-query/response-query-slice";
 import { createValueMappingSlice, ValueMappingSlice } from "./value-mapping/value-mapping-slice";
 
 export interface RestApiServiceCallSlice
@@ -32,11 +26,7 @@ export function createRestApiServiceCallSlice<TState>(
   setRestApiServiceCall: (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => void
 ): RestApiServiceCallSlice {
   const requestHeaderSlice = createRequestHeaderSlice(set, getRestApiServiceCall);
-  const requestBasicSlice = createRequestBasicSlice(
-    set,
-    getRestApiServiceCall,
-    setRestApiServiceCall
-  );
+  const requestBasicSlice = createRequestBasicSlice(set, getRestApiServiceCall, setRestApiServiceCall);
   const requestQuerySlice = createRequestQuerySlice(set, getRestApiServiceCall);
   const requestFormSlice = createRequestFormSlice(set, getRestApiServiceCall);
   const responseQuerySlice = createResponseQuerySlice(set, getRestApiServiceCall);

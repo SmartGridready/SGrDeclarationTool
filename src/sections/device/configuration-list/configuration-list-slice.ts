@@ -24,10 +24,7 @@ export interface ConfigurationListSlice
   removeConfigurationListElement: (configIndex: number) => void;
   updateConfigurationListElementName: (configIndex: number, name: string) => void;
   updateConfigurationListElementDataType: (configIndex: number, dataType: DataTypeProduct) => void;
-  updateConfigurationListElementDefaultValue: (
-    configIndex: number,
-    defaultValue: string | undefined
-  ) => void;
+  updateConfigurationListElementDefaultValue: (configIndex: number, defaultValue: string | undefined) => void;
 }
 
 export function createConfigurationListSlice<TState extends { device?: DeviceFrame }>(
@@ -62,10 +59,7 @@ export function createConfigurationListSlice<TState extends { device?: DeviceFra
           if (!state.device.configurationList) {
             state.device.configurationList = { configurationListElement: [] };
           }
-          const list = ensureArray(
-            state.device.configurationList.configurationListElement,
-            () => []
-          );
+          const list = ensureArray(state.device.configurationList.configurationListElement, () => []);
           list.push(createEmptyConfigurationListElement());
           state.device.configurationList.configurationListElement = list;
         }
@@ -74,17 +68,13 @@ export function createConfigurationListSlice<TState extends { device?: DeviceFra
     removeConfigurationListElement: (configIndex) =>
       set((state) => {
         if (state.device?.configurationList?.configurationListElement) {
-          removeArrayItem(
-            state.device.configurationList.configurationListElement,
-            configIndex,
-            () => {
-              // Since configurationListElement is required (minOccurs=1),
-              // remove the entire configurationList when empty
-              if (state.device) {
-                state.device.configurationList = undefined;
-              }
+          removeArrayItem(state.device.configurationList.configurationListElement, configIndex, () => {
+            // Since configurationListElement is required (minOccurs=1),
+            // remove the entire configurationList when empty
+            if (state.device) {
+              state.device.configurationList = undefined;
             }
-          );
+          });
         }
       }),
 

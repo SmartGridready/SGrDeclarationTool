@@ -19,9 +19,7 @@ import { mapRestApiBearer } from "./rest-api-bearer/rest-api-bearer-mapper";
 /**
  * Maps XML restApiInterfaceDescription to RestApiInterfaceDescription model
  */
-export function mapRestApiInterfaceDescription(
-  descriptionXml: Xml2JsObject | undefined
-): RestApiInterfaceDescription {
+export function mapRestApiInterfaceDescription(descriptionXml: Xml2JsObject | undefined): RestApiInterfaceDescription {
   if (!descriptionXml) {
     throw new Error("restApiInterfaceDescription is required");
   }
@@ -39,10 +37,7 @@ export function mapRestApiInterfaceDescription(
   setOptionalField(
     description,
     "restApiAuthenticationMethod",
-    getOptionalTypedValue<RestApiAuthenticationMethod>(
-      descriptionXml,
-      "restApiAuthenticationMethod"
-    )
+    getOptionalTypedValue<RestApiAuthenticationMethod>(descriptionXml, "restApiAuthenticationMethod")
   );
 
   // Map optional restApiBearer
@@ -59,9 +54,7 @@ export function mapRestApiInterfaceDescription(
   setOptionalField(
     description,
     "restApiVerifyCertificate",
-    getOptionalStringValue(descriptionXml, "restApiVerifyCertificate") as
-      | BooleanParameter
-      | undefined
+    getOptionalStringValue(descriptionXml, "restApiVerifyCertificate") as BooleanParameter | undefined
   );
 
   return description;

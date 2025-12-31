@@ -212,8 +212,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
       });
     } catch (error) {
       toast.dismiss(loadingToast);
-      const errorMessage =
-        error instanceof Error ? error.message : ERROR_MESSAGES.FILE_IMPORT.UNKNOWN_ERROR;
+      const errorMessage = error instanceof Error ? error.message : ERROR_MESSAGES.FILE_IMPORT.UNKNOWN_ERROR;
       toast.error(ERROR_MESSAGES.FILE_IMPORT.FAILED, {
         description: errorMessage,
         duration: 5000,
@@ -332,9 +331,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
       {data ? (
         FormComponent
       ) : (
-        <div className="text-center text-muted-foreground py-12">
-          No {itemNameCapitalized} loaded.
-        </div>
+        <div className="text-center text-muted-foreground py-12">No {itemNameCapitalized} loaded.</div>
       )}
 
       {DEBUG && (

@@ -14,8 +14,7 @@ export function buildModbusDataPointConfiguration(
   const validation = validateModbusDataPointConfiguration(configuration);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage =
-      firstError?.message || "Validation failed for modbus data point configuration";
+    const errorMessage = firstError?.message || "Validation failed for modbus data point configuration";
     throw new Error(errorMessage);
   }
   const configurationXml: Record<string, unknown> = {

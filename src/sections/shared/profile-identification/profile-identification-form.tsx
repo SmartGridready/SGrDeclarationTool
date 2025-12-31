@@ -59,9 +59,7 @@ interface ProfileIdentificationFormProps<TStoreState extends FunctionalProfileId
   nested?: boolean;
 }
 
-export function ProfileIdentificationForm<
-  TStoreState extends FunctionalProfileIdentificationSlice,
->({
+export function ProfileIdentificationForm<TStoreState extends FunctionalProfileIdentificationSlice>({
   useStore,
   useValidation,
   stateSelector,
@@ -80,8 +78,7 @@ export function ProfileIdentificationForm<
     useStore,
     useValidation,
     stateSelector,
-    actionsSelector: (store) =>
-      store as FunctionalProfileIdentificationSlice & Record<string, unknown>,
+    actionsSelector: (store) => store as FunctionalProfileIdentificationSlice & Record<string, unknown>,
     isAddedSelector: required ? undefined : isAddedSelector,
   });
 
@@ -114,9 +111,7 @@ export function ProfileIdentificationForm<
           options={PROFILE_IDENTIFICATION_CATEGORY}
           required={true}
           value={identification?.functionalProfileCategory}
-          onChange={(value) =>
-            actions.updateFunctionalProfileCategory(value as FunctionalProfileCategory)
-          }
+          onChange={(value) => actions.updateFunctionalProfileCategory(value as FunctionalProfileCategory)}
           error={getFieldError("functionalProfileCategory")}
         />
       </FormGroup>
@@ -158,9 +153,7 @@ export function ProfileIdentificationForm<
           type="number"
           required={true}
           value={identification?.versionNumber?.secondaryVersionNumber?.toString()}
-          onChange={(value) =>
-            actions.updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)
-          }
+          onChange={(value) => actions.updateSecondaryVersionNumber(value ? parseInt(value, 10) : 0)}
           error={getFieldError("versionNumber.secondaryVersionNumber")}
         />
         <InputField
@@ -169,9 +162,7 @@ export function ProfileIdentificationForm<
           type="number"
           required={true}
           value={identification?.versionNumber?.subReleaseVersionNumber?.toString()}
-          onChange={(value) =>
-            actions.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)
-          }
+          onChange={(value) => actions.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : 0)}
           error={getFieldError("versionNumber.subReleaseVersionNumber")}
         />
       </FormGroup>

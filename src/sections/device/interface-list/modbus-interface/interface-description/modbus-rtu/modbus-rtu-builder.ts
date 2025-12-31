@@ -22,9 +22,7 @@ export function buildModbusRtu(modbusRtu: ModbusRtu): Record<string, unknown> {
     byteLenSelected: wrapInArray(modbusRtu.byteLenSelected),
     paritySelected: wrapInArray(modbusRtu.paritySelected),
     stopBitLenSelected: wrapInArray(modbusRtu.stopBitLenSelected),
-    serialInterfaceCapability: wrapInArray(
-      buildSerialInterfaceCapability(modbusRtu.serialInterfaceCapability)
-    ),
+    serialInterfaceCapability: wrapInArray(buildSerialInterfaceCapability(modbusRtu.serialInterfaceCapability)),
   };
 
   return modbusRtuXml;

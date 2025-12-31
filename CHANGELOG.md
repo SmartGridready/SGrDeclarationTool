@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.22.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.21.0...v0.22.0) (2025-12-31)
+
+
+### Features
+
+* implemente declaration preview using sgr's xsl files (GL-20) ([29c3457](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/29c34571bb39bc3dc21022017ac5317cadcf6084))
+* upload sgr xsl files (GL-20) ([6e64224](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6e6422465f31caa7ca1c1947a528ebfc9db33d29))
+
+
+### Bug Fixes
+
+* implement validation error within an interface list (GL-18) ([9255313](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/925531373b1a8d0250ca76ea52b6d2ef9eb9db92))
+
+
+### Chores
+
+* resolve all linting warnings by removing unused vars and imports ([bceb694](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bceb694802cecaf69dd9347abd191e54977d4914))
+
+
+### Code Refactoring
+
+* make generic editor to use for devices and functional profiles (GL-14) ([fcb1c67](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fcb1c67e3e0170696248cca43b19c31c3adfbfac))
+
 ## [0.21.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.20.0...v0.21.0) (2025-12-30)
 
 

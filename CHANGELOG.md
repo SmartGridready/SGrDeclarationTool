@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.23.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.22.0...v0.23.0) (2025-12-31)
+
+
+### Features
+
+* add reusable LoadingSpinner component and standardize loading states across app including page switch (GL-14) ([bb70a09](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bb70a0942de9bec0ad1ff6d68d75d3a5a5b961fe))
+
+
+### Code Refactoring
+
+* extract shared XmlTestPage to eliminate test page duplication (GL-5) ([d730e50](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d730e50b0713e2532d66af3117913a5afdc91d68))
+* implement base modal to use for all modals (GL-14) ([93185b8](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/93185b82fb42bc2f4c957d121e6cbcac2467e3fc))
+* implement path based validation error messages (GL-18) ([a9aac14](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/a9aac141171700001d299b3764ea8529b432e508))
+
+
+### Chores
+
+* increase max line width and format codebase (GL-2) ([529956c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/529956cfc8d61c395ed4f691010d4348703a0dca))
+
 ## [0.22.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.21.0...v0.22.0) (2025-12-31)
 
 

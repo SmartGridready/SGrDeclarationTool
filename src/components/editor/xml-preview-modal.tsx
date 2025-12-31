@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/shadcn/dialog";
+import { BaseModal } from "@/components/editor/base-modal";
 import { Button } from "@/components/shadcn/button";
 import { Loader2 } from "lucide-react";
 
@@ -10,50 +10,63 @@ interface XmlPreviewModalProps {
   previewHtml: string | null;
   isLoading: boolean;
   title?: string;
+  width?: string | number;
+  height?: string | number;
 }
 
+/**
+ * XML Preview Modal - Displays rendered XML/XSL preview
+ */
 export function XmlPreviewModal({
   open,
   onOpenChange,
   previewHtml,
   isLoading,
   title = "XML Preview",
+  width = "90vw",
+  height = "85vh",
 }: XmlPreviewModalProps) {
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] w-full h-[90vh] flex flex-col p-0">
-        <DialogHeader className="px-6 pt-6 pb-4 border-b">
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-
-        <div className="flex-1 overflow-hidden relative">
-          {isLoading ? (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex flex-col items-center gap-4">
-                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">Generating preview...</p>
-              </div>
-            </div>
-          ) : previewHtml ? (
-            <iframe
-              srcDoc={previewHtml}
-              className="w-full h-full border-0"
-              title="XML Preview"
-              sandbox="allow-same-origin allow-scripts"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-muted-foreground">No preview available</p>
-            </div>
-          )}
+  const content = (
+    <div className="h-full w-full overflow-hidden relative">
+      {isLoading ? (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">Generating preview...</p>
+          </div>
         </div>
+      ) : previewHtml ? (
+        <iframe
+          srcDoc={previewHtml}
+          className="w-full h-full border-0"
+          title="XML Preview"
+          sandbox="allow-same-origin allow-scripts"
+        />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <p className="text-muted-foreground">No preview available</p>
+        </div>
+      )}
+    </div>
+  );
 
-        <div className="px-6 py-4 border-t flex justify-end">
+  return (
+    <BaseModal
+      open={open}
+      onOpenChange={onOpenChange}
+      title={title}
+      content={content}
+      width={width}
+      height={height}
+      className="p-0"
+      contentClassName="p-0"
+      footer={
+        <div className="flex justify-end px-6 py-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Close
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      }
+    />
   );
 }

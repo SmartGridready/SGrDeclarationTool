@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import { Upload, ChevronDown, HardDrive, Library, Download } from "lucide-react";
+import { Upload, ChevronDown, HardDrive, Library, Download, Eye } from "lucide-react";
 
 interface EditorActionsProps {
   title: string;
@@ -17,6 +17,7 @@ interface EditorActionsProps {
   onEmpty?: () => void;
   onClear: () => void;
   onExport?: () => void;
+  onPreview?: () => void;
   emptyButtonLabel?: string;
   isLoading?: boolean;
 }
@@ -28,6 +29,7 @@ export function EditorActions({
   onEmpty,
   onClear,
   onExport,
+  onPreview,
   emptyButtonLabel = "Empty",
   isLoading = false,
 }: EditorActionsProps) {
@@ -79,6 +81,13 @@ export function EditorActions({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {onPreview && (
+          <Button variant="outline" onClick={onPreview} disabled={isLoading}>
+            <Eye className="h-4 w-4 mr-2" />
+            Preview
+          </Button>
+        )}
 
         {onExport && (
           <Button variant="outline" onClick={onExport} disabled={isLoading}>

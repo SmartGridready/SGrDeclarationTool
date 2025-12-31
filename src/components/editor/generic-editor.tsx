@@ -4,6 +4,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { useFileImport } from "@/hooks/use-file-import";
 import { useFileExport } from "@/hooks/use-file-export";
+import { useXslPreview } from "@/hooks/use-xsl-preview";
 import { LibraryItem } from "@/utils/library-api-utils";
 import { ValidationResult } from "@/utils/validation-utils";
 import { DEBUG } from "@/debug-config";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 import { EditorActions } from "@/components/editor/editor-actions";
 import { ConfirmationDialog } from "@/components/editor/confirmation-dialog";
 import { LibraryImportModal } from "@/components/editor/library-import-modal";
+import { XmlPreviewModal } from "@/components/editor/xml-preview-modal";
 import { Button } from "@/components/shadcn/button";
 
 export interface EditorConfig<T> {
@@ -76,6 +78,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
   const [showImportDialog, setShowImportDialog] = useState(false);
   const [showLibraryImportDialog, setShowLibraryImportDialog] = useState(false);
   const [showLibraryImportConfirmation, setShowLibraryImportConfirmation] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [libraryItems, setLibraryItems] = useState<LibraryItem[]>([]);
   const [libraryLoading, setLibraryLoading] = useState(false);
   const [libraryError, setLibraryError] = useState<string | null>(null);
@@ -97,6 +100,18 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
     builder,
     data,
     filename: exportFilename,
+    errorMessage: exportErrorMessage,
+    validator,
+  });
+
+  const {
+    generatePreview,
+    previewHtml,
+    isLoading: previewLoading,
+    setPreviewHtml,
+  } = useXslPreview({
+    builder,
+    data,
     errorMessage: exportErrorMessage,
     validator,
   });
@@ -213,6 +228,13 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
     }
   }, [showLibraryImportDialog, libraryItems.length, libraryLoading, libraryError]);
 
+  const handlePreview = async () => {
+    const html = await generatePreview();
+    if (html) {
+      setShowPreviewModal(true);
+    }
+  };
+
   const handleDebugPrint = () => {
     if (data) {
       const jsonString = JSON.stringify(data, null, 2);
@@ -239,6 +261,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
         onClear={handleClear}
         onImportFromFilesystem={handleImport}
         onImportFromLibrary={handleLibraryImport}
+        onPreview={handlePreview}
         onExport={exportFile}
         emptyButtonLabel={emptyButtonLabel}
       />
@@ -290,6 +313,19 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
         onSelect={handleLibraryItemSelect}
         confirmLabel="Import"
         searchPlaceholder={searchPlaceholder}
+      />
+
+      <XmlPreviewModal
+        open={showPreviewModal}
+        onOpenChange={(open) => {
+          setShowPreviewModal(open);
+          if (!open) {
+            setPreviewHtml(null);
+          }
+        }}
+        previewHtml={previewHtml}
+        isLoading={previewLoading}
+        title={`${itemNameCapitalized} Preview`}
       />
 
       {data ? (

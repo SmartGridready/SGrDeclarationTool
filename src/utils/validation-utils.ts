@@ -75,6 +75,33 @@ export function hasFieldError(
 }
 
 /**
+ * Gets the first field error message from validation result with full path
+ * Returns a user-friendly message showing which field is missing/invalid
+ * Format: "fieldPath: error message" (e.g., "deviceFrame.deviceName: is required")
+ */
+export function getFirstFieldError<T>(validation: ValidationResult<T>): string | undefined {
+  if (validation.success) return undefined;
+
+  // Try to get the first field error from fieldErrors
+  if (validation.fieldErrors) {
+    const firstFieldPath = Object.keys(validation.fieldErrors)[0];
+    if (firstFieldPath) {
+      const firstError = validation.fieldErrors[firstFieldPath]?.[0];
+      if (firstError) {
+        return `${firstFieldPath}: ${firstError}`;
+      }
+    }
+  }
+
+  // Fallback to first error from issues
+  if (validation.errors?.issues?.[0]) {
+    return validation.errors.issues[0].message;
+  }
+
+  return undefined;
+}
+
+/**
  * Generic validation function that wraps schema validation
  */
 export function validateWithSchema<T>(schema: z.ZodSchema<T>, data: unknown): ValidationResult<T> {

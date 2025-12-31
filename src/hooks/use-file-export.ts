@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/constants/success-messages";
 import { useValidationStore } from "@/sections/shared/validation-store";
-import { ValidationResult } from "@/utils/validation-utils";
+import { ValidationResult, getFirstFieldError } from "@/utils/validation-utils";
 
 /**
  * Generic file export hook for XML files
@@ -30,32 +30,6 @@ export function useFileExport<T>({
   validator?: (data: T) => ValidationResult<T>;
 }) {
   const setValidationAttempted = useValidationStore((state) => state.setValidationAttempted);
-
-  /**
-   * Gets the first field error message from validation result
-   * Returns a user-friendly message showing which field is missing/invalid
-   */
-  const getFirstFieldError = (validation: ValidationResult<unknown>): string | undefined => {
-    if (validation.success) return undefined;
-
-    // Try to get the first field error from fieldErrors
-    if (validation.fieldErrors) {
-      const firstFieldPath = Object.keys(validation.fieldErrors)[0];
-      if (firstFieldPath) {
-        const firstError = validation.fieldErrors[firstFieldPath]?.[0];
-        if (firstError) {
-          return firstError;
-        }
-      }
-    }
-
-    // Fallback to first error from issues
-    if (validation.errors?.issues?.[0]) {
-      return validation.errors.issues[0].message;
-    }
-
-    return undefined;
-  };
 
   const exportFile = useCallback(async () => {
     if (!data) {

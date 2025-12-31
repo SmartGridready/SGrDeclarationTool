@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
-import { ValidationResult } from "@/utils/validation-utils";
+import { ValidationResult, getFirstFieldError } from "@/utils/validation-utils";
 
 export function useXslPreview<T>({
   builder,
@@ -119,8 +119,12 @@ export function useXslPreview<T>({
     if (validator) {
       const validation = validator(data);
       if (!validation.success) {
+        const firstFieldError = getFirstFieldError(validation);
+        const errorMessageText =
+          firstFieldError || "Please fix validation errors before previewing.";
+
         toast.error("Preview failed", {
-          description: "Please fix validation errors before previewing.",
+          description: errorMessageText,
           duration: 5000,
         });
         return null;

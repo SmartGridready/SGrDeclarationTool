@@ -21,8 +21,11 @@ export const genericAttributeProductEndSchema = z.object({
 });
 
 // Generic Attribute List Product End Schema (nested list)
+// genericAttributeListElement has minOccurs="1" maxOccurs="unbounded" in XSD
 export const genericAttributeListProductEndSchema = z.object({
-  genericAttributeListElement: z.array(genericAttributeProductEndSchema),
+  genericAttributeListElement: z
+    .array(genericAttributeProductEndSchema)
+    .min(1, "At least one generic attribute list element is required"),
 });
 
 // Generic Attribute Product Schema (union of simple and nested)
@@ -44,8 +47,11 @@ export const genericAttributeProductSchema = z.union([
 ]);
 
 // Generic Attribute List Product Schema
+// genericAttributeListElement has minOccurs="1" maxOccurs="unbounded" in XSD
 export const genericAttributeListProductSchema = z.object({
-  genericAttributeListElement: z.array(genericAttributeProductSchema),
+  genericAttributeListElement: z
+    .array(genericAttributeProductSchema)
+    .min(1, "At least one generic attribute list element is required"),
 });
 
 // Type exports for TypeScript inference

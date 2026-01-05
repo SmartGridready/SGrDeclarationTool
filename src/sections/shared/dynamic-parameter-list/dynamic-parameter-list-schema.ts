@@ -19,7 +19,7 @@ export const parameterListElementSchema = z.object({
   name: z.string({ message: "Parameter name is required" }).min(1, "Parameter name cannot be empty"),
   dataType: dataTypeProductSchema,
   defaultValue: z.string().optional(),
-  parameterDescription: z.array(dynamicParameterDescriptionSchema).max(4).optional(),
+  parameterDescription: z.array(dynamicParameterDescriptionSchema).optional(), // maxOccurs="unbounded" in XSD
 });
 
 // Parameter List Schema

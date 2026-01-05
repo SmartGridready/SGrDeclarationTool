@@ -16,26 +16,32 @@ const modbusBooleanSchema = z.union([
 ]);
 
 // Enum schema (used in Modbus)
+// enumEntry has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 const enumSchema = z.object({
-  enumEntry: z.array(
-    z.object({
-      literal: z.string(),
-      ordinal: z.number(),
-      description: z.string().optional(),
-    })
-  ),
+  enumEntry: z
+    .array(
+      z.object({
+        literal: z.string().min(1, "Literal is required"),
+        ordinal: z.number().int("Ordinal must be an integer"), // Required in EnumEntry (not optional like EnumEntryProductRecord)
+        description: z.string().optional(),
+      })
+    )
+    .min(1, "At least one enum entry is required"),
   hexMask: z.string().optional(),
 });
 
 // Bitmap schema (used in Modbus - same as BitmapProduct)
+// bitmapEntry has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 const bitmapSchema = z.object({
-  bitmapEntry: z.array(
-    z.object({
-      literal: z.string(),
-      hexMask: z.string(),
-      description: z.string().optional(),
-    })
-  ),
+  bitmapEntry: z
+    .array(
+      z.object({
+        literal: z.string().min(1, "Literal is required"),
+        hexMask: z.string().min(1, "Hex mask is required"),
+        description: z.string().optional(),
+      })
+    )
+    .min(1, "At least one bitmap entry is required"),
 });
 
 export const modbusDataTypeSchema = z.union([

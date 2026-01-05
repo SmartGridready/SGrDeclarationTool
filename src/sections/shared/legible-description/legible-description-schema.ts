@@ -10,10 +10,11 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 const LANGUAGE_VALUES_ARRAY = LANGUAGE_VALUES as unknown as [string, ...string[]];
 
 // Legible Description Schema
+// textElement has minLength="0" maxLength="4000" in XSD, so it can be empty
 export const legibleDescriptionSchema = z.object({
   textElement: z
     .string({ message: "Text element is required" })
-    .min(1, "Text element cannot be empty")
+    .min(0)
     .max(4000, "Text element cannot exceed 4000 characters"),
   language: z.enum(LANGUAGE_VALUES_ARRAY, {
     message: "Language is required",

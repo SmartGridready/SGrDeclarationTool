@@ -14,8 +14,11 @@ export const genericFunctionalProfileSchema = functionalProfileBaseSchema.extend
 });
 
 // Generic Functional Profile List Schema
+// functionalProfileListElement has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 export const genericFunctionalProfileListSchema = z.object({
-  functionalProfileListElement: z.array(genericFunctionalProfileSchema),
+  functionalProfileListElement: z
+    .array(genericFunctionalProfileSchema)
+    .min(1, "At least one functional profile is required"),
 });
 
 // Type exports for TypeScript inference

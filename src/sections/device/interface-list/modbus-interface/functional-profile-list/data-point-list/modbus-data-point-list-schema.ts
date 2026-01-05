@@ -17,8 +17,9 @@ export const modbusDataPointSchema = dataPointBaseSchema.extend({
 });
 
 // Modbus Data Point List Schema
+// dataPointListElement has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 export const modbusDataPointListSchema = z.object({
-  dataPointListElement: z.array(modbusDataPointSchema),
+  dataPointListElement: z.array(modbusDataPointSchema).min(1, "At least one data point is required"),
 });
 
 // Type exports for TypeScript inference

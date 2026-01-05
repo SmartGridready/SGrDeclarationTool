@@ -26,6 +26,8 @@ export const dataPointDescriptionSchema = z.object({
   unit: z.enum(UNITS_VALUES_ARRAY, {
     message: "Unit is required",
   }),
+  // arrayLength: XSD says type="int" (can be 0, negative, or positive)
+  // However, semantically array length should be positive, so we keep .positive() constraint
   arrayLength: z.number().int().positive().optional(),
   minimumValue: z.number().optional(),
   maximumValue: z.number().optional(),
@@ -33,7 +35,7 @@ export const dataPointDescriptionSchema = z.object({
   parameterList: dynamicParameterListSchema.optional(),
   alternativeNames: alternativeNamesSchema.optional(),
   legibleDescription: z.array(legibleDescriptionSchema).max(4, "Maximum 4 legible descriptions allowed").optional(),
-  programmerHints: z.array(legibleDescriptionSchema).max(4, "Maximum 4 programmer hints allowed").optional(),
+  programmerHints: z.array(legibleDescriptionSchema).optional(), // maxOccurs="unbounded" in XSD
 });
 
 // Data Point Base Schema

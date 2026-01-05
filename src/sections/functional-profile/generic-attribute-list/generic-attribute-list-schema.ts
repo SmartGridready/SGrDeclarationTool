@@ -12,8 +12,11 @@ export const genericAttributeFunctionalProfileSchema = z.object({
 });
 
 // Generic Attribute List Schema
+// genericAttributeListElement has minOccurs="1" maxOccurs="unbounded" in XSD
 export const genericAttributeListFunctionalProfileSchema = z.object({
-  genericAttributeListElement: z.array(genericAttributeFunctionalProfileSchema),
+  genericAttributeListElement: z
+    .array(genericAttributeFunctionalProfileSchema)
+    .min(1, "At least one generic attribute list element is required"),
 });
 
 // Type exports for TypeScript inference

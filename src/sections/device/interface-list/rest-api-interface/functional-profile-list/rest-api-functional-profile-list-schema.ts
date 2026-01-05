@@ -15,7 +15,9 @@ export const restApiFunctionalProfileSchema = functionalProfileBaseSchema.extend
 
 // REST API Functional Profile List Schema
 export const restApiFunctionalProfileListSchema = z.object({
-  functionalProfileListElement: z.array(restApiFunctionalProfileSchema),
+  functionalProfileListElement: z
+    .array(restApiFunctionalProfileSchema)
+    .min(1, "At least one functional profile is required"),
 });
 
 // Type exports for TypeScript inference

@@ -12,8 +12,9 @@ import { dataPointBaseSchema } from "@/sections/shared/data-point-base/data-poin
 export const contactDataPointSchema = dataPointBaseSchema;
 
 // Contact Data Point List Schema
+// dataPointListElement has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 export const contactDataPointListSchema = z.object({
-  dataPointListElement: z.array(contactDataPointSchema),
+  dataPointListElement: z.array(contactDataPointSchema).min(1, "At least one data point is required"),
 });
 
 // Type exports for TypeScript inference

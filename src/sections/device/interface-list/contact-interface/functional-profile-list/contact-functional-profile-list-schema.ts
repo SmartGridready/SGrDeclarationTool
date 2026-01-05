@@ -14,8 +14,11 @@ export const contactFunctionalProfileSchema = functionalProfileBaseSchema.extend
 });
 
 // Contact Functional Profile List Schema
+// functionalProfileListElement has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 export const contactFunctionalProfileListSchema = z.object({
-  functionalProfileListElement: z.array(contactFunctionalProfileSchema),
+  functionalProfileListElement: z
+    .array(contactFunctionalProfileSchema)
+    .min(1, "At least one functional profile is required"),
 });
 
 // Type exports for TypeScript inference

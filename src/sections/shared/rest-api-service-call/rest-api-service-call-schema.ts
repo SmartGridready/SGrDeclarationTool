@@ -18,8 +18,9 @@ const headerEntrySchema = z.object({
 });
 
 // HeaderList schema
+// header has minOccurs="0" maxOccurs="unbounded" in XSD, so it's an array that can be empty
 const headerListSchema = z.object({
-  header: z.array(headerEntrySchema).optional(),
+  header: z.array(headerEntrySchema),
 });
 
 // ParameterEntry schema

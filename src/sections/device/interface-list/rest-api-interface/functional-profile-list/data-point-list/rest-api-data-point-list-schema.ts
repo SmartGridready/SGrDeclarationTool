@@ -15,7 +15,7 @@ export const restApiDataPointSchema = dataPointBaseSchema.extend({
 
 // REST API Data Point List Schema
 export const restApiDataPointListSchema = z.object({
-  dataPointListElement: z.array(restApiDataPointSchema),
+  dataPointListElement: z.array(restApiDataPointSchema).min(1, "At least one data point is required"),
 });
 
 // Type exports for TypeScript inference

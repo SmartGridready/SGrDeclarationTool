@@ -16,8 +16,11 @@ export const modbusFunctionalProfileSchema = functionalProfileBaseSchema.extend(
 });
 
 // Modbus Functional Profile List Schema
+// functionalProfileListElement has maxOccurs="unbounded" with no minOccurs (defaults to 1), so at least one entry is required
 export const modbusFunctionalProfileListSchema = z.object({
-  functionalProfileListElement: z.array(modbusFunctionalProfileSchema),
+  functionalProfileListElement: z
+    .array(modbusFunctionalProfileSchema)
+    .min(1, "At least one functional profile is required"),
 });
 
 // Type exports for TypeScript inference

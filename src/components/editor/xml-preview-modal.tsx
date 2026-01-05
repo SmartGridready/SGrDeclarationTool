@@ -37,7 +37,7 @@ export function XmlPreviewModal({
           srcDoc={previewHtml}
           className="w-full h-full border-0"
           title="XML Preview"
-          sandbox="allow-same-origin allow-scripts"
+          sandbox="allow-same-origin allow-scripts allow-forms"
         />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center">

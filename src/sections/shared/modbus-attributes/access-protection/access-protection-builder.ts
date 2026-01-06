@@ -14,12 +14,13 @@ export function buildAccessProtection(accessProtection: AccessProtectionEnabled)
     const errorMessage = firstError?.message || "Validation failed for access protection";
     throw new Error(errorMessage);
   }
-  const protectionXml: Record<string, unknown> = {
-    isEnabled: wrapInArray(accessProtection.isEnabled.toString()),
-  };
+  const protectionXml: Record<string, unknown> = {};
 
-  // Add array of modbusExceptionCode
+  // Add array of modbusExceptionCode first (to match XML structure order)
   setOptionalXmlArray(protectionXml, "modbusExceptionCode", accessProtection.modbusExceptionCode);
+
+  // Add isEnabled after modbusExceptionCode (to match XML structure order)
+  protectionXml.isEnabled = wrapInArray(accessProtection.isEnabled.toString());
 
   return protectionXml;
 }

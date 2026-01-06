@@ -153,7 +153,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   type="text"
                   value={param.defaultValue || ""}
                   onChange={(value) =>
-                    actions.updateParameterListElementDefaultValue(listIndex, paramIndex, value || undefined)
+                    actions.updateParameterListElementDefaultValue(listIndex, paramIndex, value ?? "")
                   }
                   placeholder="Enter default value"
                   required={false}

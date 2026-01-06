@@ -43,8 +43,12 @@ function mapParameterListElement(elementXml: Xml2JsObject): DynamicParameterDesc
     dataType: mapDataTypeProduct(getFirstElement(elementXml, "dataType")),
   };
 
-  // Map optional defaultValue
-  setOptionalField(element, "defaultValue", getOptionalStringValue(elementXml, "defaultValue"));
+  // Map optional defaultValue - preserve empty strings
+  if (elementXml.defaultValue !== undefined) {
+    // If defaultValue exists in XML (even if empty), preserve it
+    const defaultValue = getStringValue(elementXml, "defaultValue", "");
+    element.defaultValue = defaultValue;
+  }
 
   // Map optional parameterDescription
   if (elementXml.parameterDescription && Array.isArray(elementXml.parameterDescription)) {

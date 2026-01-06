@@ -106,7 +106,11 @@ export function createDynamicParameterListSlice<TState>(
     updateParameterListElementDefaultValue: (listIndex, paramIndex, defaultValue) =>
       set((state) => {
         const param = getParameterList(state, listIndex)?.parameterListElement?.[paramIndex];
-        if (param) param.defaultValue = normalizeString(defaultValue);
+        if (param) {
+          // Preserve empty strings for defaultValue (they should appear as empty elements in XML)
+          // Only convert null/undefined to undefined
+          param.defaultValue = defaultValue === null || defaultValue === undefined ? undefined : defaultValue;
+        }
       }),
   };
 }

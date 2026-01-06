@@ -37,8 +37,10 @@ function buildParameterListElement(element: DynamicParameterDescriptionListEleme
     dataType: wrapInArray(buildDataTypeProduct(element.dataType)),
   };
 
-  // Add optional defaultValue
-  setOptionalXmlField(elementXml, "defaultValue", element.defaultValue);
+  // Add optional defaultValue - preserve empty strings as empty elements
+  if (element.defaultValue !== undefined && element.defaultValue !== null) {
+    elementXml.defaultValue = wrapInArray(element.defaultValue);
+  }
 
   // Add optional parameterDescription array
   setOptionalXmlArray(

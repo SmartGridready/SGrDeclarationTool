@@ -12,15 +12,6 @@ export interface RestApiBearerSlice extends RestApiServiceCallSlice {
 }
 
 /**
- * Type guard to check if interface list is REST API interface
- */
-function isRestApiInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { restApiInterface: RestApiInterface } {
-  return interfaceList !== undefined && "restApiInterface" in interfaceList;
-}
-
-/**
  * Creates a REST API bearer authentication slice for Device stores.
  * Uses the shared RestApiServiceCallSlice for the nested restApiServiceCall.
  */
@@ -29,7 +20,9 @@ export function createRestApiBearerSlice<TState extends { device?: DeviceFrame }
 ): RestApiBearerSlice {
   const getRestApiInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
+    if (!interfaceList) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return "restApiInterface" in interfaceList ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
   };
 
   const getRestApiServiceCall = (state: TState): RestApiServiceCall | undefined => {

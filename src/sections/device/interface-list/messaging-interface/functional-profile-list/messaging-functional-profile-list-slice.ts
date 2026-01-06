@@ -14,15 +14,6 @@ import {
   MessagingDataPointListSlice,
 } from "./data-point-list/messaging-data-point-list-slice";
 
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
-
 export interface MessagingFunctionalProfileListSlice {
   // Functional profile list management
   addEmptyMessagingFunctionalProfile: () => void;
@@ -45,7 +36,9 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): MessagingFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isMessagingInterface(interfaceList) ? interfaceList.messagingInterface.functionalProfileList : undefined;
+    if (!interfaceList) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return "messagingInterface" in interfaceList ? interfaceList.messagingInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
@@ -56,7 +49,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
     addEmptyMessagingFunctionalProfile: () =>
       set((state) => {
         const interfaceList = state.device?.interfaceList;
-        if (isMessagingInterface(interfaceList)) {
+        if (interfaceList && "messagingInterface" in interfaceList) {
           const messagingInterface = interfaceList.messagingInterface;
           // Ensure functionalProfileList exists
           if (!messagingInterface.functionalProfileList) {

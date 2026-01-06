@@ -28,12 +28,14 @@ export function createSingleServiceCallSlice<TState>(
 ): SingleServiceCallSlice {
   const getRestApiServiceCall = (state: TState): RestApiServiceCall | undefined => {
     const config = getConfig(state);
-    return isSingleServiceCallConfig(config) ? config.restApiServiceCall : undefined;
+    if (!config) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return "restApiServiceCall" in config ? config.restApiServiceCall : undefined;
   };
 
   const setRestApiServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const config = getConfig(state);
-    if (isSingleServiceCallConfig(config) && restApiServiceCall) {
+    if (config && restApiServiceCall && "restApiServiceCall" in config) {
       config.restApiServiceCall = restApiServiceCall;
     }
   };

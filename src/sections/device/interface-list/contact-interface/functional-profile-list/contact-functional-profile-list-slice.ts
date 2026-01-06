@@ -14,15 +14,6 @@ import {
   ContactDataPointListSlice,
 } from "./data-point-list/contact-data-point-list-slice";
 
-/**
- * Type guard to check if interface list is Contact interface
- */
-function isContactInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { contactInterface: ContactInterface } {
-  return interfaceList !== undefined && "contactInterface" in interfaceList;
-}
-
 export interface ContactFunctionalProfileListSlice {
   // Functional profile list management
   addEmptyContactFunctionalProfile: () => void;
@@ -45,7 +36,9 @@ export function createContactFunctionalProfileListSlice<TState extends { device?
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): ContactFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isContactInterface(interfaceList) ? interfaceList.contactInterface.functionalProfileList : undefined;
+    if (!interfaceList) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return "contactInterface" in interfaceList ? interfaceList.contactInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
@@ -56,7 +49,7 @@ export function createContactFunctionalProfileListSlice<TState extends { device?
     addEmptyContactFunctionalProfile: () =>
       set((state) => {
         const interfaceList = state.device?.interfaceList;
-        if (isContactInterface(interfaceList)) {
+        if (interfaceList && "contactInterface" in interfaceList) {
           const contactInterface = interfaceList.contactInterface;
           // Ensure functionalProfileList exists
           if (!contactInterface.functionalProfileList) {

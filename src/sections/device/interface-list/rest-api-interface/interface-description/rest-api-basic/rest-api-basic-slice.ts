@@ -9,15 +9,6 @@ export interface RestApiBasicSlice {
 }
 
 /**
- * Type guard to check if interface list is REST API interface
- */
-function isRestApiInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { restApiInterface: RestApiInterface } {
-  return interfaceList !== undefined && "restApiInterface" in interfaceList;
-}
-
-/**
  * Creates a REST API basic authentication slice for Device stores.
  */
 export function createRestApiBasicSlice<TState extends { device?: DeviceFrame }>(
@@ -25,7 +16,9 @@ export function createRestApiBasicSlice<TState extends { device?: DeviceFrame }>
 ): RestApiBasicSlice {
   const getRestApiInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
+    if (!interfaceList) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return "restApiInterface" in interfaceList ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
   };
 
   return {

@@ -14,15 +14,6 @@ import {
   RestApiDataPointListSlice,
 } from "./data-point-list/rest-api-data-point-list-slice";
 
-/**
- * Type guard to check if interface list is REST API interface
- */
-function isRestApiInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { restApiInterface: RestApiInterface } {
-  return interfaceList !== undefined && "restApiInterface" in interfaceList;
-}
-
 export interface RestApiFunctionalProfileListSlice {
   // Functional profile list management
   addEmptyRestApiFunctionalProfile: () => void;
@@ -45,7 +36,9 @@ export function createRestApiFunctionalProfileListSlice<TState extends { device?
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): RestApiFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.functionalProfileList : undefined;
+    if (!interfaceList || !("restApiInterface" in interfaceList) || !interfaceList.restApiInterface) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return interfaceList.restApiInterface.functionalProfileList;
   };
 
   // Helper to get a specific functional profile
@@ -56,7 +49,7 @@ export function createRestApiFunctionalProfileListSlice<TState extends { device?
     addEmptyRestApiFunctionalProfile: () =>
       set((state) => {
         const interfaceList = state.device?.interfaceList;
-        if (isRestApiInterface(interfaceList)) {
+        if (interfaceList && "restApiInterface" in interfaceList && interfaceList.restApiInterface) {
           const restApiInterface = interfaceList.restApiInterface;
           // Ensure functionalProfileList exists
           if (!restApiInterface.functionalProfileList) {

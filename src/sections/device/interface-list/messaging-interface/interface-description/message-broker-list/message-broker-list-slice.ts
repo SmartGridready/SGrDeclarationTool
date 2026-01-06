@@ -13,15 +13,6 @@ export interface MessageBrokerListSlice {
 }
 
 /**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
-
-/**
  * Creates a Message Broker List slice for Device stores.
  */
 export function createMessageBrokerListSlice<TState extends { device?: DeviceFrame }>(
@@ -29,9 +20,9 @@ export function createMessageBrokerListSlice<TState extends { device?: DeviceFra
 ): MessageBrokerListSlice {
   const getMessagingInterfaceDescription = (state: TState) => {
     const interfaceList = state.device?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.messagingInterfaceDescription
-      : undefined;
+    if (!interfaceList || !("messagingInterface" in interfaceList)) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return interfaceList.messagingInterface?.messagingInterfaceDescription;
   };
 
   const getMessageBrokerList = (state: TState): MessageBrokerList | undefined => {

@@ -14,15 +14,6 @@ import {
   GenericDataPointListSlice,
 } from "./data-point-list/generic-data-point-list-slice";
 
-/**
- * Type guard to check if interface list is Generic interface
- */
-function isGenericInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { genericInterface: GenericInterface } {
-  return interfaceList !== undefined && "genericInterface" in interfaceList;
-}
-
 export interface GenericFunctionalProfileListSlice {
   // Functional profile list management
   addEmptyGenericFunctionalProfile: () => void;
@@ -45,7 +36,9 @@ export function createGenericFunctionalProfileListSlice<TState extends { device?
   // Helper to get functional profile list
   const getFunctionalProfileList = (state: TState): GenericFunctionalProfileList | undefined => {
     const interfaceList = state.device?.interfaceList;
-    return isGenericInterface(interfaceList) ? interfaceList.genericInterface.functionalProfileList : undefined;
+    if (!interfaceList) return undefined;
+    // Direct field access with 'in' operator instead of type guard
+    return "genericInterface" in interfaceList ? interfaceList.genericInterface.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
@@ -56,7 +49,7 @@ export function createGenericFunctionalProfileListSlice<TState extends { device?
     addEmptyGenericFunctionalProfile: () =>
       set((state) => {
         const interfaceList = state.device?.interfaceList;
-        if (isGenericInterface(interfaceList)) {
+        if (interfaceList && "genericInterface" in interfaceList) {
           const genericInterface = interfaceList.genericInterface;
           // Ensure functionalProfileList exists
           if (!genericInterface.functionalProfileList) {

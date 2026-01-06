@@ -22,9 +22,14 @@ export function mapModbusDataType(modbusDataTypeXml: Xml2JsObject | undefined): 
   }
 
   // Check for boolean first (has special structure with trueValue/falseValue)
-  const booleanXml = getFirstElement(modbusDataTypeXml, "boolean");
-  if (booleanXml) {
-    return { boolean: mapModbusBoolean(booleanXml) };
+  // xml2js parses <boolean /> as { boolean: [""] } or { boolean: [{}] }
+  // We need to check if the field exists, even if it's an empty string
+  if (modbusDataTypeXml.boolean !== undefined) {
+    const booleanXml = getFirstElement(modbusDataTypeXml, "boolean");
+    // If booleanXml is undefined but boolean field exists, it means it's an empty element like <boolean />
+    // In that case, create an empty object to represent the empty boolean
+    const booleanElement = booleanXml || {};
+    return { boolean: mapModbusBoolean(booleanElement) };
   }
 
   // Check for enum

@@ -33,9 +33,12 @@ function mapConfigurationListElement(elementXml: Xml2JsObject): ConfigurationLis
     dataType: mapDataTypeProduct(getFirstElement(elementXml, "dataType")),
   };
 
-  // Map optional defaultValue
-  const defaultValue = getStringValue(elementXml, "defaultValue");
-  setOptionalField(element, "defaultValue", defaultValue || undefined);
+  // Map optional defaultValue - preserve empty strings
+  if (elementXml.defaultValue !== undefined) {
+    // If defaultValue exists in XML (even if empty), preserve it
+    const defaultValue = getStringValue(elementXml, "defaultValue", "");
+    element.defaultValue = defaultValue;
+  }
 
   // Map optional configurationDescription
   if (

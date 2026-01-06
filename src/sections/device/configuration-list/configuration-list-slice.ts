@@ -93,7 +93,11 @@ export function createConfigurationListSlice<TState extends { device?: DeviceFra
     updateConfigurationListElementDefaultValue: (configIndex, defaultValue) =>
       set((state) => {
         const config = state.device?.configurationList?.configurationListElement?.[configIndex];
-        if (config) config.defaultValue = normalizeString(defaultValue);
+        if (config) {
+          // Preserve empty strings for defaultValue (they should appear as empty elements in XML)
+          // Only convert null/undefined to undefined
+          config.defaultValue = defaultValue === null || defaultValue === undefined ? undefined : defaultValue;
+        }
       }),
   };
 }

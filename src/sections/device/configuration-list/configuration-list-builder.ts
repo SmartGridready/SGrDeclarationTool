@@ -32,8 +32,10 @@ function buildConfigurationListElement(element: ConfigurationListElement): Recor
     dataType: wrapInArray(buildDataTypeProduct(element.dataType)),
   };
 
-  // Add optional defaultValue
-  setOptionalXmlField(elementXml, "defaultValue", element.defaultValue);
+  // Add optional defaultValue - preserve empty strings as empty elements
+  if (element.defaultValue !== undefined && element.defaultValue !== null) {
+    elementXml.defaultValue = wrapInArray(element.defaultValue);
+  }
 
   // Build optional configurationDescription
   if (element.configurationDescription && element.configurationDescription.length > 0) {

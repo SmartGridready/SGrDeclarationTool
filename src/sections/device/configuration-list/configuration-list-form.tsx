@@ -85,7 +85,7 @@ export function ConfigurationListForm() {
                 type="text"
                 value={config.defaultValue || ""}
                 onChange={(value) =>
-                  configurationListActions.updateConfigurationListElementDefaultValue(configIndex, value || undefined)
+                  configurationListActions.updateConfigurationListElementDefaultValue(configIndex, value ?? "")
                 }
                 placeholder="Enter default value"
                 required={false}

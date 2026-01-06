@@ -116,79 +116,98 @@ export function useXslPreview<T>({
         throw new Error("XSLT Transformation failed: No document element in result");
       }
 
-      let html = new XMLSerializer().serializeToString(result.documentElement);
-
-      // Decode HTML entities in script tags to ensure JavaScript functions work correctly
-      // XSL uses XML entities (&lt; instead of <) which need to be decoded for JavaScript
-      // Order matters: &amp; must be decoded first to avoid double-decoding
-      html = html.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, (match, scriptContent) => {
-        const decoded = scriptContent
-          .replace(/&amp;/g, "&") // Must be first to avoid double-decoding
-          .replace(/&lt;/g, "<")
-          .replace(/&gt;/g, ">")
-          .replace(/&quot;/g, '"')
-          .replace(/&#39;/g, "'")
-          .replace(/&#x27;/g, "'") // Hex entity for apostrophe
-          .replace(/&#x2F;/g, "/"); // Hex entity for slash
-        return match.replace(scriptContent, decoded);
-      });
-
-      // Decode HTML entities in event handler attributes (onclick, onchange, etc.)
-      // Handle both single and double quotes
-      html = html.replace(/(on\w+)=(["'])([^"']*)\2/gi, (match, eventName, quote, handler) => {
-        const decoded = handler
-          .replace(/&amp;/g, "&") // Must be first
-          .replace(/&lt;/g, "<")
-          .replace(/&gt;/g, ">")
-          .replace(/&quot;/g, '"')
-          .replace(/&#39;/g, "'")
-          .replace(/&#x27;/g, "'")
-          .replace(/&#x2F;/g, "/");
-        return `${eventName}=${quote}${decoded}${quote}`;
-      });
-
-      // Fix paths for iframe srcDoc context - convert absolute paths to full URLs
-      // This is necessary because srcDoc creates an about:blank context where absolute paths don't work
       const origin = typeof window !== "undefined" ? window.location.origin : "";
-      const fixPath = (path: string, prefix: string) => {
-        // Already a full URL, keep it
-        if (path.startsWith("http://") || path.startsWith("https://")) {
-          return path;
+      const baseUrl = `${origin}/xsl/`;
+
+      /**
+       * Fallback function to prepare HTML string for iframe when DOM parsing fails
+       * This handles edge cases where the XSLT output might not be valid HTML
+       */
+      const prepareHtmlForIframe = (htmlString: string): string => {
+        // Wrap in proper HTML structure if needed
+        if (!htmlString.includes("<html")) {
+          htmlString = `<!DOCTYPE html><html><head><base href="${baseUrl}"></head><body>${htmlString}</body></html>`;
+        } else if (!htmlString.includes("<base")) {
+          // Inject base tag into existing HTML
+          htmlString = htmlString.replace(/(<head[^>]*>)/i, `$1<base href="${baseUrl}">`);
         }
-        // Absolute path starting with / - convert to full URL for iframe srcDoc
-        if (path.startsWith("/")) {
-          return `${origin}${path}`;
-        }
-        // Relative path (e.g., "ressources/fp_product_to_ems.svg") - add prefix and convert to full URL
-        return `${origin}${prefix}${path}`;
+
+        // Fix absolute paths (base tag handles relative paths)
+        htmlString = htmlString.replace(/(href|src)=(["'])(\/)([^"']+)\2/gi, (match, attr, quote, slash, path) => {
+          return `${attr}=${quote}${origin}${slash}${path}${quote}`;
+        });
+
+        return htmlString;
       };
 
-      // Fix CSS file paths
-      html = html.replace(/href=["']([^"']*\.css)["']/gi, (_, p) => `href="${fixPath(p, "/xsl/")}"`);
+      // Parse the result as HTML to properly handle entities and DOM manipulation
+      // The browser's HTML parser automatically decodes entities, so we don't need manual regex replacements
+      const htmlDoc = parser.parseFromString(
+        new XMLSerializer().serializeToString(result.documentElement),
+        "text/html"
+      );
 
-      // Fix image and resource paths in src attributes
-      html = html.replace(/src=["']([^"']*)["']/gi, (_, p) => {
-        // Skip data URIs and already absolute URLs
-        if (p.startsWith("data:") || p.startsWith("http://") || p.startsWith("https://")) {
-          return `src="${p}"`;
+      // Check for parsing errors
+      const htmlError = htmlDoc.querySelector("parsererror");
+      if (htmlError) {
+        // If HTML parsing fails, fall back to treating it as XML/HTML fragment
+        // This can happen with certain XSLT outputs
+        const htmlString = new XMLSerializer().serializeToString(result.documentElement);
+        return prepareHtmlForIframe(htmlString);
+      }
+
+      // Inject base tag to fix relative paths in iframe srcDoc context
+      // This is much cleaner than manually fixing each path with regex
+      let head = htmlDoc.querySelector("head");
+      if (!head) {
+        head = htmlDoc.createElement("head");
+        htmlDoc.documentElement.insertBefore(head, htmlDoc.documentElement.firstChild);
+      }
+
+      // Remove existing base tag if present
+      const existingBase = head.querySelector("base");
+      if (existingBase) {
+        existingBase.remove();
+      }
+
+      // Add base tag at the beginning of head to ensure it's processed first
+      const baseTag = htmlDoc.createElement("base");
+      baseTag.setAttribute("href", baseUrl);
+      head.insertBefore(baseTag, head.firstChild);
+
+      // Convert absolute paths (starting with /) to full URLs for iframe compatibility
+      // The base tag handles relative paths, but absolute paths need explicit conversion
+      const fixAbsolutePaths = (element: Element, attribute: string) => {
+        const value = element.getAttribute(attribute);
+        if (value && value.startsWith("/") && !value.startsWith("//")) {
+          element.setAttribute(attribute, `${origin}${value}`);
         }
-        return `src="${fixPath(p, "/xsl/")}"`;
+      };
+
+      // Fix absolute paths in common attributes
+      htmlDoc.querySelectorAll("link[href], img[src], script[src], source[src]").forEach((el) => {
+        if (el.hasAttribute("href")) fixAbsolutePaths(el, "href");
+        if (el.hasAttribute("src")) fixAbsolutePaths(el, "src");
       });
 
-      // Fix CSS url() paths - handle both quoted and unquoted URLs
-      html = html.replace(/url\(["']?([^"')]+)["']?\)/gi, (match, p) => {
-        const trimmed = p.trim();
-        // Skip data URIs and already absolute URLs
-        if (trimmed.startsWith("data:") || trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-          return match;
+      // Fix absolute paths in style attributes and style tags
+      htmlDoc.querySelectorAll("[style]").forEach((el) => {
+        const style = el.getAttribute("style");
+        if (style && style.includes("url(/")) {
+          el.setAttribute("style", style.replace(/url\((\/)([^)]+)\)/g, `url(${origin}$1$2)`));
         }
-        const fixed = fixPath(trimmed, "/xsl/");
-        // Preserve original quote style if present
-        const hasQuotes = match.includes('"') || match.includes("'");
-        return hasQuotes ? match.replace(trimmed, fixed) : `url("${fixed}")`;
       });
 
-      return html;
+      htmlDoc.querySelectorAll("style").forEach((styleEl) => {
+        const styleText = styleEl.textContent || "";
+        if (styleText.includes("url(/")) {
+          styleEl.textContent = styleText.replace(/url\((\/)([^)]+)\)/g, `url(${origin}$1$2)`);
+        }
+      });
+
+      // Serialize the properly manipulated DOM
+      // The browser's HTML parser automatically decodes entities, so we don't need manual regex replacements
+      return htmlDoc.documentElement.outerHTML;
     },
     [resolveXslIncludes]
   );

@@ -30,8 +30,36 @@ export function mapRestApiDataPointConfiguration(
   const restApiWriteServiceCallXml = getFirstElement(configurationXml, "restApiWriteServiceCall");
   const restApiReadServiceCallXml = getFirstElement(configurationXml, "restApiReadServiceCall");
 
+  // Determine which comes first in XML to determine the primary configuration type
+  // This is important: Write-Read means write is primary, Read-Write means read is primary
+  // If both exist, the one that comes first in Object.keys determines the primary type
+  // (Modern JavaScript engines preserve insertion order for object keys, which matches XML order)
+  const keys = Object.keys(configurationXml);
+  const writeKeyIndex = keys.indexOf("restApiWriteServiceCall");
+  const readKeyIndex = keys.indexOf("restApiReadServiceCall");
+
+  const hasWrite = writeKeyIndex !== -1 && restApiWriteServiceCallXml !== undefined;
+  const hasRead = readKeyIndex !== -1 && restApiReadServiceCallXml !== undefined;
+  const bothExist = hasWrite && hasRead;
+
+  // Determine primary type based on order when both exist, or which one exists
+  let isWriteRead = false;
+  let isReadWrite = false;
+
+  if (bothExist) {
+    // Both exist: the one that comes first in keys determines primary type
+    isWriteRead = writeKeyIndex < readKeyIndex;
+    isReadWrite = readKeyIndex < writeKeyIndex;
+  } else if (hasWrite) {
+    // Only write exists: Write-Read configuration
+    isWriteRead = true;
+  } else if (hasRead) {
+    // Only read exists: Read-Write configuration
+    isReadWrite = true;
+  }
+
   // Write-Read configuration (write is primary/required)
-  if (restApiWriteServiceCallXml) {
+  if (isWriteRead) {
     const restApiWriteServiceCall = mapRestApiServiceCall(restApiWriteServiceCallXml);
     if (restApiWriteServiceCall) {
       const config: RestApiDataPointConfiguration = {
@@ -50,7 +78,7 @@ export function mapRestApiDataPointConfiguration(
   }
 
   // Read-Write configuration (read is primary/required)
-  if (restApiReadServiceCallXml) {
+  if (isReadWrite) {
     const restApiReadServiceCall = mapRestApiServiceCall(restApiReadServiceCallXml);
     if (restApiReadServiceCall) {
       const config: RestApiDataPointConfiguration = {
@@ -58,7 +86,12 @@ export function mapRestApiDataPointConfiguration(
         restApiReadServiceCall,
       };
 
-      // Write was already checked above, so if we're here, there's no write call
+      // Add optional write service call
+      if (restApiWriteServiceCallXml) {
+        const restApiWriteServiceCall = mapRestApiServiceCall(restApiWriteServiceCallXml);
+        setOptionalField(config, "restApiWriteServiceCall", restApiWriteServiceCall);
+      }
+
       return config;
     }
   }

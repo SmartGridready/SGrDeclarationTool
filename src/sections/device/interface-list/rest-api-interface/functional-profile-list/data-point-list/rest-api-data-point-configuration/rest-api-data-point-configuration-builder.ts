@@ -17,7 +17,24 @@ function isWriteReadServiceCallConfig(
 ): config is RestApiDataPointConfiguration & {
   restApiWriteServiceCall: RestApiServiceCall;
 } {
-  return "restApiWriteServiceCall" in config && config.restApiWriteServiceCall !== undefined;
+  // Write-Read: restApiWriteServiceCall is required, restApiReadServiceCall is optional
+  // If both exist, we need to check which is primary based on object key order
+  const hasWrite = "restApiWriteServiceCall" in config && config.restApiWriteServiceCall !== undefined;
+  const hasRead = "restApiReadServiceCall" in config && config.restApiReadServiceCall !== undefined;
+
+  if (!hasWrite) return false;
+
+  // If both exist, check which comes first in object keys to determine primary
+  if (hasWrite && hasRead) {
+    const keys = Object.keys(config);
+    const writeIndex = keys.indexOf("restApiWriteServiceCall");
+    const readIndex = keys.indexOf("restApiReadServiceCall");
+    // Write is primary if it comes first
+    return writeIndex !== -1 && readIndex !== -1 && writeIndex < readIndex;
+  }
+
+  // Only write exists: Write-Read configuration
+  return true;
 }
 
 function isReadWriteServiceCallConfig(
@@ -25,7 +42,24 @@ function isReadWriteServiceCallConfig(
 ): config is RestApiDataPointConfiguration & {
   restApiReadServiceCall: RestApiServiceCall;
 } {
-  return "restApiReadServiceCall" in config && config.restApiReadServiceCall !== undefined;
+  // Read-Write: restApiReadServiceCall is required, restApiWriteServiceCall is optional
+  // If both exist, we need to check which is primary based on object key order
+  const hasWrite = "restApiWriteServiceCall" in config && config.restApiWriteServiceCall !== undefined;
+  const hasRead = "restApiReadServiceCall" in config && config.restApiReadServiceCall !== undefined;
+
+  if (!hasRead) return false;
+
+  // If both exist, check which comes first in object keys to determine primary
+  if (hasWrite && hasRead) {
+    const keys = Object.keys(config);
+    const writeIndex = keys.indexOf("restApiWriteServiceCall");
+    const readIndex = keys.indexOf("restApiReadServiceCall");
+    // Read is primary if it comes first
+    return writeIndex !== -1 && readIndex !== -1 && readIndex < writeIndex;
+  }
+
+  // Only read exists: Read-Write configuration
+  return true;
 }
 
 /**

@@ -113,7 +113,12 @@ export function RestApiDataPointConfigurationForm({
 
           {/* Render the appropriate service call form based on configuration type */}
           {configType === "single" && (
-            <SingleServiceCallForm config={config} useValidation={useValidation} fieldPathPrefix={fieldPathPrefix} />
+            <SingleServiceCallForm
+              config={config}
+              actions={actions}
+              useValidation={useValidation}
+              fieldPathPrefix={fieldPathPrefix}
+            />
           )}
 
           {configType === "writeRead" && (

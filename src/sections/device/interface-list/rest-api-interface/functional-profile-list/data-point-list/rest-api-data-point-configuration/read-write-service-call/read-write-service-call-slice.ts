@@ -1,6 +1,9 @@
 import { RestApiDataPointConfiguration, RestApiServiceCall } from "@/models/product/rest-api-types";
 import { ResponseQueryType } from "@/models/generic";
-import { createRestApiServiceCallSlice } from "@/sections/shared/rest-api-service-call/rest-api-service-call-slice";
+import {
+  createRestApiServiceCallSlice,
+  RestApiServiceCallSlice,
+} from "@/sections/shared/rest-api-service-call/rest-api-service-call-slice";
 
 /**
  * Slice interface for read service call operations (required in this config).
@@ -94,7 +97,18 @@ export interface WriteServiceCallOptionalSlice {
   writeUpdateValueMappingEntryDeviceValue: (index: number, deviceValue: string) => void;
 }
 
-export interface ReadWriteServiceCallSlice extends ReadServiceCallRequiredSlice, WriteServiceCallOptionalSlice {}
+export interface ReadWriteServiceCallSlice extends ReadServiceCallRequiredSlice, WriteServiceCallOptionalSlice {
+  /**
+   * Returns a RestApiServiceCallSlice for the read service call (required).
+   * This can be used with createSliceAdapter to pass to RestApiServiceCallForm.
+   */
+  getReadServiceCallSlice: () => RestApiServiceCallSlice;
+  /**
+   * Returns a RestApiServiceCallSlice for the write service call (optional).
+   * This can be used with createSliceAdapter to pass to RestApiServiceCallForm.
+   */
+  getWriteServiceCallSlice: () => RestApiServiceCallSlice;
+}
 
 /**
  * Type guard to check if configuration is a read-write service call type
@@ -130,26 +144,36 @@ export function createReadWriteServiceCallSlice<TState>(
   // Read service call helpers (required)
   const getReadServiceCall = (state: TState): RestApiServiceCall | undefined => {
     const config = getConfig(state);
-    return isReadWriteServiceCallConfig(config) ? config.restApiReadServiceCall : undefined;
+    if (!config) return undefined;
+    // Directly access restApiReadServiceCall if it exists
+    return "restApiReadServiceCall" in config ? config.restApiReadServiceCall : undefined;
   };
 
   const setReadServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const config = getConfig(state);
-    if (isReadWriteServiceCallConfig(config) && restApiServiceCall) {
-      config.restApiReadServiceCall = restApiServiceCall;
+    if (config && restApiServiceCall) {
+      // Directly set restApiReadServiceCall
+      (
+        config as RestApiDataPointConfiguration & { restApiReadServiceCall?: RestApiServiceCall }
+      ).restApiReadServiceCall = restApiServiceCall;
     }
   };
 
   // Write service call helpers (optional)
   const getWriteServiceCall = (state: TState): RestApiServiceCall | undefined => {
     const config = getConfig(state);
-    return isReadWriteServiceCallConfig(config) ? config.restApiWriteServiceCall : undefined;
+    if (!config) return undefined;
+    // Directly access restApiWriteServiceCall if it exists
+    return "restApiWriteServiceCall" in config ? config.restApiWriteServiceCall : undefined;
   };
 
   const setWriteServiceCall = (state: TState, restApiServiceCall: RestApiServiceCall | undefined) => {
     const config = getConfig(state);
-    if (isReadWriteServiceCallConfig(config)) {
-      config.restApiWriteServiceCall = restApiServiceCall;
+    if (config) {
+      // Directly set restApiWriteServiceCall
+      (
+        config as RestApiDataPointConfiguration & { restApiWriteServiceCall?: RestApiServiceCall }
+      ).restApiWriteServiceCall = restApiServiceCall;
     }
   };
 
@@ -204,15 +228,19 @@ export function createReadWriteServiceCallSlice<TState>(
     addWriteServiceCall: () =>
       set((state) => {
         const config = getConfig(state);
-        if (isReadWriteServiceCallConfig(config) && !config.restApiWriteServiceCall) {
-          config.restApiWriteServiceCall = { requestMethod: "POST" };
+        if (config && !("restApiWriteServiceCall" in config && config.restApiWriteServiceCall)) {
+          (
+            config as RestApiDataPointConfiguration & { restApiWriteServiceCall?: RestApiServiceCall }
+          ).restApiWriteServiceCall = { requestMethod: "POST" };
         }
       }),
     removeWriteServiceCall: () =>
       set((state) => {
         const config = getConfig(state);
-        if (isReadWriteServiceCallConfig(config)) {
-          config.restApiWriteServiceCall = undefined;
+        if (config && "restApiWriteServiceCall" in config) {
+          (
+            config as RestApiDataPointConfiguration & { restApiWriteServiceCall?: RestApiServiceCall }
+          ).restApiWriteServiceCall = undefined;
         }
       }),
     writeAddRequestHeader: writeSlice.addRequestHeader,
@@ -258,5 +286,7 @@ export function createReadWriteServiceCallSlice<TState>(
   return {
     ...prefixedReadSlice,
     ...prefixedWriteSlice,
+    getReadServiceCallSlice: () => readSlice,
+    getWriteServiceCallSlice: () => writeSlice,
   };
 }

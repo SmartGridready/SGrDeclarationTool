@@ -1,24 +1,27 @@
 "use client";
 
 import { RestApiServiceCallForm } from "@/sections/shared/rest-api-service-call/rest-api-service-call-form";
-import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
 import { RestApiDataPointConfiguration } from "@/models/product/rest-api-types";
-import { isSingleServiceCallConfig } from "./single-service-call-slice";
+import { isSingleServiceCallConfig, SingleServiceCallSlice } from "./single-service-call-slice";
+import { createSliceAdapter } from "@/hooks/use-form-section";
 
 interface SingleServiceCallFormProps {
   config: RestApiDataPointConfiguration;
+  actions: SingleServiceCallSlice;
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
   fieldPathPrefix: string;
 }
 
-export function SingleServiceCallForm({ config, useValidation, fieldPathPrefix }: SingleServiceCallFormProps) {
+export function SingleServiceCallForm({ config, actions, useValidation, fieldPathPrefix }: SingleServiceCallFormProps) {
   if (!isSingleServiceCallConfig(config)) {
     return null;
   }
 
+  const useStore = createSliceAdapter(actions);
+
   return (
-    <RestApiServiceCallForm<DeviceStoreState>
-      useStore={useDeviceStore}
+    <RestApiServiceCallForm<SingleServiceCallSlice>
+      useStore={useStore}
       useValidation={useValidation}
       stateSelector={() => ({
         restApiServiceCall: config.restApiServiceCall,

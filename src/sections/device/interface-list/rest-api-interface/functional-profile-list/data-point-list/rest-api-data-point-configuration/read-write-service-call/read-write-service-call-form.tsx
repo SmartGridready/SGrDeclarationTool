@@ -2,9 +2,9 @@
 
 import { FormSection } from "@/components/forms/form-section";
 import { RestApiServiceCallForm } from "@/sections/shared/rest-api-service-call/rest-api-service-call-form";
-import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
 import { RestApiDataPointConfiguration } from "@/models/product/rest-api-types";
 import { isReadWriteServiceCallConfig, ReadWriteServiceCallSlice } from "./read-write-service-call-slice";
+import { createSliceAdapter } from "@/hooks/use-form-section";
 
 interface ReadWriteServiceCallFormProps {
   config: RestApiDataPointConfiguration;
@@ -25,11 +25,15 @@ export function ReadWriteServiceCallForm({
 
   const hasWriteServiceCall = !!config.restApiWriteServiceCall;
 
+  // Get the service call slices from the actions and create adapters
+  const readUseStore = createSliceAdapter(actions.getReadServiceCallSlice());
+  const writeUseStore = createSliceAdapter(actions.getWriteServiceCallSlice());
+
   return (
     <div className="space-y-6">
       {/* Read Service Call - Required */}
-      <RestApiServiceCallForm<DeviceStoreState>
-        useStore={useDeviceStore}
+      <RestApiServiceCallForm
+        useStore={readUseStore}
         useValidation={useValidation}
         stateSelector={() => ({
           restApiServiceCall: config.restApiReadServiceCall,
@@ -52,8 +56,8 @@ export function ReadWriteServiceCallForm({
         nested={true}
       >
         {hasWriteServiceCall && config.restApiWriteServiceCall && (
-          <RestApiServiceCallForm<DeviceStoreState>
-            useStore={useDeviceStore}
+          <RestApiServiceCallForm
+            useStore={writeUseStore}
             useValidation={useValidation}
             stateSelector={() => ({
               restApiServiceCall: config.restApiWriteServiceCall,

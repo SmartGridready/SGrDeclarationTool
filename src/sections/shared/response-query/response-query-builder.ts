@@ -34,8 +34,8 @@ export function buildResponseQuery(responseQuery: ResponseQuery | undefined): Re
     queryType: wrapInArray(responseQuery.queryType),
   };
 
-  // Add query field if present (even if empty string, to match XSD)
-  if ("query" in responseQuery && responseQuery.query !== undefined) {
+  // Add query field if present - preserve empty strings as empty elements
+  if ("query" in responseQuery && responseQuery.query !== undefined && responseQuery.query !== null) {
     responseQueryXml.query = wrapInArray(responseQuery.query);
   }
 

@@ -84,8 +84,8 @@ function buildResponseQuery(responseQuery: ResponseQuery | undefined): Record<st
     queryType: wrapInArray(responseQuery.queryType),
   };
 
-  // Add query field if present
-  if ("query" in responseQuery && responseQuery.query) {
+  // Add query field if present - preserve empty strings as empty elements
+  if ("query" in responseQuery && responseQuery.query !== undefined && responseQuery.query !== null) {
     responseQueryXml.query = wrapInArray(responseQuery.query);
   }
 

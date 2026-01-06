@@ -44,9 +44,10 @@ export function mapResponseQuery(responseQueryXml: Xml2JsObject | undefined): Re
 
   const baseResponseQuery: ResponseQuery = { queryType };
 
-  // Check if it has a query field
-  const query = getOptionalStringValue(responseQueryXml, "query");
-  if (query !== undefined) {
+  // Check if it has a query field - preserve empty strings
+  if (responseQueryXml.query !== undefined) {
+    // If query exists in XML (even if empty), preserve it
+    const query = getOptionalStringValue(responseQueryXml, "query") ?? "";
     return { ...baseResponseQuery, query };
   }
 

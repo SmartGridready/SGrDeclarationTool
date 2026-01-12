@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.1...v0.23.2) (2026-01-12)
+
+
+### Bug Fixes
+
+* simplify xsl preview hook and fix image path resolution ([05fec22](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/05fec22f7d7af81ca4566793b87f53d64340cb6f))
+
+
+### Chores
+
+* motch sgr folder structure with xml files and xsl ressources, delete old test ([1199779](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1199779cd66b3ecdf39a2a52a3256198454762f0))
+
 ### [0.23.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.0...v0.23.1) (2026-01-12)
 
 

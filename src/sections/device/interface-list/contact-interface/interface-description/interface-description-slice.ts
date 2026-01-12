@@ -17,7 +17,9 @@ export function createContactInterfaceDescriptionSlice<TState extends { device?:
     const interfaceList = state.device?.interfaceList;
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
-    return "contactInterface" in interfaceList ? interfaceList.contactInterface.contactInterfaceDescription : undefined;
+    return "contactInterface" in interfaceList
+      ? interfaceList.contactInterface?.contactInterfaceDescription
+      : undefined;
   };
 
   return {

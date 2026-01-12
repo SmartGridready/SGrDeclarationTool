@@ -25,7 +25,7 @@ export function createMessagingInterfaceDescriptionSlice<TState extends { device
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
     return "messagingInterface" in interfaceList
-      ? interfaceList.messagingInterface.messagingInterfaceDescription
+      ? interfaceList.messagingInterface?.messagingInterfaceDescription
       : undefined;
   };
 

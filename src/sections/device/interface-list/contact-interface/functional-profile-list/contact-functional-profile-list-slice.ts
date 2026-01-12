@@ -38,7 +38,7 @@ export function createContactFunctionalProfileListSlice<TState extends { device?
     const interfaceList = state.device?.interfaceList;
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
-    return "contactInterface" in interfaceList ? interfaceList.contactInterface.functionalProfileList : undefined;
+    return "contactInterface" in interfaceList ? interfaceList.contactInterface?.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
@@ -51,6 +51,7 @@ export function createContactFunctionalProfileListSlice<TState extends { device?
         const interfaceList = state.device?.interfaceList;
         if (interfaceList && "contactInterface" in interfaceList) {
           const contactInterface = interfaceList.contactInterface;
+          if (!contactInterface) return;
           // Ensure functionalProfileList exists
           if (!contactInterface.functionalProfileList) {
             contactInterface.functionalProfileList = {

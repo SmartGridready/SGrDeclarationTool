@@ -22,7 +22,9 @@ export function createRestApiBearerSlice<TState extends { device?: DeviceFrame }
     const interfaceList = state.device?.interfaceList;
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
-    return "restApiInterface" in interfaceList ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
+    return "restApiInterface" in interfaceList
+      ? interfaceList.restApiInterface?.restApiInterfaceDescription
+      : undefined;
   };
 
   const getRestApiServiceCall = (state: TState): RestApiServiceCall | undefined => {

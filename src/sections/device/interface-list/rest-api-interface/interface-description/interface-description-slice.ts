@@ -21,7 +21,9 @@ export function createRestApiInterfaceDescriptionSlice<TState extends { device?:
     const interfaceList = state.device?.interfaceList;
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
-    return "restApiInterface" in interfaceList ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
+    return "restApiInterface" in interfaceList
+      ? interfaceList.restApiInterface?.restApiInterfaceDescription
+      : undefined;
   };
 
   // Create nested slices

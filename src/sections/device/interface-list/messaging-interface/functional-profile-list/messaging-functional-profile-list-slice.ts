@@ -38,7 +38,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
     const interfaceList = state.device?.interfaceList;
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
-    return "messagingInterface" in interfaceList ? interfaceList.messagingInterface.functionalProfileList : undefined;
+    return "messagingInterface" in interfaceList ? interfaceList.messagingInterface?.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
@@ -51,6 +51,7 @@ export function createMessagingFunctionalProfileListSlice<TState extends { devic
         const interfaceList = state.device?.interfaceList;
         if (interfaceList && "messagingInterface" in interfaceList) {
           const messagingInterface = interfaceList.messagingInterface;
+          if (!messagingInterface) return;
           // Ensure functionalProfileList exists
           if (!messagingInterface.functionalProfileList) {
             messagingInterface.functionalProfileList = {

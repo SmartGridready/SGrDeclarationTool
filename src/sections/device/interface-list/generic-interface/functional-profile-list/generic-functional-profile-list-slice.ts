@@ -38,7 +38,7 @@ export function createGenericFunctionalProfileListSlice<TState extends { device?
     const interfaceList = state.device?.interfaceList;
     if (!interfaceList) return undefined;
     // Direct field access with 'in' operator instead of type guard
-    return "genericInterface" in interfaceList ? interfaceList.genericInterface.functionalProfileList : undefined;
+    return "genericInterface" in interfaceList ? interfaceList.genericInterface?.functionalProfileList : undefined;
   };
 
   // Helper to get a specific functional profile
@@ -51,6 +51,7 @@ export function createGenericFunctionalProfileListSlice<TState extends { device?
         const interfaceList = state.device?.interfaceList;
         if (interfaceList && "genericInterface" in interfaceList) {
           const genericInterface = interfaceList.genericInterface;
+          if (!genericInterface) return;
           // Ensure functionalProfileList exists
           if (!genericInterface.functionalProfileList) {
             genericInterface.functionalProfileList = {

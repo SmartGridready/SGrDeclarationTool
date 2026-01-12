@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { Label } from "@/components/shadcn/label";
 import { Textarea } from "@/components/shadcn/textarea";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 
 interface TextareaFieldProps {
   label: string;
@@ -12,6 +14,11 @@ interface TextareaFieldProps {
   required?: boolean;
   error?: string;
   rows?: number;
+  /**
+   * Debounce delay in milliseconds. Set to 0 to disable debouncing.
+   * Default: 300ms
+   */
+  debounceMs?: number;
 }
 
 export function TextareaField({
@@ -25,7 +32,36 @@ export function TextareaField({
   required = false,
   error,
   rows = 4,
+  debounceMs = 300,
 }: TextareaFieldProps) {
+  // Local state for immediate UI updates
+  const [localValue, setLocalValue] = useState(value ?? "");
+
+  // Update local value when prop value changes (e.g., from store)
+  useEffect(() => {
+    setLocalValue(value ?? "");
+  }, [value]);
+
+  // Debounced onChange handler
+  const debouncedOnChange = useDebouncedCallback(
+    ((newValue: string) => {
+      onChange?.(newValue);
+    }) as (...args: unknown[]) => void,
+    debounceMs
+  ) as (value: string) => void;
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    // Update local state immediately for responsive UI
+    setLocalValue(newValue);
+    // Debounce the store update
+    if (debounceMs > 0) {
+      debouncedOnChange(newValue);
+    } else {
+      onChange?.(newValue);
+    }
+  };
+
   const hasError = !!error;
   const textareaClassName = hasError ? `${className} border-destructive focus-visible:ring-destructive` : className;
 
@@ -38,8 +74,8 @@ export function TextareaField({
       <Textarea
         id={name}
         name={name}
-        value={value ?? ""}
-        onChange={(e) => onChange?.(e.target.value)}
+        value={localValue}
+        onChange={handleChange}
         className={textareaClassName}
         placeholder={placeholder}
         disabled={disabled}

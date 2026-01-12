@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { Label } from "@/components/shadcn/label";
 import { Input } from "@/components/shadcn/input";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 
 interface InputFieldProps {
   label: string;
@@ -12,6 +14,7 @@ interface InputFieldProps {
   required?: boolean;
   type?: "text" | "number";
   error?: string;
+  debounceMs?: number;
 }
 
 export function InputField({
@@ -25,7 +28,36 @@ export function InputField({
   required = false,
   type = "text",
   error,
+  debounceMs = 300,
 }: InputFieldProps) {
+  // Local state for immediate UI updates
+  const [localValue, setLocalValue] = useState(value ?? "");
+
+  // Update local value when prop value changes (e.g., from store)
+  useEffect(() => {
+    setLocalValue(value ?? "");
+  }, [value]);
+
+  // Debounced onChange handler
+  const debouncedOnChange = useDebouncedCallback(
+    ((newValue: string) => {
+      onChange?.(newValue);
+    }) as (...args: unknown[]) => void,
+    debounceMs
+  ) as (value: string) => void;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    // Update local state immediately for responsive UI
+    setLocalValue(newValue);
+    // Debounce the store update
+    if (debounceMs > 0) {
+      debouncedOnChange(newValue);
+    } else {
+      onChange?.(newValue);
+    }
+  };
+
   const hasError = !!error;
   const inputClassName = hasError ? `${className} border-destructive focus-visible:ring-destructive` : className;
 
@@ -39,8 +71,8 @@ export function InputField({
         id={name}
         name={name}
         type={type}
-        value={value ?? ""}
-        onChange={(e) => onChange?.(e.target.value)}
+        value={localValue}
+        onChange={handleChange}
         className={inputClassName}
         placeholder={placeholder}
         disabled={disabled}

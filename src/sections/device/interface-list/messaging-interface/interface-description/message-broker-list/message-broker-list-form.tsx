@@ -5,7 +5,9 @@ import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { ComboboxField } from "@/components/forms/combobox-field";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
 import { MessageBrokerListElement } from "@/models/product/messaging-types";
@@ -21,20 +23,15 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerListForm() {
-  const { useDeviceState, messagingInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const messageBrokerList = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerList
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const messageBrokerList = isMessagingInterface(interfaceList)
+    ? interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerList
+    : undefined;
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerList.${field}`
-    );
+    `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerList.${field}`;
 
   return (
     <FormSection
@@ -47,8 +44,8 @@ export function MessageBrokerListForm() {
         <ArrayField<MessageBrokerListElement>
           label="Message Broker"
           items={messageBrokerList.messageBrokerListElement}
-          onAdd={() => messagingInterfaceDescriptionActions.addMessageBrokerListElement()}
-          onRemove={(index) => messagingInterfaceDescriptionActions.removeMessageBrokerListElement(index)}
+          onAdd={() => store.addMessageBrokerListElement()}
+          onRemove={(index) => store.removeMessageBrokerListElement(index)}
           emptyMessage="No message brokers added"
           noWrapper={true}
           renderItem={(item, index) => (
@@ -72,13 +69,13 @@ interface MessageBrokerListElementFormProps {
 }
 
 function MessageBrokerListElementForm({ elementIndex, element, fieldPathPrefix }: MessageBrokerListElementFormProps) {
-  const { useValidation, messagingInterfaceDescriptionActions } = useDeviceFormContext();
-  const { getError } = useValidation();
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   const elementName = element.host || `Message Broker ${elementIndex + 1}`;
 
   const handleRemove = () => {
-    messagingInterfaceDescriptionActions.removeMessageBrokerListElement(elementIndex);
+    store.removeMessageBrokerListElement(elementIndex);
   };
 
   return (
@@ -97,9 +94,7 @@ function MessageBrokerListElementForm({ elementIndex, element, fieldPathPrefix }
           required={true}
           type="text"
           value={element.host}
-          onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementHost(elementIndex, value)
-          }
+          onChange={(value) => store.updateMessageBrokerListElementHost(elementIndex, value)}
           error={getError(`${fieldPathPrefix}.host`)}
         />
         <InputField
@@ -108,9 +103,7 @@ function MessageBrokerListElementForm({ elementIndex, element, fieldPathPrefix }
           required={true}
           type="text"
           value={element.port}
-          onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementPort(elementIndex, value)
-          }
+          onChange={(value) => store.updateMessageBrokerListElementPort(elementIndex, value)}
           error={getError(`${fieldPathPrefix}.port`)}
         />
       </FormGroup>
@@ -123,9 +116,7 @@ function MessageBrokerListElementForm({ elementIndex, element, fieldPathPrefix }
           placeholder="Enter true, false, or {{parameter}}"
           options={BOOLEAN_OPTIONS}
           value={element.tls}
-          onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementTls(elementIndex, value || undefined)
-          }
+          onChange={(value) => store.updateMessageBrokerListElementTls(elementIndex, value || undefined)}
           error={getError(`${fieldPathPrefix}.tls`)}
         />
         <ComboboxField
@@ -136,10 +127,7 @@ function MessageBrokerListElementForm({ elementIndex, element, fieldPathPrefix }
           options={BOOLEAN_OPTIONS}
           value={element.tlsVerifyCertificate}
           onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerListElementTlsVerifyCertificate(
-              elementIndex,
-              value || undefined
-            )
+            store.updateMessageBrokerListElementTlsVerifyCertificate(elementIndex, value || undefined)
           }
           error={getError(`${fieldPathPrefix}.tlsVerifyCertificate`)}
         />

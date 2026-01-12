@@ -4,18 +4,22 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { MasterFunctionsSupported, MASTER_FUNCTIONS_SUPPORTED_VALUES } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/models/form-options-helper";
 
 const MASTER_FUNCTIONS_SUPPORTED_OPTIONS = createFormOptions(MASTER_FUNCTIONS_SUPPORTED_VALUES);
 
 export function MasterFunctionsSupportedListForm() {
-  const { useDeviceState, useValidation, masterFunctionsSupportedListActions } = useDeviceFormContext();
-  const { getError } = useValidation();
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
-  const masterFunctionsSupportedList = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
+  const masterFunctionsSupportedList = useDeviceStore(
+    useShallow(
+      (state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
+    )
   );
 
   return (
@@ -24,8 +28,8 @@ export function MasterFunctionsSupportedListForm() {
       description="Configure the list of supported Modbus master functions"
       required={false}
       isAdded={!!masterFunctionsSupportedList}
-      onAdd={() => masterFunctionsSupportedListActions.addMasterFunctionsSupportedList()}
-      onRemove={() => masterFunctionsSupportedListActions.removeMasterFunctionsSupportedList()}
+      onAdd={() => store.addMasterFunctionsSupportedList()}
+      onRemove={() => store.removeMasterFunctionsSupportedList()}
       nested={true}
     >
       {masterFunctionsSupportedList && (
@@ -37,10 +41,10 @@ export function MasterFunctionsSupportedListForm() {
             const existing = masterFunctionsSupportedList.masterFunctionsSupported || [];
             const available = MASTER_FUNCTIONS_SUPPORTED_VALUES.find((func) => !existing.includes(func));
             if (available) {
-              masterFunctionsSupportedListActions.addMasterFunctionSupported(available);
+              store.addMasterFunctionSupported(available);
             }
           }}
-          onRemove={(index) => masterFunctionsSupportedListActions.removeMasterFunctionSupported(index)}
+          onRemove={(index) => store.removeMasterFunctionSupported(index)}
           emptyMessage="No master functions added"
           renderItem={(func, index) => (
             <FormGroup>
@@ -51,10 +55,7 @@ export function MasterFunctionsSupportedListForm() {
                 options={MASTER_FUNCTIONS_SUPPORTED_OPTIONS}
                 value={func}
                 onChange={(value) => {
-                  masterFunctionsSupportedListActions.updateMasterFunctionSupported(
-                    index,
-                    value as MasterFunctionsSupported
-                  );
+                  store.updateMasterFunctionSupported(index, value as MasterFunctionsSupported);
                 }}
                 error={getError(`masterFunctionsSupported.${index}`)}
               />

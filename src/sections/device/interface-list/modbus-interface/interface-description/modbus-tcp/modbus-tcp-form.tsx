@@ -3,16 +3,18 @@
 import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 
 export function ModbusTcpForm() {
-  const { useDeviceState, useValidation, modbusTcpActions, pathPrefix } = useDeviceFormContext();
+  const modbusTcp = useDeviceStore(
+    useShallow((state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusTcp)
+  );
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
-  const modbusTcp = useDeviceState((d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusTcp);
-  const { getError } = useValidation();
-
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(pathPrefix, `interfaceList.modbusInterface.modbusInterfaceDescription.modbusTcp.${field}`);
+  const fieldPath = (field: string) => `interfaceList.modbusInterface.modbusInterfaceDescription.modbusTcp.${field}`;
 
   return (
     <FormSection
@@ -20,8 +22,8 @@ export function ModbusTcpForm() {
       description="Configure Modbus TCP/IP settings"
       required={false}
       isAdded={!!modbusTcp}
-      onAdd={() => modbusTcpActions.addModbusTcp()}
-      onRemove={() => modbusTcpActions.removeModbusTcp()}
+      onAdd={() => store.addModbusTcp()}
+      onRemove={() => store.removeModbusTcp()}
       nested={true}
     >
       {modbusTcp && (
@@ -32,7 +34,7 @@ export function ModbusTcpForm() {
             required={true}
             type="text"
             value={modbusTcp.port}
-            onChange={(value) => modbusTcpActions.updatePort(value)}
+            onChange={(value) => store.updatePort(value)}
             placeholder="Enter port"
             error={getError(fieldPath("port"))}
           />
@@ -42,7 +44,7 @@ export function ModbusTcpForm() {
             required={true}
             type="text"
             value={modbusTcp.address}
-            onChange={(value) => modbusTcpActions.updateAddress(value)}
+            onChange={(value) => store.updateAddress(value)}
             placeholder="Enter IP address"
             error={getError(fieldPath("address"))}
           />
@@ -52,7 +54,7 @@ export function ModbusTcpForm() {
             required={true}
             type="text"
             value={modbusTcp.slaveId}
-            onChange={(value) => modbusTcpActions.updateSlaveId(value)}
+            onChange={(value) => store.updateSlaveId(value)}
             placeholder="Enter slave ID"
             error={getError(fieldPath("slaveId"))}
           />

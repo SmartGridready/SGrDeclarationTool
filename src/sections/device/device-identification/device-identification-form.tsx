@@ -3,19 +3,18 @@
 import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 
 export function DeviceIdentificationForm() {
-  const { useDeviceState, useValidation, pathPrefix, deviceIdentificationActions } = useDeviceFormContext();
-
-  const device = useDeviceState((d) => d);
-  const { getError } = useValidation();
+  const device = useDeviceStore(useShallow((state) => state.device));
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   if (!device) {
     return null;
   }
-
-  const fieldPath = (field: string) => buildDeviceFieldPath(pathPrefix, field);
 
   return (
     <FormSection title="Device Identification" description="Basic identification data of the device" required={true}>
@@ -26,8 +25,8 @@ export function DeviceIdentificationForm() {
           required={true}
           type="text"
           value={device.deviceName}
-          onChange={(value) => deviceIdentificationActions.updateDeviceName(value)}
-          error={getError(fieldPath("deviceName"))}
+          onChange={(value) => store.updateDeviceName(value)}
+          error={getError("deviceName")}
         />
         <InputField
           label="Manufacturer Name"
@@ -35,8 +34,8 @@ export function DeviceIdentificationForm() {
           required={false}
           type="text"
           value={device.manufacturerName || ""}
-          onChange={(value) => deviceIdentificationActions.updateManufacturerName(value || undefined)}
-          error={getError(fieldPath("manufacturerName"))}
+          onChange={(value) => store.updateManufacturerName(value || undefined)}
+          error={getError("manufacturerName")}
         />
       </FormGroup>
 
@@ -47,8 +46,8 @@ export function DeviceIdentificationForm() {
           required={true}
           type="text"
           value={device.specificationOwnerIdentification}
-          onChange={(value) => deviceIdentificationActions.updateSpecificationOwnerIdentification(value)}
-          error={getError(fieldPath("specificationOwnerIdentification"))}
+          onChange={(value) => store.updateSpecificationOwnerIdentification(value)}
+          error={getError("specificationOwnerIdentification")}
         />
       </FormGroup>
     </FormSection>

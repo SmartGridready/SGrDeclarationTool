@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import {
   ModbusInterfaceSelection,
   MODBUS_INTERFACE_SELECTION_VALUES,
@@ -20,19 +22,17 @@ const MODBUS_INTERFACE_SELECTION_OPTIONS = createFormOptions(MODBUS_INTERFACE_SE
 const BIT_ORDER_OPTIONS = createFormOptions(BIT_ORDER_VALUES);
 
 export function ModbusInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, modbusInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
-
-  const modbusInterfaceDescription = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription
+  const modbusInterfaceDescription = useDeviceStore(
+    useShallow((state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription)
   );
-  const { getError } = useValidation();
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   if (!modbusInterfaceDescription) {
     return null;
   }
 
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(pathPrefix, `interfaceList.modbusInterface.modbusInterfaceDescription.${field}`);
+  const fieldPath = (field: string) => `interfaceList.modbusInterface.modbusInterfaceDescription.${field}`;
 
   return (
     <FormSection
@@ -48,9 +48,7 @@ export function ModbusInterfaceDescriptionForm() {
           required={true}
           options={MODBUS_INTERFACE_SELECTION_OPTIONS}
           value={modbusInterfaceDescription.modbusInterfaceSelection}
-          onChange={(value) =>
-            modbusInterfaceDescriptionActions.updateModbusInterfaceSelection(value as ModbusInterfaceSelection)
-          }
+          onChange={(value) => store.updateModbusInterfaceSelection(value as ModbusInterfaceSelection)}
           error={getError(fieldPath("modbusInterfaceSelection"))}
         />
         <SelectField
@@ -59,7 +57,7 @@ export function ModbusInterfaceDescriptionForm() {
           required={true}
           options={BOOLEAN_OPTIONS}
           value={modbusInterfaceDescription.firstRegisterAddressIsOne.toString()}
-          onChange={(value) => modbusInterfaceDescriptionActions.updateFirstRegisterAddressIsOne(value === "true")}
+          onChange={(value) => store.updateFirstRegisterAddressIsOne(value === "true")}
           error={getError(fieldPath("firstRegisterAddressIsOne"))}
         />
       </FormGroup>
@@ -71,7 +69,7 @@ export function ModbusInterfaceDescriptionForm() {
           required={true}
           options={BIT_ORDER_OPTIONS}
           value={modbusInterfaceDescription.bitOrder}
-          onChange={(value) => modbusInterfaceDescriptionActions.updateBitOrder(value as BitOrder)}
+          onChange={(value) => store.updateBitOrder(value as BitOrder)}
           error={getError(fieldPath("bitOrder"))}
         />
       </FormGroup>

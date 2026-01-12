@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
 
@@ -17,31 +19,25 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerAuthenticationBasicForm() {
-  const { useDeviceState, useValidation, messageBrokerAuthenticationBasicActions, pathPrefix } = useDeviceFormContext();
-
-  const basicAuth = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    if (isMessagingInterface(interfaceList)) {
-      const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
-      return auth && "basicAuthentication" in auth ? auth.basicAuthentication : undefined;
-    }
-    return undefined;
-  });
-
-  const { getError } = useValidation();
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const basicAuth = isMessagingInterface(interfaceList)
+    ? (() => {
+        const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
+        return auth && "basicAuthentication" in auth ? auth.basicAuthentication : undefined;
+      })()
+    : undefined;
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerAuthentication.basicAuthentication.${field}`
-    );
+    `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerAuthentication.basicAuthentication.${field}`;
 
   const handleAdd = () => {
-    messageBrokerAuthenticationBasicActions.addMessageBrokerAuthenticationBasic();
+    store.addMessageBrokerAuthenticationBasic();
   };
 
   const handleRemove = () => {
-    messageBrokerAuthenticationBasicActions.removeMessageBrokerAuthenticationBasic();
+    store.removeMessageBrokerAuthenticationBasic();
   };
 
   return (
@@ -62,7 +58,7 @@ export function MessageBrokerAuthenticationBasicForm() {
             required={true}
             type="text"
             value={basicAuth.username}
-            onChange={(value) => messageBrokerAuthenticationBasicActions.updateBasicUsername(value)}
+            onChange={(value) => store.updateBasicUsername(value)}
             error={getError(fieldPath("username"))}
           />
           <InputField
@@ -71,7 +67,7 @@ export function MessageBrokerAuthenticationBasicForm() {
             required={true}
             type="text"
             value={basicAuth.password}
-            onChange={(value) => messageBrokerAuthenticationBasicActions.updateBasicPassword(value)}
+            onChange={(value) => store.updateBasicPassword(value)}
             error={getError(fieldPath("password"))}
           />
         </FormGroup>

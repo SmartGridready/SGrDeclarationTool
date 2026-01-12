@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
 import {
@@ -50,16 +52,12 @@ function isClientCertificateAuthentication(auth: MessageBrokerAuthentication | u
 }
 
 export function MessageBrokerAuthenticationForm() {
-  const { useDeviceState, useValidation, messagingInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
-
-  const messagingInterfaceDescription = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.messagingInterfaceDescription
-      : undefined;
-  });
-
-  const { getError } = useValidation();
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const messagingInterfaceDescription = isMessagingInterface(interfaceList)
+    ? interfaceList.messagingInterface.messagingInterfaceDescription
+    : undefined;
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   if (!messagingInterfaceDescription) {
     return null;
@@ -82,18 +80,15 @@ export function MessageBrokerAuthenticationForm() {
 
   const handleAdd = () => {
     // Default to basic authentication when adding
-    messagingInterfaceDescriptionActions.updateMessageBrokerAuthenticationType("basicAuthentication");
+    store.updateMessageBrokerAuthenticationType("basicAuthentication");
   };
 
   const handleRemove = () => {
-    messagingInterfaceDescriptionActions.updateMessageBrokerAuthenticationType(undefined);
+    store.updateMessageBrokerAuthenticationType(undefined);
   };
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerAuthentication.${field}`
-    );
+    `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerAuthentication.${field}`;
 
   return (
     <FormSection
@@ -114,9 +109,7 @@ export function MessageBrokerAuthenticationForm() {
           options={MESSAGE_BROKER_AUTHENTICATION_TYPE_OPTIONS}
           value={authType ?? ""}
           onChange={(value) =>
-            messagingInterfaceDescriptionActions.updateMessageBrokerAuthenticationType(
-              value ? (value as MessageBrokerAuthenticationType) : undefined
-            )
+            store.updateMessageBrokerAuthenticationType(value ? (value as MessageBrokerAuthenticationType) : undefined)
           }
           error={getError(fieldPath("type"))}
         />

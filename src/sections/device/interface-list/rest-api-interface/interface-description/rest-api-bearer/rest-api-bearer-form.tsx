@@ -1,9 +1,10 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
-import { RestApiServiceCallForm } from "@/sections/shared/rest-api-service-call/rest-api-service-call-form";
 import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
+import { RestApiServiceCallForm } from "@/sections/shared/rest-api-service-call/rest-api-service-call-form";
 import { InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
 
@@ -17,27 +18,22 @@ function isRestApiInterface(
 }
 
 export function RestApiBearerForm() {
-  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
-
-  const restApiBearer = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBearer
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const restApiBearer = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBearer
+    : undefined;
+  const store = useDeviceStore.getState();
+  const useValidation = useDeviceValidation;
 
   const handleAdd = () => {
-    restApiInterfaceDescriptionActions.addRestApiBearer();
+    store.addRestApiBearer();
   };
 
   const handleRemove = () => {
-    restApiInterfaceDescriptionActions.removeRestApiBearer();
+    store.removeRestApiBearer();
   };
 
-  const fieldPathPrefix = buildDeviceFieldPath(
-    pathPrefix,
-    "interfaceList.restApiInterface.restApiInterfaceDescription.restApiBearer.restApiServiceCall"
-  );
+  const fieldPathPrefix = "interfaceList.restApiInterface.restApiInterfaceDescription.restApiBearer.restApiServiceCall";
 
   return (
     <FormSection

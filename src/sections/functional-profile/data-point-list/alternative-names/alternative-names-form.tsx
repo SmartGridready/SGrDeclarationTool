@@ -1,34 +1,35 @@
 "use client";
 
 import { AlternativeNamesForm } from "@/sections/shared/alternative-names/alternative-names-form";
-import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/hooks/use-validation";
 import { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
 import { FunctionalProfileFrame } from "@/models";
+import { useShallow } from "zustand/react/shallow";
 
 interface DataPointAlternativeNamesFormProps {
   dataPointIndex: number;
 }
 
-function useDataPointStoreAdapter(dataPointIndex: number) {
-  const { useProfileState, dataPointListActions } = useFunctionalProfileFormContext();
-
+function createDataPointStoreAdapter(
+  dataPointIndex: number,
+  profile: FunctionalProfileFrame | undefined,
+  store: ReturnType<typeof useProfileStore.getState>
+) {
   return <TSelected,>(selector: (store: { profile?: FunctionalProfileFrame } & AlternativeNamesSlice) => TSelected) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const profile = useProfileState((p) => p);
-
     const adaptedStore: { profile?: FunctionalProfileFrame } & AlternativeNamesSlice = {
       profile,
-      addAlternativeNames: () => dataPointListActions.addDataPointAlternativeNames(dataPointIndex),
-      removeAlternativeNames: () => dataPointListActions.removeDataPointAlternativeNames(dataPointIndex),
-      updateSLV1Name: (value) => dataPointListActions.updateDataPointSLV1Name(dataPointIndex, value),
-      updateWorkName: (value) => dataPointListActions.updateDataPointWorkName(dataPointIndex, value),
-      updateManufName: (value) => dataPointListActions.updateDataPointManufName(dataPointIndex, value),
-      updateIec61850Name: (value) => dataPointListActions.updateDataPointIec61850Name(dataPointIndex, value),
-      updateSarefName: (value) => dataPointListActions.updateDataPointSarefName(dataPointIndex, value),
-      updateEebusName: (value) => dataPointListActions.updateDataPointEebusName(dataPointIndex, value),
-      updateSunSpecName: (value) => dataPointListActions.updateDataPointSunSpecName(dataPointIndex, value),
-      updateHpBwpName: (value) => dataPointListActions.updateDataPointHpBwpName(dataPointIndex, value),
-      updateEn17609Name: (value) => dataPointListActions.updateDataPointEn17609Name(dataPointIndex, value),
+      addAlternativeNames: () => store.addDataPointAlternativeNames(dataPointIndex),
+      removeAlternativeNames: () => store.removeDataPointAlternativeNames(dataPointIndex),
+      updateSLV1Name: (value) => store.updateDataPointSLV1Name(dataPointIndex, value),
+      updateWorkName: (value) => store.updateDataPointWorkName(dataPointIndex, value),
+      updateManufName: (value) => store.updateDataPointManufName(dataPointIndex, value),
+      updateIec61850Name: (value) => store.updateDataPointIec61850Name(dataPointIndex, value),
+      updateSarefName: (value) => store.updateDataPointSarefName(dataPointIndex, value),
+      updateEebusName: (value) => store.updateDataPointEebusName(dataPointIndex, value),
+      updateSunSpecName: (value) => store.updateDataPointSunSpecName(dataPointIndex, value),
+      updateHpBwpName: (value) => store.updateDataPointHpBwpName(dataPointIndex, value),
+      updateEn17609Name: (value) => store.updateDataPointEn17609Name(dataPointIndex, value),
     };
 
     return selector(adaptedStore);
@@ -36,13 +37,12 @@ function useDataPointStoreAdapter(dataPointIndex: number) {
 }
 
 export function DataPointAlternativeNamesForm({ dataPointIndex }: DataPointAlternativeNamesFormProps) {
-  const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
-  const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
+  const profile = useProfileStore(useShallow((state) => state.profile));
+  const store = useProfileStore.getState();
+  const useValidation = useProfileValidation;
+  const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, profile, store);
 
-  const fieldPathPrefix = buildProfileFieldPath(
-    pathPrefix,
-    `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`
-  );
+  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`;
 
   return (
     <AlternativeNamesForm

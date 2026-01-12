@@ -1,20 +1,22 @@
 "use client";
 
 import { ModbusAttributesForm as SharedModbusAttributesForm } from "@/sections/shared/modbus-attributes/modbus-attributes-form";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 /**
  * Device specific modbus attributes form.
- * Uses the DeviceFormContext to connect to the store.
+ * Uses the device store directly.
  */
 export function ModbusAttributesForm() {
-  const { useDeviceState, useValidation, modbusAttributesActions, pathPrefix } = useDeviceFormContext();
+  const device = useDeviceStore(useShallow((state) => state.device));
+  const store = useDeviceStore.getState();
+  const useStore = createDeviceStoreAdapter(device, store);
+  const useValidation = useDeviceValidation;
 
-  const device = useDeviceState((d) => d);
-  const useStore = createDeviceStoreAdapter(device, modbusAttributesActions);
-
-  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.modbusAttributes");
+  const fieldPathPrefix = "interfaceList.modbusInterface.modbusAttributes";
 
   return (
     <SharedModbusAttributesForm

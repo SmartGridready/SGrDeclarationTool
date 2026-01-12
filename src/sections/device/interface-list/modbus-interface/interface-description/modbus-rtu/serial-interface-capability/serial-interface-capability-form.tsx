@@ -4,7 +4,9 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import {
   BaudRate,
   ByteLength,
@@ -23,11 +25,14 @@ const PARITY_OPTIONS = createFormOptions(PARITY_VALUES);
 const STOP_BIT_LENGTH_OPTIONS = createFormOptions(STOP_BIT_LENGTH_VALUES);
 
 export function SerialInterfaceCapabilityForm() {
-  const { useDeviceState, useValidation, serialInterfaceCapabilityActions } = useDeviceFormContext();
-  const { getError } = useValidation();
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
-  const serialInterfaceCapability = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu?.serialInterfaceCapability
+  const serialInterfaceCapability = useDeviceStore(
+    useShallow(
+      (state) =>
+        state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu?.serialInterfaceCapability
+    )
   );
 
   if (!serialInterfaceCapability) {
@@ -48,10 +53,10 @@ export function SerialInterfaceCapabilityForm() {
           const existing = serialInterfaceCapability.baudRatesSupported || [];
           const available = BAUD_RATE_VALUES.find((rate) => !existing.includes(rate));
           if (available) {
-            serialInterfaceCapabilityActions.addBaudRateSupported(available);
+            store.addBaudRateSupported(available);
           }
         }}
-        onRemove={(index) => serialInterfaceCapabilityActions.removeBaudRateSupported(index)}
+        onRemove={(index) => store.removeBaudRateSupported(index)}
         emptyMessage="No baud rates added"
         renderItem={(rate, index) => (
           <FormGroup>
@@ -62,8 +67,8 @@ export function SerialInterfaceCapabilityForm() {
               options={BAUD_RATE_OPTIONS}
               value={rate}
               onChange={(value) => {
-                serialInterfaceCapabilityActions.removeBaudRateSupported(index);
-                serialInterfaceCapabilityActions.addBaudRateSupported(value as BaudRate);
+                store.removeBaudRateSupported(index);
+                store.addBaudRateSupported(value as BaudRate);
               }}
               error={getError(`baudRatesSupported.${index}`)}
             />
@@ -78,10 +83,10 @@ export function SerialInterfaceCapabilityForm() {
           const existing = serialInterfaceCapability.byteLenSupported || [];
           const available = BYTE_LENGTH_VALUES.find((len) => !existing.includes(len));
           if (available) {
-            serialInterfaceCapabilityActions.addByteLenSupported(available);
+            store.addByteLenSupported(available);
           }
         }}
-        onRemove={(index) => serialInterfaceCapabilityActions.removeByteLenSupported(index)}
+        onRemove={(index) => store.removeByteLenSupported(index)}
         emptyMessage="No byte lengths added"
         renderItem={(len, index) => (
           <FormGroup>
@@ -92,8 +97,8 @@ export function SerialInterfaceCapabilityForm() {
               options={BYTE_LENGTH_OPTIONS}
               value={len}
               onChange={(value) => {
-                serialInterfaceCapabilityActions.removeByteLenSupported(index);
-                serialInterfaceCapabilityActions.addByteLenSupported(value as ByteLength);
+                store.removeByteLenSupported(index);
+                store.addByteLenSupported(value as ByteLength);
               }}
               error={getError(`byteLenSupported.${index}`)}
             />
@@ -108,10 +113,10 @@ export function SerialInterfaceCapabilityForm() {
           const existing = serialInterfaceCapability.paritySupported || [];
           const available = PARITY_VALUES.find((parity) => !existing.includes(parity));
           if (available) {
-            serialInterfaceCapabilityActions.addParitySupported(available);
+            store.addParitySupported(available);
           }
         }}
-        onRemove={(index) => serialInterfaceCapabilityActions.removeParitySupported(index)}
+        onRemove={(index) => store.removeParitySupported(index)}
         emptyMessage="No parity options added"
         renderItem={(parity, index) => (
           <FormGroup>
@@ -122,8 +127,8 @@ export function SerialInterfaceCapabilityForm() {
               options={PARITY_OPTIONS}
               value={parity}
               onChange={(value) => {
-                serialInterfaceCapabilityActions.removeParitySupported(index);
-                serialInterfaceCapabilityActions.addParitySupported(value as Parity);
+                store.removeParitySupported(index);
+                store.addParitySupported(value as Parity);
               }}
               error={getError(`paritySupported.${index}`)}
             />
@@ -138,10 +143,10 @@ export function SerialInterfaceCapabilityForm() {
           const existing = serialInterfaceCapability.stopBitLenSupported || [];
           const available = STOP_BIT_LENGTH_VALUES.find((len) => !existing.includes(len));
           if (available) {
-            serialInterfaceCapabilityActions.addStopBitLenSupported(available);
+            store.addStopBitLenSupported(available);
           }
         }}
-        onRemove={(index) => serialInterfaceCapabilityActions.removeStopBitLenSupported(index)}
+        onRemove={(index) => store.removeStopBitLenSupported(index)}
         emptyMessage="No stop bit lengths added"
         renderItem={(len, index) => (
           <FormGroup>
@@ -152,8 +157,8 @@ export function SerialInterfaceCapabilityForm() {
               options={STOP_BIT_LENGTH_OPTIONS}
               value={len}
               onChange={(value) => {
-                serialInterfaceCapabilityActions.removeStopBitLenSupported(index);
-                serialInterfaceCapabilityActions.addStopBitLenSupported(value as StopBitLength);
+                store.removeStopBitLenSupported(index);
+                store.addStopBitLenSupported(value as StopBitLength);
               }}
               error={getError(`stopBitLenSupported.${index}`)}
             />

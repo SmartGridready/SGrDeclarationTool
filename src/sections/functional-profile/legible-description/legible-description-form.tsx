@@ -1,20 +1,20 @@
 "use client";
 
 import { LegibleDescriptionForm as SharedLegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
-import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/hooks/use-validation";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 /**
  * Functional Profile specific legible description form.
- * Uses the FunctionalProfileFormContext to connect to the store.
+ * Uses the profile store directly.
  */
 export function LegibleDescriptionForm() {
-  const { useProfileState, useValidation, legibleDescriptionActions, pathPrefix } = useFunctionalProfileFormContext();
-
-  const profile = useProfileState((p) => p);
-  const useStore = createProfileStoreAdapter(profile, legibleDescriptionActions);
-
-  const fieldPathPrefix = buildProfileFieldPath(pathPrefix, "functionalProfile.legibleDescription");
+  const profile = useProfileStore(useShallow((state) => state.profile));
+  const store = useProfileStore.getState();
+  const useStore = createProfileStoreAdapter(profile, store);
+  const useValidation = useProfileValidation;
 
   return (
     <SharedLegibleDescriptionForm
@@ -24,7 +24,7 @@ export function LegibleDescriptionForm() {
         legibleDescriptions: store.profile?.functionalProfile?.legibleDescription,
       })}
       isAddedSelector={(store) => !!store.profile?.functionalProfile?.legibleDescription}
-      fieldPathPrefix={fieldPathPrefix}
+      fieldPathPrefix="functionalProfile.legibleDescription"
       required={false}
       title="Legible Description"
       description="Human-readable descriptions for the functional profile (max 4)"

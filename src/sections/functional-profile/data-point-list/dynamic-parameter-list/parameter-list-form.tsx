@@ -1,23 +1,22 @@
 "use client";
 
 import { DynamicParameterListForm } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-form";
-import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/hooks/use-validation";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 interface ParameterListFormProps {
   dataPointIndex: number;
 }
 
 export function ParameterListForm({ dataPointIndex }: ParameterListFormProps) {
-  const { useProfileState, useValidation, dataPointListActions, pathPrefix } = useFunctionalProfileFormContext();
+  const profile = useProfileStore(useShallow((state) => state.profile));
+  const store = useProfileStore.getState();
+  const useStore = createProfileStoreAdapter(profile, store);
+  const useValidation = useProfileValidation;
 
-  const profile = useProfileState((p) => p);
-  const useStore = createProfileStoreAdapter(profile, dataPointListActions);
-
-  const fieldPathPrefix = buildProfileFieldPath(
-    pathPrefix,
-    `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList`
-  );
+  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList`;
 
   return (
     <DynamicParameterListForm

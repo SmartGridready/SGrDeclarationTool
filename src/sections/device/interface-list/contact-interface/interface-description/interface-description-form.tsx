@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { ContactInterface } from "@/models/product/contact-interface";
 
@@ -17,17 +19,15 @@ function isContactInterface(
 }
 
 export function ContactInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, contactInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
-  const { getError } = useValidation();
-
-  const interfaceList = useDeviceState((d) => d?.interfaceList);
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
   const contactInterface = isContactInterface(interfaceList) ? interfaceList.contactInterface : undefined;
 
   const description = contactInterface?.contactInterfaceDescription;
 
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(pathPrefix, `interfaceList.contactInterface.contactInterfaceDescription.${field}`);
+  const fieldPath = (field: string) => `interfaceList.contactInterface.contactInterfaceDescription.${field}`;
 
   if (!description) {
     return null;
@@ -47,9 +47,7 @@ export function ContactInterfaceDescriptionForm() {
           type="number"
           required={true}
           value={description.numberOfContacts?.toString() || ""}
-          onChange={(value) =>
-            contactInterfaceDescriptionActions.updateNumberOfContacts(value ? parseInt(value, 10) : 0)
-          }
+          onChange={(value) => store.updateNumberOfContacts(value ? parseInt(value, 10) : 0)}
           error={getError(fieldPath("numberOfContacts"))}
         />
         <InputField
@@ -58,9 +56,7 @@ export function ContactInterfaceDescriptionForm() {
           type="number"
           required={true}
           value={description.contactStabilisationTimeMs?.toString() || ""}
-          onChange={(value) =>
-            contactInterfaceDescriptionActions.updateContactStabilisationTimeMs(value ? parseInt(value, 10) : 0)
-          }
+          onChange={(value) => store.updateContactStabilisationTimeMs(value ? parseInt(value, 10) : 0)}
           error={getError(fieldPath("contactStabilisationTimeMs"))}
         />
       </FormGroup>

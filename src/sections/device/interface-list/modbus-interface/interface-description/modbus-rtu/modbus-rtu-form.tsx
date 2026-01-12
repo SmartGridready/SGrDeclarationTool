@@ -4,7 +4,9 @@ import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { ComboboxField } from "@/components/forms/combobox-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import {
   BAUD_RATE_VALUES,
   BYTE_LENGTH_VALUES,
@@ -20,13 +22,13 @@ const PARITY_OPTIONS = createFormOptions(PARITY_VALUES);
 const STOP_BIT_LENGTH_OPTIONS = createFormOptions(STOP_BIT_LENGTH_VALUES);
 
 export function ModbusRtuForm() {
-  const { useDeviceState, useValidation, modbusRtuActions, pathPrefix } = useDeviceFormContext();
+  const modbusRtu = useDeviceStore(
+    useShallow((state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu)
+  );
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
-  const modbusRtu = useDeviceState((d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu);
-  const { getError } = useValidation();
-
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(pathPrefix, `interfaceList.modbusInterface.modbusInterfaceDescription.modbusRtu.${field}`);
+  const fieldPath = (field: string) => `interfaceList.modbusInterface.modbusInterfaceDescription.modbusRtu.${field}`;
 
   return (
     <FormSection
@@ -34,8 +36,8 @@ export function ModbusRtuForm() {
       description="Configure Modbus RTU settings"
       required={false}
       isAdded={!!modbusRtu}
-      onAdd={() => modbusRtuActions.addModbusRtu()}
-      onRemove={() => modbusRtuActions.removeModbusRtu()}
+      onAdd={() => store.addModbusRtu()}
+      onRemove={() => store.removeModbusRtu()}
       nested={true}
     >
       {modbusRtu && (
@@ -47,7 +49,7 @@ export function ModbusRtuForm() {
               required={true}
               type="text"
               value={modbusRtu.slaveAddr}
-              onChange={(value) => modbusRtuActions.updateSlaveAddr(value)}
+              onChange={(value) => store.updateSlaveAddr(value)}
               placeholder="Enter slave address"
               error={getError(fieldPath("slaveAddr"))}
             />
@@ -57,7 +59,7 @@ export function ModbusRtuForm() {
               required={true}
               type="text"
               value={modbusRtu.portName}
-              onChange={(value) => modbusRtuActions.updatePortName(value)}
+              onChange={(value) => store.updatePortName(value)}
               placeholder="Enter port name"
               error={getError(fieldPath("portName"))}
             />
@@ -70,7 +72,7 @@ export function ModbusRtuForm() {
               required={true}
               options={BAUD_RATE_OPTIONS}
               value={modbusRtu.baudRateSelected}
-              onChange={(value) => modbusRtuActions.updateBaudRateSelected(value)}
+              onChange={(value) => store.updateBaudRateSelected(value)}
               placeholder="Select baud rate or enter template (e.g., {{serial_baudrate}})"
               error={getError(fieldPath("baudRateSelected"))}
             />
@@ -80,7 +82,7 @@ export function ModbusRtuForm() {
               required={true}
               options={BYTE_LENGTH_OPTIONS}
               value={modbusRtu.byteLenSelected}
-              onChange={(value) => modbusRtuActions.updateByteLenSelected(value)}
+              onChange={(value) => store.updateByteLenSelected(value)}
               placeholder="Select byte length or enter template (e.g., {{serial_databits}})"
               error={getError(fieldPath("byteLenSelected"))}
             />
@@ -93,7 +95,7 @@ export function ModbusRtuForm() {
               required={true}
               options={PARITY_OPTIONS}
               value={modbusRtu.paritySelected}
-              onChange={(value) => modbusRtuActions.updateParitySelected(value)}
+              onChange={(value) => store.updateParitySelected(value)}
               placeholder="Select parity or enter template (e.g., {{serial_parity}})"
               error={getError(fieldPath("paritySelected"))}
             />
@@ -103,7 +105,7 @@ export function ModbusRtuForm() {
               required={true}
               options={STOP_BIT_LENGTH_OPTIONS}
               value={modbusRtu.stopBitLenSelected}
-              onChange={(value) => modbusRtuActions.updateStopBitLenSelected(value)}
+              onChange={(value) => store.updateStopBitLenSelected(value)}
               placeholder="Select stop bit length or enter template (e.g., {{serial_stopbits}})"
               error={getError(fieldPath("stopBitLenSelected"))}
             />

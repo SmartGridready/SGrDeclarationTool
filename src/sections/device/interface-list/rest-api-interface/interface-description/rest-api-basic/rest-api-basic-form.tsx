@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
 
@@ -17,28 +19,22 @@ function isRestApiInterface(
 }
 
 export function RestApiBasicForm() {
-  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
-
-  const restApiBasic = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBasic
-      : undefined;
-  });
-  const { getError } = useValidation();
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const restApiBasic = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBasic
+    : undefined;
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.restApiInterface.restApiInterfaceDescription.restApiBasic.${field}`
-    );
+    `interfaceList.restApiInterface.restApiInterfaceDescription.restApiBasic.${field}`;
 
   const handleAdd = () => {
-    restApiInterfaceDescriptionActions.addRestApiBasic();
+    store.addRestApiBasic();
   };
 
   const handleRemove = () => {
-    restApiInterfaceDescriptionActions.removeRestApiBasic();
+    store.removeRestApiBasic();
   };
 
   return (
@@ -58,7 +54,7 @@ export function RestApiBasicForm() {
             name="restBasicUsername"
             required={true}
             value={restApiBasic.restBasicUsername}
-            onChange={(value) => restApiInterfaceDescriptionActions.updateRestBasicUsername(value)}
+            onChange={(value) => store.updateRestBasicUsername(value)}
             error={getError(fieldPath("restBasicUsername"))}
           />
           <InputField
@@ -66,7 +62,7 @@ export function RestApiBasicForm() {
             name="restBasicPassword"
             required={true}
             value={restApiBasic.restBasicPassword}
-            onChange={(value) => restApiInterfaceDescriptionActions.updateRestBasicPassword(value)}
+            onChange={(value) => store.updateRestBasicPassword(value)}
             error={getError(fieldPath("restBasicPassword"))}
           />
         </FormGroup>

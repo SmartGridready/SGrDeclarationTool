@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
@@ -13,21 +15,23 @@ import { FunctionalProfileModbusAttributesForm } from "./modbus-attributes/modbu
 import { ModbusAttributesSlice } from "./modbus-attributes/modbus-attributes-slice";
 
 export function ModbusFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, functionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const fieldPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.functionalProfileList")
-    : "interfaceList.modbusInterface.functionalProfileList";
+  const fieldPathPrefix = "interfaceList.modbusInterface.functionalProfileList";
 
-  // Get state from context
-  const functionalProfiles = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement
+  // Get state from store
+  const functionalProfiles = useDeviceStore(
+    useShallow(
+      (state) => state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement
+    )
   );
 
-  const isAdded = useDeviceState((d) => !!d?.interfaceList?.modbusInterface?.functionalProfileList);
+  const isAdded = useDeviceStore(
+    useShallow((state) => !!state.device?.interfaceList?.modbusInterface?.functionalProfileList)
+  );
 
-  const handleAdd = () => functionalProfileListActions.addEmptyModbusFunctionalProfile();
-  const handleRemove = () => functionalProfileListActions.removeAllModbusFunctionalProfiles();
+  const handleAdd = () => store.addEmptyModbusFunctionalProfile();
+  const handleRemove = () => store.removeAllModbusFunctionalProfiles();
 
   return (
     <FormSection
@@ -42,17 +46,17 @@ export function ModbusFunctionalProfileListForm() {
       <ArrayField<ModbusFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={functionalProfileListActions.addEmptyModbusFunctionalProfile}
-        onRemove={functionalProfileListActions.removeModbusFunctionalProfile}
+        onAdd={store.addEmptyModbusFunctionalProfile}
+        onRemove={store.removeModbusFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <ModbusFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={functionalProfileListActions.getModbusFunctionalProfileSlice(index)}
-            dataPointListSlice={functionalProfileListActions.getModbusDataPointListSlice(index)}
-            modbusAttributesSlice={functionalProfileListActions.getModbusAttributesSlice(index)}
+            functionalProfileSlice={store.getModbusFunctionalProfileSlice(index)}
+            dataPointListSlice={store.getModbusDataPointListSlice(index)}
+            modbusAttributesSlice={store.getModbusAttributesSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -76,11 +80,15 @@ function ModbusFunctionalProfileItemForm({
   modbusAttributesSlice,
   fieldPathPrefix,
 }: ModbusFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, functionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const functionalProfileData = useDeviceState(
-    (d) =>
-      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+  const functionalProfileData = useDeviceStore(
+    useShallow(
+      (state) =>
+        state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
+          functionalProfileIndex
+        ]
+    )
   );
 
   const functionalProfileName =
@@ -88,7 +96,7 @@ function ModbusFunctionalProfileItemForm({
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    functionalProfileListActions.removeModbusFunctionalProfile(functionalProfileIndex);
+    store.removeModbusFunctionalProfile(functionalProfileIndex);
   };
 
   return (
@@ -103,7 +111,7 @@ function ModbusFunctionalProfileItemForm({
       <div className="space-y-6">
         <FunctionalProfileBaseForm
           useStore={createSliceAdapter(functionalProfileSlice)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           stateSelector={() => functionalProfileData ?? {}}
           fieldPathPrefix={fieldPathPrefix}
           title={`Functional Profile ${functionalProfileIndex + 1}`}

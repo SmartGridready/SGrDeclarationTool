@@ -1,7 +1,8 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
 import { MessagingInterfaceDescriptionForm } from "./interface-description/interface-description-form";
@@ -17,9 +18,7 @@ function isMessagingInterface(
 }
 
 export function MessagingInterfaceForm() {
-  const { useDeviceState } = useDeviceFormContext();
-
-  const interfaceList = useDeviceState((d) => d?.interfaceList);
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
   const messagingInterface = isMessagingInterface(interfaceList) ? interfaceList.messagingInterface : undefined;
 
   // Don't render if Messaging interface is not selected

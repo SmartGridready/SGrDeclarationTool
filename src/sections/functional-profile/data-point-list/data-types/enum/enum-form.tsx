@@ -4,7 +4,7 @@ import { InputField } from "@/components/forms/input-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormSection } from "@/components/forms/form-section";
 import { EnumMapFunctionalProfile, EnumEntryRecordFunctionalProfile } from "@/models";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 
 interface EnumFormProps {
   dataPointIndex: number;
@@ -12,7 +12,8 @@ interface EnumFormProps {
 }
 
 export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
-  const { dataPointListActions } = useFunctionalProfileFormContext();
+  const store = useProfileStore.getState();
+  const dataPointListActions = store;
 
   return (
     <FormSection

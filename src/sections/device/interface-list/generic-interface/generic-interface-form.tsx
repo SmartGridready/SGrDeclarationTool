@@ -1,7 +1,8 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { GenericInterface } from "@/models/product/generic-interface";
 import { GenericFunctionalProfileListForm } from "./functional-profile-list/generic-functional-profile-list-form";
@@ -16,9 +17,7 @@ function isGenericInterface(
 }
 
 export function GenericInterfaceForm() {
-  const { useDeviceState } = useDeviceFormContext();
-
-  const interfaceList = useDeviceState((d) => d?.interfaceList);
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
   const genericInterface = isGenericInterface(interfaceList) ? interfaceList.genericInterface : undefined;
 
   // Don't render if Generic interface is not selected

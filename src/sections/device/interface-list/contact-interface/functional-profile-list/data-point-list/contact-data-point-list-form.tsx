@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList, DataPointBase } from "@/models";
 import { ContactInterface } from "@/models/product/contact-interface";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
@@ -39,24 +41,17 @@ export function ContactDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ContactDataPointListFormProps) {
-  const { useDeviceState } = useDeviceFormContext();
+  // Get state from store
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const dataPoints = isContactInterface(interfaceList)
+    ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement
+    : undefined;
 
-  // Get state from context
-  const dataPoints = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-          ?.dataPointList?.dataPointListElement
-      : undefined;
-  });
-
-  const isAdded = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? !!interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-          ?.dataPointList
-      : false;
-  });
+  const isAdded = isContactInterface(interfaceList)
+    ? !!interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList
+    : false;
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
   const handleRemove = () => dataPointListSlice.removeAllDataPoints();
@@ -108,15 +103,11 @@ function ContactDataPointItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ContactDataPointItemFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
-
-  const dataPointData = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-          ?.dataPointList?.dataPointListElement?.[dataPointIndex]
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const dataPointData = isContactInterface(interfaceList)
+    ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement?.[dataPointIndex]
+    : undefined;
 
   const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
@@ -136,7 +127,7 @@ function ContactDataPointItemForm({
       <div className="space-y-6">
         <DataPointBaseForm
           useStore={createSliceAdapter(dataPointSlice)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           stateSelector={() => dataPointData ?? {}}
           fieldPathPrefix={fieldPathPrefix}
           title={`Data Point ${dataPointIndex + 1}`}

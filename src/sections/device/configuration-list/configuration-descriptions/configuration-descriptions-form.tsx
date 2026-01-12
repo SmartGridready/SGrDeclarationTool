@@ -3,7 +3,8 @@
 import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { ConfigurationDescription } from "@/models";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { useMemo } from "react";
 
 interface ConfigurationDescriptionsFormProps {
@@ -15,44 +16,45 @@ export function ConfigurationDescriptionsForm({
   configIndex,
   configurationDescriptions,
 }: ConfigurationDescriptionsFormProps) {
-  const { useValidation, configurationListActions, pathPrefix } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
+  const useValidation = useDeviceValidation;
 
   // Create an adapter store that wraps the configuration descriptions
   const adaptedStore = useMemo(() => {
-    const store: { legibleDescriptions?: ConfigurationDescription[] } & LegibleDescriptionSlice = {
+    const adapted: { legibleDescriptions?: ConfigurationDescription[] } & LegibleDescriptionSlice = {
       legibleDescriptions: configurationDescriptions,
       addLegibleDescription: (description) => {
-        configurationListActions.addConfigurationDescription(configIndex, description as ConfigurationDescription);
+        store.addConfigurationDescription(configIndex, description as ConfigurationDescription);
       },
       removeLegibleDescription: (index) => {
-        configurationListActions.removeConfigurationDescription(configIndex, index);
+        store.removeConfigurationDescription(configIndex, index);
       },
       removeAllLegibleDescriptions: () => {
         // Remove all descriptions by removing them one by one
         if (configurationDescriptions) {
           for (let i = configurationDescriptions.length - 1; i >= 0; i--) {
-            configurationListActions.removeConfigurationDescription(configIndex, i);
+            store.removeConfigurationDescription(configIndex, i);
           }
         }
       },
       updateTextElement: (index, textElement) => {
-        configurationListActions.updateConfigurationDescriptionText(configIndex, index, textElement);
+        store.updateConfigurationDescriptionText(configIndex, index, textElement);
       },
       updateLanguage: (index, language) => {
-        configurationListActions.updateConfigurationDescriptionLanguage(configIndex, index, language);
+        store.updateConfigurationDescriptionLanguage(configIndex, index, language);
       },
       updateUri: (index, uri) => {
-        configurationListActions.updateConfigurationDescriptionUri(configIndex, index, uri);
+        store.updateConfigurationDescriptionUri(configIndex, index, uri);
       },
       updateLabel: (index, label) => {
-        configurationListActions.updateConfigurationDescriptionLabel(configIndex, index, label);
+        store.updateConfigurationDescriptionLabel(configIndex, index, label);
       },
       addEmptyLegibleDescription: () => {
-        configurationListActions.addEmptyConfigurationDescription(configIndex);
+        store.addEmptyConfigurationDescription(configIndex);
       },
     };
-    return store;
-  }, [configIndex, configurationDescriptions, configurationListActions]);
+    return adapted;
+  }, [configIndex, configurationDescriptions, store]);
 
   // Create a store hook that returns the adapted store
   const useStore = <TSelected,>(selector: (store: typeof adaptedStore) => TSelected): TSelected => {
@@ -67,16 +69,12 @@ export function ConfigurationDescriptionsForm({
         // Convert the field path from legible description format to configuration description format
         const basePath = `configurationList.configurationListElement.${configIndex}.configurationDescription`;
         const fullPath = fieldPath.replace("legibleDescription", basePath);
-        const prefixedPath = pathPrefix ? buildDeviceFieldPath(pathPrefix, fullPath) : fullPath;
-        return getRawError(prefixedPath);
+        return getRawError(fullPath);
       },
     };
   };
 
-  const fieldPathPrefix = buildDeviceFieldPath(
-    pathPrefix,
-    `configurationList.configurationListElement.${configIndex}.configurationDescription`
-  );
+  const fieldPathPrefix = `configurationList.configurationListElement.${configIndex}.configurationDescription`;
 
   return (
     <LegibleDescriptionForm

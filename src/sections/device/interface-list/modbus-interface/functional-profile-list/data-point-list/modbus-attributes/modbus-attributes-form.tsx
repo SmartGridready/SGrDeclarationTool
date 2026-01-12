@@ -1,7 +1,7 @@
 "use client";
 
 import { ModbusAttributesForm as SharedModbusAttributesForm } from "@/sections/shared/modbus-attributes/modbus-attributes-form";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { ModbusAttributesSlice } from "./modbus-attributes-slice";
 import { ModbusDataPoint } from "@/models/product/modbus-interface";
@@ -30,7 +30,7 @@ export function DataPointModbusAttributesForm({
   fieldPathPrefix,
   getDataPoint,
 }: DataPointModbusAttributesFormProps) {
-  const { useValidation } = useDeviceFormContext();
+  const useValidation = useDeviceValidation;
 
   const useStore = createSliceAdapter(modbusAttributesSlice);
 

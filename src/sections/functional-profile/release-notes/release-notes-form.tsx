@@ -1,20 +1,20 @@
 "use client";
 
 import { ReleaseNotesForm as SharedReleaseNotesForm } from "@/sections/shared/release-notes/release-notes-form";
-import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/hooks/use-validation";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 /**
  * Functional Profile specific release notes form.
- * Uses the FunctionalProfileFormContext to connect to the store.
+ * Uses the profile store directly.
  */
 export function ReleaseNotesForm() {
-  const { useProfileState, useValidation, releaseNotesActions, pathPrefix } = useFunctionalProfileFormContext();
-
-  const profile = useProfileState((p) => p);
-  const useStore = createProfileStoreAdapter(profile, releaseNotesActions);
-
-  const fieldPathPrefix = buildProfileFieldPath(pathPrefix, "releaseNotes");
+  const profile = useProfileStore(useShallow((state) => state.profile));
+  const store = useProfileStore.getState();
+  const useStore = createProfileStoreAdapter(profile, store);
+  const useValidation = useProfileValidation;
 
   return (
     <SharedReleaseNotesForm
@@ -26,7 +26,7 @@ export function ReleaseNotesForm() {
         changeLogs: store.profile?.releaseNotes?.changeLog,
       })}
       isAddedSelector={(store) => !!store.profile?.releaseNotes}
-      fieldPathPrefix={fieldPathPrefix}
+      fieldPathPrefix="releaseNotes"
       required={false}
     />
   );

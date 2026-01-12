@@ -16,7 +16,9 @@ import {
   UNITS_VALUES,
 } from "@/models";
 import { createFormOptions } from "@/models/form-options-helper";
-import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 
 const DATA_DIRECTION_OPTIONS = createFormOptions(DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES);
 const PRESENCE_LEVEL_OPTIONS = createFormOptions(PRESENCE_LEVEL_VALUES);
@@ -38,18 +40,16 @@ import { ParameterListForm } from "@/sections/functional-profile/data-point-list
 import { DataPointGenericAttributeListForm } from "@/sections/functional-profile/data-point-list/generic-attribute-list/generic-attribute-list-form";
 
 export function DataPointListForm() {
-  const { useProfileState, useValidation, pathPrefix, dataPointListActions } = useFunctionalProfileFormContext();
-
-  // Get state from context
-  const dataPoints = useProfileState((profile) => profile?.dataPointList?.dataPointListElement);
-  const isAdded = useProfileState((profile) => !!profile?.dataPointList);
+  // Get state from store
+  const dataPoints = useProfileStore(useShallow((store) => store.profile?.dataPointList?.dataPointListElement));
+  const isAdded = useProfileStore(useShallow((store) => !!store.profile?.dataPointList));
 
   // Get validation
-  const { getError: getRawError } = useValidation();
-  const getError = (fieldPath: string) => getRawError(buildProfileFieldPath(pathPrefix, fieldPath));
+  const { getError } = useProfileValidation();
 
-  // Actions from context
-  const actions = dataPointListActions;
+  // Actions from store
+  const store = useProfileStore.getState();
+  const actions = store;
 
   const handleAdd = () => actions.addEmptyDataPoint();
   const handleRemove = () => actions.removeAllDataPoints();

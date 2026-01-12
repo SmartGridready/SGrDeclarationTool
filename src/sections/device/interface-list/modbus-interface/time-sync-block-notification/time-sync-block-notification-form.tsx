@@ -5,7 +5,9 @@ import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/models/form-options-helper";
@@ -14,23 +16,21 @@ import type { TimeSyncBlockNotificationSlice } from "./time-sync-block-notificat
 const REGISTER_TYPE_OPTIONS = createFormOptions(REGISTER_TYPE_VALUES);
 
 export function TimeSyncBlockNotificationForm() {
-  const { useDeviceState, pathPrefix, timeSyncBlockNotificationActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const fieldPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "interfaceList.modbusInterface.timeSyncBlockNotification")
-    : "interfaceList.modbusInterface.timeSyncBlockNotification";
+  const fieldPathPrefix = "interfaceList.modbusInterface.timeSyncBlockNotification";
 
-  // Get state from context
-  const timeSyncBlockNotifications = useDeviceState(
-    (d) => d?.interfaceList?.modbusInterface?.timeSyncBlockNotification
+  // Get state from store
+  const timeSyncBlockNotifications = useDeviceStore(
+    useShallow((state) => state.device?.interfaceList?.modbusInterface?.timeSyncBlockNotification)
   );
 
-  const isAdded = useDeviceState(
-    (d) => (d?.interfaceList?.modbusInterface?.timeSyncBlockNotification?.length ?? 0) > 0
+  const isAdded = useDeviceStore(
+    useShallow((state) => (state.device?.interfaceList?.modbusInterface?.timeSyncBlockNotification?.length ?? 0) > 0)
   );
 
-  const handleAdd = () => timeSyncBlockNotificationActions.addEmptyTimeSyncBlockNotification();
-  const handleRemove = () => timeSyncBlockNotificationActions.removeAllTimeSyncBlockNotifications();
+  const handleAdd = () => store.addEmptyTimeSyncBlockNotification();
+  const handleRemove = () => store.removeAllTimeSyncBlockNotifications();
 
   return (
     <FormSection
@@ -45,15 +45,15 @@ export function TimeSyncBlockNotificationForm() {
       <ArrayField<TimeSyncBlockNotification>
         label="Time Sync Block Notification"
         items={timeSyncBlockNotifications}
-        onAdd={timeSyncBlockNotificationActions.addEmptyTimeSyncBlockNotification}
-        onRemove={timeSyncBlockNotificationActions.removeTimeSyncBlockNotification}
+        onAdd={store.addEmptyTimeSyncBlockNotification}
+        onRemove={store.removeTimeSyncBlockNotification}
         emptyMessage="No time sync block notifications added"
         renderItem={(item, index) => (
           <TimeSyncBlockNotificationItemForm
             key={index}
             notificationIndex={index}
             notification={item}
-            timeSyncBlockNotificationActions={timeSyncBlockNotificationActions}
+            timeSyncBlockNotificationActions={store}
             fieldPathPrefix={`${fieldPathPrefix}[${index}]`}
           />
         )}
@@ -75,8 +75,7 @@ function TimeSyncBlockNotificationItemForm({
   timeSyncBlockNotificationActions,
   fieldPathPrefix,
 }: TimeSyncBlockNotificationItemFormProps) {
-  const { useValidation } = useDeviceFormContext();
-  const { getError } = useValidation();
+  const { getError } = useDeviceValidation();
 
   return (
     <div className="space-y-4">

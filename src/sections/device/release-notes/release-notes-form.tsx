@@ -1,20 +1,20 @@
 "use client";
 
 import { ReleaseNotesForm as SharedReleaseNotesForm } from "@/sections/shared/release-notes/release-notes-form";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 /**
  * Device specific release notes form.
- * Uses the DeviceFormContext to connect to the store.
+ * Uses the device store directly.
  */
 export function ReleaseNotesForm() {
-  const { useDeviceState, useValidation, releaseNotesActions, pathPrefix } = useDeviceFormContext();
-
-  const device = useDeviceState((d) => d);
-  const useStore = createDeviceStoreAdapter(device, releaseNotesActions);
-
-  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "releaseNotes");
+  const device = useDeviceStore(useShallow((state) => state.device));
+  const store = useDeviceStore.getState();
+  const useStore = createDeviceStoreAdapter(device, store);
+  const useValidation = useDeviceValidation;
 
   return (
     <SharedReleaseNotesForm
@@ -26,7 +26,7 @@ export function ReleaseNotesForm() {
         changeLogs: store.device?.releaseNotes?.changeLog,
       })}
       isAddedSelector={(store) => !!store.device?.releaseNotes}
-      fieldPathPrefix={fieldPathPrefix}
+      fieldPathPrefix="releaseNotes"
       required={true}
     />
   );

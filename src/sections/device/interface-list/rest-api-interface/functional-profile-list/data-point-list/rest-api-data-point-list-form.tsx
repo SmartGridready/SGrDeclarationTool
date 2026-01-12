@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { RestApiDataPoint, RestApiInterface } from "@/models/product/rest-api-interface";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
@@ -40,24 +42,17 @@ export function RestApiDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: RestApiDataPointListFormProps) {
-  const { useDeviceState } = useDeviceFormContext();
+  // Get state from store
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const dataPoints = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement
+    : undefined;
 
-  // Get state from context
-  const dataPoints = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-          ?.dataPointList?.dataPointListElement
-      : undefined;
-  });
-
-  const isAdded = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? !!interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-          ?.dataPointList
-      : false;
-  });
+  const isAdded = isRestApiInterface(interfaceList)
+    ? !!interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList
+    : false;
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
   const handleRemove = () => dataPointListSlice.removeAllDataPoints();
@@ -109,15 +104,11 @@ function RestApiDataPointItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: RestApiDataPointItemFormProps) {
-  const { useDeviceState, useValidation } = useDeviceFormContext();
-
-  const dataPointData = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-          ?.dataPointList?.dataPointListElement?.[dataPointIndex]
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const dataPointData = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement?.[dataPointIndex]
+    : undefined;
 
   const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 
@@ -137,7 +128,7 @@ function RestApiDataPointItemForm({
       <div className="space-y-6">
         <DataPointBaseForm
           useStore={createSliceAdapter(dataPointSlice)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           stateSelector={() => dataPointData ?? {}}
           fieldPathPrefix={fieldPathPrefix}
           title={`Data Point ${dataPointIndex + 1}`}
@@ -149,7 +140,7 @@ function RestApiDataPointItemForm({
         <RestApiDataPointConfigurationForm
           config={dataPointData?.restApiDataPointConfiguration}
           actions={dataPointListSlice.getDataPointConfigurationSlice(dataPointIndex)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           fieldPathPrefix={`${fieldPathPrefix}.restApiDataPointConfiguration`}
         />
       </div>

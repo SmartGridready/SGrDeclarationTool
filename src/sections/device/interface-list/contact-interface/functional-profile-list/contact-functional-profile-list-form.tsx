@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { ContactFunctionalProfile, ContactInterface } from "@/models/product/contact-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
@@ -21,27 +23,20 @@ function isContactInterface(
 }
 
 export function ContactFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, contactFunctionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const fieldPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "interfaceList.contactInterface.functionalProfileList")
-    : "interfaceList.contactInterface.functionalProfileList";
+  const fieldPathPrefix = "interfaceList.contactInterface.functionalProfileList";
 
-  // Get state from context
-  const functionalProfiles = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement
-      : undefined;
-  });
+  // Get state from store
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const functionalProfiles = isContactInterface(interfaceList)
+    ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement
+    : undefined;
 
-  const isAdded = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isContactInterface(interfaceList) ? !!interfaceList.contactInterface.functionalProfileList : false;
-  });
+  const isAdded = isContactInterface(interfaceList) ? !!interfaceList.contactInterface.functionalProfileList : false;
 
-  const handleAdd = () => contactFunctionalProfileListActions.addEmptyContactFunctionalProfile();
-  const handleRemove = () => contactFunctionalProfileListActions.removeAllContactFunctionalProfiles();
+  const handleAdd = () => store.addEmptyContactFunctionalProfile();
+  const handleRemove = () => store.removeAllContactFunctionalProfiles();
 
   return (
     <FormSection
@@ -56,16 +51,16 @@ export function ContactFunctionalProfileListForm() {
       <ArrayField<ContactFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={contactFunctionalProfileListActions.addEmptyContactFunctionalProfile}
-        onRemove={contactFunctionalProfileListActions.removeContactFunctionalProfile}
+        onAdd={store.addEmptyContactFunctionalProfile}
+        onRemove={store.removeContactFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <ContactFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={contactFunctionalProfileListActions.getContactFunctionalProfileSlice(index)}
-            dataPointListSlice={contactFunctionalProfileListActions.getContactDataPointListSlice(index)}
+            functionalProfileSlice={store.getContactFunctionalProfileSlice(index)}
+            dataPointListSlice={store.getContactDataPointListSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -87,21 +82,19 @@ function ContactFunctionalProfileItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ContactFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, contactFunctionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const functionalProfileData = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isContactInterface(interfaceList)
-      ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const functionalProfileData = isContactInterface(interfaceList)
+    ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+    : undefined;
 
   const functionalProfileName =
     functionalProfileData?.functionalProfile?.functionalProfileName ||
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    contactFunctionalProfileListActions.removeContactFunctionalProfile(functionalProfileIndex);
+    store.removeContactFunctionalProfile(functionalProfileIndex);
   };
 
   return (
@@ -116,7 +109,7 @@ function ContactFunctionalProfileItemForm({
       <div className="space-y-6">
         <FunctionalProfileBaseForm
           useStore={createSliceAdapter(functionalProfileSlice)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           stateSelector={() => functionalProfileData ?? {}}
           fieldPathPrefix={fieldPathPrefix}
           title={`Functional Profile ${functionalProfileIndex + 1}`}

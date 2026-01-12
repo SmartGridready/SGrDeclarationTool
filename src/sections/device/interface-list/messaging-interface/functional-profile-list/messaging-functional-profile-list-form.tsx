@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingFunctionalProfile, MessagingInterface } from "@/models/product/messaging-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
@@ -21,27 +23,22 @@ function isMessagingInterface(
 }
 
 export function MessagingFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, messagingFunctionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const fieldPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "interfaceList.messagingInterface.functionalProfileList")
-    : "interfaceList.messagingInterface.functionalProfileList";
+  const fieldPathPrefix = "interfaceList.messagingInterface.functionalProfileList";
 
-  // Get state from context
-  const functionalProfiles = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement
-      : undefined;
-  });
+  // Get state from store
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const functionalProfiles = isMessagingInterface(interfaceList)
+    ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement
+    : undefined;
 
-  const isAdded = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isMessagingInterface(interfaceList) ? !!interfaceList.messagingInterface.functionalProfileList : false;
-  });
+  const isAdded = isMessagingInterface(interfaceList)
+    ? !!interfaceList.messagingInterface.functionalProfileList
+    : false;
 
-  const handleAdd = () => messagingFunctionalProfileListActions.addEmptyMessagingFunctionalProfile();
-  const handleRemove = () => messagingFunctionalProfileListActions.removeAllMessagingFunctionalProfiles();
+  const handleAdd = () => store.addEmptyMessagingFunctionalProfile();
+  const handleRemove = () => store.removeAllMessagingFunctionalProfiles();
 
   return (
     <FormSection
@@ -56,16 +53,16 @@ export function MessagingFunctionalProfileListForm() {
       <ArrayField<MessagingFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={messagingFunctionalProfileListActions.addEmptyMessagingFunctionalProfile}
-        onRemove={messagingFunctionalProfileListActions.removeMessagingFunctionalProfile}
+        onAdd={store.addEmptyMessagingFunctionalProfile}
+        onRemove={store.removeMessagingFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <MessagingFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={messagingFunctionalProfileListActions.getMessagingFunctionalProfileSlice(index)}
-            dataPointListSlice={messagingFunctionalProfileListActions.getMessagingDataPointListSlice(index)}
+            functionalProfileSlice={store.getMessagingFunctionalProfileSlice(index)}
+            dataPointListSlice={store.getMessagingDataPointListSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -87,21 +84,19 @@ function MessagingFunctionalProfileItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: MessagingFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, messagingFunctionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const functionalProfileData = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isMessagingInterface(interfaceList)
-      ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const functionalProfileData = isMessagingInterface(interfaceList)
+    ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+    : undefined;
 
   const functionalProfileName =
     functionalProfileData?.functionalProfile?.functionalProfileName ||
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    messagingFunctionalProfileListActions.removeMessagingFunctionalProfile(functionalProfileIndex);
+    store.removeMessagingFunctionalProfile(functionalProfileIndex);
   };
 
   return (
@@ -116,7 +111,7 @@ function MessagingFunctionalProfileItemForm({
       <div className="space-y-6">
         <FunctionalProfileBaseForm
           useStore={createSliceAdapter(functionalProfileSlice)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           stateSelector={() => functionalProfileData ?? {}}
           fieldPathPrefix={fieldPathPrefix}
           title={`Functional Profile ${functionalProfileIndex + 1}`}

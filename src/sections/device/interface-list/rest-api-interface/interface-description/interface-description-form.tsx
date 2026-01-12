@@ -4,7 +4,9 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
 import {
@@ -32,20 +34,18 @@ function isRestApiInterface(
 }
 
 export function RestApiInterfaceDescriptionForm() {
-  const { useDeviceState, useValidation, restApiInterfaceDescriptionActions, pathPrefix } = useDeviceFormContext();
-
-  const restApiInterfaceDescription = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList) ? interfaceList.restApiInterface.restApiInterfaceDescription : undefined;
-  });
-  const { getError } = useValidation();
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const restApiInterfaceDescription = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.restApiInterfaceDescription
+    : undefined;
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   if (!restApiInterfaceDescription) {
     return null;
   }
 
-  const fieldPath = (field: string) =>
-    buildDeviceFieldPath(pathPrefix, `interfaceList.restApiInterface.restApiInterfaceDescription.${field}`);
+  const fieldPath = (field: string) => `interfaceList.restApiInterface.restApiInterfaceDescription.${field}`;
 
   const authMethod = restApiInterfaceDescription.restApiAuthenticationMethod;
   const showBasicAuth = authMethod === "BasicSecurityScheme";
@@ -65,9 +65,7 @@ export function RestApiInterfaceDescriptionForm() {
           required={true}
           options={REST_API_INTERFACE_SELECTION_OPTIONS}
           value={restApiInterfaceDescription.restApiInterfaceSelection}
-          onChange={(value) =>
-            restApiInterfaceDescriptionActions.updateRestApiInterfaceSelection(value as RestApiInterfaceSelection)
-          }
+          onChange={(value) => store.updateRestApiInterfaceSelection(value as RestApiInterfaceSelection)}
           error={getError(fieldPath("restApiInterfaceSelection"))}
         />
         <InputField
@@ -75,7 +73,7 @@ export function RestApiInterfaceDescriptionForm() {
           name="restApiUri"
           required={true}
           value={restApiInterfaceDescription.restApiUri}
-          onChange={(value) => restApiInterfaceDescriptionActions.updateRestApiUri(value)}
+          onChange={(value) => store.updateRestApiUri(value)}
           placeholder="https://api.example.com"
           error={getError(fieldPath("restApiUri"))}
         />
@@ -89,9 +87,7 @@ export function RestApiInterfaceDescriptionForm() {
           placeholder="None (no authentication)"
           options={REST_API_AUTHENTICATION_METHOD_OPTIONS}
           value={restApiInterfaceDescription.restApiAuthenticationMethod ?? ""}
-          onChange={(value) =>
-            restApiInterfaceDescriptionActions.updateRestApiAuthenticationMethod(value as RestApiAuthenticationMethod)
-          }
+          onChange={(value) => store.updateRestApiAuthenticationMethod(value as RestApiAuthenticationMethod)}
           error={getError(fieldPath("restApiAuthenticationMethod"))}
         />
         <SelectField
@@ -101,7 +97,7 @@ export function RestApiInterfaceDescriptionForm() {
           placeholder="Not specified"
           options={VERIFY_CERTIFICATE_OPTIONS}
           value={restApiInterfaceDescription.restApiVerifyCertificate ?? ""}
-          onChange={(value) => restApiInterfaceDescriptionActions.updateRestApiVerifyCertificate(value || undefined)}
+          onChange={(value) => store.updateRestApiVerifyCertificate(value || undefined)}
           error={getError(fieldPath("restApiVerifyCertificate"))}
         />
       </FormGroup>

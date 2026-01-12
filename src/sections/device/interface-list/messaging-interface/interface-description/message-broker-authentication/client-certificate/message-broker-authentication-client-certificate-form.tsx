@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
 
@@ -17,32 +19,25 @@ function isMessagingInterface(
 }
 
 export function MessageBrokerAuthenticationClientCertificateForm() {
-  const { useDeviceState, useValidation, messageBrokerAuthenticationClientCertificateActions, pathPrefix } =
-    useDeviceFormContext();
-
-  const clientCertAuth = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    if (isMessagingInterface(interfaceList)) {
-      const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
-      return auth && "clientCertificateAuthentication" in auth ? auth.clientCertificateAuthentication : undefined;
-    }
-    return undefined;
-  });
-
-  const { getError } = useValidation();
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const clientCertAuth = isMessagingInterface(interfaceList)
+    ? (() => {
+        const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
+        return auth && "clientCertificateAuthentication" in auth ? auth.clientCertificateAuthentication : undefined;
+      })()
+    : undefined;
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   const fieldPath = (field: string) =>
-    buildDeviceFieldPath(
-      pathPrefix,
-      `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerAuthentication.clientCertificateAuthentication.${field}`
-    );
+    `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerAuthentication.clientCertificateAuthentication.${field}`;
 
   const handleAdd = () => {
-    messageBrokerAuthenticationClientCertificateActions.addMessageBrokerAuthenticationClientCertificate();
+    store.addMessageBrokerAuthenticationClientCertificate();
   };
 
   const handleRemove = () => {
-    messageBrokerAuthenticationClientCertificateActions.removeMessageBrokerAuthenticationClientCertificate();
+    store.removeMessageBrokerAuthenticationClientCertificate();
   };
 
   return (
@@ -64,9 +59,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               required={true}
               type="text"
               value={clientCertAuth.keystorePath}
-              onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateKeystorePath(value)
-              }
+              onChange={(value) => store.updateClientCertificateKeystorePath(value)}
               error={getError(fieldPath("keystorePath"))}
             />
             <InputField
@@ -75,9 +68,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               required={true}
               type="text"
               value={clientCertAuth.keystorePassword}
-              onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateKeystorePassword(value)
-              }
+              onChange={(value) => store.updateClientCertificateKeystorePassword(value)}
               error={getError(fieldPath("keystorePassword"))}
             />
           </FormGroup>
@@ -88,9 +79,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               required={true}
               type="text"
               value={clientCertAuth.truststorePath}
-              onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateTruststorePath(value)
-              }
+              onChange={(value) => store.updateClientCertificateTruststorePath(value)}
               error={getError(fieldPath("truststorePath"))}
             />
             <InputField
@@ -99,9 +88,7 @@ export function MessageBrokerAuthenticationClientCertificateForm() {
               required={true}
               type="text"
               value={clientCertAuth.truststorePassword}
-              onChange={(value) =>
-                messageBrokerAuthenticationClientCertificateActions.updateClientCertificateTruststorePassword(value)
-              }
+              onChange={(value) => store.updateClientCertificateTruststorePassword(value)}
               error={getError(fieldPath("truststorePassword"))}
             />
           </FormGroup>

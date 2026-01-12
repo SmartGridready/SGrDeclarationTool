@@ -1,7 +1,8 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
 import { RestApiInterfaceDescriptionForm } from "./interface-description/interface-description-form";
@@ -17,9 +18,7 @@ function isRestApiInterface(
 }
 
 export function RestApiInterfaceForm() {
-  const { useDeviceState } = useDeviceFormContext();
-
-  const interfaceList = useDeviceState((d) => d?.interfaceList);
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
   const restApiInterface = isRestApiInterface(interfaceList) ? interfaceList.restApiInterface : undefined;
 
   // Don't render if REST API interface is not selected

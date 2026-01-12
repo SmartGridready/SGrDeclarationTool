@@ -4,7 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { InputField } from "@/components/forms/input-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { GenericAttributeFunctionalProfile } from "@/models";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 
 interface DataPointGenericAttributeListFormProps {
   dataPointIndex: number;
@@ -21,7 +21,8 @@ export function DataPointGenericAttributeListForm({
   onAdd,
   onRemove,
 }: DataPointGenericAttributeListFormProps) {
-  const { dataPointListActions } = useFunctionalProfileFormContext();
+  const store = useProfileStore.getState();
+  const dataPointListActions = store;
 
   return (
     <FormSection

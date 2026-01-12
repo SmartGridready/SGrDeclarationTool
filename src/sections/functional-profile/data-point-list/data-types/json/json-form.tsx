@@ -5,7 +5,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { JsonArrayField } from "@/components/forms/json-array-field";
 import { FormSection } from "@/components/forms/form-section";
 import { JSonArrayOutputFunctionalProfile, JSonElemFunctionalProfile } from "@/models";
-import { useFunctionalProfileFormContext } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { createEmptyJsonElement } from "@/utils/factory-utils";
 import {
   isJsonArray,
@@ -36,7 +36,8 @@ function JsonItemsEditor({
   level = 0,
   currentPath = [],
 }: JsonItemsEditorProps) {
-  const { dataPointListActions } = useFunctionalProfileFormContext();
+  const store = useProfileStore.getState();
+  const dataPointListActions = store;
 
   const handleAddArray = () => {
     dataPointListActions.addJsonItemAtPath(dataPointIndex, currentPath, createJsonArray());

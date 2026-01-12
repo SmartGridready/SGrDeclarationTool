@@ -15,18 +15,18 @@ import {
   isEnumDataTypeProduct,
   isBitmapDataTypeProduct,
 } from "@/sections/shared/data-type-product/data-type-product-utils";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { ConfigurationDescriptionsForm } from "@/sections/device/configuration-list/configuration-descriptions/configuration-descriptions-form";
 import { ConfigurationListEnumForm } from "@/sections/device/configuration-list/data-types/enum/enum-form";
 import { ConfigurationListBitmapForm } from "@/sections/device/configuration-list/data-types/bitmap/bitmap-form";
 
 export function ConfigurationListForm() {
-  const { useDeviceState, useValidation, configurationListActions, pathPrefix } = useDeviceFormContext();
-
-  const configurationList = useDeviceState((d) => d?.configurationList);
-  const { getError } = useValidation();
-
-  const fullPathPrefix = pathPrefix ? buildDeviceFieldPath(pathPrefix, "configurationList") : "configurationList";
+  const configurationList = useDeviceStore(useShallow((state) => state.device?.configurationList));
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
+  const fullPathPrefix = "configurationList";
 
   return (
     <FormSection
@@ -34,15 +34,15 @@ export function ConfigurationListForm() {
       description="Configuration parameters for the device"
       required={false}
       isAdded={!!configurationList}
-      onAdd={() => configurationListActions.addConfigurationList()}
-      onRemove={() => configurationListActions.removeConfigurationList()}
+      onAdd={() => store.addConfigurationList()}
+      onRemove={() => store.removeConfigurationList()}
       nested
     >
       <ArrayField
         label="Configuration Elements"
         items={configurationList?.configurationListElement}
-        onAdd={() => configurationListActions.addConfigurationListElement()}
-        onRemove={(configIndex) => configurationListActions.removeConfigurationListElement(configIndex)}
+        onAdd={() => store.addConfigurationListElement()}
+        onRemove={(configIndex) => store.removeConfigurationListElement(configIndex)}
         emptyMessage="No configuration elements added"
         renderItem={(config, configIndex) => (
           <>
@@ -52,7 +52,7 @@ export function ConfigurationListForm() {
                 name={`${fullPathPrefix}-${configIndex}-name`}
                 type="text"
                 value={config.name}
-                onChange={(value) => configurationListActions.updateConfigurationListElementName(configIndex, value)}
+                onChange={(value) => store.updateConfigurationListElementName(configIndex, value)}
                 placeholder="Enter configuration name"
                 required={true}
                 error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.name`)}
@@ -65,15 +65,15 @@ export function ConfigurationListForm() {
                 onChange={(value) => {
                   const newDataType = createDataTypeProductFromString(value);
                   if (value === "enum" && !isEnumDataTypeProduct(config.dataType)) {
-                    configurationListActions.setConfigurationListEnumDataType(configIndex, {
+                    store.setConfigurationListEnumDataType(configIndex, {
                       enumEntry: [],
                     });
                   } else if (value === "bitmap" && !isBitmapDataTypeProduct(config.dataType)) {
-                    configurationListActions.setConfigurationListBitmapDataType(configIndex, {
+                    store.setConfigurationListBitmapDataType(configIndex, {
                       bitmapEntry: [],
                     });
                   } else {
-                    configurationListActions.updateConfigurationListElementDataType(configIndex, newDataType);
+                    store.updateConfigurationListElementDataType(configIndex, newDataType);
                   }
                 }}
                 required={true}
@@ -84,9 +84,7 @@ export function ConfigurationListForm() {
                 name={`${fullPathPrefix}-${configIndex}-defaultValue`}
                 type="text"
                 value={config.defaultValue || ""}
-                onChange={(value) =>
-                  configurationListActions.updateConfigurationListElementDefaultValue(configIndex, value ?? "")
-                }
+                onChange={(value) => store.updateConfigurationListElementDefaultValue(configIndex, value ?? "")}
                 placeholder="Enter default value"
                 required={false}
                 error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.defaultValue`)}

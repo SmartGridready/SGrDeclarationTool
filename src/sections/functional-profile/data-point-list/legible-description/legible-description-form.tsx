@@ -1,37 +1,37 @@
 "use client";
 
 import { LegibleDescriptionForm } from "@/sections/shared/legible-description/legible-description-form";
-import { useFunctionalProfileFormContext, buildProfileFieldPath } from "@/context/functional-profile-form-context";
+import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
+import { useProfileValidation } from "@/hooks/use-validation";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { FunctionalProfileFrame } from "@/models";
+import { useShallow } from "zustand/react/shallow";
 
 interface DataPointLegibleDescriptionFormProps {
   dataPointIndex: number;
 }
 
-function useDataPointStoreAdapter(dataPointIndex: number) {
-  const { useProfileState, dataPointListActions } = useFunctionalProfileFormContext();
-
+function createDataPointStoreAdapter(
+  dataPointIndex: number,
+  profile: FunctionalProfileFrame | undefined,
+  store: ReturnType<typeof useProfileStore.getState>
+) {
   return <TSelected,>(
     selector: (store: { profile?: FunctionalProfileFrame } & LegibleDescriptionSlice) => TSelected
   ) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const profile = useProfileState((p) => p);
-
     const adaptedStore: { profile?: FunctionalProfileFrame } & LegibleDescriptionSlice = {
       profile,
       addLegibleDescription: () => {
-        dataPointListActions.addDataPointLegibleDescription(dataPointIndex);
+        store.addDataPointLegibleDescription(dataPointIndex);
       },
-      removeLegibleDescription: (index) =>
-        dataPointListActions.removeDataPointLegibleDescription(dataPointIndex, index),
-      removeAllLegibleDescriptions: () => dataPointListActions.removeAllDataPointLegibleDescriptions(dataPointIndex),
+      removeLegibleDescription: (index) => store.removeDataPointLegibleDescription(dataPointIndex, index),
+      removeAllLegibleDescriptions: () => store.removeAllDataPointLegibleDescriptions(dataPointIndex),
       updateTextElement: (index, textElement) =>
-        dataPointListActions.updateDataPointLegibleDescriptionText(dataPointIndex, index, textElement),
+        store.updateDataPointLegibleDescriptionText(dataPointIndex, index, textElement),
       updateLanguage: (index, language) =>
-        dataPointListActions.updateDataPointLegibleDescriptionLanguage(dataPointIndex, index, language),
-      updateUri: (index, uri) => dataPointListActions.updateDataPointLegibleDescriptionUri(dataPointIndex, index, uri),
-      addEmptyLegibleDescription: () => dataPointListActions.addDataPointLegibleDescription(dataPointIndex),
+        store.updateDataPointLegibleDescriptionLanguage(dataPointIndex, index, language),
+      updateUri: (index, uri) => store.updateDataPointLegibleDescriptionUri(dataPointIndex, index, uri),
+      addEmptyLegibleDescription: () => store.addDataPointLegibleDescription(dataPointIndex),
     };
 
     return selector(adaptedStore);
@@ -39,13 +39,12 @@ function useDataPointStoreAdapter(dataPointIndex: number) {
 }
 
 export function DataPointLegibleDescriptionForm({ dataPointIndex }: DataPointLegibleDescriptionFormProps) {
-  const { useValidation, pathPrefix } = useFunctionalProfileFormContext();
-  const useAdaptedStore = useDataPointStoreAdapter(dataPointIndex);
+  const profile = useProfileStore(useShallow((state) => state.profile));
+  const store = useProfileStore.getState();
+  const useValidation = useProfileValidation;
+  const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, profile, store);
 
-  const fieldPathPrefix = buildProfileFieldPath(
-    pathPrefix,
-    `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`
-  );
+  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`;
 
   return (
     <LegibleDescriptionForm

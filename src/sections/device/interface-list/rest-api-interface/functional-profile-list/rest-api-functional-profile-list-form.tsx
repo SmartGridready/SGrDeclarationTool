@@ -3,7 +3,9 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { RestApiFunctionalProfile, RestApiInterface } from "@/models/product/rest-api-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
@@ -21,27 +23,20 @@ function isRestApiInterface(
 }
 
 export function RestApiFunctionalProfileListForm() {
-  const { useDeviceState, pathPrefix, restApiFunctionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const fieldPathPrefix = pathPrefix
-    ? buildDeviceFieldPath(pathPrefix, "interfaceList.restApiInterface.functionalProfileList")
-    : "interfaceList.restApiInterface.functionalProfileList";
+  const fieldPathPrefix = "interfaceList.restApiInterface.functionalProfileList";
 
-  // Get state from context
-  const functionalProfiles = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement
-      : undefined;
-  });
+  // Get state from store
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const functionalProfiles = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement
+    : undefined;
 
-  const isAdded = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList) ? !!interfaceList.restApiInterface.functionalProfileList : false;
-  });
+  const isAdded = isRestApiInterface(interfaceList) ? !!interfaceList.restApiInterface.functionalProfileList : false;
 
-  const handleAdd = () => restApiFunctionalProfileListActions.addEmptyRestApiFunctionalProfile();
-  const handleRemove = () => restApiFunctionalProfileListActions.removeAllRestApiFunctionalProfiles();
+  const handleAdd = () => store.addEmptyRestApiFunctionalProfile();
+  const handleRemove = () => store.removeAllRestApiFunctionalProfiles();
 
   return (
     <FormSection
@@ -56,16 +51,16 @@ export function RestApiFunctionalProfileListForm() {
       <ArrayField<RestApiFunctionalProfile>
         label="Functional Profile"
         items={functionalProfiles}
-        onAdd={restApiFunctionalProfileListActions.addEmptyRestApiFunctionalProfile}
-        onRemove={restApiFunctionalProfileListActions.removeRestApiFunctionalProfile}
+        onAdd={store.addEmptyRestApiFunctionalProfile}
+        onRemove={store.removeRestApiFunctionalProfile}
         emptyMessage="No functional profiles added"
         noWrapper={true}
         renderItem={(item, index) => (
           <RestApiFunctionalProfileItemForm
             key={index}
             functionalProfileIndex={index}
-            functionalProfileSlice={restApiFunctionalProfileListActions.getRestApiFunctionalProfileSlice(index)}
-            dataPointListSlice={restApiFunctionalProfileListActions.getRestApiDataPointListSlice(index)}
+            functionalProfileSlice={store.getRestApiFunctionalProfileSlice(index)}
+            dataPointListSlice={store.getRestApiDataPointListSlice(index)}
             fieldPathPrefix={`${fieldPathPrefix}.functionalProfileListElement[${index}]`}
           />
         )}
@@ -87,21 +82,19 @@ function RestApiFunctionalProfileItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: RestApiFunctionalProfileItemFormProps) {
-  const { useDeviceState, useValidation, restApiFunctionalProfileListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
-  const functionalProfileData = useDeviceState((d) => {
-    const interfaceList = d?.interfaceList;
-    return isRestApiInterface(interfaceList)
-      ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-      : undefined;
-  });
+  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  const functionalProfileData = isRestApiInterface(interfaceList)
+    ? interfaceList.restApiInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+    : undefined;
 
   const functionalProfileName =
     functionalProfileData?.functionalProfile?.functionalProfileName ||
     `Functional Profile ${functionalProfileIndex + 1}`;
 
   const handleRemove = () => {
-    restApiFunctionalProfileListActions.removeRestApiFunctionalProfile(functionalProfileIndex);
+    store.removeRestApiFunctionalProfile(functionalProfileIndex);
   };
 
   return (
@@ -116,7 +109,7 @@ function RestApiFunctionalProfileItemForm({
       <div className="space-y-6">
         <FunctionalProfileBaseForm
           useStore={createSliceAdapter(functionalProfileSlice)}
-          useValidation={useValidation}
+          useValidation={useDeviceValidation}
           stateSelector={() => functionalProfileData ?? {}}
           fieldPathPrefix={fieldPathPrefix}
           title={`Functional Profile ${functionalProfileIndex + 1}`}

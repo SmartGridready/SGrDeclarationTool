@@ -7,7 +7,9 @@ import { SelectField } from "@/components/forms/select-field";
 import { AlternativeNamesForm } from "@/sections/device/device-information/alternative-names/alternative-names-form";
 import { LegibleDescriptionForm } from "@/sections/device/device-information/legible-description/legible-description-form";
 import { ProgrammerHintsForm } from "@/sections/device/device-information/programmer-hints/programmer-hints-form";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
+import { useShallow } from "zustand/react/shallow";
 import {
   DeviceCategory,
   LevelOfOperation,
@@ -27,16 +29,15 @@ const TEST_STATE_OPTIONS = createFormOptions(TEST_STATE_VALUES);
 const LEVEL_OF_OPERATION_OPTIONS = createFormOptions(LEVEL_OF_OPERATION_VALUES);
 
 export function DeviceInformationForm() {
-  const { useDeviceState, useValidation, pathPrefix, deviceInformationActions } = useDeviceFormContext();
-
-  const deviceInformation = useDeviceState((d) => d?.deviceInformation);
-  const { getError } = useValidation();
+  const deviceInformation = useDeviceStore(useShallow((state) => state.device?.deviceInformation));
+  const { getError } = useDeviceValidation();
+  const store = useDeviceStore.getState();
 
   if (!deviceInformation) {
     return null;
   }
 
-  const fieldPath = (field: string) => buildDeviceFieldPath(pathPrefix, `deviceInformation.${field}`);
+  const fieldPath = (field: string) => `deviceInformation.${field}`;
 
   return (
     <FormSection
@@ -58,7 +59,7 @@ export function DeviceInformationForm() {
           required={true}
           options={DEVICE_CATEGORY_OPTIONS}
           value={deviceInformation.deviceCategory}
-          onChange={(value) => deviceInformationActions.updateDeviceCategory(value as DeviceCategory)}
+          onChange={(value) => store.updateDeviceCategory(value as DeviceCategory)}
           error={getError(fieldPath("deviceCategory"))}
         />
         <SelectField
@@ -68,9 +69,7 @@ export function DeviceInformationForm() {
           options={LEVEL_OF_OPERATION_OPTIONS}
           placeholder="Select level"
           value={deviceInformation.levelOfOperation || ""}
-          onChange={(value) =>
-            deviceInformationActions.updateLevelOfOperation((value as LevelOfOperation) || undefined)
-          }
+          onChange={(value) => store.updateLevelOfOperation((value as LevelOfOperation) || undefined)}
           error={getError(fieldPath("levelOfOperation"))}
         />
       </FormGroup>
@@ -82,7 +81,7 @@ export function DeviceInformationForm() {
           required={true}
           options={BOOLEAN_OPTIONS}
           value={deviceInformation.isLocalControl.toString()}
-          onChange={(value) => deviceInformationActions.updateIsLocalControl(value === "true")}
+          onChange={(value) => store.updateIsLocalControl(value === "true")}
           error={getError(fieldPath("isLocalControl"))}
         />
         <SelectField
@@ -92,7 +91,7 @@ export function DeviceInformationForm() {
           options={TEST_STATE_OPTIONS}
           placeholder="Select test state"
           value={deviceInformation.testState || ""}
-          onChange={(value) => deviceInformationActions.updateTestState((value as TestState) || undefined)}
+          onChange={(value) => store.updateTestState((value as TestState) || undefined)}
           error={getError(fieldPath("testState"))}
         />
       </FormGroup>
@@ -105,7 +104,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.brandName || ""}
-          onChange={(value) => deviceInformationActions.updateBrandName(value || undefined)}
+          onChange={(value) => store.updateBrandName(value || undefined)}
           error={getError(fieldPath("brandName"))}
         />
         <InputField
@@ -114,7 +113,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.manufacturerLabel || ""}
-          onChange={(value) => deviceInformationActions.updateManufacturerLabel(value || undefined)}
+          onChange={(value) => store.updateManufacturerLabel(value || undefined)}
           error={getError(fieldPath("manufacturerLabel"))}
         />
       </FormGroup>
@@ -126,9 +125,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.manufacturerSpecificationIdentification || ""}
-          onChange={(value) =>
-            deviceInformationActions.updateManufacturerSpecificationIdentification(value || undefined)
-          }
+          onChange={(value) => store.updateManufacturerSpecificationIdentification(value || undefined)}
           error={getError(fieldPath("manufacturerSpecificationIdentification"))}
         />
       </FormGroup>
@@ -141,7 +138,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.softwareRevision || ""}
-          onChange={(value) => deviceInformationActions.updateSoftwareRevision(value || undefined)}
+          onChange={(value) => store.updateSoftwareRevision(value || undefined)}
           error={getError(fieldPath("softwareRevision"))}
         />
         <InputField
@@ -150,7 +147,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.hardwareRevision || ""}
-          onChange={(value) => deviceInformationActions.updateHardwareRevision(value || undefined)}
+          onChange={(value) => store.updateHardwareRevision(value || undefined)}
           error={getError(fieldPath("hardwareRevision"))}
         />
       </FormGroup>
@@ -162,9 +159,7 @@ export function DeviceInformationForm() {
           required={false}
           type="number"
           value={deviceInformation.versionNumber?.primaryVersionNumber?.toString() || ""}
-          onChange={(value) =>
-            deviceInformationActions.updatePrimaryVersionNumber(value ? parseInt(value, 10) : undefined)
-          }
+          onChange={(value) => store.updatePrimaryVersionNumber(value ? parseInt(value, 10) : undefined)}
           error={getError(fieldPath("versionNumber.primaryVersionNumber"))}
         />
         <InputField
@@ -173,9 +168,7 @@ export function DeviceInformationForm() {
           required={false}
           type="number"
           value={deviceInformation.versionNumber?.secondaryVersionNumber?.toString() || ""}
-          onChange={(value) =>
-            deviceInformationActions.updateSecondaryVersionNumber(value ? parseInt(value, 10) : undefined)
-          }
+          onChange={(value) => store.updateSecondaryVersionNumber(value ? parseInt(value, 10) : undefined)}
           error={getError(fieldPath("versionNumber.secondaryVersionNumber"))}
         />
         <InputField
@@ -184,9 +177,7 @@ export function DeviceInformationForm() {
           required={false}
           type="number"
           value={deviceInformation.versionNumber?.subReleaseVersionNumber?.toString() || ""}
-          onChange={(value) =>
-            deviceInformationActions.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : undefined)
-          }
+          onChange={(value) => store.updateSubReleaseVersionNumber(value ? parseInt(value, 10) : undefined)}
           error={getError(fieldPath("versionNumber.subReleaseVersionNumber"))}
         />
       </FormGroup>
@@ -200,7 +191,7 @@ export function DeviceInformationForm() {
           options={POWER_SOURCE_OPTIONS}
           placeholder="Select power source"
           value={deviceInformation.powerSource || ""}
-          onChange={(value) => deviceInformationActions.updatePowerSource((value as PowerSource) || undefined)}
+          onChange={(value) => store.updatePowerSource((value as PowerSource) || undefined)}
           error={getError(fieldPath("powerSource"))}
         />
         <InputField
@@ -209,7 +200,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.nominalPower || ""}
-          onChange={(value) => deviceInformationActions.updateNominalPower(value || undefined)}
+          onChange={(value) => store.updateNominalPower(value || undefined)}
           error={getError(fieldPath("nominalPower"))}
         />
       </FormGroup>
@@ -222,7 +213,7 @@ export function DeviceInformationForm() {
           required={false}
           type="text"
           value={deviceInformation.generalRemarks || ""}
-          onChange={(value) => deviceInformationActions.updateGeneralRemarks(value || undefined)}
+          onChange={(value) => store.updateGeneralRemarks(value || undefined)}
           error={getError(fieldPath("generalRemarks"))}
         />
       </FormGroup>

@@ -1,7 +1,7 @@
 "use client";
 
 import { EnumMapProduct } from "@/models";
-import { useDeviceFormContext } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
 import { DataTypeProductEnumForm } from "@/sections/shared/data-type-product/enum/enum-form";
 import { DataTypeProductEnumSlice } from "@/sections/shared/data-type-product/enum/enum-slice";
 import { useMemo } from "react";
@@ -12,25 +12,24 @@ interface ConfigurationListEnumFormProps {
 }
 
 export function ConfigurationListEnumForm({ configIndex, enumMap }: ConfigurationListEnumFormProps) {
-  const { configurationListActions } = useDeviceFormContext();
+  const store = useDeviceStore.getState();
 
   // Create an adapter that maps configuration list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
     return {
-      setEnumDataType: (enumMap) => configurationListActions.setConfigurationListEnumDataType(configIndex, enumMap),
-      addEnumEntry: (entry) => configurationListActions.addConfigurationListEnumEntry(configIndex, entry),
-      removeEnumEntry: (entryIndex) =>
-        configurationListActions.removeConfigurationListEnumEntry(configIndex, entryIndex),
+      setEnumDataType: (enumMap) => store.setConfigurationListEnumDataType(configIndex, enumMap),
+      addEnumEntry: (entry) => store.addConfigurationListEnumEntry(configIndex, entry),
+      removeEnumEntry: (entryIndex) => store.removeConfigurationListEnumEntry(configIndex, entryIndex),
       updateEnumEntryLiteral: (entryIndex, literal) =>
-        configurationListActions.updateConfigurationListEnumEntryLiteral(configIndex, entryIndex, literal),
+        store.updateConfigurationListEnumEntryLiteral(configIndex, entryIndex, literal),
       updateEnumEntryOrdinal: (entryIndex, ordinal) =>
-        configurationListActions.updateConfigurationListEnumEntryOrdinal(configIndex, entryIndex, ordinal),
+        store.updateConfigurationListEnumEntryOrdinal(configIndex, entryIndex, ordinal),
       updateEnumEntryDescription: (entryIndex, description) =>
-        configurationListActions.updateConfigurationListEnumEntryDescription(configIndex, entryIndex, description),
-      updateEnumHexMask: (hexMask) => configurationListActions.updateConfigurationListEnumHexMask(configIndex, hexMask),
-      addEmptyEnumEntry: () => configurationListActions.addEmptyConfigurationListEnumEntry(configIndex),
+        store.updateConfigurationListEnumEntryDescription(configIndex, entryIndex, description),
+      updateEnumHexMask: (hexMask) => store.updateConfigurationListEnumHexMask(configIndex, hexMask),
+      addEmptyEnumEntry: () => store.addEmptyConfigurationListEnumEntry(configIndex),
     };
-  }, [configIndex, configurationListActions]);
+  }, [configIndex, store]);
 
   return (
     <DataTypeProductEnumForm

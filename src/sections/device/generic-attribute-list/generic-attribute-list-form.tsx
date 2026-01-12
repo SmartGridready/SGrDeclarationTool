@@ -1,20 +1,20 @@
 "use client";
 
 import { GenericAttributeListProductForm } from "@/sections/shared/generic-attribute-list-product/generic-attribute-list-product-form";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 /**
  * Device specific generic attribute list form.
- * Uses the DeviceFormContext to connect to the store.
+ * Uses the device store directly.
  */
 export function GenericAttributeListForm() {
-  const { useDeviceState, useValidation, genericAttributeListActions, pathPrefix } = useDeviceFormContext();
-
-  const device = useDeviceState((d) => d);
-  const useStore = createDeviceStoreAdapter(device, genericAttributeListActions);
-
-  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "genericAttributeList");
+  const device = useDeviceStore(useShallow((state) => state.device));
+  const store = useDeviceStore.getState();
+  const useStore = createDeviceStoreAdapter(device, store);
+  const useValidation = useDeviceValidation;
 
   return (
     <GenericAttributeListProductForm
@@ -24,7 +24,7 @@ export function GenericAttributeListForm() {
         genericAttributeList: store.device?.genericAttributeList,
       })}
       isAddedSelector={(store) => !!store.device?.genericAttributeList}
-      fieldPathPrefix={fieldPathPrefix}
+      fieldPathPrefix="genericAttributeList"
       title="Generic Attribute List"
       description="Generic attributes for the device"
       nested={true}

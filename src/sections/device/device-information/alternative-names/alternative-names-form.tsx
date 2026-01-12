@@ -1,20 +1,20 @@
 "use client";
 
 import { AlternativeNamesForm as SharedAlternativeNamesForm } from "@/sections/shared/alternative-names/alternative-names-form";
-import { useDeviceFormContext, buildDeviceFieldPath } from "@/context/device-form-context";
+import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
+import { useShallow } from "zustand/react/shallow";
 
 /**
  * Device specific alternative names form.
- * Uses the DeviceFormContext to connect to the store.
+ * Uses the device store directly.
  */
 export function AlternativeNamesForm() {
-  const { useDeviceState, useValidation, deviceInformationActions, pathPrefix } = useDeviceFormContext();
-
-  const device = useDeviceState((d) => d);
-  const useStore = createDeviceStoreAdapter(device, deviceInformationActions);
-
-  const fieldPathPrefix = buildDeviceFieldPath(pathPrefix, "deviceInformation.alternativeNames");
+  const device = useDeviceStore(useShallow((state) => state.device));
+  const store = useDeviceStore.getState();
+  const useStore = createDeviceStoreAdapter(device, store);
+  const useValidation = useDeviceValidation;
 
   return (
     <SharedAlternativeNamesForm
@@ -24,7 +24,7 @@ export function AlternativeNamesForm() {
         alternativeNames: store.device?.deviceInformation?.alternativeNames,
       })}
       isAddedSelector={(store) => !!store.device?.deviceInformation?.alternativeNames}
-      fieldPathPrefix={fieldPathPrefix}
+      fieldPathPrefix="deviceInformation.alternativeNames"
       required={false}
       title="Alternative Names"
       description="Alternative naming conventions for the device"

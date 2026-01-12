@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.0...v0.23.1) (2026-01-12)
+
+
+### Bug Fixes
+
+* add missing xsl svg ressources and improve html handling (GL-20) ([cf5062d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/cf5062d8c276878eb0b3fa1d6593c5b84fb2e3a8))
+* add optional chaining for interface type access in slices (GL-16) ([432f066](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/432f066a90a8a4a592b050d959e8044de5187f4c))
+* added static images under "ressources", relative to "devices" and "functional-profiles". ([77da6af](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/77da6af8aaad252ba4b811fc85576e57f10cde27))
+* determine rest api service call primary type by XML element order ([899bf26](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/899bf2677379f51df87c692809368844cb763789))
+* minor inconsistencies in form validation schemas (GL-18) ([318ddf1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/318ddf1532996d8d8d70e317c3ee2a3dcff250f2))
+* preserve empty boolean elements in modbus data type mapper ([fa17601](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fa1760190adb35b0417621870e28d8fd85cd8826))
+* preserve empty defaultvalue elements in configuration list ([60b23d5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/60b23d57269dfbc6f1740dcb34891c451303d8e6))
+* preserve empty defaultvalue elements in dynamic parameter list ([c668e69](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c668e6926446a97667f19a109b3a7facf37029ff))
+* preserve empty query strings in rest api response query ([2c4b670](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2c4b670fc8d1ccddb51444322230ef1e4fbec02b))
+* reorder access protection xml elements to match schema structure ([60b1f75](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/60b1f754b517cf293328cbf3c2333f1d0c82c8c9))
+* resolve all build warnings by fixing use effect dependency and removing unused imports ([dd9bc2d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/dd9bc2d503be79de10484db51dd8278354c59972))
+* rest api service call forms; use slice actions correctly, remove type guards from getters/setters, and move adapter logic to slice files (GL-16) ([2c98634](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/2c986347394b70a3c06f69c59382b5a36a47a1a1))
+
+
+### Build System
+
+* added Dockerfile to build image. ([7d7bcd5](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7d7bcd5f702f98231d10bd99c2d5bb5e3ca1866b))
+
+
+### Chores
+
+* updated XSL transformations from SGr repository. ([8ee150c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8ee150cb2a1d38a7de997b1976d35f50fb2156a6))
+
+
+### Code Refactoring
+
+* consolidate validation hooks into single file (GL-18) ([6495cf2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6495cf2e13b0d0cd1f473585b0349349f57c6c48))
+* move editor directly into page (GL-14) ([192519c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/192519cc2e818085efa26032211ee5a714a2c51b))
+* remove form context abstraction, use zustand stores directly ([c4df23a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c4df23a5ae774061bdf19f7198fcbcb1e7a6ae83))
+* remove typeguards for interfaces and access fields directly (GL-16) ([e7cbfcf](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e7cbfcf7ec2c6614e4f08fdcef4c3e1c8552d498))
+* use debounce for input field and text area (GL-11) ([247147a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/247147ad174b71bbb910ced61e23d986ff15c17a))
+* use dom apis instead of regex for xslt preview html processing (GL-20) ([f3cecb3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/f3cecb30a77c424561905b65ff96b8d9efbdf207))
+* use getState() with useRef in form providers to prevent re-renders on keystroke (GL-16) ([7fad91c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7fad91c838313fa9903253bc6e8cacf2e2967235))
+
 ## [0.23.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.22.0...v0.23.0) (2025-12-31)
 
 

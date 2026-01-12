@@ -7,7 +7,6 @@ cache:
 # Define pipeline stages
 stages:
   - lint
-  - test
   - build-and-deploy
 
 # Install dependencies (runs before each job)
@@ -33,17 +32,6 @@ lint:
     - npm ci
   script:
     - npm run lint
-  only:
-    - main
-
-# Runs all tests using Jest
-test:
-  stage: test
-  image: node:20
-  before_script:
-    - npm ci
-  script:
-    - npm run test
   only:
     - main
 

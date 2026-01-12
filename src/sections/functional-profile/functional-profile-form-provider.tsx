@@ -1,13 +1,13 @@
 "use client";
 
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import {
   FunctionalProfileFormProvider,
   FunctionalProfileFormContextValue,
 } from "@/context/functional-profile-form-context";
 import { useProfileStore, ProfileStoreState } from "@/sections/functional-profile/functional-profile-store";
-import { useProfileValidation } from "@/hooks/use-profile-validation";
+import { useProfileValidation } from "@/hooks/use-validation";
 
 interface StandaloneFunctionalProfileFormProviderProps {
   children: ReactNode;
@@ -28,10 +28,17 @@ function useStandaloneProfileState<T>(selector: (profile: ProfileStoreState["pro
  * Wraps the useProfileStore to provide the FunctionalProfileFormContext.
  */
 export function StandaloneFunctionalProfileFormProvider({ children }: StandaloneFunctionalProfileFormProviderProps) {
-  // Get actions from the store (these are stable references)
-  const store = useProfileStore();
+  // Get the store instance once and cache it in a ref.
+  // Actions are stable function references in Zustand, so we only need to get them once.
+  // Using getState() doesn't subscribe to changes, preventing re-renders on state updates.
+  const storeRef = useRef<ProfileStoreState | null>(null);
+  if (!storeRef.current) {
+    storeRef.current = useProfileStore.getState();
+  }
+  const store = storeRef.current;
 
   // Create the context value - pass store slices directly instead of explicit action mapping
+  // Store actions are stable, so this memo will only recreate if the store reference changes (which it won't)
   const contextValue = useMemo<FunctionalProfileFormContextValue>(() => {
     return {
       // State selector hook - stable reference defined at module level
@@ -44,6 +51,7 @@ export function StandaloneFunctionalProfileFormProvider({ children }: Standalone
       pathPrefix: "",
 
       // Pass store slices directly - store already implements these interfaces
+      // Actions are stable function references, so passing the store object is safe
       releaseNotesActions: store,
       profileIdentificationActions: store,
       alternativeNamesActions: store,

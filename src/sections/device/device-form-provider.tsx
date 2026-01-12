@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { DeviceFormProvider, DeviceFormContextValue } from "@/context/device-form-context";
 import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
-import { useDeviceValidation } from "@/hooks/use-device-validation";
+import { useDeviceValidation } from "@/hooks/use-validation";
 
 interface StandaloneDeviceFormProviderProps {
   children: ReactNode;
@@ -25,10 +25,17 @@ function useStandaloneDeviceState<T>(selector: (device: DeviceStoreState["device
  * Wraps the useDeviceStore to provide the DeviceFormContext.
  */
 export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormProviderProps) {
-  // Get actions from the store (these are stable references)
-  const store = useDeviceStore();
+  // Get the store instance once and cache it in a ref.
+  // Actions are stable function references in Zustand, so we only need to get them once.
+  // Using getState() doesn't subscribe to changes, preventing re-renders on state updates.
+  const storeRef = useRef<DeviceStoreState | null>(null);
+  if (!storeRef.current) {
+    storeRef.current = useDeviceStore.getState();
+  }
+  const store = storeRef.current;
 
   // Create the context value - pass store slices directly instead of explicit action mapping
+  // Store actions are stable, so this memo will only recreate if the store reference changes (which it won't)
   const contextValue = useMemo<DeviceFormContextValue>(() => {
     return {
       // State selector hook - stable reference defined at module level
@@ -41,6 +48,7 @@ export function StandaloneDeviceFormProvider({ children }: StandaloneDeviceFormP
       pathPrefix: "",
 
       // Pass store slices directly - store already implements these interfaces
+      // Actions are stable function references, so passing the store object is safe
       deviceIdentificationActions: store,
       deviceInformationActions: store,
       releaseNotesActions: store,

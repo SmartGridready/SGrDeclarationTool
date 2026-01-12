@@ -1,9 +1,5 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import {
-  MessagingFunctionalProfile,
-  MessagingFunctionalProfileList,
-  MessagingInterface,
-} from "@/models/product/messaging-interface";
+import { DeviceFrame } from "@/models";
+import { MessagingFunctionalProfile, MessagingFunctionalProfileList } from "@/models/product/messaging-interface";
 import { createEmptyMessagingFunctionalProfile } from "@/utils/factory-utils";
 import {
   createFunctionalProfileBaseSlice,

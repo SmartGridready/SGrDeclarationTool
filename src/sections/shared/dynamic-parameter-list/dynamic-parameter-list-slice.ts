@@ -1,6 +1,6 @@
 import { DataTypeProduct, DynamicParameterDescriptionList } from "@/models";
 import { createEmptyDynamicParameterDescriptionListElement } from "@/utils/factory-utils";
-import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
+import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 import {
   createDynamicParameterListEnumSlice,
   DynamicParameterListEnumSlice,

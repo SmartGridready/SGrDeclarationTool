@@ -7,7 +7,6 @@ import {
   mapOptionalArray,
   getStringValue,
   getFirstElement,
-  getOptionalStringValue,
   setOptionalField,
   Xml2JsObject,
 } from "@/utils/mapper-utils";

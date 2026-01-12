@@ -1,5 +1,4 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import { RestApiInterface } from "@/models/product/rest-api-interface";
+import { DeviceFrame } from "@/models";
 import { RestApiInterfaceSelection, RestApiAuthenticationMethod } from "@/models/product/rest-api-types";
 import { createRestApiBasicSlice, RestApiBasicSlice } from "./rest-api-basic/rest-api-basic-slice";
 import { createRestApiBearerSlice, RestApiBearerSlice } from "./rest-api-bearer/rest-api-bearer-slice";

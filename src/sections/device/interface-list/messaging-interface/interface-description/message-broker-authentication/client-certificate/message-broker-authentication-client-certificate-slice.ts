@@ -1,5 +1,4 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
+import { DeviceFrame } from "@/models";
 import { createEmptyMessageBrokerAuthentication } from "@/utils/factory-utils";
 
 export interface MessageBrokerAuthenticationClientCertificateSlice {

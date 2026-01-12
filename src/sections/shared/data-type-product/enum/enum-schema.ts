@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EnumMapProduct, EnumEntryProductRecord } from "@/models";
+import { EnumMapProduct } from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**

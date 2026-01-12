@@ -1,5 +1,4 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import { RestApiInterface } from "@/models/product/rest-api-interface";
+import { DeviceFrame } from "@/models";
 import { RestApiServiceCall } from "@/models/product/rest-api-types";
 import {
   createRestApiServiceCallSlice,

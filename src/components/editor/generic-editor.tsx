@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, useCallback, ReactNode } from "react";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { useFileImport } from "@/hooks/use-file-import";
 import { useFileExport } from "@/hooks/use-file-export";
@@ -176,7 +176,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
     loadLibraryItems();
   };
 
-  const loadLibraryItems = async () => {
+  const loadLibraryItems = useCallback(async () => {
     setLibraryLoading(true);
     setLibraryError(null);
     try {
@@ -191,7 +191,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
     } finally {
       setLibraryLoading(false);
     }
-  };
+  }, [fetchLibraryItems]);
 
   const handleLibraryItemSelect = async (selectedItem: LibraryItem) => {
     const loadingToast = toast.loading("Importing from library...", {
@@ -225,7 +225,7 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
     if (showLibraryImportDialog && libraryItems.length === 0 && !libraryLoading && !libraryError) {
       loadLibraryItems();
     }
-  }, [showLibraryImportDialog, libraryItems.length, libraryLoading, libraryError]);
+  }, [showLibraryImportDialog, libraryItems.length, libraryLoading, libraryError, loadLibraryItems]);
 
   const handlePreview = async () => {
     const html = await generatePreview();

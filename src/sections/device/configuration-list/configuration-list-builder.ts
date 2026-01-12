@@ -2,7 +2,7 @@ import { ConfigurationList, ConfigurationListElement } from "@/models";
 import { validateConfigurationList } from "@/sections/device/configuration-list/configuration-list-schema";
 import { buildDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-builder";
 import { buildLegibleDescriptionItem } from "@/sections/shared/legible-description/legible-description-builder";
-import { wrapInArray, setOptionalXmlField } from "@/utils/builder-utils";
+import { wrapInArray } from "@/utils/builder-utils";
 
 /**
  * Builds XML object for configurationList from ConfigurationList model

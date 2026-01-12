@@ -1,5 +1,4 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
+import { DeviceFrame } from "@/models";
 import { MessagingPlatformType, MessageBrokerAuthenticationType } from "@/models/product/messaging-types";
 import { createEmptyMessageBrokerAuthentication } from "@/utils/factory-utils";
 import {

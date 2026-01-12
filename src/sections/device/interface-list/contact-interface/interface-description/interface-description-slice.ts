@@ -1,5 +1,4 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import { ContactInterface } from "@/models/product/contact-interface";
+import { DeviceFrame } from "@/models";
 
 export interface ContactInterfaceDescriptionSlice {
   updateNumberOfContacts: (value: number) => void;

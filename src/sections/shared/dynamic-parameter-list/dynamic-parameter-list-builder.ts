@@ -2,7 +2,7 @@ import { DynamicParameterDescriptionList, DynamicParameterDescriptionListElement
 import { validateDynamicParameterList } from "@/sections/shared/dynamic-parameter-list/dynamic-parameter-list-schema";
 import { buildLegibleDescriptionItem } from "@/sections/shared/legible-description/legible-description-builder";
 import { buildDataTypeProduct } from "@/sections/shared/data-type-product/data-type-product-builder";
-import { wrapInArray, setOptionalXmlField, setOptionalXmlArray } from "@/utils/builder-utils";
+import { wrapInArray, setOptionalXmlArray } from "@/utils/builder-utils";
 
 /**
  * Builds XML object for parameterList from DynamicParameterDescriptionList model

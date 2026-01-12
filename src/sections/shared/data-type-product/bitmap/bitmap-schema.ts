@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BitmapProduct, BitmapEntryProduct } from "@/models";
+import { BitmapProduct } from "@/models";
 import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 
 /**

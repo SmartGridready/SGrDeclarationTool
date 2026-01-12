@@ -1,9 +1,5 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import {
-  GenericFunctionalProfile,
-  GenericFunctionalProfileList,
-  GenericInterface,
-} from "@/models/product/generic-interface";
+import { DeviceFrame } from "@/models";
+import { GenericFunctionalProfile, GenericFunctionalProfileList } from "@/models/product/generic-interface";
 import { createEmptyGenericFunctionalProfile } from "@/utils/factory-utils";
 import {
   createFunctionalProfileBaseSlice,

@@ -1,9 +1,5 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import {
-  RestApiFunctionalProfile,
-  RestApiFunctionalProfileList,
-  RestApiInterface,
-} from "@/models/product/rest-api-interface";
+import { DeviceFrame } from "@/models";
+import { RestApiFunctionalProfile, RestApiFunctionalProfileList } from "@/models/product/rest-api-interface";
 import { createEmptyRestApiFunctionalProfile } from "@/utils/factory-utils";
 import {
   createFunctionalProfileBaseSlice,

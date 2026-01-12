@@ -1,6 +1,6 @@
 import { DataTypeProduct, DeviceFrame } from "@/models";
 import { createEmptyConfigurationListElement } from "@/utils/factory-utils";
-import { ensureArray, removeArrayItem, normalizeString } from "@/utils/slice-utils";
+import { ensureArray, removeArrayItem } from "@/utils/slice-utils";
 import {
   createConfigurationListEnumSlice,
   ConfigurationListEnumSlice,

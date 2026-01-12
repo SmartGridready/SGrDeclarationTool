@@ -1,9 +1,5 @@
-import { DeviceFrame, InterfaceList } from "@/models";
-import {
-  ContactFunctionalProfile,
-  ContactFunctionalProfileList,
-  ContactInterface,
-} from "@/models/product/contact-interface";
+import { DeviceFrame } from "@/models";
+import { ContactFunctionalProfile, ContactFunctionalProfileList } from "@/models/product/contact-interface";
 import { createEmptyContactFunctionalProfile } from "@/utils/factory-utils";
 import {
   createFunctionalProfileBaseSlice,

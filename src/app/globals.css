@@ -120,3 +120,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Darker toast background in dark mode */
+.dark [data-sonner-toast] {
+  background: oklch(0.15 0 0) !important;
+  border-color: oklch(1 0 0 / 15%) !important;
+}
+
+.dark [data-sonner-toast][data-styled="true"] {
+  background: oklch(0.15 0 0) !important;
+}

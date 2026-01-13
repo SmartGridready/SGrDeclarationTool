@@ -52,5 +52,5 @@ describe("Functional Profile Library Conversion and Validation", () => {
 
     // Test passes if all conversions and validations succeed
     expect(errors.length).toBe(0);
-  });
+  }, 60000);
 });

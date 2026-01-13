@@ -37,6 +37,7 @@ lint:
     - main
 
 # Runs tests - must pass before deployment
+# Runs on all branches and commits
 test:
   stage: test
   image: node:20
@@ -44,8 +45,6 @@ test:
     - npm ci
   script:
     - npm test
-  rules:
-    - if: $CI_COMMIT_TAG
 
 # Builds the Next.js application and deploys it to GitLab Pages
 pages:

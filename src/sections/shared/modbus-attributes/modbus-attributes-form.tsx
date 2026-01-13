@@ -5,7 +5,7 @@ import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { ModbusLayer6Deviation, MODBUS_LAYER6_DEVIATION_VALUES, ModbusAttributes } from "@/models/product/modbus-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { useFormSection } from "@/hooks/use-form-section";
 import { ModbusAttributesSlice } from "./modbus-attributes-slice";
 import { ScalingFactorForm } from "./scaling-factor/scaling-factor-form";

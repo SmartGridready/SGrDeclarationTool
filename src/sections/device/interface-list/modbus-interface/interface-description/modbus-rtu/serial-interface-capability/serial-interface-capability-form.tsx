@@ -17,7 +17,7 @@ import {
   PARITY_VALUES,
   STOP_BIT_LENGTH_VALUES,
 } from "@/models/generic/base-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 const BAUD_RATE_OPTIONS = createFormOptions(BAUD_RATE_VALUES);
 const BYTE_LENGTH_OPTIONS = createFormOptions(BYTE_LENGTH_VALUES);

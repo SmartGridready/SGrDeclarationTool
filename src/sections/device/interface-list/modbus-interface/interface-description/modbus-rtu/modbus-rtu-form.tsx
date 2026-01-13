@@ -13,7 +13,7 @@ import {
   PARITY_VALUES,
   STOP_BIT_LENGTH_VALUES,
 } from "@/models/generic/base-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { SerialInterfaceCapabilityForm } from "./serial-interface-capability/serial-interface-capability-form";
 
 const BAUD_RATE_OPTIONS = createFormOptions(BAUD_RATE_VALUES);

@@ -15,7 +15,7 @@ import {
   DATA_TYPE_FUNCTIONAL_PROFILE_EXTENDED_VALUES,
   UNITS_VALUES,
 } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/hooks/use-validation";
 import { useShallow } from "zustand/react/shallow";

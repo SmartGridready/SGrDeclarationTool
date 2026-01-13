@@ -7,7 +7,7 @@ import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
 import { useShallow } from "zustand/react/shallow";
 import { InterfaceType, INTERFACE_TYPE_VALUES, InterfaceList } from "@/models/product/product";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { ModbusInterfaceForm } from "./modbus-interface/modbus-interface-form";
 import { RestApiInterfaceForm } from "./rest-api-interface/rest-api-interface-form";
 import { MessagingInterfaceForm } from "./messaging-interface/messaging-interface-form";

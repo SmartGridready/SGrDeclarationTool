@@ -3,7 +3,7 @@
 import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { MessagingDataPointConfiguration, MESSAGING_DATA_TYPE_VALUES } from "@/models/product/messaging-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { MessagingDataPointConfigurationSlice } from "./messaging-data-point-configuration-slice";
 import { OutMessageForm } from "./out-message/out-message-form";
 import { InMessageForm } from "./in-message/in-message-form";

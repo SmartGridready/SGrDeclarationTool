@@ -6,7 +6,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { ModbusExceptionCode, MODBUS_EXCEPTION_CODE_VALUES } from "@/models/product/modbus-types";
 import { BOOLEAN_OPTIONS } from "@/models/generic";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { AccessProtectionSlice } from "./access-protection-slice";
 
 const MODBUS_EXCEPTION_CODE_OPTIONS = createFormOptions(MODBUS_EXCEPTION_CODE_VALUES);

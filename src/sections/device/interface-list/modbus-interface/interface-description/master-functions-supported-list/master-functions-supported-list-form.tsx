@@ -8,7 +8,7 @@ import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
 import { useShallow } from "zustand/react/shallow";
 import { MasterFunctionsSupported, MASTER_FUNCTIONS_SUPPORTED_VALUES } from "@/models/product/modbus-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 const MASTER_FUNCTIONS_SUPPORTED_OPTIONS = createFormOptions(MASTER_FUNCTIONS_SUPPORTED_VALUES);
 

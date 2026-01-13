@@ -17,7 +17,7 @@ import {
   isBitmapDataTypeProduct,
 } from "@/sections/shared/data-type-product/data-type-product-utils";
 import { DynamicParameterDescriptionList, DATA_TYPE_PRODUCT_EXTENDED_VALUES } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 

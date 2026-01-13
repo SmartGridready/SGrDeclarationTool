@@ -5,7 +5,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { TextareaField } from "@/components/forms/textarea-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { RestApiServiceCall, HTTP_METHOD_VALUES, HttpMethod } from "@/models/product/rest-api-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { RequestBasicSlice } from "./request-basic-slice";
 
 const HTTP_METHOD_OPTIONS = createFormOptions(HTTP_METHOD_VALUES);

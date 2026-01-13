@@ -6,7 +6,7 @@ import { InputField } from "@/components/forms/input-field";
 import { SelectField } from "@/components/forms/select-field";
 import { useDeviceValidation } from "@/hooks/use-validation";
 import { ModbusDataPointConfiguration, RegisterType, REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import {
   getModbusDataTypeStringValue,
   createModbusDataTypeFromString,

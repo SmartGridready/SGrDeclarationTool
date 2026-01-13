@@ -10,7 +10,7 @@ import { useShallow } from "zustand/react/shallow";
 import { InterfaceList } from "@/models";
 import { MessagingInterface } from "@/models/product/messaging-interface";
 import { MessagingPlatformType, MESSAGING_PLATFORM_TYPE_VALUES } from "@/models/product/messaging-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { MessageBrokerListForm } from "./message-broker-list/message-broker-list-form";
 import { MessageBrokerAuthenticationForm } from "./message-broker-authentication/message-broker-authentication-form";
 

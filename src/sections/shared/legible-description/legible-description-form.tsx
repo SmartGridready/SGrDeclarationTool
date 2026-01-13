@@ -9,7 +9,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { useFormSection } from "@/hooks/use-form-section";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { LegibleDescription, Language, LANGUAGE_VALUES } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 const LANGUAGE_OPTIONS = createFormOptions(LANGUAGE_VALUES);
 

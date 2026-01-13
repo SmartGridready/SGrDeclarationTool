@@ -10,7 +10,7 @@ import { useDeviceValidation } from "@/hooks/use-validation";
 import { useShallow } from "zustand/react/shallow";
 import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { REGISTER_TYPE_VALUES } from "@/models/product/modbus-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import type { TimeSyncBlockNotificationSlice } from "./time-sync-block-notification-slice";
 
 const REGISTER_TYPE_OPTIONS = createFormOptions(REGISTER_TYPE_VALUES);

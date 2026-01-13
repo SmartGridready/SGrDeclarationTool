@@ -13,7 +13,7 @@ import {
   BIT_ORDER_VALUES,
 } from "@/models/product/modbus-types";
 import { BOOLEAN_OPTIONS } from "@/models/generic";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { ModbusTcpForm } from "./modbus-tcp/modbus-tcp-form";
 import { ModbusRtuForm } from "./modbus-rtu/modbus-rtu-form";
 import { MasterFunctionsSupportedListForm } from "./master-functions-supported-list/master-functions-supported-list-form";

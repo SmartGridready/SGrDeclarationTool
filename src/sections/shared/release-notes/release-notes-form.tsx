@@ -9,7 +9,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { useFormSection } from "@/hooks/use-form-section";
 import { ReleaseNotesSlice } from "@/sections/shared/release-notes/release-notes-slice";
 import { ReleaseState, ChangeLog, RELEASE_STATE_VALUES } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 const RELEASE_STATE_OPTIONS = createFormOptions(RELEASE_STATE_VALUES);
 

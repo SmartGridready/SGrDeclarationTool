@@ -16,7 +16,7 @@ import {
   REST_API_AUTHENTICATION_METHOD_VALUES,
 } from "@/models/product/rest-api-types";
 import { BOOLEAN_OPTIONS } from "@/models/generic";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { RestApiBasicForm } from "./rest-api-basic/rest-api-basic-form";
 import { RestApiBearerForm } from "./rest-api-bearer/rest-api-bearer-form";
 

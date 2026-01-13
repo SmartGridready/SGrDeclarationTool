@@ -4,7 +4,7 @@
 
 import { ModbusDataType, ModbusBoolean, Enum, BitmapProduct, MODBUS_DATA_TYPE_VALUES } from "@/models";
 import { EmptyType } from "@/models/generic";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 /**
  * Type guard to check if a ModbusDataType is a boolean type

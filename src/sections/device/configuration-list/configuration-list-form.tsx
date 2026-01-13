@@ -6,7 +6,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { DATA_TYPE_PRODUCT_EXTENDED_VALUES } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 import {

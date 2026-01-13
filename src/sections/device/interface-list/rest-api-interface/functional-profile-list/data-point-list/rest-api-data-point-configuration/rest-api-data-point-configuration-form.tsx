@@ -9,7 +9,7 @@ import {
   REST_API_DATA_TYPE_VALUES,
   RestApiDataPointConfiguration,
 } from "@/models/product/rest-api-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import {
   RestApiDataPointConfigurationSlice,
   ConfigType,

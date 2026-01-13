@@ -4,7 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { InputField } from "@/components/forms/input-field";
 import { MessageFilter } from "@/models/generic";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { MessageFilterSlice, MESSAGE_FILTER_TYPE_VALUES, MessageFilterType } from "./message-filter-slice";
 
 const MESSAGE_FILTER_TYPE_OPTIONS = createFormOptions(MESSAGE_FILTER_TYPE_VALUES);

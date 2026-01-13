@@ -21,7 +21,7 @@ import {
   DATA_TYPE_PRODUCT_EXTENDED_VALUES,
   UNITS_VALUES,
 } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import {
   getDataTypeProductStringValue,
   createDataTypeProductFromString,

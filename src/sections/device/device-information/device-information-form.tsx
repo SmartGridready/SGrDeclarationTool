@@ -19,7 +19,7 @@ import {
   LEVEL_OF_OPERATION_VALUES,
 } from "@/models";
 import { TestState, TEST_STATE_VALUES } from "@/models/product/product";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 
 import { BOOLEAN_OPTIONS } from "@/models/generic";
 

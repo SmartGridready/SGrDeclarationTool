@@ -11,7 +11,7 @@ import {
   LevelOfOperation,
   FunctionalProfileIdentification,
 } from "@/models";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { FunctionalProfileIdentificationSlice } from "@/sections/shared/profile-identification/profile-identification-slice";
 import { useFormSection } from "@/hooks/use-form-section";
 

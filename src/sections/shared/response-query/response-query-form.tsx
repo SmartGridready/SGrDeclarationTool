@@ -4,7 +4,7 @@ import { FormSection } from "@/components/forms/form-section";
 import { SelectField } from "@/components/forms/select-field";
 import { TextareaField } from "@/components/forms/textarea-field";
 import { ResponseQuery, RESPONSE_QUERY_TYPE_VALUES } from "@/models/generic";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { ResponseQuerySlice } from "./response-query-slice";
 import { JmesPathMappingForm } from "./jmespath/jmespath-mapping-form";
 

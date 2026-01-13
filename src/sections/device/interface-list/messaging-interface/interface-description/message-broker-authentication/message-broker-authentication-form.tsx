@@ -13,7 +13,7 @@ import {
   MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES,
   MessageBrokerAuthentication,
 } from "@/models/product/messaging-types";
-import { createFormOptions } from "@/models/form-options-helper";
+import { createFormOptions } from "@/utils/form-options-utils";
 import { MessageBrokerAuthenticationBasicForm } from "./basic/message-broker-authentication-basic-form";
 import { MessageBrokerAuthenticationClientCertificateForm } from "./client-certificate/message-broker-authentication-client-certificate-form";
 

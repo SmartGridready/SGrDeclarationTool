@@ -7,6 +7,7 @@ cache:
 # Define pipeline stages
 stages:
   - lint
+  - test
   - build-and-deploy
 
 # Install dependencies (runs before each job)
@@ -34,6 +35,17 @@ lint:
     - npm run lint
   only:
     - main
+
+# Runs tests - must pass before deployment
+test:
+  stage: test
+  image: node:20
+  before_script:
+    - npm ci
+  script:
+    - npm test
+  rules:
+    - if: $CI_COMMIT_TAG
 
 # Builds the Next.js application and deploys it to GitLab Pages
 pages:

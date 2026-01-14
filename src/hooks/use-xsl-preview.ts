@@ -107,14 +107,6 @@ export function useXslPreview<T>({
         throw new Error(`XSL Parse Error: ${xslError.textContent || "Invalid XSL"}`);
       }
 
-      // Determine document type for resource path resolution
-      // Check for FunctionalProfileFrame or DeviceFrame (with namespace)
-      const sgrNamespace = "http://www.smartgridready.com/ns/V0/";
-      const isFunctionalProfile =
-        xmlDoc.getElementsByTagNameNS(sgrNamespace, "FunctionalProfileFrame").length > 0 ||
-        xmlDoc.querySelector("FunctionalProfileFrame") !== null;
-      const ressourcesBasePath = isFunctionalProfile ? "/FuncProfiles/ressources/" : "/ExtInterfaces/ressources/";
-
       // Transform XML with XSL
       const processor = new XSLTProcessor();
       processor.importStylesheet(xslDoc);
@@ -134,33 +126,22 @@ export function useXslPreview<T>({
       if (htmlError) {
         // Fallback: return as string with minimal processing
         const htmlString = new XMLSerializer().serializeToString(result.documentElement);
-        const origin = typeof window !== "undefined" ? window.location.origin : "";
-        return htmlString.replace(/<head([^>]*)>/i, `<head$1><base href="${origin}/xsl/"></head>`);
+        return htmlString;
       }
 
-      // Ensure head exists and add/update base tag
-      let head = htmlDoc.querySelector("head");
-      if (!head) {
-        head = htmlDoc.createElement("head");
-        htmlDoc.documentElement.insertBefore(head, htmlDoc.documentElement.firstChild);
+      // Some XML nodes contain escaped HTML text, e.g. in CDATA.
+      // Those may not be rendered correctly without this fix.
+      const escapedHtml = htmlDoc.getElementsByClassName("renderhtml");
+      for (let i = escapedHtml.length - 1; i >= 0; i--) {
+        escapedHtml[i].innerHTML = escapedHtml[i].textContent;
       }
-
-      const existingBase = head.querySelector("base");
-      if (existingBase) {
-        existingBase.remove();
-      }
-
-      const origin = typeof window !== "undefined" ? window.location.origin : "";
-      const baseTag = htmlDoc.createElement("base");
-      baseTag.setAttribute("href", `${origin}/xsl/`);
-      head.insertBefore(baseTag, head.firstChild);
 
       // Fix relative ressources paths in img tags (from XML content)
-      // These are relative paths like "ressources/image.svg" that need to point to the correct directory
+      // These are relative paths like "ressources/image.svg" that need to point to the correct directory "/xsl/ressources/..."
       htmlDoc.querySelectorAll("img[src]").forEach((img) => {
         const src = img.getAttribute("src");
         if (src && src.startsWith("ressources/")) {
-          img.setAttribute("src", `${ressourcesBasePath}${src.substring("ressources/".length)}`);
+          img.setAttribute("src", `/xsl/ressources/${src.substring("ressources/".length)}`);
         }
       });
 

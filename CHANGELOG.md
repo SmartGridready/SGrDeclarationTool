@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.2...v0.23.3) (2026-01-14)
+
+
+### Bug Fixes
+
+* don’t clobber already-rendered HTML in XSL preview (GL-20) ([c419960](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c41996028d8bdf03d7224f1abc6cbeaa01c2fe15))
+* move all xsl relevant svg's to one folder and fix preview asset paths (drop <base>, rewrite ressources/* to /xsl/ressources/*, and unescape renderhtml) (GL-20) ([4d7e14b](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4d7e14b5974c862c57503a6ef49c3a3a02e2f6c3))
+
+
+### Chores
+
+* move form options helper to utils folder ([3474a22](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3474a22e896ae0e82f82950ea9f47ab51d7d2035))
+
+
+### Continuous Integration
+
+* add test task to pipeline (GL-3) ([8385448](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8385448cbfd8f7477efc754c9ab045f5917b7bb9))
+* remove commit tag rules for test task (GL-3) ([e9ab553](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e9ab5534b671029c6b47de8cf1474293db57c1d1))
+
+
+### Tests
+
+* add library conversion and validation tests for devices and functional profiles (GL-5) ([e2bce10](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e2bce1079cb180c985f65aaa68cc4ab55e312c99))
+* increase test timeout value (GL-5) ([b2ce79c](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b2ce79c9acc5a975be93f1e7255b0e02a578cb6b))
+
+
+### Styling
+
+* support darkmode colors for toast (GL-17) ([fb64d89](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fb64d89d3e717d139829d3a7c7b9df3972e75277))
+
 ### [0.23.2](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.1...v0.23.2) (2026-01-12)
 
 

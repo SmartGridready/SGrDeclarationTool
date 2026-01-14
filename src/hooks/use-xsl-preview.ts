@@ -133,7 +133,15 @@ export function useXslPreview<T>({
       // Those may not be rendered correctly without this fix.
       const escapedHtml = htmlDoc.getElementsByClassName("renderhtml");
       for (let i = escapedHtml.length - 1; i >= 0; i--) {
-        escapedHtml[i].innerHTML = escapedHtml[i].textContent;
+        const el = escapedHtml[i];
+
+        // If the XSLT engine already produced real HTML nodes (e.g. because
+        // disable-output-escaping was honored), DON'T clobber it.
+        const hasElementChildren = Array.from(el.childNodes).some((n) => n.nodeType === Node.ELEMENT_NODE);
+        if (hasElementChildren) continue;
+
+        // Otherwise, interpret the text content as HTML.
+        el.innerHTML = el.textContent ?? "";
       }
 
       // Fix relative ressources paths in img tags (from XML content)

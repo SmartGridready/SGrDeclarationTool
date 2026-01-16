@@ -9,8 +9,11 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 // Extract enum values from constants
 const MASTER_FUNCTIONS_SUPPORTED_VALUES_ARRAY = MASTER_FUNCTIONS_SUPPORTED_VALUES as unknown as [string, ...string[]];
 
+// Note: maxOccurs="unbounded" with no minOccurs (defaults to 1) in XSD
 export const masterFunctionsSupportedListSchema = z.object({
-  masterFunctionsSupported: z.array(z.enum(MASTER_FUNCTIONS_SUPPORTED_VALUES_ARRAY)),
+  masterFunctionsSupported: z
+    .array(z.enum(MASTER_FUNCTIONS_SUPPORTED_VALUES_ARRAY))
+    .min(1, "At least one master function is required"),
 });
 
 // Type exports for TypeScript inference

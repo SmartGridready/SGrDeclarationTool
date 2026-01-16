@@ -46,6 +46,7 @@ const jsonataFilterTypeSchema = z.object({
 });
 
 // MessageFilter schema (union)
+// Note: XSD has typo "xpapathFilter" - we use correct name "xpathFilter"
 const messageFilterSchema = z.union([
   z.object({ plaintextFilter: plaintextFilterTypeSchema }),
   z.object({ jmespathFilter: jmespathFilterTypeSchema }),

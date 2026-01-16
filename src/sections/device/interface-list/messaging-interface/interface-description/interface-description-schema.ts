@@ -9,13 +9,19 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 // Extract enum values from constants
 const MESSAGING_PLATFORM_TYPE_VALUES_ARRAY = MESSAGING_PLATFORM_TYPE_VALUES as unknown as [string, ...string[]];
 
+// BooleanParameter pattern: \{\{.+\}\}|true|false
+const booleanParameterPattern = /^(\{\{.+\}\}|true|false)$/;
+
 // MessageBrokerListElement schema
 // Note: tls and tlsVerifyCertificate are BooleanParameter (string type that can be "true", "false", or variable like "{{var}}")
 export const messageBrokerListElementSchema = z.object({
   host: z.string().min(1, "Host is required"),
   port: z.string().min(1, "Port is required"),
-  tls: z.string().optional(),
-  tlsVerifyCertificate: z.string().optional(),
+  tls: z.string().regex(booleanParameterPattern, "Must be 'true', 'false', or a variable (e.g., {{tls}})").optional(),
+  tlsVerifyCertificate: z
+    .string()
+    .regex(booleanParameterPattern, "Must be 'true', 'false', or a variable (e.g., {{verify}})")
+    .optional(),
 });
 
 // MessageBrokerList schema

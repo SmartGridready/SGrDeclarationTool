@@ -9,10 +9,23 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 // ModbusBoolean can be empty, or have trueValue, or have falseValue
+// Note: trueValue and falseValue are type="unsignedShort" in XSD (0-65535)
 const modbusBooleanSchema = z.union([
   z.object({}), // Empty type
-  z.object({ trueValue: z.number() }),
-  z.object({ falseValue: z.number() }),
+  z.object({
+    trueValue: z
+      .number()
+      .int("True value must be an integer")
+      .min(0, "True value must be at least 0")
+      .max(65535, "True value cannot exceed 65535"),
+  }),
+  z.object({
+    falseValue: z
+      .number()
+      .int("False value must be an integer")
+      .min(0, "False value must be at least 0")
+      .max(65535, "False value cannot exceed 65535"),
+  }),
 ]);
 
 // Enum schema (used in Modbus)

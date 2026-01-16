@@ -19,8 +19,11 @@ const genericAttributeFunctionalProfileSchema = z.object({
   name: z.string({ message: "Name is required" }).min(1, "Name cannot be empty"),
 });
 
+// Note: genericAttributeListElement has minOccurs="1" maxOccurs="unbounded" in XSD
 const genericAttributeListFunctionalProfileSchema = z.object({
-  genericAttributeListElement: z.array(genericAttributeFunctionalProfileSchema),
+  genericAttributeListElement: z
+    .array(genericAttributeFunctionalProfileSchema)
+    .min(1, "At least one generic attribute is required"),
 });
 
 /**
@@ -113,8 +116,9 @@ export const functionalProfileDataPointSchema = z.object({
 });
 
 // Data Point List Schema
+// Note: maxOccurs="unbounded" with no minOccurs (defaults to 1) in XSD
 export const dataPointListSchema = z.object({
-  dataPointListElement: z.array(functionalProfileDataPointSchema),
+  dataPointListElement: z.array(functionalProfileDataPointSchema).min(1, "At least one data point is required"),
 });
 
 // Type exports

@@ -11,6 +11,8 @@ const LANGUAGE_VALUES_ARRAY = LANGUAGE_VALUES as unknown as [string, ...string[]
 
 // Legible Description Schema
 // textElement has minLength="0" maxLength="4000" in XSD, so it can be empty
+// Note: "label" field is NOT part of LegibleDescription in XSD
+// It only exists in ConfigurationDescription which extends LegibleDescription
 export const legibleDescriptionSchema = z.object({
   textElement: z
     .string({ message: "Text element is required" })
@@ -20,7 +22,6 @@ export const legibleDescriptionSchema = z.object({
     message: "Language is required",
   }),
   uri: z.string().optional(),
-  label: z.string().optional(),
 });
 
 // Legible Descriptions Schema (array, maxOccurs="4")

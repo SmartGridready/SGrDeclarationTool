@@ -11,11 +11,12 @@ import { accessProtectionEnabledSchema } from "./access-protection/access-protec
 // Extract enum values from constants
 const MODBUS_LAYER6_DEVIATION_VALUES_ARRAY = MODBUS_LAYER6_DEVIATION_VALUES as unknown as [string, ...string[]];
 
+// Note: stepByIncrement, sunssf, pollingLatencyMs are type="unsignedInt" in XSD
 export const modbusAttributesSchema = z.object({
   scalingFactor: scalingFactorSchema.optional(),
-  stepByIncrement: z.number().optional(),
-  sunssf: z.number().optional(),
-  pollingLatencyMs: z.number().int().positive().optional(),
+  stepByIncrement: z.number().int().nonnegative("Step by increment must be non-negative").optional(),
+  sunssf: z.number().int().nonnegative("Sunssf must be non-negative").optional(),
+  pollingLatencyMs: z.number().int().nonnegative("Polling latency must be non-negative").optional(),
   accessProtection: accessProtectionEnabledSchema.optional(),
   layer6Deviation: z.enum(MODBUS_LAYER6_DEVIATION_VALUES_ARRAY).optional(),
 });

@@ -7,8 +7,8 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  */
 
 export const restApiBasicSchema = z.object({
-  restBasicUsername: z.string().min(1),
-  restBasicPassword: z.string().min(1),
+  restBasicUsername: z.string({ message: "Username is required" }).min(1, "Username cannot be empty"),
+  restBasicPassword: z.string({ message: "Password is required" }).min(1, "Password cannot be empty"),
 });
 
 // Type exports for TypeScript inference

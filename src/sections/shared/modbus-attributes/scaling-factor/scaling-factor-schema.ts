@@ -6,9 +6,10 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
  * Scaling Factor validation schemas and validators
  */
 
+// Note: Both fields are type="int" in XSD
 export const scalingFactorSchema = z.object({
-  multiplicator: z.number({ message: "Multiplicator is required" }),
-  powerof10: z.number({ message: "Power of 10 is required" }),
+  multiplicator: z.number({ message: "Multiplicator is required" }).int("Multiplicator must be an integer"),
+  powerof10: z.number({ message: "Power of 10 is required" }).int("Power of 10 must be an integer"),
 });
 
 // Type exports for TypeScript inference

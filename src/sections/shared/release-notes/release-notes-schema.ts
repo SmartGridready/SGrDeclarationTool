@@ -10,9 +10,13 @@ import { ValidationResult, validateWithSchema } from "@/utils/validation-utils";
 const RELEASE_STATE_VALUES_ARRAY = RELEASE_STATE_VALUES as unknown as [string, ...string[]];
 
 // Change Log Entry Schema
+// Note: date is type="date" in XSD which requires ISO 8601 format (YYYY-MM-DD)
 export const changeLogSchema = z.object({
   version: z.string({ message: "Version is required" }).min(1, "Version cannot be empty"),
-  date: z.string({ message: "Date is required" }).min(1, "Date cannot be empty"),
+  date: z
+    .string({ message: "Date is required" })
+    .min(1, "Date cannot be empty")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in ISO 8601 format (YYYY-MM-DD)"),
   author: z.string({ message: "Author is required" }).min(1, "Author cannot be empty"),
   comment: z.string({ message: "Comment is required" }).min(1, "Comment cannot be empty"),
 });

@@ -22,13 +22,23 @@ const REST_API_AUTHENTICATION_METHOD_VALUES_ARRAY = REST_API_AUTHENTICATION_METH
   ...string[],
 ];
 
+// Note: restApiUri is type="anyURI" in XSD, restApiVerifyCertificate is type="booleanParameter"
 export const restApiInterfaceDescriptionSchema = z.object({
-  restApiInterfaceSelection: z.enum(REST_API_INTERFACE_SELECTION_VALUES_ARRAY),
-  restApiUri: z.string().min(1),
+  restApiInterfaceSelection: z.enum(REST_API_INTERFACE_SELECTION_VALUES_ARRAY, {
+    message: "REST API interface selection is required",
+  }),
+  restApiUri: z
+    .string({ message: "REST API URI is required" })
+    .min(1, "REST API URI cannot be empty")
+    .url("Must be a valid URI"),
   restApiAuthenticationMethod: z.enum(REST_API_AUTHENTICATION_METHOD_VALUES_ARRAY).optional(),
   restApiBearer: restApiBearerSchema.optional(),
   restApiBasic: restApiBasicSchema.optional(),
-  restApiVerifyCertificate: z.string().optional(),
+  // booleanParameter pattern: \{\{.+\}\}|true|false
+  restApiVerifyCertificate: z
+    .string()
+    .regex(/^(\{\{.+\}\}|true|false)$/, "Must be 'true', 'false', or a variable (e.g., {{verify}})")
+    .optional(),
 });
 
 // Type exports for TypeScript inference

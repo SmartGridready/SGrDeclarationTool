@@ -6,15 +6,12 @@ import { ArrayField } from "@/components/forms/array-field";
 import { GenericAttributeFunctionalProfile } from "@/models";
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useProfileField } from "@/hooks/use-store-field";
 
 export function GenericAttributeListForm() {
-  const state = useProfileStore(
-    useShallow((store) => ({
-      genericAttributes: store.profile?.genericAttributeList?.genericAttributeListElement,
-    }))
-  );
-  const isAdded = useProfileStore(useShallow((store) => !!store.profile?.genericAttributeList));
+  // Granular selectors for targeted re-renders
+  const genericAttributes = useProfileField((p) => p?.genericAttributeList?.genericAttributeListElement);
+  const isAdded = useProfileField((p) => !!p?.genericAttributeList);
 
   const { getError } = useProfileValidation();
   const store = useProfileStore.getState();
@@ -34,7 +31,7 @@ export function GenericAttributeListForm() {
     >
       <ArrayField<GenericAttributeFunctionalProfile>
         label="Attributes"
-        items={state.genericAttributes}
+        items={genericAttributes}
         onAdd={actions.addEmptyGenericAttribute}
         onRemove={actions.removeGenericAttribute}
         emptyMessage="No attributes added"

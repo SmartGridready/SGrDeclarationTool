@@ -18,7 +18,7 @@ import {
 import { createFormOptions } from "@/utils/form-options-utils";
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useProfileField } from "@/hooks/use-store-field";
 
 const DATA_DIRECTION_OPTIONS = createFormOptions(DATA_DIRECTION_FUNCTIONAL_PROFILE_VALUES);
 const PRESENCE_LEVEL_OPTIONS = createFormOptions(PRESENCE_LEVEL_VALUES);
@@ -40,9 +40,9 @@ import { ParameterListForm } from "@/sections/functional-profile/data-point-list
 import { DataPointGenericAttributeListForm } from "@/sections/functional-profile/data-point-list/generic-attribute-list/generic-attribute-list-form";
 
 export function DataPointListForm() {
-  // Get state from store
-  const dataPoints = useProfileStore(useShallow((store) => store.profile?.dataPointList?.dataPointListElement));
-  const isAdded = useProfileStore(useShallow((store) => !!store.profile?.dataPointList));
+  // Granular selectors for targeted re-renders
+  const dataPoints = useProfileField((p) => p?.dataPointList?.dataPointListElement);
+  const isAdded = useProfileField((p) => !!p?.dataPointList);
 
   // Get validation
   const { getError } = useProfileValidation();

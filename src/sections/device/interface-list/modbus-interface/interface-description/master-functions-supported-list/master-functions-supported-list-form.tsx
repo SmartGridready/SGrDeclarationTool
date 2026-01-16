@@ -6,7 +6,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { MasterFunctionsSupported, MASTER_FUNCTIONS_SUPPORTED_VALUES } from "@/models/product/modbus-types";
 import { createFormOptions } from "@/utils/form-options-utils";
 
@@ -16,10 +16,9 @@ export function MasterFunctionsSupportedListForm() {
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 
-  const masterFunctionsSupportedList = useDeviceStore(
-    useShallow(
-      (state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
-    )
+  // Granular selector
+  const masterFunctionsSupportedList = useDeviceField(
+    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.masterFunctionsSupportedList
   );
 
   return (

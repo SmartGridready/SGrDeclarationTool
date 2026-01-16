@@ -5,27 +5,14 @@ import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
-
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
+import { useDeviceField } from "@/hooks/use-store-field";
 
 export function MessageBrokerAuthenticationBasicForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const basicAuth = isMessagingInterface(interfaceList)
-    ? (() => {
-        const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
-        return auth && "basicAuthentication" in auth ? auth.basicAuthentication : undefined;
-      })()
-    : undefined;
+  // Granular selector
+  const basicAuth = useDeviceField((d) => {
+    const auth = d?.interfaceList?.messagingInterface?.messagingInterfaceDescription?.messageBrokerAuthentication;
+    return auth && "basicAuthentication" in auth ? auth.basicAuthentication : undefined;
+  });
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

@@ -5,24 +5,13 @@ import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { RestApiInterface } from "@/models/product/rest-api-interface";
-
-/**
- * Type guard to check if interface list is REST API interface
- */
-function isRestApiInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { restApiInterface: RestApiInterface } {
-  return interfaceList !== undefined && "restApiInterface" in interfaceList;
-}
+import { useDeviceField } from "@/hooks/use-store-field";
 
 export function RestApiBasicForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const restApiBasic = isRestApiInterface(interfaceList)
-    ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBasic
-    : undefined;
+  // Granular selector for REST API basic auth
+  const restApiBasic = useDeviceField(
+    (d) => d?.interfaceList?.restApiInterface?.restApiInterfaceDescription?.restApiBasic
+  );
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

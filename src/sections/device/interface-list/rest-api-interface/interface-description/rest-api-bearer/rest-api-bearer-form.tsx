@@ -3,7 +3,7 @@
 import { FormSection } from "@/components/forms/form-section";
 import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { RestApiServiceCallForm } from "@/sections/shared/rest-api-service-call/rest-api-service-call-form";
 import { InterfaceList } from "@/models";
 import { RestApiInterface } from "@/models/product/rest-api-interface";
@@ -18,10 +18,10 @@ function isRestApiInterface(
 }
 
 export function RestApiBearerForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const restApiBearer = isRestApiInterface(interfaceList)
-    ? interfaceList.restApiInterface.restApiInterfaceDescription?.restApiBearer
-    : undefined;
+  // Granular selector for REST API bearer auth
+  const restApiBearer = useDeviceField(
+    (d) => d?.interfaceList?.restApiInterface?.restApiInterfaceDescription?.restApiBearer
+  );
   const store = useDeviceStore.getState();
   const useValidation = useDeviceValidation;
 

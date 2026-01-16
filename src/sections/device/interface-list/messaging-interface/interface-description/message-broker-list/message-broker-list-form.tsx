@@ -7,28 +7,17 @@ import { InputField } from "@/components/forms/input-field";
 import { ComboboxField } from "@/components/forms/combobox-field";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { MessageBrokerListElement } from "@/models/product/messaging-types";
 import { BOOLEAN_OPTIONS } from "@/models/generic";
-
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
 
 export function MessageBrokerListForm() {
   const store = useDeviceStore.getState();
 
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const messageBrokerList = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerList
-    : undefined;
+  // Granular selector
+  const messageBrokerList = useDeviceField(
+    (d) => d?.interfaceList?.messagingInterface?.messagingInterfaceDescription?.messageBrokerList
+  );
 
   const fieldPath = (field: string) =>
     `interfaceList.messagingInterface.messagingInterfaceDescription.messageBrokerList.${field}`;

@@ -5,7 +5,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import {
   ModbusInterfaceSelection,
   MODBUS_INTERFACE_SELECTION_VALUES,
@@ -22,8 +22,9 @@ const MODBUS_INTERFACE_SELECTION_OPTIONS = createFormOptions(MODBUS_INTERFACE_SE
 const BIT_ORDER_OPTIONS = createFormOptions(BIT_ORDER_VALUES);
 
 export function ModbusInterfaceDescriptionForm() {
-  const modbusInterfaceDescription = useDeviceStore(
-    useShallow((state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription)
+  // Granular selector
+  const modbusInterfaceDescription = useDeviceField(
+    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription
   );
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();

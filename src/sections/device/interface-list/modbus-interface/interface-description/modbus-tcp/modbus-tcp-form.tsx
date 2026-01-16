@@ -5,12 +5,11 @@ import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 
 export function ModbusTcpForm() {
-  const modbusTcp = useDeviceStore(
-    useShallow((state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusTcp)
-  );
+  // Granular selector
+  const modbusTcp = useDeviceField((d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusTcp);
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

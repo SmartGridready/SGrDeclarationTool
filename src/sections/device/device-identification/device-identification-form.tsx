@@ -5,14 +5,19 @@ import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField, useHasDevice } from "@/hooks/use-store-field";
 
 export function DeviceIdentificationForm() {
-  const device = useDeviceStore(useShallow((state) => state.device));
+  // Granular field selectors - only re-render when specific field changes
+  const hasDevice = useHasDevice();
+  const deviceName = useDeviceField((d) => d?.deviceName);
+  const manufacturerName = useDeviceField((d) => d?.manufacturerName);
+  const specificationOwnerIdentification = useDeviceField((d) => d?.specificationOwnerIdentification);
+
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 
-  if (!device) {
+  if (!hasDevice) {
     return null;
   }
 
@@ -24,7 +29,7 @@ export function DeviceIdentificationForm() {
           name="deviceName"
           required={true}
           type="text"
-          value={device.deviceName}
+          value={deviceName ?? ""}
           onChange={(value) => store.updateDeviceName(value)}
           error={getError("deviceName")}
         />
@@ -33,7 +38,7 @@ export function DeviceIdentificationForm() {
           name="manufacturerName"
           required={false}
           type="text"
-          value={device.manufacturerName || ""}
+          value={manufacturerName ?? ""}
           onChange={(value) => store.updateManufacturerName(value || undefined)}
           error={getError("manufacturerName")}
         />
@@ -45,7 +50,7 @@ export function DeviceIdentificationForm() {
           name="specificationOwnerIdentification"
           required={true}
           type="text"
-          value={device.specificationOwnerIdentification}
+          value={specificationOwnerIdentification ?? ""}
           onChange={(value) => store.updateSpecificationOwnerIdentification(value)}
           error={getError("specificationOwnerIdentification")}
         />

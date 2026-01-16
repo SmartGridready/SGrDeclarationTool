@@ -3,24 +3,13 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingDataPoint, MessagingInterface } from "@/models/product/messaging-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
+import { MessagingDataPoint } from "@/models/product/messaging-interface";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import { MessagingDataPointListSlice } from "./messaging-data-point-list-slice";
 import { MessagingDataPointConfigurationForm } from "./messaging-data-point-configuration/messaging-data-point-configuration-form";
-
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
 
 interface MessagingDataPointListFormProps {
   /**
@@ -42,17 +31,20 @@ export function MessagingDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: MessagingDataPointListFormProps) {
-  // Get state from store
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const dataPoints = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-        ?.dataPointList?.dataPointListElement
-    : undefined;
+  // Granular selectors
+  const dataPoints = useDeviceField(
+    (d) =>
+      d?.interfaceList?.messagingInterface?.functionalProfileList?.functionalProfileListElement?.[
+        functionalProfileIndex
+      ]?.dataPointList?.dataPointListElement
+  );
 
-  const isAdded = isMessagingInterface(interfaceList)
-    ? !!interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-        ?.dataPointList
-    : false;
+  const isAdded = useDeviceField(
+    (d) =>
+      !!d?.interfaceList?.messagingInterface?.functionalProfileList?.functionalProfileListElement?.[
+        functionalProfileIndex
+      ]?.dataPointList
+  );
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
   const handleRemove = () => dataPointListSlice.removeAllDataPoints();
@@ -104,12 +96,14 @@ function MessagingDataPointItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: MessagingDataPointItemFormProps) {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  // Granular selector for this specific data point
+  const dataPointData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.messagingInterface?.functionalProfileList?.functionalProfileListElement?.[
+        functionalProfileIndex
+      ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
+  );
   const { getError } = useDeviceValidation();
-  const dataPointData = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-        ?.dataPointList?.dataPointListElement?.[dataPointIndex]
-    : undefined;
 
   const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 

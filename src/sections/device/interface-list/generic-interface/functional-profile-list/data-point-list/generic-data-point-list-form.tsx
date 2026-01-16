@@ -3,23 +3,12 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList, DataPointBase } from "@/models";
-import { GenericInterface } from "@/models/product/generic-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
+import { DataPointBase } from "@/models";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import { GenericDataPointListSlice } from "./generic-data-point-list-slice";
-
-/**
- * Type guard to check if interface list is Generic interface
- */
-function isGenericInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { genericInterface: GenericInterface } {
-  return interfaceList !== undefined && "genericInterface" in interfaceList;
-}
 
 interface GenericDataPointListFormProps {
   /**
@@ -41,17 +30,19 @@ export function GenericDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: GenericDataPointListFormProps) {
-  // Get state from store
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const dataPoints = isGenericInterface(interfaceList)
-    ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+  // Granular selectors
+  const dataPoints = useDeviceField(
+    (d) =>
+      d?.interfaceList?.genericInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
         ?.dataPointList?.dataPointListElement
-    : undefined;
+  );
 
-  const isAdded = isGenericInterface(interfaceList)
-    ? !!interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-        ?.dataPointList
-    : false;
+  const isAdded = useDeviceField(
+    (d) =>
+      !!d?.interfaceList?.genericInterface?.functionalProfileList?.functionalProfileListElement?.[
+        functionalProfileIndex
+      ]?.dataPointList
+  );
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
   const handleRemove = () => dataPointListSlice.removeAllDataPoints();
@@ -103,11 +94,12 @@ function GenericDataPointItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: GenericDataPointItemFormProps) {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const dataPointData = isGenericInterface(interfaceList)
-    ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+  // Granular selector for this specific data point
+  const dataPointData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.genericInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
         ?.dataPointList?.dataPointListElement?.[dataPointIndex]
-    : undefined;
+  );
 
   const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 

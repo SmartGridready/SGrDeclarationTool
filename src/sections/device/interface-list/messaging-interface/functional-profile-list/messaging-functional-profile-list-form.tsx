@@ -5,37 +5,23 @@ import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingFunctionalProfile, MessagingInterface } from "@/models/product/messaging-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
+import { MessagingFunctionalProfile } from "@/models/product/messaging-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
 import { MessagingDataPointListForm } from "./data-point-list/messaging-data-point-list-form";
 import { MessagingDataPointListSlice } from "./data-point-list/messaging-data-point-list-slice";
-
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
 
 export function MessagingFunctionalProfileListForm() {
   const store = useDeviceStore.getState();
 
   const fieldPathPrefix = "interfaceList.messagingInterface.functionalProfileList";
 
-  // Get state from store
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const functionalProfiles = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement
-    : undefined;
-
-  const isAdded = isMessagingInterface(interfaceList)
-    ? !!interfaceList.messagingInterface.functionalProfileList
-    : false;
+  // Granular selectors
+  const functionalProfiles = useDeviceField(
+    (d) => d?.interfaceList?.messagingInterface?.functionalProfileList?.functionalProfileListElement
+  );
+  const isAdded = useDeviceField((d) => !!d?.interfaceList?.messagingInterface?.functionalProfileList);
 
   const handleAdd = () => store.addEmptyMessagingFunctionalProfile();
   const handleRemove = () => store.removeAllMessagingFunctionalProfiles();
@@ -86,10 +72,13 @@ function MessagingFunctionalProfileItemForm({
 }: MessagingFunctionalProfileItemFormProps) {
   const store = useDeviceStore.getState();
 
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const functionalProfileData = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-    : undefined;
+  // Granular selector for this specific functional profile
+  const functionalProfileData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.messagingInterface?.functionalProfileList?.functionalProfileListElement?.[
+        functionalProfileIndex
+      ]
+  );
 
   const functionalProfileName =
     functionalProfileData?.functionalProfile?.functionalProfileName ||

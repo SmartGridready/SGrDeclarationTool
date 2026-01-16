@@ -5,35 +5,23 @@ import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { GenericFunctionalProfile, GenericInterface } from "@/models/product/generic-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
+import { GenericFunctionalProfile } from "@/models/product/generic-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
 import { GenericDataPointListForm } from "./data-point-list/generic-data-point-list-form";
 import { GenericDataPointListSlice } from "./data-point-list/generic-data-point-list-slice";
-
-/**
- * Type guard to check if interface list is Generic interface
- */
-function isGenericInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { genericInterface: GenericInterface } {
-  return interfaceList !== undefined && "genericInterface" in interfaceList;
-}
 
 export function GenericFunctionalProfileListForm() {
   const store = useDeviceStore.getState();
 
   const fieldPathPrefix = "interfaceList.genericInterface.functionalProfileList";
 
-  // Get state from store
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const functionalProfiles = isGenericInterface(interfaceList)
-    ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement
-    : undefined;
-
-  const isAdded = isGenericInterface(interfaceList) ? !!interfaceList.genericInterface.functionalProfileList : false;
+  // Granular selectors
+  const functionalProfiles = useDeviceField(
+    (d) => d?.interfaceList?.genericInterface?.functionalProfileList?.functionalProfileListElement
+  );
+  const isAdded = useDeviceField((d) => !!d?.interfaceList?.genericInterface?.functionalProfileList);
 
   const handleAdd = () => store.addEmptyGenericFunctionalProfile();
   const handleRemove = () => store.removeAllGenericFunctionalProfiles();
@@ -84,10 +72,11 @@ function GenericFunctionalProfileItemForm({
 }: GenericFunctionalProfileItemFormProps) {
   const store = useDeviceStore.getState();
 
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const functionalProfileData = isGenericInterface(interfaceList)
-    ? interfaceList.genericInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-    : undefined;
+  // Granular selector for this specific functional profile
+  const functionalProfileData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.genericInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+  );
 
   const functionalProfileName =
     functionalProfileData?.functionalProfile?.functionalProfileName ||

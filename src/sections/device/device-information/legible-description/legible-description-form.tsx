@@ -4,17 +4,25 @@ import { LegibleDescriptionForm as SharedLegibleDescriptionForm } from "@/sectio
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
 import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
-import { useShallow } from "zustand/react/shallow";
+import { useHasDevice, useDeviceField } from "@/hooks/use-store-field";
 
 /**
  * Device specific legible description form.
  * Uses the device store directly.
  */
 export function LegibleDescriptionForm() {
-  const device = useDeviceStore(useShallow((state) => state.device));
+  const hasDevice = useHasDevice();
+  // Subscribe only to legibleDescription section for targeted re-renders
+  const legibleDescription = useDeviceField((d) => d?.deviceInformation?.legibleDescription);
   const store = useDeviceStore.getState();
-  const useStore = createDeviceStoreAdapter(device, store);
+  const useStore = createDeviceStoreAdapter(store.device, store);
   const useValidation = useDeviceValidation;
+
+  void legibleDescription;
+
+  if (!hasDevice) {
+    return null;
+  }
 
   return (
     <SharedLegibleDescriptionForm

@@ -4,17 +4,26 @@ import { GenericAttributeListProductForm } from "@/sections/shared/generic-attri
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
 import { createDeviceStoreAdapter } from "@/hooks/use-form-section";
-import { useShallow } from "zustand/react/shallow";
+import { useHasDevice, useDeviceField } from "@/hooks/use-store-field";
 
 /**
  * Device specific generic attribute list form.
  * Uses the device store directly.
  */
 export function GenericAttributeListForm() {
-  const device = useDeviceStore(useShallow((state) => state.device));
+  const hasDevice = useHasDevice();
+  // Subscribe only to genericAttributeList section for targeted re-renders
+  const genericAttributeList = useDeviceField((d) => d?.genericAttributeList);
   const store = useDeviceStore.getState();
-  const useStore = createDeviceStoreAdapter(device, store);
+  const useStore = createDeviceStoreAdapter(store.device, store);
   const useValidation = useDeviceValidation;
+
+  // Use the subscription to trigger re-renders when section changes
+  void genericAttributeList;
+
+  if (!hasDevice) {
+    return null;
+  }
 
   return (
     <GenericAttributeListProductForm

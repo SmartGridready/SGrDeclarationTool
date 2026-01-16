@@ -17,13 +17,16 @@ import {
 } from "@/sections/shared/data-type-product/data-type-product-utils";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { ConfigurationDescriptionsForm } from "@/sections/device/configuration-list/configuration-descriptions/configuration-descriptions-form";
 import { ConfigurationListEnumForm } from "@/sections/device/configuration-list/data-types/enum/enum-form";
 import { ConfigurationListBitmapForm } from "@/sections/device/configuration-list/data-types/bitmap/bitmap-form";
 
 export function ConfigurationListForm() {
-  const configurationList = useDeviceStore(useShallow((state) => state.device?.configurationList));
+  // Granular selectors for configuration list
+  const hasConfigurationList = useDeviceField((d) => !!d?.configurationList);
+  const configurationListElement = useDeviceField((d) => d?.configurationList?.configurationListElement);
+
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
   const fullPathPrefix = "configurationList";
@@ -33,14 +36,14 @@ export function ConfigurationListForm() {
       title="Configuration List"
       description="Configuration parameters for the device"
       required={false}
-      isAdded={!!configurationList}
+      isAdded={hasConfigurationList}
       onAdd={() => store.addConfigurationList()}
       onRemove={() => store.removeConfigurationList()}
       nested
     >
       <ArrayField
         label="Configuration Elements"
-        items={configurationList?.configurationListElement}
+        items={configurationListElement}
         onAdd={() => store.addConfigurationListElement()}
         onRemove={(configIndex) => store.removeConfigurationListElement(configIndex)}
         emptyMessage="No configuration elements added"

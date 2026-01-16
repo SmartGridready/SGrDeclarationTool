@@ -8,6 +8,7 @@ export interface ModbusTcpSlice {
   updatePort: (port: UnsignedIntParameter) => void;
   updateAddress: (address: ModbusIpAddress) => void;
   updateSlaveId: (slaveId: UnsignedIntParameter) => void;
+  updateTimeout: (timeout: UnsignedIntParameter | undefined) => void;
 }
 
 /**
@@ -62,6 +63,14 @@ export function createModbusTcpSlice<TState extends { device?: DeviceFrame }>(
         const modbusTcp = getModbusTcp(state);
         if (modbusTcp) {
           modbusTcp.slaveId = slaveId;
+        }
+      }),
+
+    updateTimeout: (timeout) =>
+      set((state) => {
+        const modbusTcp = getModbusTcp(state);
+        if (modbusTcp) {
+          modbusTcp.timeout = timeout;
         }
       }),
   };

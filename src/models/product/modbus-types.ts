@@ -93,10 +93,12 @@ export interface AccessProtectionEnabled {
 export const MODBUS_LAYER6_DEVIATION_VALUES = ["2RegBase1000_L2H", "2RegBase1000_H2L"] as const;
 export type ModbusLayer6Deviation = (typeof MODBUS_LAYER6_DEVIATION_VALUES)[number];
 
+// Note: timeout field is optional (minOccurs="0") in XSD
 export interface ModbusTcp {
   port: UnsignedIntParameter;
   address: ModbusIpAddress;
   slaveId: UnsignedIntParameter;
+  timeout?: UnsignedIntParameter; // Added: type="unsignedIntParameter" minOccurs="0" in XSD
 }
 
 export type ModbusIpAddress = string; // pattern: \d+\.\d+\.\d+\.\d+|\{\{.*\}\}

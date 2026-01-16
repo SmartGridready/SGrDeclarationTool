@@ -58,6 +58,16 @@ export function ModbusTcpForm() {
             placeholder="Enter slave ID"
             error={getError(fieldPath("slaveId"))}
           />
+          <InputField
+            label="Timeout"
+            name="modbusTcpTimeout"
+            required={false}
+            type="text"
+            value={modbusTcp.timeout || ""}
+            onChange={(value) => store.updateTimeout(value)}
+            placeholder="Enter timeout (optional)"
+            error={getError(fieldPath("timeout"))}
+          />
         </FormGroup>
       )}
     </FormSection>

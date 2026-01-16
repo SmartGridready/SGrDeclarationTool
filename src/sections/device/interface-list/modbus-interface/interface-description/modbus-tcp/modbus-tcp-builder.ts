@@ -20,5 +20,10 @@ export function buildModbusTcp(modbusTcp: ModbusTcp): Record<string, unknown> {
     slaveId: wrapInArray(modbusTcp.slaveId),
   };
 
+  // Only include timeout if it's defined (it's optional)
+  if (modbusTcp.timeout !== undefined) {
+    modbusTcpXml.timeout = wrapInArray(modbusTcp.timeout);
+  }
+
   return modbusTcpXml;
 }

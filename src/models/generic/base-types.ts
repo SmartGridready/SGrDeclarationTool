@@ -436,7 +436,7 @@ export const PARITY_VALUES = ["EVEN", "ODD", "NONE"] as const;
 export type Parity = (typeof PARITY_VALUES)[number];
 export type ParityParameter = string; // Pattern: ({{.+}})|(^\d+$)|EVEN|ODD|NONE
 
-export const STOP_BIT_LENGTH_VALUES = ["1", "1.5", "2"] as const;
+export const STOP_BIT_LENGTH_VALUES = ["0", "1", "1.5", "2"] as const;
 export type StopBitLength = (typeof STOP_BIT_LENGTH_VALUES)[number];
 export type StopBitLengthParameter = string; // Pattern: ({{.+}})|0|1|1.5|2
 
@@ -492,6 +492,7 @@ export interface JMESPathMappingRecord {
   name?: string;
 }
 
+// Note: XSD has typo "xpapathFilter" - we use correct name "xpathFilter"
 export type MessageFilter =
   | { plaintextFilter: PlaintextFilterType }
   | { jmespathFilter: JMESPathFilterType }

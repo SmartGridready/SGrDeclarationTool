@@ -14,5 +14,6 @@ export function mapModbusTcp(modbusTcpXml: Xml2JsObject | undefined): ModbusTcp 
     port: getStringValue(modbusTcpXml, "port") as UnsignedIntParameter,
     address: getStringValue(modbusTcpXml, "address") as ModbusIpAddress,
     slaveId: getStringValue(modbusTcpXml, "slaveId") as UnsignedIntParameter,
+    timeout: getStringValue(modbusTcpXml, "timeout") as UnsignedIntParameter | undefined,
   };
 }

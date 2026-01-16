@@ -4,17 +4,25 @@ import { ReleaseNotesForm as SharedReleaseNotesForm } from "@/sections/shared/re
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/hooks/use-validation";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
-import { useShallow } from "zustand/react/shallow";
+import { useHasProfile, useProfileField } from "@/hooks/use-store-field";
 
 /**
  * Functional Profile specific release notes form.
  * Uses the profile store directly.
  */
 export function ReleaseNotesForm() {
-  const profile = useProfileStore(useShallow((state) => state.profile));
+  const hasProfile = useHasProfile();
+  // Subscribe only to releaseNotes section for targeted re-renders
+  const releaseNotes = useProfileField((p) => p?.releaseNotes);
   const store = useProfileStore.getState();
-  const useStore = createProfileStoreAdapter(profile, store);
+  const useStore = createProfileStoreAdapter(store.profile, store);
   const useValidation = useProfileValidation;
+
+  void releaseNotes;
+
+  if (!hasProfile) {
+    return null;
+  }
 
   return (
     <SharedReleaseNotesForm

@@ -4,17 +4,25 @@ import { AlternativeNamesForm as SharedAlternativeNamesForm } from "@/sections/s
 import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
 import { useProfileValidation } from "@/hooks/use-validation";
 import { createProfileStoreAdapter } from "@/hooks/use-form-section";
-import { useShallow } from "zustand/react/shallow";
+import { useHasProfile, useProfileField } from "@/hooks/use-store-field";
 
 /**
  * Functional Profile specific alternative names form.
  * Uses the profile store directly.
  */
 export function AlternativeNamesForm() {
-  const profile = useProfileStore(useShallow((state) => state.profile));
+  const hasProfile = useHasProfile();
+  // Subscribe only to alternativeNames section for targeted re-renders
+  const alternativeNames = useProfileField((p) => p?.functionalProfile?.alternativeNames);
   const store = useProfileStore.getState();
-  const useStore = createProfileStoreAdapter(profile, store);
+  const useStore = createProfileStoreAdapter(store.profile, store);
   const useValidation = useProfileValidation;
+
+  void alternativeNames;
+
+  if (!hasProfile) {
+    return null;
+  }
 
   return (
     <SharedAlternativeNamesForm

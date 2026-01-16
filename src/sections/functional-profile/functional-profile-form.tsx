@@ -1,7 +1,6 @@
 "use client";
 
-import { useProfileStore } from "@/sections/functional-profile/functional-profile-store";
-import { useShallow } from "zustand/react/shallow";
+import { useHasProfile } from "@/hooks/use-store-field";
 import { ReleaseNotesForm } from "@/sections/functional-profile/release-notes/release-notes-form";
 import { ProfileIdentificationForm } from "@/sections/functional-profile/profile-identification/profile-identification-form";
 import { AlternativeNamesForm } from "@/sections/functional-profile/alternative-names/alternative-names-form";
@@ -14,9 +13,9 @@ import { DataPointListForm } from "@/sections/functional-profile/data-point-list
  * Uses the profile store directly.
  */
 export function FunctionalProfileForm() {
-  const profile = useProfileStore(useShallow((state) => state.profile));
+  const hasProfile = useHasProfile();
 
-  if (!profile) {
+  if (!hasProfile) {
     return null;
   }
 

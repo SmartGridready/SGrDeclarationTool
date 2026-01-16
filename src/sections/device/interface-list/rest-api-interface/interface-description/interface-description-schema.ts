@@ -27,10 +27,7 @@ export const restApiInterfaceDescriptionSchema = z.object({
   restApiInterfaceSelection: z.enum(REST_API_INTERFACE_SELECTION_VALUES_ARRAY, {
     message: "REST API interface selection is required",
   }),
-  restApiUri: z
-    .string({ message: "REST API URI is required" })
-    .min(1, "REST API URI cannot be empty")
-    .url("Must be a valid URI"),
+  restApiUri: z.string({ message: "REST API URI is required" }).min(1, "REST API URI cannot be empty"),
   restApiAuthenticationMethod: z.enum(REST_API_AUTHENTICATION_METHOD_VALUES_ARRAY).optional(),
   restApiBearer: restApiBearerSchema.optional(),
   restApiBasic: restApiBasicSchema.optional(),

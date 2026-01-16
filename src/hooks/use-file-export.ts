@@ -30,6 +30,7 @@ export function useFileExport<T>({
   validator?: (data: T) => ValidationResult<T>;
 }) {
   const setValidationAttempted = useValidationStore((state) => state.setValidationAttempted);
+  const resetValidation = useValidationStore((state) => state.resetValidation);
 
   const exportFile = useCallback(async () => {
     if (!data) {
@@ -81,6 +82,9 @@ export function useFileExport<T>({
         id: loadingToastId,
         description: SUCCESS_MESSAGES.FILE_EXPORT.DOWNLOAD_READY(filename),
       });
+
+      // Reset validation state after successful export so errors are hidden until next export attempt
+      resetValidation();
     } catch (error) {
       const errorMessageText = error instanceof Error ? error.message : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
 
@@ -91,7 +95,7 @@ export function useFileExport<T>({
         duration: 5000,
       });
     }
-  }, [builder, data, filename, errorMessage, validator, setValidationAttempted]);
+  }, [builder, data, filename, errorMessage, validator, setValidationAttempted, resetValidation]);
 
   return {
     exportFile,

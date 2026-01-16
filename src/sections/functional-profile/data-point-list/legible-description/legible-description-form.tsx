@@ -5,22 +5,18 @@ import { useProfileStore } from "@/sections/functional-profile/functional-profil
 import { useProfileValidation } from "@/hooks/use-validation";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { FunctionalProfileFrame } from "@/models";
-import { useShallow } from "zustand/react/shallow";
+import { useHasProfile, useProfileField } from "@/hooks/use-store-field";
 
 interface DataPointLegibleDescriptionFormProps {
   dataPointIndex: number;
 }
 
-function createDataPointStoreAdapter(
-  dataPointIndex: number,
-  profile: FunctionalProfileFrame | undefined,
-  store: ReturnType<typeof useProfileStore.getState>
-) {
+function createDataPointStoreAdapter(dataPointIndex: number, store: ReturnType<typeof useProfileStore.getState>) {
   return <TSelected,>(
     selector: (store: { profile?: FunctionalProfileFrame } & LegibleDescriptionSlice) => TSelected
   ) => {
     const adaptedStore: { profile?: FunctionalProfileFrame } & LegibleDescriptionSlice = {
-      profile,
+      profile: store.profile,
       addLegibleDescription: () => {
         store.addDataPointLegibleDescription(dataPointIndex);
       },
@@ -39,10 +35,20 @@ function createDataPointStoreAdapter(
 }
 
 export function DataPointLegibleDescriptionForm({ dataPointIndex }: DataPointLegibleDescriptionFormProps) {
-  const profile = useProfileStore(useShallow((state) => state.profile));
+  const hasProfile = useHasProfile();
+  // Subscribe only to this data point's legibleDescription for targeted re-renders
+  const legibleDescription = useProfileField(
+    (p) => p?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint?.legibleDescription
+  );
   const store = useProfileStore.getState();
   const useValidation = useProfileValidation;
-  const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, profile, store);
+  const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, store);
+
+  void legibleDescription;
+
+  if (!hasProfile) {
+    return null;
+  }
 
   const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`;
 

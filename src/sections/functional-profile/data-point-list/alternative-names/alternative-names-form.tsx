@@ -5,20 +5,16 @@ import { useProfileStore } from "@/sections/functional-profile/functional-profil
 import { useProfileValidation } from "@/hooks/use-validation";
 import { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alternative-names-slice";
 import { FunctionalProfileFrame } from "@/models";
-import { useShallow } from "zustand/react/shallow";
+import { useHasProfile, useProfileField } from "@/hooks/use-store-field";
 
 interface DataPointAlternativeNamesFormProps {
   dataPointIndex: number;
 }
 
-function createDataPointStoreAdapter(
-  dataPointIndex: number,
-  profile: FunctionalProfileFrame | undefined,
-  store: ReturnType<typeof useProfileStore.getState>
-) {
+function createDataPointStoreAdapter(dataPointIndex: number, store: ReturnType<typeof useProfileStore.getState>) {
   return <TSelected,>(selector: (store: { profile?: FunctionalProfileFrame } & AlternativeNamesSlice) => TSelected) => {
     const adaptedStore: { profile?: FunctionalProfileFrame } & AlternativeNamesSlice = {
-      profile,
+      profile: store.profile,
       addAlternativeNames: () => store.addDataPointAlternativeNames(dataPointIndex),
       removeAlternativeNames: () => store.removeDataPointAlternativeNames(dataPointIndex),
       updateSLV1Name: (value) => store.updateDataPointSLV1Name(dataPointIndex, value),
@@ -37,10 +33,20 @@ function createDataPointStoreAdapter(
 }
 
 export function DataPointAlternativeNamesForm({ dataPointIndex }: DataPointAlternativeNamesFormProps) {
-  const profile = useProfileStore(useShallow((state) => state.profile));
+  const hasProfile = useHasProfile();
+  // Subscribe only to this data point's alternativeNames for targeted re-renders
+  const alternativeNames = useProfileField(
+    (p) => p?.dataPointList?.dataPointListElement?.[dataPointIndex]?.dataPoint?.alternativeNames
+  );
   const store = useProfileStore.getState();
   const useValidation = useProfileValidation;
-  const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, profile, store);
+  const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, store);
+
+  void alternativeNames;
+
+  if (!hasProfile) {
+    return null;
+  }
 
   const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`;
 

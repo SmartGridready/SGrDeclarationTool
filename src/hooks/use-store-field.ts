@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/react/shallow";
 import { useDeviceStore, DeviceStoreState } from "@/sections/device/device-store";
 import { useProfileStore, ProfileStoreState } from "@/sections/functional-profile/functional-profile-store";
 import { DeviceFrame } from "@/models";
@@ -5,18 +6,20 @@ import { FunctionalProfileFrame } from "@/models";
 
 /**
  * Helper hook for granular field selection from the device store.
- * Only re-renders when the selected field changes, not when any device field changes
+ * Uses shallow comparison to prevent unnecessary re-renders when the selected
+ * value is an object or array that hasn't actually changed.
  */
 export function useDeviceField<T>(selector: (device: DeviceFrame | undefined) => T): T {
-  return useDeviceStore((state) => selector(state.device));
+  return useDeviceStore(useShallow((state) => selector(state.device)));
 }
 
 /**
  * Helper hook for granular field selection from the profile store.
- * Only re-renders when the selected field changes, not when any profile field changes.
+ * Uses shallow comparison to prevent unnecessary re-renders when the selected
+ * value is an object or array that hasn't actually changed.
  */
 export function useProfileField<T>(selector: (profile: FunctionalProfileFrame | undefined) => T): T {
-  return useProfileStore((state) => selector(state.profile));
+  return useProfileStore(useShallow((state) => selector(state.profile)));
 }
 
 /**

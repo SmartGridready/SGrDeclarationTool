@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import { DeviceFrame } from "@/models";
+import { debouncedStorage } from "@/utils/debounced-storage";
 import { createEmptyDevice } from "@/utils/factory-utils";
 import {
   createDeviceIdentificationSlice,
@@ -67,9 +68,9 @@ export const useDeviceStore = create<DeviceStoreState>()(
     })),
     {
       name: "sgr-device-storage",
-      storage: createJSONStorage(() => localStorage),
+      storage: debouncedStorage<DeviceStoreState>(),
       // Only persist the device state, not the action objects with functions
-      partialize: (state) => ({ device: state.device }),
+      partialize: (state) => ({ device: state.device }) as DeviceStoreState,
     }
   )
 );

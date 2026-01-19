@@ -35,36 +35,15 @@ const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 const UNIT_OPTIONS = createFormOptions(UNITS_VALUES);
 
 interface DataPointBaseFormProps<TStoreState extends DataPointBaseSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get dataPointBase state from the store
-   */
   stateSelector: (store: TStoreState) => {
     dataPoint?: DataPointDescription;
     genericAttributeList?: DataPointBase["genericAttributeList"];
   };
-  /**
-   * Field path prefix for validation errors (e.g., "dataPoint" or "dataPointList.dataPointListElement[0]")
-   */
   fieldPathPrefix?: string;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
 }
 

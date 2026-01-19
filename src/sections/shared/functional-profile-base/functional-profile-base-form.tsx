@@ -11,36 +11,15 @@ import { GenericAttributeListProductForm } from "@/sections/shared/generic-attri
 import { FunctionalProfileBase, FunctionalProfileDescription } from "@/models";
 
 interface FunctionalProfileBaseFormProps<TStoreState extends FunctionalProfileBaseSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get functionalProfileBase state from the store
-   */
   stateSelector: (store: TStoreState) => {
     functionalProfile?: FunctionalProfileDescription;
     genericAttributeList?: FunctionalProfileBase["genericAttributeList"];
   };
-  /**
-   * Field path prefix for validation errors (e.g., "functionalProfile" or "device.interfaceList.modbusInterface.functionalProfileList.functionalProfileListElement[0]")
-   */
   fieldPathPrefix?: string;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
 }
 

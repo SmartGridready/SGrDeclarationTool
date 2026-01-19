@@ -34,43 +34,16 @@ const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 const UNIT_OPTIONS = createFormOptions(UNITS_VALUES);
 
 interface GenericAttributeListProductFormProps<TStoreState extends GenericAttributeListProductSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get genericAttributeList state from the store
-   */
   stateSelector: (store: TStoreState) => {
     genericAttributeList?: GenericAttributeListProduct;
   };
-  /**
-   * Selector to check if genericAttributeList exists (for optional genericAttributeList)
-   */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Field path prefix for validation errors (e.g., "genericAttributeList" or "device.genericAttributeList")
-   */
   fieldPathPrefix?: string;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
-  /**
-   * Whether generic attribute list is required (if true, add/remove buttons are hidden)
-   */
   required?: boolean;
 }
 

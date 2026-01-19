@@ -19,43 +19,16 @@ const PROFILE_IDENTIFICATION_CATEGORY = createFormOptions(FUNCTIONAL_PROFILE_CAT
 const LEVEL_OF_OPERATION = createFormOptions(LEVEL_OF_OPERATION_VALUES);
 
 interface ProfileIdentificationFormProps<TStoreState extends FunctionalProfileIdentificationSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get profile identification state from the store
-   */
   stateSelector: (store: TStoreState) => {
     functionalProfileIdentification?: FunctionalProfileIdentification;
   };
-  /**
-   * Selector to check if profile identification exists (for optional profile identification)
-   */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Field path prefix for validation errors
-   */
   fieldPathPrefix?: string;
-  /**
-   * Whether profile identification is required (if true, add/remove buttons are hidden)
-   */
   required?: boolean;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
 }
 

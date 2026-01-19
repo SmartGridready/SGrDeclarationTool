@@ -14,51 +14,18 @@ import { createFormOptions } from "@/utils/form-options-utils";
 const LANGUAGE_OPTIONS = createFormOptions(LANGUAGE_VALUES);
 
 interface LegibleDescriptionFormProps<TStoreState extends LegibleDescriptionSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get legibleDescriptions state from the store
-   */
   stateSelector: (store: TStoreState) => {
     legibleDescriptions?: LegibleDescription[];
   };
-  /**
-   * Selector to check if legibleDescriptions exists (for optional legibleDescriptions)
-   */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Field path prefix for validation errors (e.g., "legibleDescription" or "device.deviceInformation.legibleDescription")
-   */
   fieldPathPrefix?: string;
-  /**
-   * Whether legible descriptions are required (if true, add/remove buttons are hidden)
-   */
   required?: boolean;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
-  /**
-   * Maximum number of items allowed (default: 4)
-   */
   maxItems?: number;
-  /**
-   * Whether to show the label field (for descriptions that extend legible descriptions with a label)
-   */
   showLabel?: boolean;
 }
 

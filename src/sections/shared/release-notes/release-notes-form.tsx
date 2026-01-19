@@ -14,45 +14,18 @@ import { createFormOptions } from "@/utils/form-options-utils";
 const RELEASE_STATE_OPTIONS = createFormOptions(RELEASE_STATE_VALUES);
 
 interface ReleaseNotesFormProps<TStoreState extends ReleaseNotesSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get releaseNotes state from the store
-   */
   stateSelector: (store: TStoreState) => {
     releaseState?: ReleaseState;
     remarks?: string;
     changeLogs?: ChangeLog[];
   };
-  /**
-   * Selector to check if releaseNotes exists (for optional releaseNotes)
-   */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Field path prefix for validation errors (e.g., "releaseNotes" or "device.releaseNotes")
-   */
   fieldPathPrefix?: string;
-  /**
-   * Whether release notes are required (if true, add/remove buttons are hidden)
-   */
   required?: boolean;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
 }
 

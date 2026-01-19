@@ -22,47 +22,17 @@ import { createFormOptions } from "@/utils/form-options-utils";
 const DATA_TYPE_OPTIONS = createFormOptions(DATA_TYPE_PRODUCT_EXTENDED_VALUES);
 
 interface DynamicParameterListFormProps<TStoreState extends DynamicParameterListSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get parameterList state from the store
-   */
   stateSelector: (store: TStoreState) => {
     parameterList?: DynamicParameterDescriptionList;
   };
-  /**
-   * Selector to check if parameterList exists (for optional parameterList)
-   */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Field path prefix for validation errors (e.g., "dataPointList.dataPointListElement.0.dataPoint.parameterList")
-   */
   fieldPathPrefix?: string;
-  /**
-   * List index for this parameter list (used for actions)
-   */
   listIndex: number;
-  /**
-   * Whether parameter list is required (if true, add/remove buttons are hidden)
-   */
   required?: boolean;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
 }
 

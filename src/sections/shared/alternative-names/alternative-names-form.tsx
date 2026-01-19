@@ -8,43 +8,16 @@ import { AlternativeNamesSlice } from "@/sections/shared/alternative-names/alter
 import { AlternativeNames } from "@/models";
 
 interface AlternativeNamesFormProps<TStoreState extends AlternativeNamesSlice> {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector to get alternativeNames state from the store
-   */
   stateSelector: (store: TStoreState) => {
     alternativeNames?: AlternativeNames;
   };
-  /**
-   * Selector to check if alternativeNames exists (for optional alternativeNames)
-   */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Field path prefix for validation errors (e.g., "alternativeNames" or "device.deviceInformation.alternativeNames")
-   */
   fieldPathPrefix?: string;
-  /**
-   * Whether alternative names are required (if true, add/remove buttons are hidden)
-   */
   required?: boolean;
-  /**
-   * Title for the form section
-   */
   title?: string;
-  /**
-   * Description for the form section
-   */
   description?: string;
-  /**
-   * Whether this is a nested section (affects styling)
-   */
   nested?: boolean;
 }
 

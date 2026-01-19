@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.4](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.3...v0.23.4) (2026-01-19)
+
+
+### Bug Fixes
+
+* add 0 for stop bit length values and timeout prop for modbus tcp ([e99ca84](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/e99ca8428a03ba1b7863f19edfb9b01203078c05))
+* correct minor zod schema inconsistencies (GL-18) ([ce3cbfb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ce3cbfb9d6e0ccb690fa0f9c47173cb4e44cb5fe))
+* error messages for device and fp's (GL-17) ([8393cf7](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8393cf76de96bac431340cb42bf0de5c540ecfef))
+* missing and wrong error field paths and props (GL-18) ([0c95877](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0c9587707886adbb419041460c3cd5625e3b269d))
+* remove any ignores from eslint config and add remaining types for mappers (GL-7) ([3f61119](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3f611190cb2338b7414ea653332e03c47a9117fa))
+* remove incorrect url validation (GL-18) ([315f534](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/315f534d79c12259ab72c130ec203203dc8199f9))
+* reset validationAttemped after export (GL-18) ([ad08e3e](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/ad08e3e3808364d5593b2ec559cdc68b3c69f014))
+* set validation attempted to true on preview ([9182bdb](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/9182bdb92d312f88baae5f9304a821e81c24767b))
+
+
+### Performance Improvements
+
+* implement debounce storage hook (GL-16) ([c89d39d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/c89d39d0f642e2591ea6fb8846d11129682574eb))
+
+
+### Code Refactoring
+
+* add granular field selection hooks for stores (GL-16) ([6f7a866](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6f7a866cec1b50d5b88e721e99adb69bd1564f79))
+* optimize data point sub-forms with granular selectors (GL-16) ([fe20038](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/fe20038dd1f5d64545a08d048693b736901056a0))
+* optimize device information forms with granular selectors (GL-16) ([6a5a10d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6a5a10df036d88f70673ed2dc709ea0fc6f73d01))
+* optimize device lists and release notes with granular selectors (GL-16) ([bb23450](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bb23450124a33961117713e5a183b0d96bef743e))
+* optimize functional profile forms with granular selectors (GL-16) ([63abfa1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/63abfa19d9b1f56f47d4c894e84ad1eae64a7faa))
+* optimize functional profile lists with granular selectors (GL-16) ([36f8011](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/36f8011b44fa99e3ef7e42140aa1f4c04e0fd2e0))
+* optimize interface data point lists with granular selectors (GL-16) ([7cdbd3f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7cdbd3f0b6bed2bc754add3c49422b7fa11c71f5))
+* optimize interface descriptions and authentication with granular selectors (GL-16) ([464c161](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/464c16163f74558773c7799f58c2bf7c37a48375))
+* optimize interface functional profile lists with granular selectors (GL-16) ([0a6945a](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0a6945a708c7339214a56888290a26fcdf2e1c4f))
+* optimize interface list and type forms with granular selectors (GL-16) ([1d29903](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1d2990336d1a9ce3126f2a6f635f718946bdb8fb))
+* optimize simple device forms with granular selectors (GL-16) ([d841f78](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/d841f78bce5af1d4bd13827698b60b2b5fb85356))
+* optimize time sync block notification form with granular selectors (GL-16) ([705cb3d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/705cb3dbe012953200b2da26be3121eb0cbda86b))
+
+
+### Chores
+
+* remove redundant comments in forms ([4763422](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/476342232072036afff2ffdc94f46f49fa64c389))
+
 ### [0.23.3](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.2...v0.23.3) (2026-01-14)
 
 

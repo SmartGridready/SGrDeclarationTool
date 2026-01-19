@@ -68,7 +68,7 @@ export function SerialInterfaceCapabilityForm() {
                 store.removeBaudRateSupported(index);
                 store.addBaudRateSupported(value as BaudRate);
               }}
-              error={getError(`baudRatesSupported.${index}`)}
+              error={getError(`baudRatesSupported[${index}]`)}
             />
           </FormGroup>
         )}
@@ -98,7 +98,7 @@ export function SerialInterfaceCapabilityForm() {
                 store.removeByteLenSupported(index);
                 store.addByteLenSupported(value as ByteLength);
               }}
-              error={getError(`byteLenSupported.${index}`)}
+              error={getError(`byteLenSupported[${index}]`)}
             />
           </FormGroup>
         )}
@@ -128,7 +128,7 @@ export function SerialInterfaceCapabilityForm() {
                 store.removeParitySupported(index);
                 store.addParitySupported(value as Parity);
               }}
-              error={getError(`paritySupported.${index}`)}
+              error={getError(`paritySupported[${index}]`)}
             />
           </FormGroup>
         )}
@@ -158,7 +158,7 @@ export function SerialInterfaceCapabilityForm() {
                 store.removeStopBitLenSupported(index);
                 store.addStopBitLenSupported(value as StopBitLength);
               }}
-              error={getError(`stopBitLenSupported.${index}`)}
+              error={getError(`stopBitLenSupported[${index}]`)}
             />
           </FormGroup>
         )}

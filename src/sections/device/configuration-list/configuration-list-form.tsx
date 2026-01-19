@@ -58,7 +58,7 @@ export function ConfigurationListForm() {
                 onChange={(value) => store.updateConfigurationListElementName(configIndex, value)}
                 placeholder="Enter configuration name"
                 required={true}
-                error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.name`)}
+                error={getError(`${fullPathPrefix}.configurationListElement[${configIndex}].name`)}
               />
               <SelectField
                 label="Data Type"
@@ -80,7 +80,7 @@ export function ConfigurationListForm() {
                   }
                 }}
                 required={true}
-                error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.dataType`)}
+                error={getError(`${fullPathPrefix}.configurationListElement[${configIndex}].dataType`)}
               />
               <InputField
                 label="Default Value"
@@ -90,7 +90,7 @@ export function ConfigurationListForm() {
                 onChange={(value) => store.updateConfigurationListElementDefaultValue(configIndex, value ?? "")}
                 placeholder="Enter default value"
                 required={false}
-                error={getError(`${fullPathPrefix}.configurationListElement.${configIndex}.defaultValue`)}
+                error={getError(`${fullPathPrefix}.configurationListElement[${configIndex}].defaultValue`)}
               />
             </FormGroup>
 

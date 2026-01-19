@@ -12,6 +12,7 @@ interface DynamicParameterListBitmapFormProps {
   bitmap: BitmapProduct;
   actions: DynamicParameterListSlice;
   fieldPathPrefix: string;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function DynamicParameterListBitmapForm({
@@ -20,6 +21,7 @@ export function DynamicParameterListBitmapForm({
   bitmap,
   actions,
   fieldPathPrefix,
+  getError,
 }: DynamicParameterListBitmapFormProps) {
   // Create an adapter that maps parameter list actions to the shared bitmap slice interface
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
@@ -37,11 +39,14 @@ export function DynamicParameterListBitmapForm({
     };
   }, [listIndex, paramIndex, actions]);
 
+  const dataTypeFieldPath = `${fieldPathPrefix}.parameterListElement[${paramIndex}].dataType`;
+
   return (
     <DataTypeProductBitmapForm
       bitmap={bitmap}
       actions={adaptedActions}
-      fieldPathPrefix={`${fieldPathPrefix}-param-${paramIndex}-bitmap`}
+      fieldPathPrefix={dataTypeFieldPath}
+      getError={getError}
     />
   );
 }

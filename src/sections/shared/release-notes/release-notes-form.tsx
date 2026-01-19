@@ -126,7 +126,7 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
               onChange={(value) => actions.updateChangeLogField(index, "version", value)}
               placeholder="e.g., 1.0.0"
               required={true}
-              error={getError(`${fieldPathPrefix}.changeLog.${index}.version`)}
+              error={getError(`${fieldPathPrefix}.changeLog[${index}].version`)}
             />
             <DateField
               label="Date"
@@ -134,7 +134,7 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
               value={item.date}
               onChange={(value) => actions.updateChangeLogField(index, "date", value)}
               required={true}
-              error={getError(`${fieldPathPrefix}.changeLog.${index}.date`)}
+              error={getError(`${fieldPathPrefix}.changeLog[${index}].date`)}
             />
             <InputField
               label="Author"
@@ -143,7 +143,7 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
               onChange={(value) => actions.updateChangeLogField(index, "author", value)}
               placeholder="Author name"
               required={true}
-              error={getError(`${fieldPathPrefix}.changeLog.${index}.author`)}
+              error={getError(`${fieldPathPrefix}.changeLog[${index}].author`)}
             />
             <InputField
               label="Comment"
@@ -152,7 +152,7 @@ export function ReleaseNotesForm<TStoreState extends ReleaseNotesSlice>({
               onChange={(value) => actions.updateChangeLogField(index, "comment", value)}
               placeholder="Change description"
               required={true}
-              error={getError(`${fieldPathPrefix}.changeLog.${index}.comment`)}
+              error={getError(`${fieldPathPrefix}.changeLog[${index}].comment`)}
             />
           </FormGroup>
         )}

@@ -82,7 +82,7 @@ export function AccessProtectionForm({
                   onChange={(value) => {
                     actions.updateModbusExceptionCode(index, value as ModbusExceptionCode);
                   }}
-                  error={getError(`modbusExceptionCode.${index}`)}
+                  error={getError(`${fieldPathPrefix}.accessProtection.modbusExceptionCode[${index}]`)}
                 />
               </FormGroup>
             )}

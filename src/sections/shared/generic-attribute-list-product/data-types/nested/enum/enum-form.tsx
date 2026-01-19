@@ -12,6 +12,7 @@ interface GenericAttributeListProductNestedEnumFormProps {
   enumMap: EnumMapProduct;
   actions: GenericAttributeListProductSlice;
   fieldPathPrefix?: string;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function GenericAttributeListProductNestedEnumForm({
@@ -19,7 +20,8 @@ export function GenericAttributeListProductNestedEnumForm({
   nestedElementIndex,
   enumMap,
   actions,
-  fieldPathPrefix = "generic-attribute",
+  fieldPathPrefix = "genericAttributeList",
+  getError,
 }: GenericAttributeListProductNestedEnumFormProps) {
   // Create an adapter that maps generic attribute list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
@@ -46,11 +48,14 @@ export function GenericAttributeListProductNestedEnumForm({
     };
   }, [elementIndex, nestedElementIndex, actions]);
 
+  const dataTypeFieldPath = `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].genericAttributeList.genericAttributeListElement[${nestedElementIndex}].dataType`;
+
   return (
     <DataTypeProductEnumForm
       enumMap={enumMap}
       actions={adaptedActions}
-      fieldPathPrefix={`${fieldPathPrefix}-${elementIndex}-nested-${nestedElementIndex}-enum`}
+      fieldPathPrefix={dataTypeFieldPath}
+      getError={getError}
     />
   );
 }

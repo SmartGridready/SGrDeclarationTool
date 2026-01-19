@@ -9,11 +9,14 @@ import { useProfileStore } from "@/sections/functional-profile/functional-profil
 interface BitmapFormProps {
   dataPointIndex: number;
   bitmap: BitmapFunctionalProfile;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
-export function BitmapForm({ dataPointIndex, bitmap }: BitmapFormProps) {
+export function BitmapForm({ dataPointIndex, bitmap, getError }: BitmapFormProps) {
   const store = useProfileStore.getState();
   const dataPointListActions = store;
+
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.dataType.bitmap`;
 
   return (
     <FormSection
@@ -37,6 +40,7 @@ export function BitmapForm({ dataPointIndex, bitmap }: BitmapFormProps) {
               onChange={(value) => dataPointListActions.updateBitmapEntryLiteral(dataPointIndex, entryIndex, value)}
               placeholder="Enter bitmap literal"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.bitmapEntry[${entryIndex}].literal`) : undefined}
             />
             <InputField
               label="Description"
@@ -46,6 +50,7 @@ export function BitmapForm({ dataPointIndex, bitmap }: BitmapFormProps) {
                 dataPointListActions.updateBitmapEntryDescription(dataPointIndex, entryIndex, value || undefined)
               }
               placeholder="Enter description"
+              error={getError ? getError(`${fieldPathPrefix}.bitmapEntry[${entryIndex}].description`) : undefined}
             />
           </>
         )}

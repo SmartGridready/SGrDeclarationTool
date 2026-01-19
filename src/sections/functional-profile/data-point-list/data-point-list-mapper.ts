@@ -16,6 +16,7 @@ import {
   getOptionalStringValue,
   mapSimpleDataType,
   setOptionalField,
+  Xml2JsObject,
 } from "@/utils/mapper-utils";
 import { mapLegibleDescription } from "@/sections/shared/legible-description/legible-description-mapper";
 import { mapAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-mapper";
@@ -34,7 +35,7 @@ import {
 /**
  * Maps XML dataPointList to FunctionalProfileDataPointList model
  */
-export function mapDataPointList(dataPointListXml: any): FunctionalProfileDataPointList {
+export function mapDataPointList(dataPointListXml: Xml2JsObject): FunctionalProfileDataPointList {
   return {
     dataPointListElement: mapArray(dataPointListXml, "dataPointListElement", mapDataPointElement),
   };
@@ -43,7 +44,7 @@ export function mapDataPointList(dataPointListXml: any): FunctionalProfileDataPo
 /**
  * Maps a single XML dataPointListElement to FunctionalProfileDataPoint model
  */
-function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
+function mapDataPointElement(elementXml: Xml2JsObject): FunctionalProfileDataPoint {
   const dpXml = getFirstElement(elementXml, "dataPoint");
 
   if (!dpXml) {
@@ -108,7 +109,7 @@ function mapDataPointElement(elementXml: any): FunctionalProfileDataPoint {
  * Maps XML dataType to DataTypeFunctionalProfile
  * The XML structure uses nested elements like <float64 /> instead of a string value
  */
-function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
+function mapDataType(dataTypeXml: Xml2JsObject | undefined): DataTypeFunctionalProfile {
   if (!dataTypeXml) {
     return { float64: {} };
   }
@@ -156,7 +157,7 @@ function mapDataType(dataTypeXml: any): DataTypeFunctionalProfile {
 /**
  * Maps XML enum dataType to EnumMapFunctionalProfile model
  */
-function mapEnumDataType(enumXml: any): EnumMapFunctionalProfile {
+function mapEnumDataType(enumXml: Xml2JsObject): EnumMapFunctionalProfile {
   const enumMap: EnumMapFunctionalProfile = {};
 
   // Map optional fields
@@ -169,7 +170,7 @@ function mapEnumDataType(enumXml: any): EnumMapFunctionalProfile {
 /**
  * Maps XML enumEntry to EnumEntryRecordFunctionalProfile model
  */
-function mapEnumEntry(entryXml: any): EnumEntryRecordFunctionalProfile {
+function mapEnumEntry(entryXml: Xml2JsObject): EnumEntryRecordFunctionalProfile {
   const entry: EnumEntryRecordFunctionalProfile = {
     literal: getStringValue(entryXml, "literal"),
   };
@@ -183,7 +184,7 @@ function mapEnumEntry(entryXml: any): EnumEntryRecordFunctionalProfile {
 /**
  * Maps XML bitmap dataType to BitmapFunctionalProfile model
  */
-function mapBitmapDataType(bitmapXml: any): BitmapFunctionalProfile {
+function mapBitmapDataType(bitmapXml: Xml2JsObject): BitmapFunctionalProfile {
   const bitmap: BitmapFunctionalProfile = {};
 
   // Map optional bitmapEntry array
@@ -195,7 +196,7 @@ function mapBitmapDataType(bitmapXml: any): BitmapFunctionalProfile {
 /**
  * Maps XML bitmapEntry to BitmapEntryFunctionalProfile model
  */
-function mapBitmapEntry(entryXml: any): BitmapEntryFunctionalProfile {
+function mapBitmapEntry(entryXml: Xml2JsObject): BitmapEntryFunctionalProfile {
   const entry: BitmapEntryFunctionalProfile = {
     literal: getStringValue(entryXml, "literal"),
   };
@@ -209,7 +210,7 @@ function mapBitmapEntry(entryXml: any): BitmapEntryFunctionalProfile {
 /**
  * Maps XML json dataType to JSonOutputFunctionalProfile model
  */
-function mapJsonDataType(jsonXml: any): JSonOutputFunctionalProfile {
+function mapJsonDataType(jsonXml: Xml2JsObject): JSonOutputFunctionalProfile {
   const jsonOutput: JSonOutputFunctionalProfile = {};
 
   // Map optional items array
@@ -221,7 +222,7 @@ function mapJsonDataType(jsonXml: any): JSonOutputFunctionalProfile {
 /**
  * Maps XML json item (array or element) to JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile
  */
-function mapJsonItem(itemXml: any): JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile {
+function mapJsonItem(itemXml: Xml2JsObject): JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile {
   // Check if it's an array (has name property)
   if (itemXml.name !== undefined) {
     return mapJsonArray(itemXml);
@@ -234,7 +235,7 @@ function mapJsonItem(itemXml: any): JSonArrayOutputFunctionalProfile | JSonElemF
 /**
  * Maps XML json array to JSonArrayOutputFunctionalProfile model
  */
-function mapJsonArray(arrayXml: any): JSonArrayOutputFunctionalProfile {
+function mapJsonArray(arrayXml: Xml2JsObject): JSonArrayOutputFunctionalProfile {
   const array: JSonArrayOutputFunctionalProfile = {};
 
   // Map optional fields
@@ -247,7 +248,7 @@ function mapJsonArray(arrayXml: any): JSonArrayOutputFunctionalProfile {
 /**
  * Maps XML json element to JSonElemFunctionalProfile model
  */
-function mapJsonElement(elementXml: any): JSonElemFunctionalProfile {
+function mapJsonElement(elementXml: Xml2JsObject): JSonElemFunctionalProfile {
   const key = getStringValue(elementXml, "key");
 
   // Check which type it is (date, string, or number)

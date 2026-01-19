@@ -67,14 +67,14 @@ export function ConfigurationDescriptionsForm({
     return {
       getError: (fieldPath: string) => {
         // Convert the field path from legible description format to configuration description format
-        const basePath = `configurationList.configurationListElement.${configIndex}.configurationDescription`;
+        const basePath = `configurationList.configurationListElement[${configIndex}].configurationDescription`;
         const fullPath = fieldPath.replace("legibleDescription", basePath);
         return getRawError(fullPath);
       },
     };
   };
 
-  const fieldPathPrefix = `configurationList.configurationListElement.${configIndex}.configurationDescription`;
+  const fieldPathPrefix = `configurationList.configurationListElement[${configIndex}].configurationDescription`;
 
   return (
     <LegibleDescriptionForm

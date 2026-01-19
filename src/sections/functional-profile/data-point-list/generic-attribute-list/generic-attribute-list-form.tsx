@@ -53,7 +53,7 @@ export function DataPointGenericAttributeListForm({
             placeholder="Enter attribute name"
             required={true}
             error={getError(
-              `dataPointList.dataPointListElement.${dataPointIndex}.genericAttributeList.genericAttributeListElement.${attributeIndex}.name`
+              `dataPointList.dataPointListElement[${dataPointIndex}].genericAttributeList.genericAttributeListElement[${attributeIndex}].name`
             )}
           />
         )}

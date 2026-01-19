@@ -12,6 +12,7 @@ interface ModbusDataPointEnumFormProps {
   enumMap: Enum;
   actions: ModbusDataPointEnumSlice;
   fieldPathPrefix?: string;
+  getError?: (fieldPath: string) => string | undefined;
   title?: string;
   description?: string;
   nested?: boolean;
@@ -23,6 +24,7 @@ export function ModbusDataPointEnumForm({
   enumMap,
   actions,
   fieldPathPrefix = "enum",
+  getError,
   title = "Enum Configuration",
   description = "Define enumeration entries with literal values, ordinals and optional hex mask",
   nested = true,
@@ -37,6 +39,7 @@ export function ModbusDataPointEnumForm({
           actions.updateModbusDataPointEnumHexMask(functionalProfileIndex, dataPointIndex, value || undefined)
         }
         placeholder="Enter hex mask (e.g., 0xFF)"
+        error={getError ? getError(`${fieldPathPrefix}.hexMask`) : undefined}
       />
       <ArrayField<EnumEntry>
         label="Enum Entries"
@@ -57,6 +60,7 @@ export function ModbusDataPointEnumForm({
               }
               placeholder="Enter enum literal"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.enumEntry[${entryIndex}].literal`) : undefined}
             />
             <InputField
               label="Ordinal"
@@ -73,6 +77,7 @@ export function ModbusDataPointEnumForm({
               }
               placeholder="Enter ordinal number"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.enumEntry[${entryIndex}].ordinal`) : undefined}
             />
             <InputField
               label="Description"
@@ -87,6 +92,7 @@ export function ModbusDataPointEnumForm({
                 )
               }
               placeholder="Enter description"
+              error={getError ? getError(`${fieldPathPrefix}.enumEntry[${entryIndex}].description`) : undefined}
             />
           </>
         )}

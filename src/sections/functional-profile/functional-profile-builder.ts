@@ -18,14 +18,14 @@ import { wrapInArray, setOptionalXmlArray } from "@/utils/builder-utils";
  */
 export async function buildFunctionalProfileToXml(frame: FunctionalProfileFrame): Promise<string> {
   if (!frame) {
-    throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED);
+    throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED_FP);
   }
 
   // Validate the frame before building
   const validation = validateFunctionalProfileFrame(frame);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage = firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED;
+    const errorMessage = firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED_FP;
     throw new Error(ERROR_MESSAGES.XML_BUILD.FAILED(errorMessage));
   }
 

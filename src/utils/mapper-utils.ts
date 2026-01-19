@@ -173,8 +173,7 @@ export function hasValue(xml: Xml2JsObject | undefined, field: string): boolean 
  */
 export function setOptionalField<T extends object>(obj: T, field: keyof T, value: unknown): void {
   if (value !== undefined && value !== null) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (obj as any)[field] = value;
+    (obj as Record<string, unknown>)[field as string] = value;
   }
 }
 

@@ -14,10 +14,7 @@ const LANGUAGE_VALUES_ARRAY = LANGUAGE_VALUES as unknown as [string, ...string[]
 // Note: "label" field is NOT part of LegibleDescription in XSD
 // It only exists in ConfigurationDescription which extends LegibleDescription
 export const legibleDescriptionSchema = z.object({
-  textElement: z
-    .string({ message: "Text element is required" })
-    .min(0)
-    .max(4000, "Text element cannot exceed 4000 characters"),
+  textElement: z.string().min(0).max(4000, "Text element cannot exceed 4000 characters"),
   language: z.enum(LANGUAGE_VALUES_ARRAY, {
     message: "Language is required",
   }),

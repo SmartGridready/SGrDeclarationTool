@@ -26,7 +26,7 @@ export function ParameterListForm({ dataPointIndex }: ParameterListFormProps) {
     return null;
   }
 
-  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList`;
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.parameterList`;
 
   return (
     <DynamicParameterListForm

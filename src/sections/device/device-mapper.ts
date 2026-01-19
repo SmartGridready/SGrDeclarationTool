@@ -1,6 +1,6 @@
 import { parseString } from "xml2js";
 import { DeviceFrame } from "@/models";
-import { getFirstElement, setOptionalField } from "@/utils/mapper-utils";
+import { getFirstElement, setOptionalField, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapReleaseNotes } from "@/sections/shared/release-notes/release-notes-mapper";
 import { mapDeviceIdentification } from "@/sections/device/device-identification/device-identification-mapper";
 import { mapDeviceInformation } from "@/sections/device/device-information/device-information-mapper";
@@ -10,15 +10,23 @@ import { mapInterfaceList } from "@/sections/device/interface-list/interface-lis
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 
 /**
+ * Type representing the parsed XML structure from xml2js with explicitRoot: true
+ * The root element is the key of the object
+ */
+type ParsedDeviceXml = {
+  DeviceFrame: Xml2JsObject;
+};
+
+/**
  * Parses XML string and maps it to DeviceFrame model
  * @param xmlString - The XML content as a string
  * @returns Promise resolving to DeviceFrame
  * @throws Error if XML is invalid or cannot be parsed
  */
 export async function parseDevice(xmlString: string): Promise<DeviceFrame> {
-  let parsed: any;
+  let parsed: ParsedDeviceXml;
   try {
-    parsed = await new Promise<any>((resolve, reject) => {
+    parsed = await new Promise<ParsedDeviceXml>((resolve, reject) => {
       parseString(
         xmlString,
         {
@@ -31,7 +39,7 @@ export async function parseDevice(xmlString: string): Promise<DeviceFrame> {
           if (err) {
             reject(err);
           } else {
-            resolve(result);
+            resolve(result as ParsedDeviceXml);
           }
         }
       );
@@ -47,21 +55,21 @@ export async function parseDevice(xmlString: string): Promise<DeviceFrame> {
 /**
  * Maps the parsed XML object to DeviceFrame model
  */
-function mapDevice(parsed: any): DeviceFrame {
+function mapDevice(parsed: ParsedDeviceXml): DeviceFrame {
   if (!parsed.DeviceFrame) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_DEVICE);
   }
 
   const frameData = parsed.DeviceFrame;
   const deviceInformationXml = getFirstElement(frameData, "deviceInformation");
 
   if (!deviceInformationXml) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_DEVICE);
   }
 
   const releaseNotesXml = getFirstElement(frameData, "releaseNotes");
   if (!releaseNotesXml) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_DEVICE);
   }
 
   const identification = mapDeviceIdentification(frameData);

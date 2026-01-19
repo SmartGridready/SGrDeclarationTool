@@ -43,7 +43,7 @@ export function GenericAttributeListForm() {
             onChange={(value) => actions.updateGenericAttributeName(index, value)}
             placeholder="Enter attribute name"
             required={true}
-            error={getError(`genericAttributeList.genericAttributeListElement.${index}.name`)}
+            error={getError(`genericAttributeList.genericAttributeListElement[${index}].name`)}
           />
         )}
       />

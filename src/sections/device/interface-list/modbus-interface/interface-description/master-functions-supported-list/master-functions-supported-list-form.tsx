@@ -56,7 +56,7 @@ export function MasterFunctionsSupportedListForm() {
                 onChange={(value) => {
                   store.updateMasterFunctionSupported(index, value as MasterFunctionsSupported);
                 }}
-                error={getError(`masterFunctionsSupported.${index}`)}
+                error={getError(`masterFunctionsSupported[${index}]`)}
               />
             </FormGroup>
           )}

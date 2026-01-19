@@ -1,6 +1,6 @@
 import { parseString } from "xml2js";
 import { FunctionalProfileFrame } from "@/models";
-import { getFirstElement, setOptionalField } from "@/utils/mapper-utils";
+import { getFirstElement, setOptionalField, Xml2JsObject } from "@/utils/mapper-utils";
 import { mapReleaseNotes } from "@/sections/shared/release-notes/release-notes-mapper";
 import { mapProfileIdentification } from "@/sections/shared/profile-identification/profile-identification-mapper";
 import { mapAlternativeNames } from "@/sections/shared/alternative-names/alternative-names-mapper";
@@ -10,15 +10,23 @@ import { mapDataPointList } from "@/sections/functional-profile/data-point-list/
 import { ERROR_MESSAGES } from "@/constants/error-messages";
 
 /**
+ * Type representing the parsed XML structure from xml2js with explicitRoot: true
+ * The root element is the key of the object
+ */
+type ParsedFunctionalProfileXml = {
+  FunctionalProfileFrame: Xml2JsObject;
+};
+
+/**
  * Parses XML string and maps it to FunctionalProfileFrame model
  * @param xmlString - The XML content as a string
  * @returns Promise resolving to FunctionalProfileFrame
  * @throws Error if XML is invalid or cannot be parsed
  */
 export async function parseFunctionalProfile(xmlString: string): Promise<FunctionalProfileFrame> {
-  let parsed: any;
+  let parsed: ParsedFunctionalProfileXml;
   try {
-    parsed = await new Promise<any>((resolve, reject) => {
+    parsed = await new Promise<ParsedFunctionalProfileXml>((resolve, reject) => {
       parseString(
         xmlString,
         {
@@ -31,7 +39,7 @@ export async function parseFunctionalProfile(xmlString: string): Promise<Functio
           if (err) {
             reject(err);
           } else {
-            resolve(result);
+            resolve(result as ParsedFunctionalProfileXml);
           }
         }
       );
@@ -47,16 +55,16 @@ export async function parseFunctionalProfile(xmlString: string): Promise<Functio
 /**
  * Maps the parsed XML object to FunctionalProfileFrame model
  */
-function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
+function mapFunctionalProfile(parsed: ParsedFunctionalProfileXml): FunctionalProfileFrame {
   if (!parsed.FunctionalProfileFrame) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_FP);
   }
 
   const frameData = parsed.FunctionalProfileFrame;
   const functionalProfileXml = getFirstElement(frameData, "functionalProfile");
 
   if (!functionalProfileXml) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_FP);
   }
 
   const identificationXml = getFirstElement(functionalProfileXml, "functionalProfileIdentification");

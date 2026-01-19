@@ -78,7 +78,7 @@ export function DataPointListForm() {
               onChange={(value) => actions.updateDataPointName(index, value)}
               placeholder="Enter data point name"
               required={true}
-              error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.dataPointName`)}
+              error={getError(`dataPointList.dataPointListElement[${index}].dataPoint.dataPointName`)}
             />
 
             <FormGroup columns={2}>
@@ -89,7 +89,7 @@ export function DataPointListForm() {
                 value={item.dataPoint.dataDirection}
                 onChange={(value) => actions.updateDataDirection(index, value as DataDirectionFunctionalProfile)}
                 required={true}
-                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.dataDirection`)}
+                error={getError(`dataPointList.dataPointListElement[${index}].dataPoint.dataDirection`)}
               />
               <SelectField
                 label="Presence Level"
@@ -98,7 +98,7 @@ export function DataPointListForm() {
                 value={item.dataPoint.presenceLevel}
                 onChange={(value) => actions.updatePresenceLevel(index, value as PresenceLevel)}
                 required={true}
-                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.presenceLevel`)}
+                error={getError(`dataPointList.dataPointListElement[${index}].dataPoint.presenceLevel`)}
               />
             </FormGroup>
 
@@ -121,7 +121,7 @@ export function DataPointListForm() {
                   }
                 }}
                 required={true}
-                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.dataType`)}
+                error={getError(`dataPointList.dataPointListElement[${index}].dataPoint.dataType`)}
               />
               <SelectField
                 label="Unit"
@@ -130,7 +130,7 @@ export function DataPointListForm() {
                 value={item.dataPoint.unit}
                 onChange={(value) => actions.updateUnit(index, value as Units)}
                 required={true}
-                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.unit`)}
+                error={getError(`dataPointList.dataPointListElement[${index}].dataPoint.unit`)}
               />
               <InputField
                 label="Array Length"
@@ -139,20 +139,20 @@ export function DataPointListForm() {
                 value={item.dataPoint.arrayLength?.toString() || ""}
                 onChange={(value) => actions.updateArrayLength(index, value ? parseInt(value, 10) : undefined)}
                 placeholder="Enter array length"
-                error={getError(`dataPointList.dataPointListElement.${index}.dataPoint.arrayLength`)}
+                error={getError(`dataPointList.dataPointListElement[${index}].dataPoint.arrayLength`)}
               />
             </FormGroup>
 
             {isEnumDataType(item.dataPoint.dataType) && (
-              <EnumForm dataPointIndex={index} enumMap={item.dataPoint.dataType.enum} />
+              <EnumForm dataPointIndex={index} enumMap={item.dataPoint.dataType.enum} getError={getError} />
             )}
 
             {isBitmapDataType(item.dataPoint.dataType) && (
-              <BitmapForm dataPointIndex={index} bitmap={item.dataPoint.dataType.bitmap} />
+              <BitmapForm dataPointIndex={index} bitmap={item.dataPoint.dataType.bitmap} getError={getError} />
             )}
 
             {isJsonDataType(item.dataPoint.dataType) && (
-              <JsonForm dataPointIndex={index} items={item.dataPoint.dataType.json.items} />
+              <JsonForm dataPointIndex={index} items={item.dataPoint.dataType.json.items} getError={getError} />
             )}
 
             <ParameterListForm dataPointIndex={index} />

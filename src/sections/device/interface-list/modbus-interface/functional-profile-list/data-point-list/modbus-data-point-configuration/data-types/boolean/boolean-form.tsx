@@ -11,6 +11,7 @@ interface ModbusDataPointBooleanFormProps {
   boolean: ModbusBoolean;
   actions: ModbusDataPointBooleanSlice;
   fieldPathPrefix?: string;
+  getError?: (fieldPath: string) => string | undefined;
   title?: string;
   description?: string;
   nested?: boolean;
@@ -22,6 +23,7 @@ export function ModbusDataPointBooleanForm({
   boolean,
   actions,
   fieldPathPrefix = "boolean",
+  getError,
   title = "Boolean Configuration",
   description = "Configure boolean values for true and false states",
   nested = true,
@@ -48,6 +50,7 @@ export function ModbusDataPointBooleanForm({
           );
         }}
         placeholder="Enter numeric value for true state"
+        error={getError ? getError(`${fieldPathPrefix}.trueValue`) : undefined}
       />
       <InputField
         label="False Value"
@@ -63,6 +66,7 @@ export function ModbusDataPointBooleanForm({
           );
         }}
         placeholder="Enter numeric value for false state"
+        error={getError ? getError(`${fieldPathPrefix}.falseValue`) : undefined}
       />
     </FormSection>
   );

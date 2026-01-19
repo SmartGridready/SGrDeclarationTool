@@ -12,6 +12,7 @@ interface ModbusDataPointBitmapFormProps {
   bitmap: BitmapProduct;
   actions: ModbusDataPointBitmapSlice;
   fieldPathPrefix?: string;
+  getError?: (fieldPath: string) => string | undefined;
   title?: string;
   description?: string;
   nested?: boolean;
@@ -23,6 +24,7 @@ export function ModbusDataPointBitmapForm({
   bitmap,
   actions,
   fieldPathPrefix = "bitmap",
+  getError,
   title = "Bitmap Configuration",
   description = "Define bitmap entries with literal values, hex masks and descriptions",
   nested = true,
@@ -53,6 +55,7 @@ export function ModbusDataPointBitmapForm({
               }
               placeholder="Enter bitmap literal"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.bitmapEntry[${entryIndex}].literal`) : undefined}
             />
             <InputField
               label="Hex Mask"
@@ -68,6 +71,7 @@ export function ModbusDataPointBitmapForm({
               }
               placeholder="Enter hex mask (e.g., 0xFF)"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.bitmapEntry[${entryIndex}].hexMask`) : undefined}
             />
             <InputField
               label="Description"
@@ -82,6 +86,7 @@ export function ModbusDataPointBitmapForm({
                 )
               }
               placeholder="Enter description"
+              error={getError ? getError(`${fieldPathPrefix}.bitmapEntry[${entryIndex}].description`) : undefined}
             />
           </>
         )}

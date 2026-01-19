@@ -48,7 +48,7 @@ export function DataPointAlternativeNamesForm({ dataPointIndex }: DataPointAlter
     return null;
   }
 
-  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`;
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.alternativeNames`;
 
   return (
     <AlternativeNamesForm

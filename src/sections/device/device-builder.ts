@@ -18,14 +18,14 @@ import { wrapInArray } from "@/utils/builder-utils";
  */
 export async function buildDeviceToXml(device: DeviceFrame): Promise<string> {
   if (!device) {
-    throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED);
+    throw new Error(ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED_DEVICE);
   }
 
   // Validate the device before building
   const validation = validateDeviceFrame(device);
   if (!validation.success) {
     const firstError = validation.errors?.issues[0];
-    const errorMessage = firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED;
+    const errorMessage = firstError?.message || ERROR_MESSAGES.XML_BUILD.FRAME_REQUIRED_DEVICE;
     throw new Error(ERROR_MESSAGES.XML_BUILD.FAILED(errorMessage));
   }
 

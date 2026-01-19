@@ -50,7 +50,7 @@ export function DataPointLegibleDescriptionForm({ dataPointIndex }: DataPointLeg
     return null;
   }
 
-  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`;
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.legibleDescription`;
 
   return (
     <LegibleDescriptionForm

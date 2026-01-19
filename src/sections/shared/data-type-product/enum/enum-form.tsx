@@ -13,6 +13,7 @@ interface DataTypeProductEnumFormProps {
   title?: string;
   description?: string;
   nested?: boolean;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function DataTypeProductEnumForm({
@@ -22,6 +23,7 @@ export function DataTypeProductEnumForm({
   title = "Enum Configuration",
   description = "Define enumeration entries with literal values, ordinals and optional hex mask",
   nested = true,
+  getError,
 }: DataTypeProductEnumFormProps) {
   return (
     <FormSection title={title} description={description} nested={nested} required>
@@ -31,6 +33,7 @@ export function DataTypeProductEnumForm({
         value={enumMap.hexMask || ""}
         onChange={(value) => actions.updateEnumHexMask(value || undefined)}
         placeholder="Enter hex mask (e.g., 0xFF)"
+        error={getError ? getError(`${fieldPathPrefix}.enum.hexMask`) : undefined}
       />
       <ArrayField<EnumEntryProductRecord>
         label="Enum Entries"
@@ -47,6 +50,7 @@ export function DataTypeProductEnumForm({
               onChange={(value) => actions.updateEnumEntryLiteral(entryIndex, value)}
               placeholder="Enter enum literal"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.enum.enumEntry[${entryIndex}].literal`) : undefined}
             />
             <InputField
               label="Ordinal"
@@ -55,6 +59,7 @@ export function DataTypeProductEnumForm({
               value={entry.ordinal?.toString() || ""}
               onChange={(value) => actions.updateEnumEntryOrdinal(entryIndex, value ? parseInt(value, 10) : undefined)}
               placeholder="Enter ordinal number"
+              error={getError ? getError(`${fieldPathPrefix}.enum.enumEntry[${entryIndex}].ordinal`) : undefined}
             />
             <InputField
               label="Description"
@@ -62,6 +67,7 @@ export function DataTypeProductEnumForm({
               value={entry.description || ""}
               onChange={(value) => actions.updateEnumEntryDescription(entryIndex, value || undefined)}
               placeholder="Enter description"
+              error={getError ? getError(`${fieldPathPrefix}.enum.enumEntry[${entryIndex}].description`) : undefined}
             />
           </>
         )}

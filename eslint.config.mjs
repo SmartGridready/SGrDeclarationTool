@@ -34,24 +34,6 @@ const eslintConfig = [
     ],
   },
   {
-    files: ["src/sections/functional-profile/**/*mapper*.ts"],
-    rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-    },
-  },
-  {
-    files: ["src/sections/device/**/*mapper*.ts"],
-    rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-    },
-  },
-  {
-    files: ["src/sections/functional-profile/**/*builder*.ts"],
-    rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-    },
-  },
-  {
     files: ["jest.config.js", "*.config.js"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",

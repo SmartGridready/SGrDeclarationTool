@@ -2,6 +2,7 @@
 
 import { EnumMapProduct } from "@/models";
 import { useDeviceStore } from "@/sections/device/device-store";
+import { useDeviceValidation } from "@/hooks/use-validation";
 import { DataTypeProductEnumForm } from "@/sections/shared/data-type-product/enum/enum-form";
 import { DataTypeProductEnumSlice } from "@/sections/shared/data-type-product/enum/enum-slice";
 import { useMemo } from "react";
@@ -13,6 +14,7 @@ interface ConfigurationListEnumFormProps {
 
 export function ConfigurationListEnumForm({ configIndex, enumMap }: ConfigurationListEnumFormProps) {
   const store = useDeviceStore.getState();
+  const { getError } = useDeviceValidation();
 
   // Create an adapter that maps configuration list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
@@ -31,11 +33,14 @@ export function ConfigurationListEnumForm({ configIndex, enumMap }: Configuratio
     };
   }, [configIndex, store]);
 
+  const dataTypeFieldPath = `configurationList.configurationListElement[${configIndex}].dataType`;
+
   return (
     <DataTypeProductEnumForm
       enumMap={enumMap}
       actions={adaptedActions}
-      fieldPathPrefix={`configuration-${configIndex}-enum`}
+      fieldPathPrefix={dataTypeFieldPath}
+      getError={getError}
     />
   );
 }

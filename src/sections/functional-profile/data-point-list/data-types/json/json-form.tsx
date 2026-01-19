@@ -19,6 +19,7 @@ import {
 interface JsonFormProps {
   dataPointIndex: number;
   items?: (JSonArrayOutputFunctionalProfile | JSonElemFunctionalProfile)[];
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 interface JsonItemsEditorProps {
@@ -27,6 +28,8 @@ interface JsonItemsEditorProps {
   pathPrefix: string;
   level?: number;
   currentPath?: number[];
+  getError?: (fieldPath: string) => string | undefined;
+  fieldPathPrefix?: string;
 }
 
 function JsonItemsEditor({
@@ -35,6 +38,8 @@ function JsonItemsEditor({
   pathPrefix,
   level = 0,
   currentPath = [],
+  getError,
+  fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.dataType.json.items`,
 }: JsonItemsEditorProps) {
   const store = useProfileStore.getState();
   const dataPointListActions = store;
@@ -69,6 +74,20 @@ function JsonItemsEditor({
       emptyMessage={`No ${level > 0 ? "nested " : ""}items added`}
       nestedLabel={level > 0 ? "Nested Items" : undefined}
       renderItem={(jsonItem, itemIndex) => {
+        // Build field path for this item based on currentPath
+        const buildItemPath = (field: string) => {
+          if (currentPath.length === 0) {
+            return `${fieldPathPrefix}[${itemIndex}].${field}`;
+          }
+          // For nested items, build path like items[0].items[1].key
+          let path = fieldPathPrefix;
+          for (const idx of currentPath) {
+            path += `[${idx}].items`;
+          }
+          path += `[${itemIndex}].${field}`;
+          return path;
+        };
+
         if (isJsonArray(jsonItem)) {
           return (
             <>
@@ -81,6 +100,7 @@ function JsonItemsEditor({
                   handleUpdateArrayItem(itemIndex, { ...jsonItem, name: value });
                 }}
                 placeholder="Enter array name"
+                error={getError ? getError(buildItemPath("name")) : undefined}
               />
               <JsonItemsEditor
                 dataPointIndex={dataPointIndex}
@@ -88,6 +108,8 @@ function JsonItemsEditor({
                 pathPrefix={`${pathPrefix}-json-${itemIndex}`}
                 level={level + 1}
                 currentPath={[...currentPath, itemIndex]}
+                getError={getError}
+                fieldPathPrefix={fieldPathPrefix}
               />
             </>
           );
@@ -106,6 +128,7 @@ function JsonItemsEditor({
                 }}
                 placeholder="Enter key"
                 required={true}
+                error={getError ? getError(buildItemPath("key")) : undefined}
               />
               <SelectField
                 label="Type"
@@ -119,6 +142,7 @@ function JsonItemsEditor({
                   );
                 }}
                 required={true}
+                error={getError ? getError(buildItemPath("type")) : undefined}
               />
             </>
           );
@@ -130,7 +154,7 @@ function JsonItemsEditor({
   );
 }
 
-export function JsonForm({ dataPointIndex, items }: JsonFormProps) {
+export function JsonForm({ dataPointIndex, items, getError }: JsonFormProps) {
   return (
     <FormSection
       title="JSON Configuration"
@@ -143,6 +167,8 @@ export function JsonForm({ dataPointIndex, items }: JsonFormProps) {
         items={items}
         pathPrefix={`dataPoint-${dataPointIndex}`}
         currentPath={[]}
+        getError={getError}
+        fieldPathPrefix={`dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.dataType.json.items`}
       />
     </FormSection>
   );

@@ -16,7 +16,7 @@ export function ParameterListForm({ dataPointIndex }: ParameterListFormProps) {
   const useStore = createProfileStoreAdapter(profile, store);
   const useValidation = useProfileValidation;
 
-  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.parameterList`;
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.parameterList`;
 
   return (
     <DynamicParameterListForm

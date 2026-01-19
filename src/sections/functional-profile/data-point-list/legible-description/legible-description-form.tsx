@@ -44,7 +44,7 @@ export function DataPointLegibleDescriptionForm({ dataPointIndex }: DataPointLeg
   const useValidation = useProfileValidation;
   const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, profile, store);
 
-  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.legibleDescription`;
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.legibleDescription`;
 
   return (
     <LegibleDescriptionForm

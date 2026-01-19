@@ -13,6 +13,7 @@ interface DataTypeProductBitmapFormProps {
   title?: string;
   description?: string;
   nested?: boolean;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function DataTypeProductBitmapForm({
@@ -22,6 +23,7 @@ export function DataTypeProductBitmapForm({
   title = "Bitmap Configuration",
   description = "Define bitmap entries with literal values, hex masks and descriptions",
   nested = true,
+  getError,
 }: DataTypeProductBitmapFormProps) {
   return (
     <FormSection title={title} description={description} nested={nested} required>
@@ -40,6 +42,7 @@ export function DataTypeProductBitmapForm({
               onChange={(value) => actions.updateBitmapEntryLiteral(entryIndex, value)}
               placeholder="Enter bitmap literal"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.bitmap.bitmapEntry[${entryIndex}].literal`) : undefined}
             />
             <InputField
               label="Hex Mask"
@@ -48,6 +51,7 @@ export function DataTypeProductBitmapForm({
               onChange={(value) => actions.updateBitmapEntryHexMask(entryIndex, value)}
               placeholder="Enter hex mask (e.g., 0xFF)"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.bitmap.bitmapEntry[${entryIndex}].hexMask`) : undefined}
             />
             <InputField
               label="Description"
@@ -55,6 +59,9 @@ export function DataTypeProductBitmapForm({
               value={entry.description || ""}
               onChange={(value) => actions.updateBitmapEntryDescription(entryIndex, value || undefined)}
               placeholder="Enter description"
+              error={
+                getError ? getError(`${fieldPathPrefix}.bitmap.bitmapEntry[${entryIndex}].description`) : undefined
+              }
             />
           </>
         )}

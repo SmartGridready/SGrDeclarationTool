@@ -127,7 +127,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                 onChange={(value) => actions.updateGenericAttributeListElementName(elementIndex, value)}
                 placeholder="Enter attribute name"
                 required={true}
-                error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.name`)}
+                error={getError(`${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].name`)}
               />
               <SelectField
                 label="Attribute Type"
@@ -173,7 +173,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                       }
                     }}
                     required={true}
-                    error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.dataType`)}
+                    error={getError(`${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].dataType`)}
                   />
                   <InputField
                     label="Value"
@@ -183,7 +183,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                     onChange={(value) => actions.updateGenericAttributeListElementValue(elementIndex, value)}
                     placeholder="Enter value"
                     required={true}
-                    error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.value`)}
+                    error={getError(`${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].value`)}
                   />
                   <SelectField
                     label="Unit"
@@ -192,7 +192,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                     value={element.unit}
                     onChange={(value) => actions.updateGenericAttributeListElementUnit(elementIndex, value as Units)}
                     required={true}
-                    error={getError(`${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.unit`)}
+                    error={getError(`${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].unit`)}
                   />
                 </FormGroup>
 
@@ -202,6 +202,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                     enumMap={element.dataType.enum}
                     actions={actions}
                     fieldPathPrefix={fieldPathPrefix}
+                    getError={getError}
                   />
                 )}
 
@@ -211,6 +212,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                     bitmap={element.dataType.bitmap}
                     actions={actions}
                     fieldPathPrefix={fieldPathPrefix}
+                    getError={getError}
                   />
                 )}
               </>
@@ -240,7 +242,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                           placeholder="Enter nested attribute name"
                           required={true}
                           error={getError(
-                            `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.genericAttributeList.genericAttributeListElement.${nestedElementIndex}.name`
+                            `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].genericAttributeList.genericAttributeListElement[${nestedElementIndex}].name`
                           )}
                         />
                         <SelectField
@@ -268,7 +270,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                           }}
                           required={true}
                           error={getError(
-                            `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.genericAttributeList.genericAttributeListElement.${nestedElementIndex}.dataType`
+                            `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].genericAttributeList.genericAttributeListElement[${nestedElementIndex}].dataType`
                           )}
                         />
                         <InputField
@@ -286,7 +288,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                           placeholder="Enter value"
                           required={true}
                           error={getError(
-                            `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.genericAttributeList.genericAttributeListElement.${nestedElementIndex}.value`
+                            `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].genericAttributeList.genericAttributeListElement[${nestedElementIndex}].value`
                           )}
                         />
                       </FormGroup>
@@ -305,7 +307,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                           }
                           required={true}
                           error={getError(
-                            `${fieldPathPrefix}.genericAttributeListElement.${elementIndex}.genericAttributeList.genericAttributeListElement.${nestedElementIndex}.unit`
+                            `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].genericAttributeList.genericAttributeListElement[${nestedElementIndex}].unit`
                           )}
                         />
                       </FormGroup>
@@ -317,6 +319,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                           enumMap={nestedElement.dataType.enum}
                           actions={actions}
                           fieldPathPrefix={fieldPathPrefix}
+                          getError={getError}
                         />
                       )}
 
@@ -327,6 +330,7 @@ export function GenericAttributeListProductForm<TStoreState extends GenericAttri
                           bitmap={nestedElement.dataType.bitmap}
                           actions={actions}
                           fieldPathPrefix={fieldPathPrefix}
+                          getError={getError}
                         />
                       )}
                     </div>

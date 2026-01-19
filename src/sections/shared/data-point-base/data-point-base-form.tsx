@@ -213,6 +213,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             enumMap={dataPoint.dataType.enum}
             actions={actions}
             fieldPathPrefix={`${fieldPathPrefix}.dataPoint.dataType.enum`}
+            getError={getError}
           />
         )}
 
@@ -221,6 +222,7 @@ export function DataPointBaseForm<TStoreState extends DataPointBaseSlice>({
             bitmap={dataPoint.dataType.bitmap}
             actions={actions}
             fieldPathPrefix={`${fieldPathPrefix}.dataPoint.dataType.bitmap`}
+            getError={getError}
           />
         )}
 

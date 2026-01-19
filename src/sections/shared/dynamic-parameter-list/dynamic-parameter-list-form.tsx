@@ -123,7 +123,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   onChange={(value) => actions.updateParameterListElementName(listIndex, paramIndex, value)}
                   placeholder="Enter parameter name"
                   required={true}
-                  error={getError(`${fieldPathPrefix}.parameterListElement.${paramIndex}.name`)}
+                  error={getError(`${fieldPathPrefix}.parameterListElement[${paramIndex}].name`)}
                 />
                 <SelectField
                   label="Data Type"
@@ -145,7 +145,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                     }
                   }}
                   required={true}
-                  error={getError(`${fieldPathPrefix}.parameterListElement.${paramIndex}.dataType`)}
+                  error={getError(`${fieldPathPrefix}.parameterListElement[${paramIndex}].dataType`)}
                 />
                 <InputField
                   label="Default Value"
@@ -157,7 +157,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   }
                   placeholder="Enter default value"
                   required={false}
-                  error={getError(`${fieldPathPrefix}.parameterListElement.${paramIndex}.defaultValue`)}
+                  error={getError(`${fieldPathPrefix}.parameterListElement[${paramIndex}].defaultValue`)}
                 />
               </FormGroup>
 
@@ -168,6 +168,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   enumMap={param.dataType.enum}
                   actions={actions}
                   fieldPathPrefix={fieldPathPrefix}
+                  getError={getError}
                 />
               )}
 
@@ -178,6 +179,7 @@ export function DynamicParameterListForm<TStoreState extends DynamicParameterLis
                   bitmap={param.dataType.bitmap}
                   actions={actions}
                   fieldPathPrefix={fieldPathPrefix}
+                  getError={getError}
                 />
               )}
 

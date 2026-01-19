@@ -11,13 +11,15 @@ interface GenericAttributeListProductSimpleBitmapFormProps {
   bitmap: BitmapProduct;
   actions: GenericAttributeListProductSlice;
   fieldPathPrefix?: string;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function GenericAttributeListProductSimpleBitmapForm({
   elementIndex,
   bitmap,
   actions,
-  fieldPathPrefix = "generic-attribute",
+  fieldPathPrefix = "genericAttributeList",
+  getError,
 }: GenericAttributeListProductSimpleBitmapFormProps) {
   // Create an adapter that maps generic attribute list actions to the shared bitmap slice interface
   const adaptedActions = useMemo<DataTypeProductBitmapSlice>(() => {
@@ -35,11 +37,14 @@ export function GenericAttributeListProductSimpleBitmapForm({
     };
   }, [elementIndex, actions]);
 
+  const dataTypeFieldPath = `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].dataType`;
+
   return (
     <DataTypeProductBitmapForm
       bitmap={bitmap}
       actions={adaptedActions}
-      fieldPathPrefix={`${fieldPathPrefix}-${elementIndex}-simple-bitmap`}
+      fieldPathPrefix={dataTypeFieldPath}
+      getError={getError}
     />
   );
 }

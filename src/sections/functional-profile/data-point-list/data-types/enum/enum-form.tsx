@@ -9,11 +9,14 @@ import { useProfileStore } from "@/sections/functional-profile/functional-profil
 interface EnumFormProps {
   dataPointIndex: number;
   enumMap: EnumMapFunctionalProfile;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
-export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
+export function EnumForm({ dataPointIndex, enumMap, getError }: EnumFormProps) {
   const store = useProfileStore.getState();
   const dataPointListActions = store;
+
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.dataType.enum`;
 
   return (
     <FormSection
@@ -28,6 +31,7 @@ export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
         value={enumMap.hexMask || ""}
         onChange={(value) => dataPointListActions.updateEnumHexMask(dataPointIndex, value || undefined)}
         placeholder="Enter hex mask (e.g., 0xFF)"
+        error={getError ? getError(`${fieldPathPrefix}.hexMask`) : undefined}
       />
       <ArrayField<EnumEntryRecordFunctionalProfile>
         label="Enum Entries"
@@ -44,6 +48,7 @@ export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
               onChange={(value) => dataPointListActions.updateEnumEntryLiteral(dataPointIndex, entryIndex, value)}
               placeholder="Enter enum literal"
               required={true}
+              error={getError ? getError(`${fieldPathPrefix}.enumEntry[${entryIndex}].literal`) : undefined}
             />
             <InputField
               label="Description"
@@ -53,6 +58,7 @@ export function EnumForm({ dataPointIndex, enumMap }: EnumFormProps) {
                 dataPointListActions.updateEnumEntryDescription(dataPointIndex, entryIndex, value || undefined)
               }
               placeholder="Enter description"
+              error={getError ? getError(`${fieldPathPrefix}.enumEntry[${entryIndex}].description`) : undefined}
             />
           </>
         )}

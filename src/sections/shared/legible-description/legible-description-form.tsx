@@ -118,9 +118,9 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
                 value={item.textElement}
                 onChange={(value) => actions.updateTextElement(index, value)}
                 placeholder="Enter description text (max 4000 characters)"
-                required={true}
+                required={false}
                 rows={6}
-                error={getError(`${fieldPathPrefix}.${index}.textElement`)}
+                error={getError(`${fieldPathPrefix}[${index}].textElement`)}
               />
               <FormGroup columns={showLabel ? 3 : 2}>
                 <SelectField
@@ -130,7 +130,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
                   required={true}
                   value={item.language}
                   onChange={(value) => actions.updateLanguage(index, value as Language)}
-                  error={getError(`${fieldPathPrefix}.${index}.language`)}
+                  error={getError(`${fieldPathPrefix}[${index}].language`)}
                 />
                 <InputField
                   label="URI"
@@ -140,7 +140,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
                   value={item.uri}
                   onChange={(value) => actions.updateUri(index, value || undefined)}
                   placeholder="Optional URI reference"
-                  error={getError(`${fieldPathPrefix}.${index}.uri`)}
+                  error={getError(`${fieldPathPrefix}[${index}].uri`)}
                 />
                 {showLabel && (
                   <InputField
@@ -151,7 +151,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
                     value={(item as { label?: string }).label || ""}
                     onChange={(value) => actions.updateLabel?.(index, value || undefined)}
                     placeholder="Optional label"
-                    error={getError(`${fieldPathPrefix}.${index}.label`)}
+                    error={getError(`${fieldPathPrefix}[${index}].label`)}
                   />
                 )}
               </FormGroup>

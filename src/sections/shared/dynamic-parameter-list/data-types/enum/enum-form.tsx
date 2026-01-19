@@ -12,6 +12,7 @@ interface DynamicParameterListEnumFormProps {
   enumMap: EnumMapProduct;
   actions: DynamicParameterListSlice;
   fieldPathPrefix: string;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function DynamicParameterListEnumForm({
@@ -20,6 +21,7 @@ export function DynamicParameterListEnumForm({
   enumMap,
   actions,
   fieldPathPrefix,
+  getError,
 }: DynamicParameterListEnumFormProps) {
   // Create an adapter that maps parameter list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
@@ -38,11 +40,14 @@ export function DynamicParameterListEnumForm({
     };
   }, [listIndex, paramIndex, actions]);
 
+  const dataTypeFieldPath = `${fieldPathPrefix}.parameterListElement[${paramIndex}].dataType`;
+
   return (
     <DataTypeProductEnumForm
       enumMap={enumMap}
       actions={adaptedActions}
-      fieldPathPrefix={`${fieldPathPrefix}-param-${paramIndex}-enum`}
+      fieldPathPrefix={dataTypeFieldPath}
+      getError={getError}
     />
   );
 }

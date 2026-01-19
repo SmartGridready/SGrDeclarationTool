@@ -42,7 +42,7 @@ export function DataPointAlternativeNamesForm({ dataPointIndex }: DataPointAlter
   const useValidation = useProfileValidation;
   const useAdaptedStore = createDataPointStoreAdapter(dataPointIndex, profile, store);
 
-  const fieldPathPrefix = `dataPointList.dataPointListElement.${dataPointIndex}.dataPoint.alternativeNames`;
+  const fieldPathPrefix = `dataPointList.dataPointListElement[${dataPointIndex}].dataPoint.alternativeNames`;
 
   return (
     <AlternativeNamesForm

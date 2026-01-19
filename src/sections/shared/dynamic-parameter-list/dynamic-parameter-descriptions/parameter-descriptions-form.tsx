@@ -72,7 +72,7 @@ export function DynamicParameterDescriptionsForm({
         // Convert the field path from legible description format to parameter description format
         const fullPath = fieldPath.replace(
           "legibleDescription",
-          `${fieldPathPrefix}.parameterListElement.${paramIndex}.parameterDescription`
+          `${fieldPathPrefix}.parameterListElement[${paramIndex}].parameterDescription`
         );
         return getError(fullPath);
       },
@@ -87,7 +87,7 @@ export function DynamicParameterDescriptionsForm({
         legibleDescriptions: store.legibleDescriptions,
       })}
       isAddedSelector={(store) => !!store.legibleDescriptions}
-      fieldPathPrefix={`${fieldPathPrefix}.parameterListElement.${paramIndex}.parameterDescription`}
+      fieldPathPrefix={`${fieldPathPrefix}.parameterListElement[${paramIndex}].parameterDescription`}
       required={false}
       title="Parameter Descriptions"
       description="Human-readable descriptions for the parameter (max 4)"

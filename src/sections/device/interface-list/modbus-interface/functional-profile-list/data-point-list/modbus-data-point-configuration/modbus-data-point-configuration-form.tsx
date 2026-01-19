@@ -164,6 +164,7 @@ export function ModbusDataPointConfigurationForm({
           boolean={modbusDataType.boolean}
           actions={actions}
           fieldPathPrefix={`${fieldPathPrefix}.modbusDataType.boolean`}
+          getError={getError}
         />
       )}
 
@@ -174,6 +175,7 @@ export function ModbusDataPointConfigurationForm({
           enumMap={modbusDataType.enum}
           actions={actions}
           fieldPathPrefix={`${fieldPathPrefix}.modbusDataType.enum`}
+          getError={getError}
         />
       )}
 
@@ -184,6 +186,7 @@ export function ModbusDataPointConfigurationForm({
           bitmap={modbusDataType.bitmap}
           actions={actions}
           fieldPathPrefix={`${fieldPathPrefix}.modbusDataType.bitmap`}
+          getError={getError}
         />
       )}
     </FormSection>

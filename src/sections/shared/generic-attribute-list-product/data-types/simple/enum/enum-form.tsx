@@ -11,13 +11,15 @@ interface GenericAttributeListProductSimpleEnumFormProps {
   enumMap: EnumMapProduct;
   actions: GenericAttributeListProductSlice;
   fieldPathPrefix?: string;
+  getError?: (fieldPath: string) => string | undefined;
 }
 
 export function GenericAttributeListProductSimpleEnumForm({
   elementIndex,
   enumMap,
   actions,
-  fieldPathPrefix = "generic-attribute",
+  fieldPathPrefix = "genericAttributeList",
+  getError,
 }: GenericAttributeListProductSimpleEnumFormProps) {
   // Create an adapter that maps generic attribute list actions to the shared enum slice interface
   const adaptedActions = useMemo<DataTypeProductEnumSlice>(() => {
@@ -36,11 +38,14 @@ export function GenericAttributeListProductSimpleEnumForm({
     };
   }, [elementIndex, actions]);
 
+  const dataTypeFieldPath = `${fieldPathPrefix}.genericAttributeListElement[${elementIndex}].dataType`;
+
   return (
     <DataTypeProductEnumForm
       enumMap={enumMap}
       actions={adaptedActions}
-      fieldPathPrefix={`${fieldPathPrefix}-${elementIndex}-simple-enum`}
+      fieldPathPrefix={dataTypeFieldPath}
+      getError={getError}
     />
   );
 }

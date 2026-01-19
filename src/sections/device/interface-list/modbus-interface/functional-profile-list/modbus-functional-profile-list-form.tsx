@@ -5,7 +5,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { ModbusFunctionalProfile } from "@/models/product/modbus-interface";
 import { FunctionalProfileBaseForm } from "@/sections/shared/functional-profile-base/functional-profile-base-form";
 import { FunctionalProfileBaseSlice } from "@/sections/shared/functional-profile-base/functional-profile-base-slice";
@@ -19,16 +19,11 @@ export function ModbusFunctionalProfileListForm() {
 
   const fieldPathPrefix = "interfaceList.modbusInterface.functionalProfileList";
 
-  // Get state from store
-  const functionalProfiles = useDeviceStore(
-    useShallow(
-      (state) => state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement
-    )
+  // Granular selectors
+  const functionalProfiles = useDeviceField(
+    (d) => d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement
   );
-
-  const isAdded = useDeviceStore(
-    useShallow((state) => !!state.device?.interfaceList?.modbusInterface?.functionalProfileList)
-  );
+  const isAdded = useDeviceField((d) => !!d?.interfaceList?.modbusInterface?.functionalProfileList);
 
   const handleAdd = () => store.addEmptyModbusFunctionalProfile();
   const handleRemove = () => store.removeAllModbusFunctionalProfiles();
@@ -82,13 +77,10 @@ function ModbusFunctionalProfileItemForm({
 }: ModbusFunctionalProfileItemFormProps) {
   const store = useDeviceStore.getState();
 
-  const functionalProfileData = useDeviceStore(
-    useShallow(
-      (state) =>
-        state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]
-    )
+  // Granular selector for this specific functional profile
+  const functionalProfileData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
   );
 
   const functionalProfileName =

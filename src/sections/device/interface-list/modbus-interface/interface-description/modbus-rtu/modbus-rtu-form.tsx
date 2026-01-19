@@ -6,7 +6,7 @@ import { ComboboxField } from "@/components/forms/combobox-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import {
   BAUD_RATE_VALUES,
   BYTE_LENGTH_VALUES,
@@ -22,9 +22,8 @@ const PARITY_OPTIONS = createFormOptions(PARITY_VALUES);
 const STOP_BIT_LENGTH_OPTIONS = createFormOptions(STOP_BIT_LENGTH_VALUES);
 
 export function ModbusRtuForm() {
-  const modbusRtu = useDeviceStore(
-    useShallow((state) => state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu)
-  );
+  // Granular selector
+  const modbusRtu = useDeviceField((d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu);
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

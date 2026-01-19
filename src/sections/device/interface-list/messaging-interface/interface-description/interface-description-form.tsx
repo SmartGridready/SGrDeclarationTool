@@ -6,9 +6,7 @@ import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { MessagingPlatformType, MESSAGING_PLATFORM_TYPE_VALUES } from "@/models/product/messaging-types";
 import { createFormOptions } from "@/utils/form-options-utils";
 import { MessageBrokerListForm } from "./message-broker-list/message-broker-list-form";
@@ -16,20 +14,11 @@ import { MessageBrokerAuthenticationForm } from "./message-broker-authentication
 
 const MESSAGING_PLATFORM_OPTIONS = createFormOptions(MESSAGING_PLATFORM_TYPE_VALUES);
 
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
-
 export function MessagingInterfaceDescriptionForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const messagingInterfaceDescription = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.messagingInterfaceDescription
-    : undefined;
+  // Granular selector
+  const messagingInterfaceDescription = useDeviceField(
+    (d) => d?.interfaceList?.messagingInterface?.messagingInterfaceDescription
+  );
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

@@ -5,7 +5,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { InterfaceType, INTERFACE_TYPE_VALUES, InterfaceList } from "@/models/product/product";
 import { createFormOptions } from "@/utils/form-options-utils";
 import { ModbusInterfaceForm } from "./modbus-interface/modbus-interface-form";
@@ -27,11 +27,12 @@ function getSelectedInterfaceType(interfaceList: InterfaceList | undefined): Int
 }
 
 export function InterfaceListForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
+  // Selector that computes the selected interface type
+  const selectedInterfaceType = useDeviceField((d) => getSelectedInterfaceType(d?.interfaceList));
+
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 
-  const selectedInterfaceType = getSelectedInterfaceType(interfaceList);
   const fieldPath = (field: string) => `interfaceList.${field}`;
 
   return (

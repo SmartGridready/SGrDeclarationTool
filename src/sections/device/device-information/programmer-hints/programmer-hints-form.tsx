@@ -5,7 +5,7 @@ import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
 import { LegibleDescriptionSlice } from "@/sections/shared/legible-description/legible-description-slice";
 import { DeviceFrame } from "@/models";
-import { useShallow } from "zustand/react/shallow";
+import { useHasDevice, useDeviceField } from "@/hooks/use-store-field";
 
 /**
  * Device specific programmer hints form.
@@ -14,16 +14,19 @@ import { useShallow } from "zustand/react/shallow";
  * so we reuse the LegibleDescriptionForm with an adapter.
  */
 export function ProgrammerHintsForm() {
+  const hasDevice = useHasDevice();
+  // Subscribe only to programmerHints section for targeted re-renders
+  const programmerHints = useDeviceField((d) => d?.deviceInformation?.programmerHints);
+
   // Create a store hook adapter that maps ProgrammerHintsSlice to LegibleDescriptionSlice interface
   const useStore = <TSelected,>(
     selector: (store: { device?: DeviceFrame } & LegibleDescriptionSlice) => TSelected
   ): TSelected => {
-    const device = useDeviceStore(useShallow((state) => state.device));
     const store = useDeviceStore.getState();
 
     // Map programmer hints actions to LegibleDescriptionSlice interface
     const adaptedStore: { device?: DeviceFrame } & LegibleDescriptionSlice = {
-      device,
+      device: store.device,
       addLegibleDescription: store.addProgrammerHint,
       removeLegibleDescription: store.removeProgrammerHint,
       removeAllLegibleDescriptions: store.removeAllProgrammerHints,
@@ -36,8 +39,14 @@ export function ProgrammerHintsForm() {
     return selector(adaptedStore);
   };
 
+  void programmerHints;
+
   const useValidation = useDeviceValidation;
   const fieldPathPrefix = "deviceInformation.programmerHints";
+
+  if (!hasDevice) {
+    return null;
+  }
 
   return (
     <SharedLegibleDescriptionForm

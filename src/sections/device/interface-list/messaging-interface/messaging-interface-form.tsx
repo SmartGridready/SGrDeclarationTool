@@ -1,28 +1,16 @@
 "use client";
 
 import { FormSection } from "@/components/forms/form-section";
-import { useDeviceStore } from "@/sections/device/device-store";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { MessagingInterfaceDescriptionForm } from "./interface-description/interface-description-form";
 import { MessagingFunctionalProfileListForm } from "./functional-profile-list/messaging-functional-profile-list-form";
 
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
-
 export function MessagingInterfaceForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const messagingInterface = isMessagingInterface(interfaceList) ? interfaceList.messagingInterface : undefined;
+  // Granular selector - only re-render when messagingInterface existence changes
+  const hasMessagingInterface = useDeviceField((d) => !!d?.interfaceList?.messagingInterface);
 
   // Don't render if Messaging interface is not selected
-  if (!messagingInterface) {
+  if (!hasMessagingInterface) {
     return null;
   }
 

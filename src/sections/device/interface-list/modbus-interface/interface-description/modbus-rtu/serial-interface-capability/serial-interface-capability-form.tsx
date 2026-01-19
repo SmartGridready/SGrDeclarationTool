@@ -6,7 +6,7 @@ import { ArrayField } from "@/components/forms/array-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import {
   BaudRate,
   ByteLength,
@@ -28,11 +28,9 @@ export function SerialInterfaceCapabilityForm() {
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 
-  const serialInterfaceCapability = useDeviceStore(
-    useShallow(
-      (state) =>
-        state.device?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu?.serialInterfaceCapability
-    )
+  // Granular selector
+  const serialInterfaceCapability = useDeviceField(
+    (d) => d?.interfaceList?.modbusInterface?.modbusInterfaceDescription?.modbusRtu?.serialInterfaceCapability
   );
 
   if (!serialInterfaceCapability) {

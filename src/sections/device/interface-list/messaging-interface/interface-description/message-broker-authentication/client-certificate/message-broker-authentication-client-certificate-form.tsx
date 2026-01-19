@@ -5,27 +5,14 @@ import { FormGroup } from "@/components/forms/form-group";
 import { InputField } from "@/components/forms/input-field";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
-
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
+import { useDeviceField } from "@/hooks/use-store-field";
 
 export function MessageBrokerAuthenticationClientCertificateForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const clientCertAuth = isMessagingInterface(interfaceList)
-    ? (() => {
-        const auth = interfaceList.messagingInterface.messagingInterfaceDescription?.messageBrokerAuthentication;
-        return auth && "clientCertificateAuthentication" in auth ? auth.clientCertificateAuthentication : undefined;
-      })()
-    : undefined;
+  // Granular selector
+  const clientCertAuth = useDeviceField((d) => {
+    const auth = d?.interfaceList?.messagingInterface?.messagingInterfaceDescription?.messageBrokerAuthentication;
+    return auth && "clientCertificateAuthentication" in auth ? auth.clientCertificateAuthentication : undefined;
+  });
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

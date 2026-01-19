@@ -5,9 +5,7 @@ import { SelectField } from "@/components/forms/select-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { MessagingInterface } from "@/models/product/messaging-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
 import {
   MessageBrokerAuthenticationType,
   MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES,
@@ -18,15 +16,6 @@ import { MessageBrokerAuthenticationBasicForm } from "./basic/message-broker-aut
 import { MessageBrokerAuthenticationClientCertificateForm } from "./client-certificate/message-broker-authentication-client-certificate-form";
 
 const MESSAGE_BROKER_AUTHENTICATION_TYPE_OPTIONS = createFormOptions(MESSAGE_BROKER_AUTHENTICATION_TYPE_VALUES);
-
-/**
- * Type guard to check if interface list is Messaging interface
- */
-function isMessagingInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { messagingInterface: MessagingInterface } {
-  return interfaceList !== undefined && "messagingInterface" in interfaceList;
-}
 
 /**
  * Type guard to check if authentication is basic authentication
@@ -52,10 +41,10 @@ function isClientCertificateAuthentication(auth: MessageBrokerAuthentication | u
 }
 
 export function MessageBrokerAuthenticationForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const messagingInterfaceDescription = isMessagingInterface(interfaceList)
-    ? interfaceList.messagingInterface.messagingInterfaceDescription
-    : undefined;
+  // Granular selector
+  const messagingInterfaceDescription = useDeviceField(
+    (d) => d?.interfaceList?.messagingInterface?.messagingInterfaceDescription
+  );
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

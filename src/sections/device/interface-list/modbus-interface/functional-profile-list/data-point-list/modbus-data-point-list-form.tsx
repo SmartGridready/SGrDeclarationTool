@@ -5,9 +5,8 @@ import { ArrayField } from "@/components/forms/array-field";
 import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
+import { useDeviceField } from "@/hooks/use-store-field";
 import { ModbusDataPoint } from "@/models/product/modbus-interface";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
@@ -36,23 +35,17 @@ export function ModbusDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ModbusDataPointListFormProps) {
-  // Get state from store
-  const dataPoints = useDeviceStore(
-    useShallow(
-      (state) =>
-        state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement
-    )
+  // Granular selectors
+  const dataPoints = useDeviceField(
+    (d) =>
+      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement
   );
 
-  const isAdded = useDeviceStore(
-    useShallow(
-      (state) =>
-        !!state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList
-    )
+  const isAdded = useDeviceField(
+    (d) =>
+      !!d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList
   );
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
@@ -109,13 +102,11 @@ function ModbusDataPointItemForm({
   fieldPathPrefix,
 }: ModbusDataPointItemFormProps) {
   const { getError } = useDeviceValidation();
-  const dataPointData = useDeviceStore(
-    useShallow(
-      (state) =>
-        state.device?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[
-          functionalProfileIndex
-        ]?.dataPointList?.dataPointListElement?.[dataPointIndex]
-    )
+  // Granular selector for this specific data point
+  const dataPointData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.modbusInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+        ?.dataPointList?.dataPointListElement?.[dataPointIndex]
   );
 
   const configurationSlice = dataPointListSlice.getModbusDataPointConfigurationSlice(

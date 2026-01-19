@@ -6,9 +6,7 @@ import { InputField } from "@/components/forms/input-field";
 import { FormGroup } from "@/components/forms/form-group";
 import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList } from "@/models";
-import { RestApiInterface } from "@/models/product/rest-api-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
 import {
   RestApiInterfaceSelection,
   REST_API_INTERFACE_SELECTION_VALUES,
@@ -24,20 +22,11 @@ const REST_API_INTERFACE_SELECTION_OPTIONS = createFormOptions(REST_API_INTERFAC
 const REST_API_AUTHENTICATION_METHOD_OPTIONS = createFormOptions(REST_API_AUTHENTICATION_METHOD_VALUES);
 const VERIFY_CERTIFICATE_OPTIONS = BOOLEAN_OPTIONS;
 
-/**
- * Type guard to check if interface list is REST API interface
- */
-function isRestApiInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { restApiInterface: RestApiInterface } {
-  return interfaceList !== undefined && "restApiInterface" in interfaceList;
-}
-
 export function RestApiInterfaceDescriptionForm() {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const restApiInterfaceDescription = isRestApiInterface(interfaceList)
-    ? interfaceList.restApiInterface.restApiInterfaceDescription
-    : undefined;
+  // Granular selectors for REST API interface description fields
+  const restApiInterfaceDescription = useDeviceField(
+    (d) => d?.interfaceList?.restApiInterface?.restApiInterfaceDescription
+  );
   const { getError } = useDeviceValidation();
   const store = useDeviceStore.getState();
 

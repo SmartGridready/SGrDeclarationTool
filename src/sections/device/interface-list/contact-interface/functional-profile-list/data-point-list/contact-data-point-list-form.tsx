@@ -3,23 +3,12 @@
 import { FormSection } from "@/components/forms/form-section";
 import { ArrayField } from "@/components/forms/array-field";
 import { createSliceAdapter } from "@/hooks/use-form-section";
-import { useDeviceStore } from "@/sections/device/device-store";
 import { useDeviceValidation } from "@/hooks/use-validation";
-import { useShallow } from "zustand/react/shallow";
-import { InterfaceList, DataPointBase } from "@/models";
-import { ContactInterface } from "@/models/product/contact-interface";
+import { useDeviceField } from "@/hooks/use-store-field";
+import { DataPointBase } from "@/models";
 import { DataPointBaseForm } from "@/sections/shared/data-point-base/data-point-base-form";
 import { DataPointBaseSlice } from "@/sections/shared/data-point-base/data-point-base-slice";
 import { ContactDataPointListSlice } from "./contact-data-point-list-slice";
-
-/**
- * Type guard to check if interface list is Contact interface
- */
-function isContactInterface(
-  interfaceList: InterfaceList | undefined
-): interfaceList is { contactInterface: ContactInterface } {
-  return interfaceList !== undefined && "contactInterface" in interfaceList;
-}
 
 interface ContactDataPointListFormProps {
   /**
@@ -41,17 +30,19 @@ export function ContactDataPointListForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ContactDataPointListFormProps) {
-  // Get state from store
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const dataPoints = isContactInterface(interfaceList)
-    ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+  // Granular selectors
+  const dataPoints = useDeviceField(
+    (d) =>
+      d?.interfaceList?.contactInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
         ?.dataPointList?.dataPointListElement
-    : undefined;
+  );
 
-  const isAdded = isContactInterface(interfaceList)
-    ? !!interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
-        ?.dataPointList
-    : false;
+  const isAdded = useDeviceField(
+    (d) =>
+      !!d?.interfaceList?.contactInterface?.functionalProfileList?.functionalProfileListElement?.[
+        functionalProfileIndex
+      ]?.dataPointList
+  );
 
   const handleAdd = () => dataPointListSlice.addEmptyDataPoint();
   const handleRemove = () => dataPointListSlice.removeAllDataPoints();
@@ -103,11 +94,12 @@ function ContactDataPointItemForm({
   dataPointListSlice,
   fieldPathPrefix,
 }: ContactDataPointItemFormProps) {
-  const interfaceList = useDeviceStore(useShallow((state) => state.device?.interfaceList));
-  const dataPointData = isContactInterface(interfaceList)
-    ? interfaceList.contactInterface.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
+  // Granular selector for this specific data point
+  const dataPointData = useDeviceField(
+    (d) =>
+      d?.interfaceList?.contactInterface?.functionalProfileList?.functionalProfileListElement?.[functionalProfileIndex]
         ?.dataPointList?.dataPointListElement?.[dataPointIndex]
-    : undefined;
+  );
 
   const dataPointName = dataPointData?.dataPoint?.dataPointName || `Data Point ${dataPointIndex + 1}`;
 

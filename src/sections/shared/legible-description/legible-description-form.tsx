@@ -78,7 +78,7 @@ export function LegibleDescriptionForm<TStoreState extends LegibleDescriptionSli
           emptyMessage="No descriptions added"
           maxItems={maxItems}
           renderItem={(item, index) => (
-            <div className="space-y-4">
+            <div className="space-y-4 min-w-0">
               <TextareaField
                 label="Text Element"
                 name={`${fieldPathPrefix}-${index}-textElement`}

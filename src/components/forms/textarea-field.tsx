@@ -63,10 +63,12 @@ export function TextareaField({
   };
 
   const hasError = !!error;
-  const textareaClassName = hasError ? `${className} border-destructive focus-visible:ring-destructive` : className;
+  const textareaClassName = hasError
+    ? `${className} border-destructive focus-visible:ring-destructive break-words`
+    : `${className} break-words`;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 min-w-0">
       <Label htmlFor={name}>
         {label}
         {required && <span className="text-destructive ml-1">*</span>}

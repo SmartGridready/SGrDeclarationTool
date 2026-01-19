@@ -54,7 +54,7 @@ export function ArrayField<T>({
               <div key={index}>{renderItem(item, index)}</div>
             ) : (
               <div key={index} className="flex items-start gap-4 p-4 border rounded-md bg-card">
-                <div className="flex-1 space-y-3">{renderItem(item, index)}</div>
+                <div className="flex-1 min-w-0 space-y-3">{renderItem(item, index)}</div>
                 <Button
                   type="button"
                   variant="ghost"

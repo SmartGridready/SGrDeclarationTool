@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { ERROR_MESSAGES } from "@/constants/error-messages";
+import { useValidationStore } from "@/sections/shared/validation-store";
 import { ValidationResult, getFirstFieldError } from "@/utils/validation-utils";
 
 export function useXslPreview<T>({
@@ -16,6 +17,7 @@ export function useXslPreview<T>({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [previewHtml, setPreviewHtml] = useState<string | null>(null);
+  const setValidationAttempted = useValidationStore((state) => state.setValidationAttempted);
 
   const resolveXslIncludes = useCallback(
     async (xslText: string, basePath = "/xsl/", visited = new Set<string>()): Promise<string> => {
@@ -164,8 +166,13 @@ export function useXslPreview<T>({
       return null;
     }
 
+    // Validate before previewing - this triggers validation error display
     if (validator) {
       const validation = validator(data);
+
+      // Mark validation as attempted so errors will be displayed
+      setValidationAttempted(true);
+
       if (!validation.success) {
         const firstFieldError = getFirstFieldError(validation);
         const errorMessageText = firstFieldError || "Please fix validation errors before previewing.";
@@ -192,7 +199,7 @@ export function useXslPreview<T>({
     } finally {
       setIsLoading(false);
     }
-  }, [builder, data, errorMessage, validator, transformXmlWithXsl]);
+  }, [builder, data, errorMessage, validator, transformXmlWithXsl, setValidationAttempted]);
 
   return { generatePreview, previewHtml, isLoading, setPreviewHtml };
 }

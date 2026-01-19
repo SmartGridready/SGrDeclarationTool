@@ -49,14 +49,14 @@ export async function parseFunctionalProfile(xmlString: string): Promise<Functio
  */
 function mapFunctionalProfile(parsed: any): FunctionalProfileFrame {
   if (!parsed.FunctionalProfileFrame) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_FP);
   }
 
   const frameData = parsed.FunctionalProfileFrame;
   const functionalProfileXml = getFirstElement(frameData, "functionalProfile");
 
   if (!functionalProfileXml) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_FP);
   }
 
   const identificationXml = getFirstElement(functionalProfileXml, "functionalProfileIdentification");

@@ -49,19 +49,19 @@ export async function parseDevice(xmlString: string): Promise<DeviceFrame> {
  */
 function mapDevice(parsed: any): DeviceFrame {
   if (!parsed.DeviceFrame) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_DEVICE);
   }
 
   const frameData = parsed.DeviceFrame;
   const deviceInformationXml = getFirstElement(frameData, "deviceInformation");
 
   if (!deviceInformationXml) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_DEVICE);
   }
 
   const releaseNotesXml = getFirstElement(frameData, "releaseNotes");
   if (!releaseNotesXml) {
-    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT);
+    throw new Error(ERROR_MESSAGES.XML_PARSE.INVALID_ROOT_DEVICE);
   }
 
   const identification = mapDeviceIdentification(frameData);

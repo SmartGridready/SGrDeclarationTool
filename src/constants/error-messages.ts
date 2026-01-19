@@ -17,10 +17,12 @@ export const ERROR_MESSAGES = {
   },
   XML_PARSE: {
     FAILED: (message: string) => `Failed to parse XML: ${message}`,
-    INVALID_ROOT: "Invalid XML: Root element must be 'FunctionalProfileFrame'",
+    INVALID_ROOT_DEVICE: "Invalid XML: Root element must be 'DeviceFrame'",
+    INVALID_ROOT_FP: "Invalid XML: Root element must be 'FunctionalProfileFrame'",
   },
   XML_BUILD: {
     FAILED: (message: string) => `Failed to build XML: ${message}`,
-    FRAME_REQUIRED: "FunctionalProfileFrame is required",
+    FRAME_REQUIRED_DEVICE: "DeviceFrame is required",
+    FRAME_REQUIRED_FP: "FunctionalProfileFrame is required",
   },
 } as const;

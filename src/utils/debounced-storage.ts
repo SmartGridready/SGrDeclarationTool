@@ -1,4 +1,4 @@
-import { createJSONStorage, type PersistStorage, type StorageValue } from "zustand/middleware";
+import { createJSONStorage, type PersistStorage } from "zustand/middleware";
 
 /**
  * Creates a debounced localStorage adapter that wraps Zustand's createJSONStorage.

@@ -1,8 +1,14 @@
 # SmartGridready Declaration Tool
 
+A web-based editor for creating and editing SmartGridready device and functional profile XML declarations. 
+This tool provides a form-based interface with validation, XML preview and import/export capabilities.
+
+For more information about SmartGridready, visit the [SGrSpecifications repository](https://github.com/SmartGridready/SGrSpecifications) and [smartgridready.ch](https://smartgridready.ch/).
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
+- [Project Overview](#project-overview)
 - [Project Structure](#project-structure)
 - [Used Libraries](#used-libraries)
 - [Commit Rules](#commit-rules)
@@ -32,6 +38,19 @@
 4. **Open your browser**
 
    Navigate to [http://localhost:3000](http://localhost:3000).
+
+## Project Overview
+
+The `src/` folder contains the following top-level directories:
+
+- **`app/`** - Next.js App Router pages and layouts for the main routes (devices, functional profiles)
+- **`components/`** - Reusable React components including editor dialogs, form inputs, navigation, and shadcn UI primitives
+- **`constants/`** - Constant values for error, info, and success messages used throughout the application
+- **`hooks/`** - Custom React hooks for file import/export, validation, debouncing, and XSL preview
+- **`models/`** - TypeScript type definitions for functional profiles and products
+- **`sections/`** - Form sections and related logic (builders, mappers, schemas, slices) for device and functional profile editors
+- **`test/`** - Jest test files for library API integration tests
+- **`utils/`** - Utility functions for XML building, mapping, validation, and other shared logic
 
 ## Used Libraries
 
@@ -123,7 +142,8 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
 
 ## Pipeline and Deployment
 
-The GitLab CI/CD pipeline consists of two stages:
+The GitLab CI/CD pipeline consists of three stages:
 
 1. **Lint**: Runs `format-check` and `lint` jobs on the `main` branch
-2. **Build and Deploy**: Builds and deploys to [GitLab Pages](https://sgr-declaration-tool-6bb311.pages.fhnw.ch/) when a tag is pushed
+2. **Test**: Runs `npm test` on all branches and commits
+3. **Build and Deploy**: Builds and deploys to [GitLab Pages](https://sgr-declaration-tool-6bb311.pages.fhnw.ch/) when a tag is pushed

@@ -88,7 +88,7 @@ Each commit message should follow this format:
 - **Type** (required): The type of change being made
 - **Scope** (optional): The area of the codebase affected
 - **Subject** (required): A short, imperative description of the change
-- **Issue Number** (required): The linked Issue from GitLab
+- **Issue Number** (optional but preferred): The linked Issue from GitLab
 
 **Example:**
 

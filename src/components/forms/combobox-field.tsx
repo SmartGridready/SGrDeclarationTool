@@ -121,10 +121,19 @@ export function ComboboxField({
                 return (
                   <div
                     key={option.value}
+                    role="option"
+                    aria-selected={isSelected}
+                    tabIndex={0}
                     onClick={() => handleOptionSelect(option.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleOptionSelect(option.value);
+                      }
+                    }}
                     className={cn(
                       "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none",
-                      "focus:bg-accent focus:text-accent-foreground",
+                      "focus:bg-accent focus:text-accent-foreground focus:outline-none",
                       "hover:bg-accent hover:text-accent-foreground",
                       disabled && "pointer-events-none opacity-50"
                     )}

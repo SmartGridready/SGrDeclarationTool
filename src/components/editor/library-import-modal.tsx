@@ -99,19 +99,28 @@ export function LibraryImportModal({
           </div>
         ) : (
           <div className="h-full overflow-auto p-2">
-            <ul className="space-y-1">
+            <ul className="space-y-1" role="listbox">
               {filteredItems.map((item, index) => {
                 const isSelected = selectedItem === item;
 
                 return (
                   <li
                     key={item.identifier || index}
+                    role="option"
+                    aria-selected={isSelected}
+                    tabIndex={0}
                     className={cn(
                       "p-3 border rounded-lg cursor-pointer transition-colors",
-                      "hover:bg-muted/50",
+                      "hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring",
                       isSelected && "bg-muted/40 border-primary"
                     )}
                     onClick={() => setSelectedItem(item)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelectedItem(item);
+                      }
+                    }}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1 min-w-0">

@@ -6,14 +6,8 @@ import { useValidationStore } from "@/sections/shared/validation-store";
 import { ValidationResult, getFirstFieldError } from "@/utils/validation-utils";
 
 /**
- * Generic file export hook for XML files
- * @template T - The type of the data to export (e.g., FunctionalProfileFrame)
- * @param options - Configuration options
- * @param options.builder - Function to build the XML string from type T
- * @param options.data - The data to export
- * @param options.filename - The filename for the exported file (default: "export.xml")
- * @param options.errorMessage - Custom error message when data is missing
- * @param options.validator - Optional validator function to validate data before export
+ * Hook for exporting data to XML files with validation and toast notifications.
+ * @param options - Configuration with builder, data, filename, and optional validator
  * @returns Object with exportFile function
  */
 export function useFileExport<T>({
@@ -40,11 +34,9 @@ export function useFileExport<T>({
       return;
     }
 
-    // Validate before exporting - this triggers validation error display
     if (validator) {
       const validation = validator(data);
 
-      // Mark validation as attempted so errors will be displayed
       setValidationAttempted(true);
 
       if (!validation.success) {
@@ -66,7 +58,6 @@ export function useFileExport<T>({
     try {
       const xmlString = await builder(data);
 
-      // Create a blob and download it
       const blob = new Blob([xmlString], { type: "application/xml" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -77,18 +68,15 @@ export function useFileExport<T>({
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      // Update the loading toast to success (this replaces it automatically)
       toast.success(SUCCESS_MESSAGES.FILE_EXPORT.BUILD_SUCCESS, {
         id: loadingToastId,
         description: SUCCESS_MESSAGES.FILE_EXPORT.DOWNLOAD_READY(filename),
       });
 
-      // Reset validation state after successful export so errors are hidden until next export attempt
       resetValidation();
     } catch (error) {
       const errorMessageText = error instanceof Error ? error.message : ERROR_MESSAGES.FILE_EXPORT.UNKNOWN_ERROR;
 
-      // Update the loading toast to error (this replaces it automatically)
       toast.error(ERROR_MESSAGES.FILE_EXPORT.FAILED, {
         id: loadingToastId,
         description: errorMessageText,

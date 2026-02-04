@@ -4,6 +4,11 @@ import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { useValidationStore } from "@/sections/shared/validation-store";
 import { ValidationResult, getFirstFieldError } from "@/utils/validation-utils";
 
+/**
+ * Hook for generating XSL-transformed HTML previews from XML data.
+ * @param options - Configuration with builder, data, and optional validator
+ * @returns Object with generatePreview function, preview HTML, and loading state
+ */
 export function useXslPreview<T>({
   builder,
   data,
@@ -19,6 +24,9 @@ export function useXslPreview<T>({
   const [previewHtml, setPreviewHtml] = useState<string | null>(null);
   const setValidationAttempted = useValidationStore((state) => state.setValidationAttempted);
 
+  /**
+   * Recursively resolves xsl:include directives in XSL stylesheets.
+   */
   const resolveXslIncludes = useCallback(
     async (xslText: string, basePath = "/xsl/", visited = new Set<string>()): Promise<string> => {
       const parser = new DOMParser();
@@ -84,18 +92,19 @@ export function useXslPreview<T>({
     []
   );
 
+  /**
+   * Transforms XML string to HTML using XSL stylesheet.
+   */
   const transformXmlWithXsl = useCallback(
     async (xmlString: string): Promise<string> => {
       const parser = new DOMParser();
 
-      // Load and resolve XSL includes
       const xslResponse = await fetch("/xsl/SGr.xsl");
       if (!xslResponse.ok) {
         throw new Error("Failed to load XSL file");
       }
       const xslText = await resolveXslIncludes(await xslResponse.text(), "/xsl/");
 
-      // Parse XML and XSL
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
       const xslDoc = parser.parseFromString(xslText, "text/xml");
 
@@ -109,7 +118,6 @@ export function useXslPreview<T>({
         throw new Error(`XSL Parse Error: ${xslError.textContent || "Invalid XSL"}`);
       }
 
-      // Transform XML with XSL
       const processor = new XSLTProcessor();
       processor.importStylesheet(xslDoc);
       const result = processor.transformToDocument(xmlDoc);
@@ -118,7 +126,6 @@ export function useXslPreview<T>({
         throw new Error("XSLT Transformation failed: No document element in result");
       }
 
-      // Parse result as HTML
       const htmlDoc = parser.parseFromString(
         new XMLSerializer().serializeToString(result.documentElement),
         "text/html"
@@ -126,28 +133,20 @@ export function useXslPreview<T>({
 
       const htmlError = htmlDoc.querySelector("parsererror");
       if (htmlError) {
-        // Fallback: return as string with minimal processing
         const htmlString = new XMLSerializer().serializeToString(result.documentElement);
         return htmlString;
       }
 
-      // Some XML nodes contain escaped HTML text, e.g. in CDATA.
-      // Those may not be rendered correctly without this fix.
       const escapedHtml = htmlDoc.getElementsByClassName("renderhtml");
       for (let i = escapedHtml.length - 1; i >= 0; i--) {
         const el = escapedHtml[i];
 
-        // If the XSLT engine already produced real HTML nodes (e.g. because
-        // disable-output-escaping was honored), DON'T clobber it.
         const hasElementChildren = Array.from(el.childNodes).some((n) => n.nodeType === Node.ELEMENT_NODE);
         if (hasElementChildren) continue;
 
-        // Otherwise, interpret the text content as HTML.
         el.innerHTML = el.textContent ?? "";
       }
 
-      // Fix relative ressources paths in img tags (from XML content)
-      // These are relative paths like "ressources/image.svg" that need to point to the correct directory "/xsl/ressources/..."
       htmlDoc.querySelectorAll("img[src]").forEach((img) => {
         const src = img.getAttribute("src");
         if (src && src.startsWith("ressources/")) {
@@ -160,17 +159,18 @@ export function useXslPreview<T>({
     [resolveXslIncludes]
   );
 
+  /**
+   * Generates the HTML preview from current data.
+   */
   const generatePreview = useCallback(async (): Promise<string | null> => {
     if (!data) {
       toast.error("Preview failed", { description: errorMessage });
       return null;
     }
 
-    // Validate before previewing - this triggers validation error display
     if (validator) {
       const validation = validator(data);
 
-      // Mark validation as attempted so errors will be displayed
       setValidationAttempted(true);
 
       if (!validation.success) {

@@ -4,13 +4,9 @@ import { ERROR_MESSAGES } from "@/constants/error-messages";
 import { SUCCESS_MESSAGES } from "@/constants/success-messages";
 
 /**
- * Generic file import hook for XML files
- * @template T - The type of the parsed result (e.g., FunctionalProfileFrame)
- * @param options - Configuration options
- * @param options.parser - Function to parse the XML string into type T
- * @param options.onSuccess - Callback when file is successfully parsed
- * @param options.accept - File input accept attribute (default: ".xml")
- * @returns Object with importFile function and input ref
+ * Hook for importing XML files with parsing and toast notifications.
+ * @param options - Configuration with parser, success callback, and accept type
+ * @returns Object with importFile function, input ref, and change handler
  */
 export function useFileImport<T>({
   parser,
@@ -35,21 +31,19 @@ export function useFileImport<T>({
         return;
       }
 
-      // Reset input so the same file can be selected again
       if (inputRef.current) {
         inputRef.current.value = "";
       }
 
-      // Show loading toast
       const loadingToast = toast.loading("Importing file...", {
         description: `Processing ${file.name}`,
       });
 
       try {
-        const fileContent = await readFileAsText(file); // Read file as text
-        const parsedData = await parser(fileContent); // Parse XML
+        const fileContent = await readFileAsText(file);
+        const parsedData = await parser(fileContent);
 
-        onSuccess(parsedData); // Update store
+        onSuccess(parsedData);
 
         toast.dismiss(loadingToast);
         toast.success(SUCCESS_MESSAGES.FILE_IMPORT.SUCCESS, {
@@ -62,7 +56,7 @@ export function useFileImport<T>({
 
         toast.error(ERROR_MESSAGES.FILE_IMPORT.FAILED, {
           description: errorMessage,
-          duration: 5000, // Show error duration in milliseconds
+          duration: 5000,
         });
       }
     },
@@ -78,7 +72,7 @@ export function useFileImport<T>({
 }
 
 /**
- * Reads a file as text
+ * Reads a file as text.
  */
 function readFileAsText(file: File): Promise<string> {
   return new Promise((resolve, reject) => {

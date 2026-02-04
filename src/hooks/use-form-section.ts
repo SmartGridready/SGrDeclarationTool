@@ -2,12 +2,6 @@ import { useRef } from "react";
 
 /**
  * Creates a useStore adapter that wraps a slice object.
- * This is useful when you have a slice instance and need to pass it to a component
- * that expects a useStore hook.
- *
- * @example
- * const useDataPointStore = createSliceAdapter(dataPointSlice);
- * <DataPointBaseForm useStore={useDataPointStore} ... />
  */
 export function createSliceAdapter<TSlice>(slice: TSlice) {
   return <TSelected>(selector: (store: TSlice) => TSelected): TSelected => {
@@ -16,12 +10,7 @@ export function createSliceAdapter<TSlice>(slice: TSlice) {
 }
 
 /**
- * Creates a useStore adapter for Device forms that combines device state and actions.
- * This is the standard pattern for connecting Device-specific forms to shared form components.
- *
- * @example
- * const useStore = createDeviceStoreAdapter(device, deviceInformationActions);
- * <SharedAlternativeNamesForm useStore={useStore} ... />
+ * Creates a useStore adapter for Device forms combining state and actions.
  */
 export function createDeviceStoreAdapter<TActions>(
   device: import("@/models").DeviceFrame | undefined,
@@ -38,12 +27,7 @@ export function createDeviceStoreAdapter<TActions>(
 }
 
 /**
- * Creates a useStore adapter for FunctionalProfile forms that combines profile state and actions.
- * This is the standard pattern for connecting FunctionalProfile-specific forms to shared form components.
- *
- * @example
- * const useStore = createProfileStoreAdapter(profile, alternativeNamesActions);
- * <SharedAlternativeNamesForm useStore={useStore} ... />
+ * Creates a useStore adapter for FunctionalProfile forms combining state and actions.
  */
 export function createProfileStoreAdapter<TActions>(
   profile: import("@/models").FunctionalProfileFrame | undefined,
@@ -61,7 +45,7 @@ export function createProfileStoreAdapter<TActions>(
 }
 
 /**
- * Shallow comparison for objects (one level deep)
+ * Shallow comparison for objects (one level deep).
  */
 function shallowEqual<T extends Record<string, unknown>>(objA: T, objB: T): boolean {
   if (objA === objB) return true;
@@ -79,47 +63,32 @@ function shallowEqual<T extends Record<string, unknown>>(objA: T, objB: T): bool
   return true;
 }
 
+/**
+ * Hook for managing form sections with store integration and validation.
+ * Provides optimized selectors with shallow comparison to prevent unnecessary re-renders.
+ * @param config - Configuration object with store, validation, and selectors
+ * @returns Object with state, actions, validation, and handlers
+ */
 export function useFormSection<
   TStoreState,
   TState extends Record<string, unknown>,
   TActions extends Record<string, unknown>,
 >(config: {
-  /**
-   * Store hook function (e.g., useProfileStore, useDeviceStore)
-   * Should accept a selector function and return the selected value
-   */
+  /** Store hook function that accepts a selector and returns the selected value. */
   useStore: <TSelected>(selector: (store: TStoreState) => TSelected) => TSelected;
-  /**
-   * Validation hook function that returns an object with getError method
-   * getError should accept a field path and return an error message or undefined
-   */
+  /** Validation hook that returns an object with getError method. */
   useValidation: () => { getError: (fieldPath: string) => string | undefined };
-  /**
-   * Selector function to get state from the store
-   * State values are compared shallowly to prevent unnecessary re-renders
-   */
+  /** Selector to get state from the store. Values are compared shallowly. */
   stateSelector: (store: TStoreState) => TState;
-  /**
-   * Selector function to get actions from the store
-   * Actions are functions and are stable, so no comparison is needed
-   */
+  /** Selector to get actions from the store. Actions are stable references. */
   actionsSelector: (store: TStoreState) => TActions;
-  /**
-   * Optional selector to determine if the section is added
-   */
+  /** Optional selector to determine if the section is added. */
   isAddedSelector?: (store: TStoreState) => boolean;
-  /**
-   * Optional add handler - will be called when section should be added
-   * If not provided, handleAdd will be undefined
-   */
+  /** Optional handler called when section should be added. */
   onAdd?: (actions: TActions) => void;
-  /**
-   * Optional remove handler - will be called when section should be removed
-   * If not provided, handleRemove will be undefined
-   */
+  /** Optional handler called when section should be removed. */
   onRemove?: (actions: TActions) => void;
 }) {
-  // Store selector refs to always use the latest version
   const stateSelectorRef = useRef(config.stateSelector);
   stateSelectorRef.current = config.stateSelector;
 
@@ -129,11 +98,9 @@ export function useFormSection<
   const isAddedSelectorRef = useRef(config.isAddedSelector);
   isAddedSelectorRef.current = config.isAddedSelector;
 
-  // Caches for results
   const stateCache = useRef<TState | null>(null);
   const actionsCache = useRef<TActions | null>(null);
 
-  // Create stable selector functions that never change reference
   const stableStateSelector = useRef((store: TStoreState): TState => {
     const newState = stateSelectorRef.current(store);
     if (stateCache.current && shallowEqual(stateCache.current, newState)) {
@@ -156,7 +123,6 @@ export function useFormSection<
     return isAddedSelectorRef.current?.(store) ?? false;
   }).current;
 
-  // Use stable selectors with the store
   const state = config.useStore(stableStateSelector);
   const actions = config.useStore(stableActionsSelector);
   const isAddedValue = config.useStore(config.isAddedSelector ? stableIsAddedSelector : () => false);

@@ -5,50 +5,42 @@ import { DeviceFrame } from "@/models";
 import { FunctionalProfileFrame } from "@/models";
 
 /**
- * Helper hook for granular field selection from the device store.
- * Uses shallow comparison to prevent unnecessary re-renders when the selected
- * value is an object or array that hasn't actually changed.
+ * Hook for granular field selection from the device store with shallow comparison.
  */
 export function useDeviceField<T>(selector: (device: DeviceFrame | undefined) => T): T {
   return useDeviceStore(useShallow((state) => selector(state.device)));
 }
 
 /**
- * Helper hook for granular field selection from the profile store.
- * Uses shallow comparison to prevent unnecessary re-renders when the selected
- * value is an object or array that hasn't actually changed.
+ * Hook for granular field selection from the profile store with shallow comparison.
  */
 export function useProfileField<T>(selector: (profile: FunctionalProfileFrame | undefined) => T): T {
   return useProfileStore(useShallow((state) => selector(state.profile)));
 }
 
 /**
- * Helper hook to check if a device exists in the store.
- * Useful for conditional rendering.
+ * Hook to check if a device exists in the store.
  */
 export function useHasDevice(): boolean {
   return useDeviceStore((state) => !!state.device);
 }
 
 /**
- * Helper hook to check if a profile exists in the store.
- * Useful for conditional rendering.
+ * Hook to check if a profile exists in the store.
  */
 export function useHasProfile(): boolean {
   return useProfileStore((state) => !!state.profile);
 }
 
 /**
- * Helper hook for selecting a specific action from the device store.
- * Actions are stable references and won't cause re-renders.
+ * Hook for selecting an action from the device store.
  */
 export function useDeviceAction<T>(selector: (state: DeviceStoreState) => T): T {
   return useDeviceStore(selector);
 }
 
 /**
- * Helper hook for selecting a specific action from the profile store.
- * Actions are stable references and won't cause re-renders.
+ * Hook for selecting an action from the profile store.
  */
 export function useProfileAction<T>(selector: (state: ProfileStoreState) => T): T {
   return useProfileStore(selector);

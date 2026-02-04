@@ -1,12 +1,12 @@
 /**
- * Helper to normalize string values (empty strings become undefined)
+ * Normalizes a string value, returning undefined for empty strings.
  */
 export function normalizeString(value: string | undefined): string | undefined {
   return !value || value.trim() === "" ? undefined : value;
 }
 
 /**
- * Helper to ensure an array exists and return it
+ * Ensures an array exists, initializing it if undefined.
  */
 export function ensureArray<T>(array: T[] | undefined, init: () => T[]): T[] {
   if (!array) {
@@ -16,7 +16,7 @@ export function ensureArray<T>(array: T[] | undefined, init: () => T[]): T[] {
 }
 
 /**
- * Helper to safely remove an item from an array and clean up if empty
+ * Removes an item from an array and optionally calls a callback when empty.
  */
 export function removeArrayItem<T>(array: T[] | undefined, index: number, onEmpty?: () => void): void {
   if (array && index >= 0 && index < array.length) {

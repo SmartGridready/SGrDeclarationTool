@@ -1,22 +1,19 @@
 /**
- * Common utility functions for building XML objects from models
- * These utilities handle common patterns when building from TypeScript models
- * to xml2js compatible XML objects.
+ * Utility functions for building xml2js compatible XML objects from models.
  */
 
 /**
- * Wraps a value in an array (xml2js format requirement)
- * xml2js expects all XML element values to be arrays
+ * Wraps a value in an array for xml2js format.
  */
 export function wrapInArray<T>(value: T): T[] {
   return [value];
 }
 
 /**
- * Conditionally includes a field in an XML object if the value is defined
- * @param xmlObject - The XML object to add the field to
+ * Sets an optional field on an XML object if the value is defined.
+ * @param xmlObject - The XML object to modify
  * @param field - The field name
- * @param value - The value to include (if defined)
+ * @param value - The value to set
  */
 export function setOptionalXmlField(xmlObject: Record<string, unknown>, field: string, value: unknown): void {
   if (value !== undefined && value !== null) {
@@ -25,10 +22,10 @@ export function setOptionalXmlField(xmlObject: Record<string, unknown>, field: s
 }
 
 /**
- * Conditionally includes an array field in an XML object if the array has items
- * @param xmlObject - The XML object to add the field to
+ * Sets an optional array field on an XML object if the array has items.
+ * @param xmlObject - The XML object to modify
  * @param field - The field name
- * @param array - The array to include (if it has items)
+ * @param array - The array to set
  */
 export function setOptionalXmlArray<T>(
   xmlObject: Record<string, unknown>,
@@ -41,13 +38,10 @@ export function setOptionalXmlArray<T>(
 }
 
 /**
- * Builds a simple data type XML element
- * The XML structure uses nested elements like <float64 /> instead of a string value
+ * Builds a simple data type XML element as a self-closing tag.
  * @param typeName - The type name (e.g., "float64", "string")
  * @returns XML object with the type as a key
  */
 export function buildSimpleDataType(typeName: string): Record<string, string[]> {
-  // Return an object with the typeName as a key with empty string value
-  // xml2js will render this as a self-closing tag like <float64 />
   return { [typeName]: [""] };
 }

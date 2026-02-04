@@ -39,7 +39,7 @@ import { TimeSyncBlockNotification } from "@/models/product/modbus-types";
 import { createSimpleDataType } from "@/sections/functional-profile/data-point-list/data-type-utils";
 
 /**
- * Creates an empty ModbusInterface with minimal required values
+ * Creates an empty ModbusInterface.
  */
 export function createEmptyModbusInterface(): ModbusInterface {
   return {
@@ -55,7 +55,7 @@ export function createEmptyModbusInterface(): ModbusInterface {
 }
 
 /**
- * Creates an empty RestApiInterface with minimal required values
+ * Creates an empty RestApiInterface.
  */
 export function createEmptyRestApiInterface(): RestApiInterface {
   return {
@@ -70,7 +70,7 @@ export function createEmptyRestApiInterface(): RestApiInterface {
 }
 
 /**
- * Creates an empty MessagingInterface with minimal required values
+ * Creates an empty MessagingInterface.
  */
 export function createEmptyMessagingInterface(): MessagingInterface {
   return {
@@ -87,7 +87,7 @@ export function createEmptyMessagingInterface(): MessagingInterface {
 }
 
 /**
- * Creates an empty ContactInterface with minimal required values
+ * Creates an empty ContactInterface.
  */
 export function createEmptyContactInterface(): ContactInterface {
   return {
@@ -102,7 +102,7 @@ export function createEmptyContactInterface(): ContactInterface {
 }
 
 /**
- * Creates an empty GenericInterface with minimal required values
+ * Creates an empty GenericInterface.
  */
 export function createEmptyGenericInterface(): GenericInterface {
   return {
@@ -113,7 +113,7 @@ export function createEmptyGenericInterface(): GenericInterface {
 }
 
 /**
- * Creates a new empty DeviceFrame with minimal required values
+ * Creates an empty DeviceFrame.
  */
 export function createEmptyDevice(): DeviceFrame {
   return {
@@ -133,7 +133,7 @@ export function createEmptyDevice(): DeviceFrame {
 }
 
 /**
- * Creates a new empty FunctionalProfileFrame with minimal required values
+ * Creates an empty FunctionalProfileFrame.
  */
 export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
   return {
@@ -154,7 +154,7 @@ export function createEmptyFunctionalProfile(): FunctionalProfileFrame {
 }
 
 /**
- * Creates a new empty functional profile (Modbus or REST API) with minimal required values
+ * Creates a base functional profile structure.
  */
 function createEmptyFunctionalProfileBase() {
   return {
@@ -179,42 +179,42 @@ function createEmptyFunctionalProfileBase() {
 }
 
 /**
- * Creates a new empty ModbusFunctionalProfile with minimal required values
+ * Creates an empty ModbusFunctionalProfile.
  */
 export function createEmptyModbusFunctionalProfile(): ModbusFunctionalProfile {
   return createEmptyFunctionalProfileBase() as ModbusFunctionalProfile;
 }
 
 /**
- * Creates a new empty RestApiFunctionalProfile with minimal required values
+ * Creates an empty RestApiFunctionalProfile.
  */
 export function createEmptyRestApiFunctionalProfile(): RestApiFunctionalProfile {
   return createEmptyFunctionalProfileBase() as RestApiFunctionalProfile;
 }
 
 /**
- * Creates a new empty MessagingFunctionalProfile with minimal required values
+ * Creates an empty MessagingFunctionalProfile.
  */
 export function createEmptyMessagingFunctionalProfile(): MessagingFunctionalProfile {
   return createEmptyFunctionalProfileBase() as MessagingFunctionalProfile;
 }
 
 /**
- * Creates a new empty ContactFunctionalProfile with minimal required values
+ * Creates an empty ContactFunctionalProfile.
  */
 export function createEmptyContactFunctionalProfile(): ContactFunctionalProfile {
   return createEmptyFunctionalProfileBase() as ContactFunctionalProfile;
 }
 
 /**
- * Creates a new empty GenericFunctionalProfile with minimal required values
+ * Creates an empty GenericFunctionalProfile.
  */
 export function createEmptyGenericFunctionalProfile(): GenericFunctionalProfile {
   return createEmptyFunctionalProfileBase() as GenericFunctionalProfile;
 }
 
 /**
- * Creates a new empty data point (Modbus or REST API) with minimal required values
+ * Creates a base data point structure.
  */
 function createEmptyDataPointBase() {
   return {
@@ -228,21 +228,21 @@ function createEmptyDataPointBase() {
 }
 
 /**
- * Creates a new empty ModbusDataPoint with minimal required values
+ * Creates an empty ModbusDataPoint.
  */
 export function createEmptyModbusDataPoint(): ModbusDataPoint {
   return createEmptyDataPointBase() as ModbusDataPoint;
 }
 
 /**
- * Creates a new empty RestApiDataPoint with minimal required values
+ * Creates an empty RestApiDataPoint.
  */
 export function createEmptyRestApiDataPoint(): RestApiDataPoint {
   return createEmptyDataPointBase() as RestApiDataPoint;
 }
 
 /**
- * Creates a new empty MessagingDataPoint with minimal required values
+ * Creates an empty MessagingDataPoint.
  */
 export function createEmptyMessagingDataPoint(): MessagingDataPoint {
   return {
@@ -254,21 +254,21 @@ export function createEmptyMessagingDataPoint(): MessagingDataPoint {
 }
 
 /**
- * Creates a new empty ContactDataPoint (DataPointBase) with minimal required values
+ * Creates an empty ContactDataPoint.
  */
 export function createEmptyContactDataPoint(): DataPointBase {
   return createEmptyDataPointBase() as DataPointBase;
 }
 
 /**
- * Creates a new empty GenericDataPoint (DataPointBase) with minimal required values
+ * Creates an empty GenericDataPoint.
  */
 export function createEmptyGenericDataPoint(): DataPointBase {
   return createEmptyDataPointBase() as DataPointBase;
 }
 
 /**
- * Creates a new empty FunctionalProfileDataPoint with minimal required values
+ * Creates an empty FunctionalProfileDataPoint.
  */
 export function createEmptyDataPoint(): FunctionalProfileDataPoint {
   return {
@@ -283,7 +283,7 @@ export function createEmptyDataPoint(): FunctionalProfileDataPoint {
 }
 
 /**
- * Creates a new empty ChangeLog with minimal required values
+ * Creates an empty ChangeLog.
  */
 export function createEmptyChangeLog(): ChangeLog {
   return {
@@ -295,7 +295,7 @@ export function createEmptyChangeLog(): ChangeLog {
 }
 
 /**
- * Creates a new empty LegibleDescription with minimal required values
+ * Creates an empty LegibleDescription.
  */
 export function createEmptyLegibleDescription(): LegibleDescription {
   return {
@@ -305,7 +305,7 @@ export function createEmptyLegibleDescription(): LegibleDescription {
 }
 
 /**
- * Creates a new empty GenericAttributeFunctionalProfile with minimal required values
+ * Creates an empty GenericAttributeFunctionalProfile.
  */
 export function createEmptyGenericAttribute(): GenericAttributeFunctionalProfile {
   return {
@@ -314,14 +314,14 @@ export function createEmptyGenericAttribute(): GenericAttributeFunctionalProfile
 }
 
 /**
- * Creates a new empty JSonElemFunctionalProfile with minimal required values
+ * Creates an empty JSonElemFunctionalProfile.
  */
 export function createEmptyJsonElement(): JSonElemFunctionalProfile {
   return { key: "", string: "" };
 }
 
 /**
- * Creates a new empty ConfigurationListElement with minimal required values
+ * Creates an empty ConfigurationListElement.
  */
 export function createEmptyConfigurationListElement(): ConfigurationListElement {
   return {
@@ -331,7 +331,7 @@ export function createEmptyConfigurationListElement(): ConfigurationListElement 
 }
 
 /**
- * Creates a new empty DynamicParameterDescriptionListElement with minimal required values
+ * Creates an empty DynamicParameterDescriptionListElement.
  */
 export function createEmptyDynamicParameterDescriptionListElement(): DynamicParameterDescriptionListElement {
   return {
@@ -341,7 +341,7 @@ export function createEmptyDynamicParameterDescriptionListElement(): DynamicPara
 }
 
 /**
- * Creates a new empty enum entry (Functional Profile or Product) with minimal required values
+ * Creates a base enum entry structure.
  */
 function createEmptyEnumEntryBase() {
   return {
@@ -350,14 +350,14 @@ function createEmptyEnumEntryBase() {
 }
 
 /**
- * Creates a new empty EnumEntryRecordFunctionalProfile with minimal required values
+ * Creates an empty EnumEntryRecordFunctionalProfile.
  */
 export function createEmptyEnumEntryFunctionalProfile(): EnumEntryRecordFunctionalProfile {
   return createEmptyEnumEntryBase();
 }
 
 /**
- * Creates a new empty BitmapEntryFunctionalProfile with minimal required values
+ * Creates an empty BitmapEntryFunctionalProfile.
  */
 export function createEmptyBitmapEntryFunctionalProfile(): BitmapEntryFunctionalProfile {
   return {
@@ -366,14 +366,14 @@ export function createEmptyBitmapEntryFunctionalProfile(): BitmapEntryFunctional
 }
 
 /**
- * Creates a new empty EnumEntryProductRecord with minimal required values
+ * Creates an empty EnumEntryProductRecord.
  */
 export function createEmptyEnumEntryProduct(): EnumEntryProductRecord {
   return createEmptyEnumEntryBase();
 }
 
 /**
- * Creates a new empty EnumEntry with ordinal (for modbus data point configuration)
+ * Creates an empty EnumEntry with ordinal.
  */
 export function createEmptyEnumEntryProductWithOrdinal(): EnumEntry {
   return {
@@ -383,7 +383,7 @@ export function createEmptyEnumEntryProductWithOrdinal(): EnumEntry {
 }
 
 /**
- * Creates a new empty BitmapEntryProduct with minimal required values
+ * Creates an empty BitmapEntryProduct.
  */
 export function createEmptyBitmapEntryProduct(): BitmapEntryProduct {
   return {
@@ -393,7 +393,7 @@ export function createEmptyBitmapEntryProduct(): BitmapEntryProduct {
 }
 
 /**
- * Creates a new empty TimeSyncBlockNotification with minimal required values
+ * Creates an empty TimeSyncBlockNotification.
  */
 export function createEmptyTimeSyncBlockNotification(): TimeSyncBlockNotification {
   return {
@@ -406,7 +406,7 @@ export function createEmptyTimeSyncBlockNotification(): TimeSyncBlockNotificatio
 }
 
 /**
- * Creates a new empty generic attribute (Product or ProductEnd) with minimal required values
+ * Creates a base generic attribute structure.
  */
 function createEmptyGenericAttributeBase() {
   return {
@@ -418,21 +418,21 @@ function createEmptyGenericAttributeBase() {
 }
 
 /**
- * Creates a new empty GenericAttributeProduct (simple) with minimal required values
+ * Creates an empty GenericAttributeProduct.
  */
 export function createEmptyGenericAttributeProduct(): GenericAttributeProduct {
   return createEmptyGenericAttributeBase() as GenericAttributeProduct;
 }
 
 /**
- * Creates a new empty GenericAttributeProductEnd with minimal required values
+ * Creates an empty GenericAttributeProductEnd.
  */
 export function createEmptyGenericAttributeProductEnd(): GenericAttributeProductEnd {
   return createEmptyGenericAttributeBase();
 }
 
 /**
- * Creates a new empty MessageBrokerAuthenticationBasic with minimal required values
+ * Creates an empty MessageBrokerAuthenticationBasic.
  */
 export function createEmptyMessageBrokerAuthenticationBasic(): MessageBrokerAuthenticationBasic {
   return {
@@ -442,7 +442,7 @@ export function createEmptyMessageBrokerAuthenticationBasic(): MessageBrokerAuth
 }
 
 /**
- * Creates a new empty MessageBrokerAuthenticationClientCertificate with minimal required values
+ * Creates an empty MessageBrokerAuthenticationClientCertificate.
  */
 export function createEmptyMessageBrokerAuthenticationClientCertificate(): MessageBrokerAuthenticationClientCertificate {
   return {
@@ -454,7 +454,9 @@ export function createEmptyMessageBrokerAuthenticationClientCertificate(): Messa
 }
 
 /**
- * Creates a new empty MessageBrokerAuthentication with minimal required values
+ * Creates an empty MessageBrokerAuthentication based on type.
+ * @param authType - The authentication type
+ * @returns Authentication object for the specified type
  */
 export function createEmptyMessageBrokerAuthentication(
   authType: MessageBrokerAuthenticationType
@@ -471,7 +473,7 @@ export function createEmptyMessageBrokerAuthentication(
 }
 
 /**
- * Creates a new empty MessageBrokerListElement with minimal required values
+ * Creates an empty MessageBrokerListElement.
  */
 export function createEmptyMessageBrokerListElement(): MessageBrokerListElement {
   return {
@@ -481,7 +483,7 @@ export function createEmptyMessageBrokerListElement(): MessageBrokerListElement 
 }
 
 /**
- * Creates a new empty OutMessage with minimal required values
+ * Creates an empty OutMessage.
  */
 export function createEmptyOutMessage(): OutMessage {
   return {
@@ -491,7 +493,7 @@ export function createEmptyOutMessage(): OutMessage {
 }
 
 /**
- * Creates a new empty InMessage with minimal required values
+ * Creates an empty InMessage.
  */
 export function createEmptyInMessage(): InMessage {
   return {

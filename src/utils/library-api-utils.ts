@@ -1,5 +1,5 @@
 /**
- * Library API utilities for fetching functional profiles and devices from the library
+ * Library API utilities for fetching functional profiles and devices.
  */
 
 export interface LibraryItem {
@@ -7,7 +7,7 @@ export interface LibraryItem {
 }
 
 /**
- * Fetches all functional profiles from the library
+ * Fetches all functional profiles from the library.
  * @returns Promise resolving to array of functional profiles
  */
 export async function fetchFunctionalProfiles(): Promise<LibraryItem[]> {
@@ -30,7 +30,7 @@ export async function fetchFunctionalProfiles(): Promise<LibraryItem[]> {
 }
 
 /**
- * Fetches all devices from the library
+ * Fetches all devices from the library.
  * @returns Promise resolving to array of devices
  */
 export async function fetchDevices(): Promise<LibraryItem[]> {
@@ -53,12 +53,11 @@ export async function fetchDevices(): Promise<LibraryItem[]> {
 }
 
 /**
- * Fetches XML content for a functional profile by identifier
- * @param identifier - The identifier of the functional profile
+ * Fetches XML content for a functional profile by identifier.
+ * @param identifier - The functional profile identifier
  * @returns Promise resolving to XML string
  */
 export async function fetchFunctionalProfileXml(identifier: string): Promise<string> {
-  // Identifier already includes .xml extension
   const url = `https://library.smartgridready.ch/fpx/${encodeURIComponent(identifier)}`;
 
   try {
@@ -87,12 +86,11 @@ export async function fetchFunctionalProfileXml(identifier: string): Promise<str
 }
 
 /**
- * Fetches XML content for a device by identifier
- * @param identifier - The identifier of the device
+ * Fetches XML content for a device by identifier.
+ * @param identifier - The device identifier
  * @returns Promise resolving to XML string
  */
 export async function fetchDeviceXml(identifier: string): Promise<string> {
-  // Identifier already includes .xml extension
   const url = `https://library.smartgridready.ch/prodx/${encodeURIComponent(identifier)}`;
 
   try {

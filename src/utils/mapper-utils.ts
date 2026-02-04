@@ -1,21 +1,18 @@
 /**
- * Common utility functions for XML to model mapping
- * These utilities handle the common patterns when mapping from xml2js parsed XML
- * to TypeScript model objects.
+ * Utility functions for XML to model mapping using xml2js.
  */
 
 /**
- * Type representing XML structure parsed by xml2js
- * xml2js converts XML elements to arrays, so each field is an array
+ * Type representing XML structure parsed by xml2js.
  */
 type Xml2JsValue = string | number | boolean | Xml2JsObject | Xml2JsValue[];
 export type Xml2JsObject = Record<string, Xml2JsValue[]>;
 
 /**
- * Extracts a string value from XML array format (xml2js uses arrays)
+ * Extracts a string value from XML array format.
  * @param xml - The XML object
  * @param field - The field name to extract
- * @param defaultValue - Default value if field is missing or empty
+ * @param defaultValue - Default value if field is missing
  * @returns The string value or default
  */
 export function getStringValue(xml: Xml2JsObject | undefined, field: string, defaultValue: string = ""): string {
@@ -24,7 +21,7 @@ export function getStringValue(xml: Xml2JsObject | undefined, field: string, def
 }
 
 /**
- * Extracts an optional string value from XML array format
+ * Extracts an optional string value from XML array format.
  * @param xml - The XML object
  * @param field - The field name to extract
  * @returns The string value or undefined
@@ -35,12 +32,11 @@ export function getOptionalStringValue(xml: Xml2JsObject | undefined, field: str
 }
 
 /**
- * Extracts a number value from XML array format
+ * Extracts a number value from XML array format.
  * @param xml - The XML object
  * @param field - The field name to extract
  * @param defaultValue - Default value if field is missing or invalid
  * @returns The parsed number or default
- * @note Uses parseFloat to handle both integers and decimal numbers
  */
 export function getNumberValue(xml: Xml2JsObject | undefined, field: string, defaultValue: number = 0): number {
   const value = xml?.[field]?.[0];
@@ -52,11 +48,10 @@ export function getNumberValue(xml: Xml2JsObject | undefined, field: string, def
 }
 
 /**
- * Extracts an optional number value from XML array format
+ * Extracts an optional number value from XML array format.
  * @param xml - The XML object
  * @param field - The field name to extract
  * @returns The parsed number or undefined
- * @note Uses parseFloat to handle both integers and decimal numbers
  */
 export function getOptionalNumberValue(xml: Xml2JsObject | undefined, field: string): number | undefined {
   const value = xml?.[field]?.[0];
@@ -68,7 +63,7 @@ export function getOptionalNumberValue(xml: Xml2JsObject | undefined, field: str
 }
 
 /**
- * Extracts a typed value (enum/union type) from XML array format
+ * Extracts a typed value from XML array format.
  * @param xml - The XML object
  * @param field - The field name to extract
  * @param defaultValue - Default value if field is missing
@@ -80,7 +75,7 @@ export function getTypedValue<T>(xml: Xml2JsObject | undefined, field: string, d
 }
 
 /**
- * Extracts an optional typed value from XML array format
+ * Extracts an optional typed value from XML array format.
  * @param xml - The XML object
  * @param field - The field name to extract
  * @returns The typed value or undefined
@@ -91,11 +86,11 @@ export function getOptionalTypedValue<T>(xml: Xml2JsObject | undefined, field: s
 }
 
 /**
- * Extracts an array from XML and maps it using a mapper function
+ * Extracts an array from XML and maps it using a mapper function.
  * @param xml - The XML object
  * @param field - The field name containing the array
  * @param mapper - Function to map each array element
- * @param defaultValue - Default value if field is missing or not an array
+ * @param defaultValue - Default value if field is missing
  * @returns Mapped array or default
  */
 export function mapArray<T>(
@@ -115,7 +110,7 @@ export function mapArray<T>(
 }
 
 /**
- * Extracts an optional array from XML and maps it using a mapper function
+ * Extracts an optional array from XML and maps it using a mapper function.
  * @param xml - The XML object
  * @param field - The field name containing the array
  * @param mapper - Function to map each array element
@@ -137,7 +132,7 @@ export function mapOptionalArray<T>(
 }
 
 /**
- * Extracts the first element from an XML array (common pattern for single elements)
+ * Extracts the first element from an XML array.
  * @param xml - The XML object
  * @param field - The field name
  * @returns The first element or undefined
@@ -152,7 +147,7 @@ export function getFirstElement(xml: Xml2JsObject | undefined, field: string): X
 }
 
 /**
- * Checks if a field exists and has a value in XML
+ * Checks if a field exists and has a value in XML.
  * @param xml - The XML object
  * @param field - The field name to check
  * @returns True if field exists and has a value
@@ -166,10 +161,7 @@ export function hasValue(xml: Xml2JsObject | undefined, field: string): boolean 
 }
 
 /**
- * Conditionally sets an optional field on an object if the value is defined
- * @param obj - The object to set the field on
- * @param field - The field name
- * @param value - The value to set (if defined)
+ * Sets an optional field on an object if the value is defined.
  */
 export function setOptionalField<T extends object>(obj: T, field: keyof T, value: unknown): void {
   if (value !== undefined && value !== null) {
@@ -178,9 +170,9 @@ export function setOptionalField<T extends object>(obj: T, field: keyof T, value
 }
 
 /**
- * Maps simple data types (boolean, int8, int16, etc.) from XML
+ * Maps simple data types from XML using a type map.
  * @param dataTypeXml - The XML dataType object
- * @param typeMap - Map of type names to their corresponding model objects
+ * @param typeMap - Map of type names to model objects
  * @param defaultValue - Default value if no type is found
  * @returns The mapped data type or default
  */

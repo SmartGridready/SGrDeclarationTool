@@ -1,6 +1,5 @@
 /**
- * Helper function to convert const arrays to form options
- * The label will be 1:1 with the value
+ * Converts a const array to form options with matching label and value.
  */
 export function createFormOptions<T extends readonly string[]>(
   values: T

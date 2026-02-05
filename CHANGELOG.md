@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.24.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.4...v0.24.0) (2026-02-05)
+
+
+### Features
+
+* add error page handling (GL-14) ([6bbbb40](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/6bbbb406bee41fe170edaaf16e1a27c6b30ec4d8))
+
+
+### Bug Fixes
+
+* linting warnings (GL-11) ([972ea0d](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/972ea0de638a19a103fe57556c79cbcc68dcb3a9))
+* textarea overflowing container by setting min width to 0 (GL-11) ([1371182](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/1371182cee7cdce86632a3906dbc69ba2fda5c1d))
+
+
+### Documentation
+
+* add introduction and project overview to readme ([cfd4924](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/cfd4924a0ae663606d84b1bb3631f43173e68d7d))
+* issue number is optional but preferred in readme ([acddf57](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/acddf57e14bd7431d4c781450cd3c8356fc7a078))
+
+
+### Chores
+
+* remove unused storage value type ([af36a27](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/af36a276ef40751ee9ac685e6289637805484f39))
+* rework comments for hooks ([b6aed7f](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/b6aed7fed4d020dbc80f220be79ac4a5eea7e81a))
+* rework comments for util functions ([aa44382](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/aa443821ce5e032a5d39a25edf366e7144c62452))
+* upgrade to Next.js 16 and migrate ESLint to native flat config ([0c67c35](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/0c67c35d8e4f73ac58c81e1d5d38ab2c35b77a0b))
+
 ### [0.23.4](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.3...v0.23.4) (2026-01-19)
 
 

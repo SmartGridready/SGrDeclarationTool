@@ -122,14 +122,14 @@ export function GenericEditor<T>({ config }: GenericEditorProps<T>) {
     } else {
       createEmpty();
       resetValidation();
-      toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
+      toast.info(INFO_MESSAGES.EDITOR.EMPTY_LOADED(itemNameCapitalized));
     }
   };
 
   const confirmLoadEmpty = () => {
     createEmpty();
     resetValidation();
-    toast.info(INFO_MESSAGES.PROFILE.EMPTY_LOADED);
+    toast.info(INFO_MESSAGES.EDITOR.EMPTY_LOADED(itemNameCapitalized));
     setShowLoadEmptyDialog(false);
   };
 

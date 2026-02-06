@@ -4,8 +4,7 @@
  */
 
 export const INFO_MESSAGES = {
-  // Profile Actions
-  PROFILE: {
-    EMPTY_LOADED: "Empty profile loaded",
+  EDITOR: {
+    EMPTY_LOADED: (itemName: string) => `Empty ${itemName} loaded`,
   },
 } as const;

@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.24.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.24.0...v0.24.1) (2026-02-06)
+
+
+### Bug Fixes
+
+* pass declaration type to info message (GL-17) ([8d70ce4](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8d70ce4e940dfaf35a7dadaaaf3eda47fd4bd7e2))
+* prevent falsy values from being silently replaced in mapper utils (GL-7) ([3e52edf](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/3e52edff9df7b34a6101bf0449e1c6dd934bb439))
+* use dynamic item name in empty-loaded toast message (GL-17) ([7f51907](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/7f519077a8a7e2a350e73c886dfe2989fee0c636))
+
+
+### Chores
+
+* remove unnecessary key props on static navbar elements ([bbcd415](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/bbcd415d580898e7c6b90529909ac2fe835090f1))
+
+
+### Code Refactoring
+
+* remove redundant debouncedStorage wrapper function (GL-16) ([56e0b24](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/56e0b24611cf2a00b7515726b726fd114e437a3c))
+* remove unused react import ([8973fde](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/8973fdebfb556a19631faf0b3003315c5eee5b1c))
+
+
+### Documentation
+
+* add command overview to readme ([4c59bea](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/commit/4c59bea7121e04f38b7a569ac94677beeb0221e8))
+
 ## [0.24.0](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.23.4...v0.24.0) (2026-02-05)
 
 

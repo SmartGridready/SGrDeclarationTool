@@ -39,10 +39,3 @@ export function createDebouncedStorage<T>(delayMs: number = 1000): PersistStorag
 
   return baseStorage as PersistStorage<T>;
 }
-
-/**
- * Creates a debounced storage with default 1000ms delay.
- */
-export function debouncedStorage<T>(): PersistStorage<T> {
-  return createDebouncedStorage<T>(1000);
-}

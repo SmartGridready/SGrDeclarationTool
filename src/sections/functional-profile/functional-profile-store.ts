@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist } from "zustand/middleware";
 import { FunctionalProfileFrame } from "@/models";
-import { debouncedStorage } from "@/utils/debounced-storage";
+import { createDebouncedStorage } from "@/utils/debounced-storage";
 import { createEmptyFunctionalProfile } from "@/utils/factory-utils";
 import {
   createReleaseNotesSliceForProfile,
@@ -73,7 +73,7 @@ export const useProfileStore = create<ProfileStoreState>()(
     })),
     {
       name: "sgr-profile-storage",
-      storage: debouncedStorage<ProfileStoreState>(),
+      storage: createDebouncedStorage<ProfileStoreState>(),
       // Only persist the profile state, not the action objects with functions
       partialize: (state) => ({ profile: state.profile }) as ProfileStoreState,
     }

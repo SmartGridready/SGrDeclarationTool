@@ -39,6 +39,18 @@ For more information about SmartGridready, visit the [SGrSpecifications reposito
 
    Navigate to [http://localhost:3000](http://localhost:3000).
 
+### Available Commands
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start development server with Turbopack |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run test` | Run Jest tests |
+| `npm run lint` | Run ESLint and Prettier checks |
+| `npm run format` | Format code with Prettier |
+| `npm run format:check` | Check code formatting |
+
 ## Project Overview
 
 The `src/` folder contains the following top-level directories:

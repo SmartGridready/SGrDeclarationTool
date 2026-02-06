@@ -71,7 +71,7 @@ export function getOptionalNumberValue(xml: Xml2JsObject | undefined, field: str
  */
 export function getTypedValue<T>(xml: Xml2JsObject | undefined, field: string, defaultValue: T): T {
   const value = xml?.[field]?.[0];
-  return (value as T) || defaultValue;
+  return value !== undefined && value !== null ? (value as T) : defaultValue;
 }
 
 /**
@@ -82,7 +82,7 @@ export function getTypedValue<T>(xml: Xml2JsObject | undefined, field: string, d
  */
 export function getOptionalTypedValue<T>(xml: Xml2JsObject | undefined, field: string): T | undefined {
   const value = xml?.[field]?.[0];
-  return value ? (value as T) : undefined;
+  return value !== undefined && value !== null ? (value as T) : undefined;
 }
 
 /**

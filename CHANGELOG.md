@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.24.2](https://github.com/SmartGridready/SGrDeclarationTool/compare/v0.24.1...v0.24.2) (2026-02-11)
+
+
+### Features
+
+* display version in navigation bar. ([3f840c1](https://github.com/SmartGridready/SGrDeclarationTool/commit/3f840c15daa8ee4c9635db68d9ee0b2e7a1fc871))
+
+
+### Build System
+
+* added Github CI and issue template, removed deployment from Gitlab CI. added Docker compose. ([9e25fba](https://github.com/SmartGridready/SGrDeclarationTool/commit/9e25fba39e74365880bffa4629edbbc287f78695))
+
 ### [0.24.1](https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool/compare/v0.24.0...v0.24.1) (2026-02-06)
 
 

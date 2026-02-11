@@ -9,8 +9,8 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 .gitlab/
+.github/
 CHANGELOG.md
 components/ui/
 README.md
 public/
- 

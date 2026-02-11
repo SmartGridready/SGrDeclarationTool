@@ -1,22 +1,28 @@
+# Docker
 **/.dockerignore
 **/docker-compose*
 **/Dockerfile*
+
+# Git
 **/.git
 **/.gitignore
 **/.github
 **/.gitlab
 **/.gitlab-ci.yml
 
+# NPM/JS
 **/node_modules
 **/npm-debug.log
 **/.env
 **/out
 **/.swc
+**/.next
 **/.husky
 **/next-env.d.ts
 
+# Visual Studio
 **/.vscode
 **/.vs
 
-README.md
-CHANGELOG.md
+# Docs
+**/*.md

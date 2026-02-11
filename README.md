@@ -26,7 +26,7 @@ For more information about SmartGridready, visit the [SGrSpecifications reposito
 2. **Install dependencies**
 
    ```bash
-   npm i
+   npm ci
    ```
 
 3. **Run the development server**
@@ -152,10 +152,47 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
    git push --follow-tags origin main
    ```
 
+## Docker
+
+### Build Image
+
+```bash
+docker build --rm -t sgr-declaration-tool:latest .
+```
+
+The Docker build process has 2 stages:
+
+1. Build using NodeJS image
+2. Copy to Nginx runtime image
+
+### Run
+
+Run container:
+
+```bash
+docker compose up -d
+```
+
+Stop:
+
+```bash
+docker compose down
+```
+
 ## Pipeline and Deployment
+
+### Github
+
+The Github CI/CD pipeline consists of three stages:
+
+1. **Lint**: Runs `npm run lint` on all branches and commits
+2. **Test**: Runs `npm run test` on all branches and commits
+3. **Build** Runs `npm run build` on all branches and commits
+
+### Gitlab
 
 The GitLab CI/CD pipeline consists of three stages:
 
-1. **Lint**: Runs `format-check` and `lint` jobs on the `main` branch
-2. **Test**: Runs `npm test` on all branches and commits
-3. **Build and Deploy**: Builds and deploys to [GitLab Pages](https://sgr-declaration-tool-6bb311.pages.fhnw.ch/) when a tag is pushed
+1. **Lint**: Runs `npm run lint` on all branches and commits
+2. **Test**: Runs `npm run test` on all branches and commits
+3. **Build** Runs `npm run build` on all branches and commits

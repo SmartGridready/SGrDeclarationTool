@@ -1,0 +1,9 @@
+# SGr declaration tool compose stack for development
+services:
+  sgr-declaration-tool:
+    restart: unless-stopped
+    image: sgr-declaration-tool
+    build:
+      context: .
+    ports:
+      - 8080:80

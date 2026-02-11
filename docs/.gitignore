@@ -5,15 +5,6 @@
 .idea/
 *.iml
 
-# Zola-Builds (lokal nie committen)
-public/
-MeetingNotes/public/
-
-# Zola / Build-Caches (falls vorhanden)
-.sass-cache/
-.zola-cache/
-.cache/
-
 # Logs
 *.log
 
@@ -58,3 +49,6 @@ tmp/
 *.swp
 .DS_Store
 Thumbs.db
+
+# Output
+**/*.pdf

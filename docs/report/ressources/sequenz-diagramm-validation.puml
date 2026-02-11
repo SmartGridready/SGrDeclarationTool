@@ -1,0 +1,41 @@
+@startuml
+!theme plain
+
+title Validierungsprozess (vereinfacht, Fokus Validierungslogik)
+
+actor Benutzer
+participant "useFileExport" as Export
+participant "validation-store" as Store
+participant "Zod Schema\n(validateDeviceFrame)" as Schema
+participant "Forms" as Forms
+
+Benutzer -> Export : exportFile()
+Export -> Schema : validator(data)
+Schema --> Export : ValidationResult
+
+Export -> Store : setValidationAttempted(true)
+Store --> Export : (void)
+note right of Store: Wird IMMER gesetzt,\nunabhängig vom Ergebnis
+
+alt validation.success == false
+    Export -> Export : toast.error(firstFieldError)
+    Export --> Benutzer : return (Export abgebrochen)
+    
+    note over Store, Forms
+        React-Reaktivität: Forms subscriben 
+        auf Store und re-rendern automatisch.
+        useDeviceValidation() liefert nun Fehler.
+    end note
+    
+    Forms -> Forms : Zeigt Fehler an Feldern
+    
+else validation.success == true
+    Export --> Benutzer : Validierung OK\n(Builder wird aufgerufen)
+    note right of Export
+        Nach erfolgreichem Export (Download)
+        wird resetValidation() aufgerufen.
+        Siehe Builder-Prozess.
+    end note
+end
+
+@enduml

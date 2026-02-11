@@ -1,0 +1,430 @@
+\documentclass[a4paper,12pt]{article}
+
+% Basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+% Modern font - Linux Libertine
+\usepackage{libertine}
+\usepackage{libertinust1math}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue,bookmarks=true]{hyperref}
+\usepackage{fancyhdr}
+
+% Tables and colors
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+
+% Gantt charts and timeline
+\usepackage{pgfgantt}
+\usepackage{tikz}
+\usepackage{pdflscape}
+
+% Page margins
+\usepackage[a4paper,top=20mm,bottom=20mm,left=30mm,right=30mm]{geometry}
+
+% Headers and footers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{IP5 Projektvereinbarung}
+\fancyfoot[R]{Seite \thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Title information
+\title{
+  \textbf{Web-basiertes Deklarations-Tool für SmartGridready} \\[1ex]
+  \begin{large}
+    \textbf{IP5 HS25 - Projektvereinbarung} \\
+  \end{large}
+}
+
+% Authors
+\author{
+  \textbf{Cikaqi, Fatlum} \\
+  \texttt{fatlum.cikaqi@students.fhnw.ch}
+  \and
+  \textbf{Wirth, Maurin} \\
+  \texttt{maurin.wirth@students.fhnw.ch} \\[2em]
+  \textbf{University of Applied Sciences Northwestern Switzerland} \\
+  (Fachhochschule Nordwestschweiz)
+}
+
+% Date
+\date{\today}
+
+% Document content
+\begin{document}
+
+\maketitle
+
+\newpage
+
+% Glossary
+\section*{Glossar}
+\begin{description}
+  \item[\textbf{XML-Schema (XSD)}]
+    Das XML-Schema definiert die Struktur, Datentypen und Regeln für XML-Deklarationen. Es legt fest, welche Elemente und Attribute zulässig sind und in welcher Beziehung sie zueinander stehen. Im SmartGridready-Kontext dient es als Grundlage zur Validierung und zum Ableiten des Domänenmodells.
+
+  \item[\textbf{XML-Deklaration}]
+    Eine Beschreibung einer EID oder eines Funktionsprofils im XML-Format.
+
+  \item[\textbf{External Interface Description (EID)}]
+    Die External Interface Description setzt sich aus den Geräteinformationen und für das Gerät relevanten Funktionsprofilen zusammen. In den Funktionsprofilen muss zu jedem Datenpunkt die Gerätespezifische Transport-Information ergänzt werden. Die fertige External Interface Description ist eine XML-Datei, die eine maschinenlesbare Funktionsbeschreibung der Geräteschnittstelle darstellt.
+
+  \item[\textbf{Funktionsprofil}]
+    Ein Funktionsprofil ist eine Beschreibung einer Gruppe von zusammengehörenden Datenpunkten mit SGr-Attributen (Qualität, Semantik etc.) welche eine Geräteschnittstelle für einen bestimmten Funktionsumfang exakt beschreibt. Die Datenpunkte der Funktionsprofile müssen in der External Interface Description vom Deklarierenden mit den gerätespezifischen Transportinformationen ergänzt werden.
+
+  \item[\textbf{Datenpunkt}]
+    Ein einzelnes, eindeutig definiertes Datenelement innerhalb eines Funktionsprofils. Es beschreibt eine konkrete Eigenschaft oder Messgrosse eines Geräts, z. B. Temperatur, Leistung oder Betriebsstatus. Jeder Datenpunkt ist Teil einer XML-Deklaration und kann über die EID kommuniziert werden.
+
+  \item[\textbf{Domänenmodell}]
+    Das Domänenmodell ist eine in TypeScript implementierte, strukturierte Abbildung der SmartGridready-Datenwelt. Es wird direkt aus dem XML-Schema generiert und beschreibt die relevanten Entitäten, Beziehungen und Datentypen. Es dient als zentrale Grundlage für die Erstellung, Validierung und Verarbeitung von XML-Deklarationen im SmartGridready-Tool.
+\end{description}
+
+\newpage
+
+% ------------------------------------------------------------
+% --- Einleitung ---
+% ------------------------------------------------------------
+\section{Einleitung}
+Das IMVS unterstützt die Initiative SmartGridready im Rahmen eines Forschungsprojektes, um Anforderungen und standardisierte Kommunikationsschnittstellen für netzdienliche Elektrogeräte im intelligenten Stromnetz (Smart Grid) zu definieren. Ziel ist die einfache und interoperable Integration dieser Geräte in Energiemanagementsysteme. Aktuell basiert die Deklaration eines Geräts auf statischen Excel-Vorlagen und manueller Validierung gemass den öffentlich zugänglichen XML-Schemas und Funktionsprofilen auf GitHub, bzw. einer web-basierten Bibliothek.
+
+Für Hersteller, Installateure und Systemintegratoren wäre ein intuitives, web-basiertes Tool zur Erstellung, Validierung und Verwaltung von XML-Deklarationen von grossem praktischen Nutzen. Dieses soll direkt auf den XML-Deklarationen aufbauen und wiederum eine valide XML-Deklaration generieren, die dem XML-Schema entspricht.
+
+
+% Project objectives
+\section{Ziel des Projekts}
+Im Projekt soll ein interaktives, browserbasiertes Tool entwickelt werden, das die Erstellung, Bearbeitung und Prüfung von XML-Deklarationen unterstützt. Grundlage bilden dabei die bestehenden XML-Schemas und XML-Deklarationen.
+
+Das Tool soll eine dynamische, schrittweise geführte Eingabemaske bereitstellen, die sich an den gewählten Strukturen orientiert. Erstellte XML-Deklarationen sollen gespeichert, nachträglich bearbeitet sowie sowohl syntaktisch (Schema-Validität) als auch semantisch (Regelkonformität) validiert werden. Darüber hinaus sollen Exportfunktionen in XML- und PDF-Format zur Verfügung stehen.
+
+Damit trägt das Projekt dazu bei, die bisher manuellen und statischen Prozesse zu automatisieren und eine Grundlage für die effiziente Nutzung von SmartGridready in der Praxis zu schaffen.
+
+\newpage
+
+% Requirements
+\section{Anforderungen}
+\subsection{Muss-Anforderungen}
+\subsubsection{Funktionale Anforderungen}
+\begin{itemize}
+  \item \textbf{Dynamisches Formular:}  
+    Dynamische Generierung einer Eingabemaske basierend auf der XML-Deklaration, mit hoher Flexibilität im Rahmen des zugrunde liegenden XML-Schemas.
+
+  \item \textbf{Import von XML-Deklaration als Vorlage:}  
+    Import von SmartGridready-konformen XML-Deklarationen über das Dateisystem oder eine REST-API.
+
+  \item \textbf{Export von XML-Deklarationen:}  
+    Export von SmartGridready-konformen XML-Deklarationen als XML- oder PDF-Repräsentation.
+
+  \item \textbf{Validierung:}  
+    Überprüfung der XML-Deklarationen sowohl syntaktisch (Schema-Validität) als auch semantisch (Regeln und Beziehungen). Die Validierung soll durch die Sicherstellung eines konsistenten Domänenmodells gewährleistet werden.
+
+  \item \textbf{Persistenz via LocalStorage (Autosave):}  
+    Beim Neuladen der Web-App bleibt der aktuelle Formularzustand erhalten.
+\end{itemize}
+
+\subsubsection{Nicht-funktionale Anforderungen}
+\begin{itemize}
+  \item \textbf{Plattformunabhängigkeit:}  
+    Das Tool läuft in gängigen Browsern unabhängig vom Betriebssystem.
+
+  \item \textbf{Benutzerfreundlichkeit:}  
+    Die Eingabemasken sollen klar strukturiert und leicht verständlich für eine technisch versierte Zielgruppe sein. Die Applikation soll eine responsive Gestaltung (Bsp. Loading Spinner) aufweisen.
+
+  \item \textbf{Repository:}  
+    Das Repository soll klar strukturiert sein, mit nachvollziehbarer Commit-History, sinnvollen Tags und einem aussagekräftigen README.
+
+\end{itemize}
+
+\subsection{Soll-Anforderungen}
+\subsubsection{Funktionale Anforderungen}
+\begin{itemize}
+  \item \textbf{Rendern mit XSLT:}  
+    XML-Deklarationen mithilfe von XSLT als HTML darzustellen.
+  \item \textbf{Deployment:}  
+    Während der Entwicklungsphase soll die Web-Applikation gehostet werden, um Feedback Prozesse zu erleichtern.
+\end{itemize}
+
+
+\newpage
+
+% Use cases
+\subsection{Use Cases}
+
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use Case} & \textbf{UC1: XML-Deklaration von Grund auf erstellen} \\ \hline
+\textbf{Ziel} & Neue XML-Deklaration ohne Vorlage erstellen und exportieren. \\ \hline
+\textbf{Akteure} & Benutzer (Hersteller, Integrator, Entwickler) \\ \hline
+\textbf{Vorbedingungen} & Web-Applikation ist geöffnet.\\ \hline
+\textbf{Hauptablauf} &
+1. Wählt \textbf{EID} oder \textbf{Funktionsprofil}. 2. Wählt \textbf{Neu Spezifikation}. 2. Leeres Vorlage wird geladen. 3. Eingabemaske passt sich dynamisch an. 4. Benutzer ergänzt Inhalte. 5. System validiert Eingaben (konstant). 6. Export als XML-Datei oder pdf. \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use Case} & \textbf{UC2: XML-Deklaration per Vorlage (REST-API)} \\ \hline
+\textbf{Ziel} & XML-Deklaration auf Basis einer bestehenden Vorlage aus der REST-API erstellen und exportieren. \\ \hline
+\textbf{Akteure} & Benutzer (Hersteller, Integrator, Entwickler) \\ \hline
+\textbf{Vorbedingungen} & Verbindung zur REST-API besteht. \\ \hline
+\textbf{Hauptablauf} & 
+1. Wählt \textbf{EID} oder \textbf{Funktionsprofil}. 2. Wählt \textbf{Vorlage importieren}. 3. System lädt alle XML-Deklarationen aus der REST-API. 4. Benutzer sucht oder filtert nach einer Vorlage. 5. Vorlage wird geladen und angezeigt. 6. Benutzer passt Inhalte an. 7. System validiert Eingaben (konstant). 8. Export als XML-Datei oder pdf. \\ \hline
+\end{tabularx}
+\end{table}
+
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Use Case} & \textbf{UC3: XML-Deklaration per Vorlage (Dateisystem)} \\ \hline
+\textbf{Ziel} & XML-Deklaration auf Basis einer lokal gespeicherten Vorlage erstellen und exportieren. \\ \hline
+\textbf{Akteure} & Benutzer (Hersteller, Integrator, Entwickler) \\ \hline
+\textbf{Vorbedingungen} & Lokale XML-Vorlages liegen im Dateisystem vor. \\ \hline
+\textbf{Hauptablauf} &
+1. Wählt \textbf{EID} oder \textbf{Funktionsprofil}. 2. Wählt \textbf{Vorlage aus Datei importieren}. 3. System öffnet Datei-Dialog. 4. Benutzer wählt lokale XML-Datei. 5. Vorlage wird geladen und angezeigt. 6. Benutzer bearbeitet und ergänzt Inhalte. 7. System validiert Eingaben (konstant). 8. Export als XML-Datei oder pdf. \\ \hline
+\end{tabularx}
+\end{table}
+
+
+\newpage
+
+% Project scope
+\section{Projektabgrenzung}
+Im Projekt werden folgende Punkte bewusst nicht behandelt:
+
+\begin{itemize}
+  \item \textbf{Änderungen an den XML-Schemas:}  
+    Die zugrunde liegenden XML-Schemas dürfen nicht angepasst oder erweitert werden.  
+
+  \item \textbf{Kommunikator-Beschreibungen:}  
+    Fokus liegt ausschliesslich auf XML-Deklarationen von Geräten und Funktionsprofilen, nicht auf der Deklaration von Kommunikatoren.  
+
+  \item \textbf{Kommerzielle Verwertung:}  
+    Es handelt sich um einen Prototyp, nicht um ein fertiges Gerät für den Markt.  
+
+  \item \textbf{Form der Projektabgabe:}  
+    Die Abgabe des Projekts erfolgt über das GitLab-Repository.
+
+  \item \textbf{Automatische Modellgenerierung:}  
+    Die automatische Generierung dynamischer Modelle direkt aus den XML-Schemas ist nicht Bestandteil des Projekts. 
+    Es genügt, die erforderlichen Strukturen durch statische Modelle abzubilden.
+\end{itemize}
+
+
+% Analysis
+\section{Analyse}
+\subsection{Fragestellung}
+
+\begin{itemize}
+  \item Wie lässt sich eine Systemarchitektur herleiten, die es ermöglicht, komplexe XML-Deklarationen intuitiv in Formulare zu überführen?
+\end{itemize}
+
+\subsection{Tech-Stack}
+\begin{enumerate}
+  \item \textbf{React mit Next.js} \\ 
+    React ermöglicht eine komponentenbasierte Entwicklung und eine flexible Abbildung komplexer UI-Strukturen. Next.js wird als Build- und Routing-Framework genutzt.
+
+  \item \textbf{shadcn/ui} \\
+    Das shadcn/ui-Paket stellt einheitliche, moderne und barrierearme UI-Komponenten bereit, die sich leicht anpassen lassen. Damit kann eine konsistente und ansprechende Benutzeroberfläche umgesetzt werden, ohne alle Elemente manuell entwickeln zu müssen.
+
+  \item \textbf{xml2js} \\
+    Die Bibliothek \texttt{xml2js} ermöglicht die Umwandlung von XML-Deklarationen in JavaScript-Objekte und unterstützt so das Mapping zum Domänenmodell sowie das anschliessende Parsen zurück in XML.
+\end{enumerate}
+
+
+% Risk analysis
+\subsection{Risiken}
+\renewcommand{\arraystretch}{1.25}
+\rowcolors{2}{gray!8}{white}
+
+\begin{minipage}{\textwidth}
+   {\footnotesize \textbf{Legende:} E = Eintrittswahrscheinlichkeit,\; A = Auswirkung;\; H = hoch,\; M = mittel,\; N = niedrig.}
+  \vspace{0.3em}
+
+\begin{small}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.5cm} p{5.3cm} X p{0.7cm} p{0.7cm}}
+\rowcolor{gray!20}
+ID & Risiko & Massnahmen (Prävention / Reaktion) & E & A \\
+
+R1 & \textbf{Komplexes XML-Schema:}  
+Das statische Domänenmodell ist unvollständig oder enthält Fehler. &  
+\textbf{Prävention:} Aufbau einer Testumgebung, in der sämtliche XML-Deklarationen der Bibliothek durchlaufen werden (XML → Model → XML).  
+\textbf{Reaktion:} Nachbesserung der fehlerhaften XML-Mappings und Aktualisierung der betroffenen Schemas. & H & H \\
+
+R2 & \textbf{Komplexer Code:}  
+Ein umfangreiches XML-Schema führt zu hohem Implementierungsaufwand und komplexem Code. Dadurch steigt das Risiko für Architekturfehler oder mangelnde Wartbarkeit. &  
+\textbf{Prävention:} Frühzeitige architektonische Planung, Visualisierung der Schema-Beziehungen (z.\,B. mit UML- oder ER-Diagrammen) und klare Modularisierung des Codes.  
+\textbf{Reaktion:} Refactoring der betroffenen Komponenten. Hilfe von Web-Framework-Experten. & M & H \\
+
+R3 & \textbf{Ungeeigneter Technologie-Stack:}  
+Die Kombination von React/Next.js, shadcn/ui und xml2js kann zu unerwarteten Integrationsproblemen führen. &  
+\textbf{Prävention:} Durchführung eines Proof-of-Concepts sowie regelmassige technische Reviews.  
+\textbf{Reaktion:} Anpassung des Technologie-Stacks oder Austausch einzelner Bibliotheken bei wiederkehrenden Problemen. & N & H \\
+
+R4 & \textbf{Zeitliche Engpässe:}  
+Verzögerungen können durch parallele Projektaufgaben oder unvorhergesehene Mehraufwände entstehen. &  
+\textbf{Prävention:} Präzise Meilensteinplanung, Priorisierung kritischer Funktionen und Einplanung von Pufferzeiten.  
+\textbf{Reaktion:} Anpassung des Projektumfangs oder Umverteilung von Aufgaben im Team. & M & H \\
+
+R5 & \textbf{Unterschätzte Benutzerfreundlichkeit:}  
+Formulare sind technisch funktionsfähig, könnten jedoch für die Zielgruppe zu komplex oder unübersichtlich wirken. &  
+\textbf{Prävention:} Einholen regelmassigen Feedbacks von potenziellen Anwendern und iterative Optimierung der UI.  
+\textbf{Reaktion:} Überarbeitung des Layouts und Einführung von Hilfetexten oder Tooltips. & M & M \\
+
+R6 & \textbf{Unklare Repository-Struktur:}  
+Eine unübersichtliche Commit-Historie oder unzureichende Dokumentation erschwert die Zusammenarbeit im Team. &  
+\textbf{Prävention:} Einführung verbindlicher Git-Standards (Branch-Strategie, Commit-Konventionen, gepflegte README-Dateien).  
+\textbf{Reaktion:} Gemeinsame Aufräumphase (Refactoring der Struktur, Ergänzung fehlender Dokumentation). & N & M \\
+
+\end{tabularx}
+\end{small}
+\end{minipage}
+
+% Timeline
+\begin{landscape}
+  \section{Zeitplan}
+  \thispagestyle{empty}
+  \centering
+
+  \newcommand{\W}[1]{\numexpr 52 + #1\relax}
+
+  \begin{ganttchart}[
+    hgrid,
+    vgrid,
+    x unit=0.95cm,
+    y unit chart=0.55cm,
+    group label font=\bfseries\scriptsize,
+    bar label font=\scriptsize,
+    bar/.append style={fill=black!10},
+    group/.append style={fill=black!25},
+    milestone/.append style={fill=black},
+  ]{38}{58}
+
+    \gantttitle{Kalenderwochen}{21} \\
+    \gantttitlelist{38,...,52}{1} \gantttitlelist{1,...,6}{1} \\
+
+    \ganttgroup{Koordination}{38}{42}\\
+      \ganttbar{Projektvereinbarung}{40}{42}\\
+      \ganttmilestone{M1: Projektvereinbarung}{42}\\
+
+    \ganttgroup{Proof-of-Concept}{39}{47}\\
+      \ganttbar{Ausarbeitung Domänenmodell}{39}{47}\\
+      \ganttbar{Parsing, Mapping, Test-System}{42}{47}\\
+      \ganttbar{Anbindung REST-API}{42}{44}\\
+      \ganttbar{Generisches Formular System}{42}{47}\\
+      \ganttmilestone{M2: PoC verifiziert}{47}\\
+
+    \ganttgroup{Implementierung}{48}{52}\\
+      \ganttbar{Verifizierung Domänenmodell}{48}{52}\\
+      \ganttbar{Formular-Komponenten}{48}{52}\\
+      \ganttbar{XML zu Domänenmodell Mapping}{48}{52}\\
+      \ganttbar{Anbindung REST-API}{48}{49}\\
+      \ganttbar{Domänenmodell zu XML Parsing}{50}{52}\\
+      \ganttbar{Feedback externer Benutzer}{51}{51}\\
+      \ganttmilestone{M3: Funktionaler Prototyp}{52}\\
+  
+    \ganttgroup{Validierung und Optimierung}{\W{1}}{\W{5}}\\
+      \ganttbar{Refactoring}{\W{1}}{\W{5}}\\
+      \ganttbar{Dokumentation finalisieren}{\W{1}}{\W{5}}\\
+      \ganttmilestone{M4: Abgabe / Präsentation}{\W{5}}
+
+  \end{ganttchart}
+\end{landscape}
+
+\newpage
+
+% Milestones and deliverables
+\section{Meilensteine und Lieferobjekte}
+\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.6cm} X X}
+\rowcolor{gray!15}\textbf{Meilenstein} & \textbf{Lieferobjekt(e)} & \textbf{Abnahmekriterium} \\
+
+M1 (KW42) & Projektvereinbarung (PDF) &
+Von Coach und Product Owner geprüft, bestätigt und unterzeichnet. \\
+M2 (KW47) & Lauffähiger Proof of Concept (GitLab-Repository)
+und Review der Architektur &
+Kernfunktionalität gemass Risikoanalyse umgesetzt und erfolgreich durch den Product Owner validiert. \\
+
+M3 (KW52) & Funktionaler Prototyp (GitLab-Repository) mit vollständiger Implementierung der definierten Features (funktional und nicht-funktional). &
+Alle definierten Testfälle erfolgreich bestanden; Funktionsprüfung und Freigabe durch den Product Owner. \\
+
+M4 (KW06) & Finale Projektabgabe (GitLab-Repository, Projektbericht und Abschlusspräsentation). &
+Reviewtermin durchgeführt; Abnahmeprotokoll von Product Owner unterzeichnet. \\
+\end{tabularx}
+
+
+
+\newpage
+\section{Projektorganisation und -management}
+% Project organization and management
+
+\subsection{Kommunikation und Meetings}
+\begin{itemize}
+  \item \textbf{Sync-Meeting (Montags alle zwei Wochen):} Abarbeitung der Traktandenliste, Besprechung über Fortschritt und Probleme sowie das Erfassen der nächsten Schritte.
+
+  \item \textbf{Kanäle:} Teams-Channel, GitLab Pages für Meeting Notes und Traktandenliste
+  
+  \item \textbf{Source-Code:} \\
+    GitLab-Repositories:  
+    \begin{itemize}
+      \item \texttt{/docs} – Dokumentationen  
+      \item \texttt{/sgr-poc} – Proof of Concept  
+      \item \texttt{/sgr-deklarationstool} – Hauptprojekt  
+    \end{itemize}
+\end{itemize}
+
+\subsection{Arbeitsweise und Tools}
+\begin{itemize}
+  \item \textbf{Issue-Tracking:} GitLab Issues mit Akzeptanzkriterien
+  
+  \item \textbf{Branching-Strategie:} Trunk-Based Development
+  
+  \item \textbf{Commit-Konvention:} Conventional Commits
+  
+  \item \textbf{CI/CD:} GitLab CI (Build, Lint, Test)
+
+\end{itemize}
+
+\newpage
+
+
+
+\newpage
+
+% Signatures
+\section*{Unterschriften\footnotemark}
+\vspace{1cm}
+
+\noindent
+\begin{tabularx}{\textwidth}{X X}
+\textbf{Fatlum Cikaqi} & \textbf{Maurin Wirth} \\[.3cm]
+\textit{Datum / Unterschrift} & \textit{Datum / Unterschrift} \\
+\noalign{\vspace{1.5cm}} % <<< zusätzlicher Weissraum über den Linien
+\hrulefill & \hrulefill \\
+\end{tabularx}
+
+\vspace{2cm}
+
+\noindent
+\begin{tabularx}{\textwidth}{X X}
+\textbf{Matthias Krebs} & \textbf{Jürg Luthiger} \\[.3cm]
+\textit{Datum / Unterschrift} & \textit{Datum / Unterschrift} \\
+\noalign{\vspace{1.5cm}} % <<< hier ebenso
+\hrulefill & \hrulefill \\
+\end{tabularx}
+
+\footnotetext{Diese Vereinbarung gilt als akzeptiert durch Unterschrift \emph{oder} durch Bestätigung per E-Mail.}
+
+\end{document}

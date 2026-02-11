@@ -1,0 +1,42 @@
+@startuml
+!theme plain
+
+title Builder Prozess (vereinfacht)
+
+actor Benutzer
+participant "Editor UI" as UI
+participant "Export-Flow\n(useFileExport)" as Export
+participant "Validierung\n(Zod)" as Validation
+participant "Root-Builder\n(buildDeviceToXml / buildFunctionalProfileToXml)" as RootBuilder
+participant "Section-Builder\n(*-builder.ts)" as SectionBuilder
+participant "xml2js\nBuilder.buildObject()" as XmlBuilder
+
+Benutzer -> UI : Export starten
+UI -> Export : exportFile()
+
+Export -> Validation : validate(frame)
+Validation --> Export : ok / errors
+
+alt valid == false
+    Export -> UI : Fehler anzeigen / Toast
+    Export --> Benutzer : Export abgebrochen
+else valid == true
+    Export -> RootBuilder : buildToXml(frame)
+    RootBuilder -> RootBuilder : validateDeviceFrame(frame)
+    note right of RootBuilder
+        **Defense in Depth:**
+        Nochmalige Validierung im Builder,
+        damit nie invalides XML erzeugt wird.
+    end note
+    RootBuilder -> SectionBuilder : buildSection(...)
+    SectionBuilder --> RootBuilder : xml2js-kompatible Teilobjekte
+    RootBuilder -> XmlBuilder : buildObject(xmlObject)
+    XmlBuilder --> RootBuilder : XML String
+    RootBuilder --> Export : XML String
+    Export --> Benutzer : Download
+    Export -> Export : resetValidation()
+    note right of Export: Fehleranzeige zurücksetzen\nnach erfolgreichem Export
+end
+
+@enduml
+

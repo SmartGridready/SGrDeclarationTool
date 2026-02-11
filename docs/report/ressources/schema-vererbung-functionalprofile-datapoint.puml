@@ -1,0 +1,94 @@
+@startuml
+' SmartGridready Schema (simplified) — inheritance & key schema features
+
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package "Generic (Base)" {
+  class "FunctionalProfileBase\n(Generic/FunctionalProfile.xsd)" as FPBase <<complexType>>
+  class "DataPointBase\n(Generic/DataPoint.xsd)" as DPBase <<complexType>>
+
+  class "FunctionalProfileDescription" as FPDesc <<complexType>>
+  class "DataPointDescription" as DPDesc <<complexType>>
+
+  FPBase o-- FPDesc : contains\nfunctionalProfile
+  DPBase o-- DPDesc : contains\ndataPoint
+
+  class "DataType\n(Generic/BaseTypes.xsd)" as DataTypeGroup <<group>>
+  class "DataTypeProduct" as DataTypeProduct <<complexType>>
+  DataTypeProduct ..> DataTypeGroup : includes via\nxsd:group ref
+
+  enum "PresenceLevel" as PresenceLevel <<restriction>>
+  enum "DataDirectionProduct" as DataDirectionProduct <<restriction>>
+  DPDesc ..> PresenceLevel : uses
+  DPDesc ..> DataDirectionProduct : uses
+}
+
+package "Product Interfaces\n(Product/*.xsd)" {
+  ' Type extension (= inheritance via xsd:complexContent/xsd:extension)
+  class "ModbusFunctionalProfile" as ModbusFP <<complexType>>
+  class "RestApiFunctionalProfile" as RestFP <<complexType>>
+  class "MessagingFunctionalProfile" as MsgFP <<complexType>>
+  class "GenericFunctionalProfile" as GenFP <<complexType>>
+  class "ContactFunctionalProfile" as CntFP <<complexType>>
+
+  FPBase <|-- ModbusFP : xsd:extension
+  FPBase <|-- RestFP : xsd:extension
+  FPBase <|-- MsgFP  : xsd:extension
+  FPBase <|-- GenFP  : xsd:extension
+  FPBase <|-- CntFP  : xsd:extension
+
+  class "ModbusDataPoint" as ModbusDP <<complexType>>
+  class "RestApiDataPoint" as RestDP <<complexType>>
+  class "MessagingDataPoint" as MsgDP <<complexType>>
+
+  DPBase <|-- ModbusDP : xsd:extension
+  DPBase <|-- RestDP   : xsd:extension
+  DPBase <|-- MsgDP    : xsd:extension
+
+  class "ModbusDataPointConfiguration" as ModbusCfg <<complexType>>
+  class "RestApiDataPointConfiguration" as RestCfg <<complexType>>
+  class "MessagingDataPointConfiguration" as MsgCfg <<complexType>>
+
+  ModbusDP o-- ModbusCfg : adds\nmodbusDataPointConfiguration
+  RestDP   o-- RestCfg   : adds\nrestApiDataPointConfiguration
+  MsgDP    o-- MsgCfg    : adds\nmessagingDataPointConfiguration
+
+  note right of ModbusDP
+    Example pattern:
+    DataPointBase
+      + generic part (DataPointDescription)
+      + interface-specific section (*Configuration / *Attributes)
+  end note
+}
+
+package "Product Root (choice)\n(Product/Product.xsd)" {
+  class "InterfaceList" as InterfaceList <<choice>>
+  class "ModbusInterface" as ModbusIf <<complexType>>
+  class "RestApiInterface" as RestIf <<complexType>>
+  class "MessagingInterface" as MsgIf <<complexType>>
+  class "GenericInterface" as GenIf <<complexType>>
+  class "ContactInterface" as CntIf <<complexType>>
+
+  InterfaceList o-- ModbusIf : xsd:choice (one of)
+  InterfaceList o-- RestIf   : xsd:choice (one of)
+  InterfaceList o-- MsgIf    : xsd:choice (one of)
+  InterfaceList o-- GenIf    : xsd:choice (one of)
+  InterfaceList o-- CntIf    : xsd:choice (one of)
+}
+
+note bottom
+Legend / mapping to XSD:
+- <<complexType>>: xsd:complexType
+- inheritance arrows: xsd:complexContent/xsd:extension
+- <<choice>>: xsd:choice (polymorphism)
+- <<group>>: xsd:group re-use (composition of common fragments)
+- <<restriction>>: xsd:simpleType restriction / enumeration (value constraints)
+end note
+
+@enduml
+
+
+
+

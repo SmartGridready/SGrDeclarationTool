@@ -1,0 +1,32 @@
+@startuml
+!theme plain
+
+title Mapper Prozess (vereinfacht)
+
+actor Benutzer
+participant "Editor UI" as UI
+participant "Import-Flow\n(useFileImport / LibraryImport)" as Import
+participant "Parser\n(parseDevice / parseFunctionalProfile)" as Parser
+participant "xml2js\nparseString()" as Xml2Js
+participant "Root-Mapper\n(mapDevice / mapFunctionalProfile)" as RootMapper
+participant "Section-Mapper\n(*-mapper.ts)" as SectionMapper
+database "State Store\n(Zustand)" as Store
+
+Benutzer -> UI : Import starten (Datei/Library)
+UI -> Import : readXml()
+Import -> Parser : parse(xmlString)
+Parser -> Xml2Js : parseString(xmlString,\n{ explicitArray, explicitRoot, trim, mergeAttrs:false })
+Xml2Js --> Parser : parsed JS-Objekt
+
+Parser -> RootMapper : map(parsed)
+RootMapper -> SectionMapper : mapSection(...)
+SectionMapper --> RootMapper : partial Model
+RootMapper --> Parser : DeviceFrame / FunctionalProfileFrame
+
+Parser --> Import : typed Model
+Import -> Store : setFrame(model)
+Store --> UI : state update
+UI --> Benutzer : Formulare befüllt
+
+@enduml
+

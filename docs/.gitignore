@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+
+# JetBrains / IntelliJ
+.idea/
+*.iml
+
+# Zola-Builds (lokal nie committen)
+public/
+MeetingNotes/public/
+
+# Zola / Build-Caches (falls vorhanden)
+.sass-cache/
+.zola-cache/
+.cache/
+
+# Logs
+*.log
+
+# Editor/Tools (optional)
+.vscode/
+
+# Falls du versehentlich mal außerhalb von /public gebaut hast:
+# (nur falls bei dir im Projektwurzel aufgetaucht)
+# /search_index.*.js
+
+# Build-Verzeichnisse
+build/
+out/
+tmp/
+
+# LaTeX-Zwischendateien
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.run.xml
+*.synctex.gz
+*.toc
+*.out
+*.nav
+*.snm
+*.vrb
+*.ilg
+*.ind
+*.idx
+*.lof
+*.lot
+*.lol
+
+# Sonstiges
+*.bak
+*~
+.#*
+*.swp
+.DS_Store
+Thumbs.db

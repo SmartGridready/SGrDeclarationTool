@@ -1,0 +1,49 @@
+@startuml
+!theme plain
+
+skinparam component {
+    FontSize 12
+    FontStyle bold
+    BackgroundColor #E8E8E8
+    BorderColor #000000
+}
+
+skinparam package {
+    FontSize 14
+    FontStyle bold
+}
+
+package "src/app/devices" {
+    component "page.tsx" as devicesPage
+}
+
+package "src/app/functional-profiles" {
+    component "page.tsx" as profilesPage
+}
+
+package "src/components/editor" {
+    component "generic-editor.tsx" as genericEditor
+    component "editor-actions.tsx" as editorActions
+    component "library-import-modal.tsx" as libraryModal
+    component "confirmation-dialog.tsx" as confirmationDialog
+    component "xml-preview-modal.tsx" as previewModal
+    component "base-modal.tsx" as baseModal
+}
+
+' Page to GenericEditor connections
+devicesPage --> genericEditor
+profilesPage --> genericEditor
+
+' GenericEditor to sub-components
+genericEditor --> editorActions
+genericEditor --> libraryModal
+genericEditor --> confirmationDialog
+genericEditor --> previewModal
+
+' Modal hierarchy
+confirmationDialog --> baseModal
+previewModal --> baseModal
+libraryModal --> baseModal
+
+@enduml
+

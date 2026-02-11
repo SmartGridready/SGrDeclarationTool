@@ -20,7 +20,7 @@ For more information about SmartGridready, visit the [SGrSpecifications reposito
 1. **Clone the repository**
 
    ```bash
-   git clone https://gitlab.fhnw.ch/ip5-smartgridready/sgr-declaration-tool.git
+   git clone https://github.com/SmartGridready/SGrDeclarationTool.git
    ```
 
 2. **Install dependencies**

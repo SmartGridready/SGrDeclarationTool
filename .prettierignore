@@ -11,6 +11,7 @@ yarn.lock
 .gitlab/
 .github/
 CHANGELOG.md
+LICENSE.md
 components/ui/
 README.md
 public/

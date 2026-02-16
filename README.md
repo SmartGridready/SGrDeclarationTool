@@ -120,7 +120,16 @@ This project uses [Husky](https://typicode.github.io/husky/) to run automated ch
 Releases are performed **manually** using semantic versioning (patch, minor, major).
 The project uses [standard-version](https://github.com/conventional-changelog/standard-version).
 
-1. **Choose the release type and run the command**
+1. **Checkout a separate release branch**
+
+   ```bash
+   git checkout -b my-release
+   ```
+
+   SmartGridready development policy does not allow pushing directly to main branch.
+   Instead, changes must be merged into main branch via pull requests.
+
+2. **Choose the release type and run the command**
 
    **Patch** (`0.2.0` → `0.2.1`): Bug fixes, patches
 
@@ -143,14 +152,29 @@ The project uses [standard-version](https://github.com/conventional-changelog/st
    This will:
    - Bump the version in `package.json`
    - Generate/update `CHANGELOG.md` based on commit history
-   - Create a git tag with the new version
    - Create a commit with the version bump and changelog
 
-2. **Push the release**
+   The tagging step is omitted, because we need to merge into main branch first.
+
+3. **Push the release branch**
 
    ```bash
-   git push --follow-tags origin main
+   git push origin my-release
    ```
+
+4. **Create and merge pull request**
+
+   Create a new pull request [here](https://github.com/SmartGridready/SGrDeclarationTool/pulls):
+   - source branch is `my-release`
+   - target branch is `main`
+
+   Request a review and finally merge (and squash) the pull request into `main`.
+
+5. **Create release tag**
+
+   After merging the pull request into `main`:
+
+   Create a new tag whose name matches the new release, e.g. `v1.0.0`.
 
 ## Docker
 
